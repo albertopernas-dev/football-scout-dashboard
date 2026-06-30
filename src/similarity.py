@@ -38,6 +38,30 @@ def features_for_position(position: str) -> list[str]:
     return POSITION_SIMILARITY_FEATURES.get(key, DEFAULT_SIMILARITY_FEATURES)
 
 
+def _resolve_similarity_features(df: pd.DataFrame, candidate_features: list[str] | tuple[str, ...]) -> list[str]:
+    resolved = []
+    for feature in candidate_features:
+        percentile_feature = f"{feature}_pct"
+        if percentile_feature in df.columns:
+            resolved.append(percentile_feature)
+        elif feature in df.columns:
+            resolved.append(feature)
+    return resolved
+
+
+def _normalized_feature_matrix(df: pd.DataFrame, features: list[str]) -> np.ndarray:
+    numeric = df[features].apply(pd.to_numeric, errors="coerce").fillna(0)
+    normalized = numeric.copy()
+    for column in normalized.columns:
+        minimum = normalized[column].min()
+        spread = normalized[column].max() - minimum
+        if spread == 0:
+            normalized[column] = 0.0
+        else:
+            normalized[column] = (normalized[column] - minimum) / spread
+    return normalized.to_numpy(dtype=float)
+
+
 def _cosine_similarity(matrix: np.ndarray) -> np.ndarray:
     norms = np.linalg.norm(matrix, axis=1, keepdims=True)
     safe = np.divide(matrix, norms, out=np.zeros_like(matrix, dtype=float), where=norms != 0)
@@ -58,10 +82,10 @@ def find_similar_players(
     target_idx = int(work.index[work["player"] == player_name][0])
     target_position = work.loc[target_idx, "position"] if "position" in work.columns else None
     candidate_features = features or features_for_position(target_position)
-    selected_features = [feature for feature in candidate_features if feature in df.columns]
+    selected_features = _resolve_similarity_features(work, candidate_features)
     if not selected_features:
         raise ValueError("No similarity features are available in the dataframe.")
-    matrix = work[selected_features].apply(pd.to_numeric, errors="coerce").fillna(0).to_numpy(dtype=float)
+    matrix = _normalized_feature_matrix(work, selected_features)
     similarities = _cosine_similarity(matrix)[target_idx]
 
     result = work.copy()
