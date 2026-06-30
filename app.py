@@ -36,6 +36,43 @@ def format_euros(value: object) -> str:
     return f"{int(amount):,}".replace(",", ".") + " €"
 
 
+def format_score(value: object, decimals: int = 1) -> str:
+    number = pd.to_numeric(pd.Series([value]), errors="coerce").iloc[0]
+    if pd.isna(number):
+        return ""
+    return f"{number:.{decimals}f}"
+
+
+def format_number(value: object, decimals: int = 2) -> str:
+    number = pd.to_numeric(pd.Series([value]), errors="coerce").iloc[0]
+    if pd.isna(number):
+        return ""
+    return f"{number:.{decimals}f}"
+
+
+def format_display_columns(
+    df: pd.DataFrame,
+    currency_columns: list[str] | None = None,
+    one_decimal_columns: list[str] | None = None,
+    two_decimal_columns: list[str] | None = None,
+    three_decimal_columns: list[str] | None = None,
+) -> pd.DataFrame:
+    display_df = df.copy()
+    for column in currency_columns or []:
+        if column in display_df.columns:
+            display_df[column] = display_df[column].apply(format_euros)
+    for column in one_decimal_columns or []:
+        if column in display_df.columns:
+            display_df[column] = display_df[column].apply(lambda value: format_score(value, 1))
+    for column in two_decimal_columns or []:
+        if column in display_df.columns:
+            display_df[column] = display_df[column].apply(lambda value: format_number(value, 2))
+    for column in three_decimal_columns or []:
+        if column in display_df.columns:
+            display_df[column] = display_df[column].apply(lambda value: format_number(value, 3))
+    return display_df
+
+
 def filter_data(df: pd.DataFrame) -> pd.DataFrame:
     with st.sidebar:
         st.header("Filtros")
@@ -85,8 +122,24 @@ def player_table(df: pd.DataFrame) -> None:
         "xg_per90",
         "xa_per90",
     ]
+    visible_columns = [column for column in display_columns if column in df.columns]
+    sorted_df = df[visible_columns].sort_values("overall_score", ascending=False)
+    display_df = format_display_columns(
+        sorted_df,
+        currency_columns=["market_value"],
+        one_decimal_columns=[
+            "overall_score",
+            "market_opportunity_score",
+            "attacking_impact_score",
+            "chance_creation_score",
+            "ball_progression_score",
+            "defensive_impact_score",
+            "dribbling_threat_score",
+        ],
+        two_decimal_columns=["goals_per90", "assists_per90", "xg_per90", "xa_per90"],
+    )
     st.dataframe(
-        df[[column for column in display_columns if column in df.columns]].sort_values("overall_score", ascending=False),
+        display_df,
         width="stretch",
         hide_index=True,
     )
@@ -122,8 +175,25 @@ def similarity_and_report_view(df: pd.DataFrame) -> None:
     top_n = st.slider("Número de similares", 3, 10, 5)
 
     similar = find_similar_players(df, selected_player, top_n=top_n)
+    similar_columns = [
+        "player",
+        "age",
+        "position",
+        "team",
+        "league",
+        "market_value",
+        "similarity",
+        "overall_score",
+        "market_opportunity_score",
+    ]
+    similar_display = format_display_columns(
+        similar[[column for column in similar_columns if column in similar.columns]],
+        currency_columns=["market_value"],
+        one_decimal_columns=["overall_score", "market_opportunity_score"],
+        three_decimal_columns=["similarity"],
+    )
     st.dataframe(
-        similar[["player", "age", "position", "team", "league", "market_value", "similarity", "overall_score", "market_opportunity_score"]],
+        similar_display,
         width="stretch",
         hide_index=True,
     )
@@ -197,8 +267,21 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
         "dribbling_threat_score",
         "market_opportunity_score",
     ]
-    st.dataframe(
+    opportunity_display = format_display_columns(
         opportunities[[column for column in ranking_columns if column in opportunities.columns]],
+        currency_columns=["market_value"],
+        one_decimal_columns=[
+            "overall_score",
+            "attacking_impact_score",
+            "chance_creation_score",
+            "ball_progression_score",
+            "defensive_impact_score",
+            "dribbling_threat_score",
+            "market_opportunity_score",
+        ],
+    )
+    st.dataframe(
+        opportunity_display,
         width="stretch",
         hide_index=True,
     )
