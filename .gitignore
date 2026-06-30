@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .streamlit/secrets.toml
+.env
 reports/generated/*.html
 data/football_scout.db
 *.log

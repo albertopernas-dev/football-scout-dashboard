@@ -101,6 +101,21 @@ Genera la base local SQLite desde el CSV de ejemplo con:
 
 El script carga `data/sample_players.csv` en `data/football_scout.db`, tabla `players`. Después de ejecutarlo, la app cargará SQLite como fuente principal por defecto. Si la base no existe, la capa de datos cae al CSV de demo.
 
+## External provider ingestion
+
+La app permite preparar una ingesta desde `EXTERNAL_PROVIDER_URL` hacia SQLite. El proveedor debe devolver JSON como lista de jugadores o como objeto con clave `players`.
+
+`.env.example` es solo una plantilla. El proyecto actualmente no carga archivos `.env` automaticamente, asi que define `EXTERNAL_PROVIDER_URL` en la sesion antes de ejecutar la ingesta.
+
+Ejemplo en PowerShell:
+
+```powershell
+$env:EXTERNAL_PROVIDER_URL="https://example.com/players.json"
+.venv\Scripts\python.exe scripts/load_external_to_sqlite.py
+```
+
+El script carga los datos en `data/football_scout.db`, tabla `players`. Todavía no hay proveedor específico implementado, credenciales reales ni scraping.
+
 ## Demo use case
 
 This MVP helps identify undervalued football players through statistical filters, position-based percentiles, similarity modelling and automated scouting reports.

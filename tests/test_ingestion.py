@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 
 from src.data_sources import load_players_from_sqlite
-from src.ingestion import load_csv_to_sqlite
+from src.ingestion import load_csv_to_sqlite, load_external_to_sqlite
 
 
 def test_load_csv_to_sqlite_creates_players_table_and_returns_row_count(tmp_path):
@@ -41,3 +41,54 @@ def test_load_csv_to_sqlite_replaces_existing_players_table(tmp_path):
 def test_load_csv_to_sqlite_raises_clear_error_for_missing_csv(tmp_path):
     with pytest.raises(FileNotFoundError, match="CSV file not found"):
         load_csv_to_sqlite(tmp_path / "missing.csv", tmp_path / "football_scout.db", "players")
+
+
+def test_load_external_to_sqlite_loads_mocked_provider_data(tmp_path):
+    database_path = tmp_path / "football_scout.db"
+
+    def fetcher(url):
+        return [{"player": "External", "age": 19, "position": "LW"}]
+
+    row_count = load_external_to_sqlite(
+        "https://example.test/players",
+        database_path,
+        "players",
+        fetcher=fetcher,
+    )
+    loaded = load_players_from_sqlite(database_path, "players")
+
+    assert row_count == 1
+    assert loaded.to_dict("records") == [{"player": "External", "age": 19, "position": "LW"}]
+
+
+def test_load_external_to_sqlite_rejects_empty_url(tmp_path):
+    with pytest.raises(ValueError, match="EXTERNAL_PROVIDER_URL"):
+        load_external_to_sqlite("", tmp_path / "football_scout.db", "players", fetcher=lambda url: [])
+
+
+def test_load_external_to_sqlite_rejects_empty_provider_response(tmp_path):
+    with pytest.raises(ValueError, match="No player data returned"):
+        load_external_to_sqlite(
+            "https://example.test/players",
+            tmp_path / "football_scout.db",
+            "players",
+            fetcher=lambda url: [],
+        )
+
+
+def test_load_external_to_sqlite_uses_injected_fetcher_without_real_network(tmp_path):
+    calls = []
+
+    def fetcher(url):
+        calls.append(url)
+        return {"players": [{"player": "Injected"}]}
+
+    row_count = load_external_to_sqlite(
+        "https://example.test/players",
+        tmp_path / "football_scout.db",
+        "players",
+        fetcher=fetcher,
+    )
+
+    assert row_count == 1
+    assert calls == ["https://example.test/players"]
