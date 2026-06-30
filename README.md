@@ -11,6 +11,7 @@ MVP de scouting futbolistico construido con Python, Streamlit, pandas, scikit-le
 - Percentiles por posicion.
 - Scores propios: finalizacion, creacion, progresion, defensa y overall.
 - Market Opportunity Score para detectar jugadores infravalorados.
+- Opportunity Finder para rankear candidatos segun edad, minutos, mercado y contrato.
 - Metricas de similitud especificas por posicion.
 - Tabla filtrable.
 - Comparador entre jugadores.
@@ -41,6 +42,7 @@ football-scout-dashboard/
     features.py
     scoring.py
     similarity.py
+    opportunity.py
     visualizations.py
     reports.py
   tests/
@@ -49,6 +51,7 @@ football-scout-dashboard/
     test_similarity.py
     test_scoring.py
     test_reports.py
+    test_opportunity.py
 ```
 
 ## Instalacion
@@ -102,6 +105,15 @@ Suggested demo flow:
 5. Compare the best candidate against a more established player.
 6. Review the radar chart and similar players.
 7. Generate the HTML scouting report.
+
+## Opportunity Finder
+
+Opportunity Finder ayuda a convertir el `market_opportunity_score` en un ranking accionable de scouting. Permite buscar jugadores jovenes, con minutos suficientes, valor de mercado acotado y, opcionalmente, contrato proximo a finalizar.
+
+Problema que resuelve: reduce una tabla amplia de estadisticas a una lista corta de candidatos potencialmente infravalorados.
+
+Ejemplo:
+Buscar extremos sub-23 con alto impacto ofensivo, buen regate, valor de mercado bajo y contrato proximo a finalizar.
 
 ## Tests
 

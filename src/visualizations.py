@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import pandas as pd
 import plotly.graph_objects as go
+import plotly.express as px
 
 
 def create_radar_chart(
@@ -34,5 +35,35 @@ def create_radar_chart(
         polar=dict(radialaxis=dict(visible=True, range=[0, max_range] if max_range else None)),
         showlegend=True,
         template="plotly_white",
+    )
+    return figure
+
+
+def create_opportunity_bar_chart(
+    df: pd.DataFrame,
+    player_col: str = "player",
+    score_col: str = "market_opportunity_score",
+) -> go.Figure:
+    chart_data = df.copy()
+    if player_col not in chart_data.columns or score_col not in chart_data.columns:
+        return go.Figure()
+    chart_data = chart_data.sort_values(score_col, ascending=True)
+    figure = px.bar(
+        chart_data,
+        x=score_col,
+        y=player_col,
+        orientation="h",
+        color=score_col,
+        color_continuous_scale="Tealgrn",
+        range_x=[0, 100],
+        labels={
+            player_col: "Player",
+            score_col: "Market Opportunity Score",
+        },
+    )
+    figure.update_layout(
+        margin=dict(l=20, r=20, t=20, b=20),
+        template="plotly_white",
+        coloraxis_showscale=False,
     )
     return figure
