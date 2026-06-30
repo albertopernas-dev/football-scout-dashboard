@@ -26,6 +26,20 @@
         margin: 24px 0;
         padding: 16px;
       }
+      section {
+        margin: 26px 0;
+      }
+      h2 {
+        color: #1f7a5c;
+        margin-bottom: 10px;
+      }
+      ul {
+        margin-top: 8px;
+      }
+      .note {
+        color: #5d6d7e;
+        font-size: 0.92rem;
+      }
       table {
         border-collapse: collapse;
         margin: 16px 0 28px;
@@ -54,24 +68,58 @@
       <strong>Market Opportunity Score:</strong> {{ market_opportunity_score }}/100
     </section>
 
-    <h2>Metricas principales por 90</h2>
-    <table>
-      <thead>
-        <tr><th>Metrica</th><th>Valor</th></tr>
-      </thead>
-      <tbody>
-        {{ metrics_rows }}
-      </tbody>
-    </table>
+    <section>
+      <h2>Resumen del perfil</h2>
+      <p>{{ profile_summary }}</p>
+    </section>
 
-    <h2>Jugadores similares</h2>
-    <table>
-      <thead>
-        <tr><th>Jugador</th><th>Equipo</th><th>Posicion</th><th>Similitud</th></tr>
-      </thead>
-      <tbody>
-        {{ similar_rows }}
-      </tbody>
-    </table>
+    <section>
+      <h2>Fortalezas principales</h2>
+      {{ strengths }}
+    </section>
+
+    <section>
+      <h2>Riesgos o señales a revisar</h2>
+      {{ risks }}
+    </section>
+
+    <section>
+      <h2>Contexto de mercado</h2>
+      <p>{{ market_context }}</p>
+    </section>
+
+    <section>
+      <h2>Métricas principales</h2>
+      <table>
+        <thead>
+          <tr><th>Métrica</th><th>Valor</th></tr>
+        </thead>
+        <tbody>
+          {{ metrics_rows }}
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Jugadores similares</h2>
+      <table>
+        <thead>
+          <tr>{{ similar_headers }}</tr>
+        </thead>
+        <tbody>
+          {{ similar_rows }}
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Recomendación final</h2>
+      <p>{{ recommendation }}</p>
+    </section>
+
+    <section class="note">
+      <h2>Nota metodológica</h2>
+      <p>Este informe se genera automáticamente a partir de métricas normalizadas, percentiles por posición, modelos de similitud y scores internos. Debe utilizarse como apoyo al scouting, no como sustituto de la evaluación técnica en vídeo o directo.</p>
+    </section>
   </body>
 </html>
