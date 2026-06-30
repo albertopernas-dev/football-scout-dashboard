@@ -1,23 +1,23 @@
 # Football Scout Dashboard
 
-MVP de scouting futbolistico construido con Python, Streamlit, pandas, scikit-learn, Plotly y una arquitectura modular preparada para evolucionar a FastAPI + Next.js.
+MVP de scouting futbolístico construido con Python, Streamlit, pandas, scikit-learn, Plotly y una arquitectura modular preparada para evolucionar a FastAPI + Next.js.
 
 ## Funcionalidades
 
 - Carga de CSV y uso de `data/sample_players.csv` por defecto.
-- Normalizacion de columnas en espanol/ingles.
-- Limpieza automatica y validacion de columnas obligatorias.
-- Metricas por 90 minutos.
+- Normalización de columnas en español/ingles.
+- Limpieza automática y validación de columnas obligatorias.
+- Métricas por 90 minutos.
 - Percentiles por posicion.
-- Scores propios: finalizacion, creacion, progresion, defensa y overall.
+- Scores propios: finalización, creación, progresión, defensa y overall.
 - Market Opportunity Score para detectar jugadores infravalorados.
-- Opportunity Finder para rankear candidatos segun edad, minutos, mercado y contrato.
-- Metricas de similitud especificas por posicion.
+- Opportunity Finder para rankear candidatos según edad, minutos, mercado y contrato.
+- Métricas de similitud especificas por posición.
 - Tabla filtrable.
 - Comparador entre jugadores.
 - Radar charts con Plotly.
 - Jugadores similares mediante cosine similarity.
-- Informes automaticos de scouting en HTML.
+- Informes automáticos de scouting en HTML.
 
 ## Estructura
 
@@ -54,7 +54,7 @@ football-scout-dashboard/
     test_opportunity.py
 ```
 
-## Instalacion
+## Instalación
 
 ```bash
 python -m venv .venv
@@ -70,7 +70,7 @@ streamlit run app.py
 
 ## CSV esperado
 
-Columnas canonicas recomendadas:
+Columnas canónicas recomendadas:
 
 ```text
 player, age, position, team, league, minutes, goals, assists, xg, xa,
@@ -79,7 +79,7 @@ completed_dribbles, duels_won, recoveries, interceptions,
 season, market_value, contract_end
 ```
 
-Tambien se aceptan aliases comunes en espanol, por ejemplo `Jugador`, `Edad`, `Posicion`, `Equipo`, `Liga`, `Minutos`, `Goles`, `Asistencias`, `Tiros`, `Pases clave`, `Pases progresivos`, `Conducciones progresivas`, `Regates completados`, `Duelos ganados`, `Recuperaciones` e `Intercepciones`.
+También se aceptan aliases comunes en español, por ejemplo `Jugador`, `Edad`, `Posicion`, `Equipo`, `Liga`, `Minutos`, `Goles`, `Asistencias`, `Tiros`, `Pases clave`, `Pases progresivos`, `Conducciones progresivas`, `Regates completados`, `Duelos ganados`, `Recuperaciones` e `Intercepciones`.
 
 ## Demo use case
 
@@ -106,14 +106,23 @@ Suggested demo flow:
 6. Review the radar chart and similar players.
 7. Generate the HTML scouting report.
 
+## Flujo recomendado
+
+1. Filtra jugadores por liga, posición, edad y minutos.
+2. Revisa la tabla y los scores.
+3. Compara perfiles.
+4. Busca jugadores similares.
+5. Usa Opportunity Finder para detectar candidatos infravalorados.
+6. Genera informes desde la pestaña de similitud.
+
 ## Opportunity Finder
 
-Opportunity Finder ayuda a convertir el `market_opportunity_score` en un ranking accionable de scouting. Permite buscar jugadores jovenes, con minutos suficientes, valor de mercado acotado y, opcionalmente, contrato proximo a finalizar.
+Opportunity Finder ayuda a convertir el `market_opportunity_score` en un ranking accionable de scouting. Permite buscar jugadores jóvenes, con minutos suficientes, valor de mercado acotado y, opcionalmente, contrato próximo a finalizar.
 
-Problema que resuelve: reduce una tabla amplia de estadisticas a una lista corta de candidatos potencialmente infravalorados.
+Problema que resuelve: reduce una tabla amplia de estadísticas a una lista corta de candidatos potencialmente infravalorados.
 
 Ejemplo:
-Buscar extremos sub-23 con alto impacto ofensivo, buen regate, valor de mercado bajo y contrato proximo a finalizar.
+Buscar extremos sub-23 con alto impacto ofensivo, buen regate, valor de mercado bajo y contrato próximo a finalizar.
 
 ## Tests
 
@@ -121,4 +130,4 @@ Buscar extremos sub-23 con alto impacto ofensivo, buen regate, valor de mercado 
 pytest
 ```
 
-Los tests cubren la parte reusable del dominio. `app.py` se mantiene como una capa fina de UI para facilitar una futura migracion a FastAPI + Next.js.
+Los tests cubren la parte reusable del dominio. `app.py` se mantiene como una capa fina de UI para facilitar una futura migración a FastAPI + Next.js.

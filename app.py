@@ -29,18 +29,25 @@ def prepare_data(raw: pd.DataFrame) -> pd.DataFrame:
     return add_profile_scores(percentiles)
 
 
+def format_euros(value: object) -> str:
+    amount = pd.to_numeric(pd.Series([value]), errors="coerce").iloc[0]
+    if pd.isna(amount) or amount <= 0:
+        return "Desconocido"
+    return f"{int(amount):,}".replace(",", ".") + " €"
+
+
 def filter_data(df: pd.DataFrame) -> pd.DataFrame:
     with st.sidebar:
         st.header("Filtros")
         leagues = st.multiselect("Liga", sorted(df["league"].unique()), default=sorted(df["league"].unique()))
         positions = st.multiselect(
-            "Posicion",
+            "Posición",
             sorted(df["position"].unique()),
             default=sorted(df["position"].unique()),
         )
         teams = st.multiselect("Equipo", sorted(df["team"].unique()))
         age_range = st.slider("Rango de edad", int(df["age"].min()), int(df["age"].max()), (int(df["age"].min()), int(df["age"].max())))
-        min_minutes = st.slider("Minutos minimos", 0, int(df["minutes"].max()), min(900, int(df["minutes"].max())))
+        min_minutes = st.slider("Minutos mínimos", 0, int(df["minutes"].max()), min(900, int(df["minutes"].max())))
         search = st.text_input("Buscar jugador")
 
     filtered = df[
@@ -96,7 +103,7 @@ def comparison_view(df: pd.DataFrame) -> None:
     player_b = col_b.selectbox("Jugador B", players, index=1)
 
     selected_metrics = st.multiselect(
-        "Metricas del radar",
+        "Métricas del radar",
         RADAR_METRICS,
         default=[metric for metric in RADAR_METRICS[:8] if metric in df.columns],
     )
@@ -112,7 +119,7 @@ def similarity_and_report_view(df: pd.DataFrame) -> None:
     st.subheader("Jugadores similares e informe")
     players = sorted(df["player"].unique())
     selected_player = st.selectbox("Jugador para scouting", players)
-    top_n = st.slider("Numero de similares", 3, 10, 5)
+    top_n = st.slider("Número de similares", 3, 10, 5)
 
     similar = find_similar_players(df, selected_player, top_n=top_n)
     st.dataframe(
@@ -142,14 +149,14 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
     available_positions = sorted(df["position"].dropna().unique()) if "position" in df.columns else []
     controls_a, controls_b, controls_c = st.columns(3)
     positions = controls_a.multiselect("Posiciones", available_positions, default=available_positions)
-    max_age = controls_b.number_input("Edad maxima", min_value=15, max_value=45, value=23, step=1)
-    min_minutes = controls_c.number_input("Minutos minimos", min_value=0, value=900, step=100)
+    max_age = controls_b.number_input("Edad máxima", min_value=15, max_value=45, value=23, step=1)
+    min_minutes = controls_c.number_input("Minutos mínimos", min_value=0, value=900, step=100)
 
     controls_d, controls_e, controls_f = st.columns(3)
-    max_market_value = controls_d.number_input("Valor de mercado maximo (€)", min_value=0, value=10_000_000, step=500_000)
-    use_contract_filter = controls_e.checkbox("Filtrar por contrato proximo")
+    max_market_value = controls_d.number_input("Valor de mercado máximo (€)", min_value=0, value=10_000_000, step=500_000)
+    use_contract_filter = controls_e.checkbox("Filtrar por contrato próximo")
     contract_months = controls_f.slider("Meses hasta fin de contrato", 1, 60, 24, disabled=not use_contract_filter)
-    top_n = st.slider("Numero de resultados", 3, 25, 10)
+    top_n = st.slider("Número de resultados", 3, 25, 10)
 
     try:
         opportunities = find_market_opportunities(
@@ -166,7 +173,10 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
         return
 
     if opportunities.empty:
-        st.info("No hay jugadores que cumplan estos filtros.")
+        st.info(
+            "No hay jugadores que cumplan estos filtros. Prueba a ampliar edad, minutos mínimos, "
+            "valor de mercado o desactivar el filtro de contrato."
+        )
         return
 
     ranking_columns = [
@@ -194,7 +204,7 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
     )
     st.plotly_chart(create_opportunity_bar_chart(opportunities), width="stretch")
 
-    selected_player = st.selectbox("Detalle de jugador", opportunities["player"].tolist())
+    selected_player = st.selectbox("Detalle del jugador", opportunities["player"].tolist())
     selected_row = opportunities[opportunities["player"] == selected_player].iloc[0]
     detail_metrics = [metric for metric in RADAR_METRICS if metric in opportunities.columns]
     if detail_metrics:
@@ -204,19 +214,38 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
     card_a.metric("Overall", selected_row.get("overall_score", 0))
     card_b.metric("Opportunity", selected_row.get("market_opportunity_score", 0))
     card_c.metric("Edad", selected_row.get("age", ""))
-    card_d.metric("Valor mercado", f"{int(selected_row.get('market_value', 0)):,} €")
-    st.write(
-        {
-            "posicion": selected_row.get("position", ""),
-            "equipo": selected_row.get("team", ""),
-            "liga": selected_row.get("league", ""),
-            "fin_contrato": selected_row.get("contract_end", ""),
-        }
+    card_d.metric("Valor de mercado", format_euros(selected_row.get("market_value", 0)))
+
+    detail_a, detail_b, detail_c = st.columns(3)
+    detail_a.markdown(f"**Posición:** {selected_row.get('position', '')}")
+    detail_a.markdown(f"**Equipo:** {selected_row.get('team', '')}")
+    detail_b.markdown(f"**Liga:** {selected_row.get('league', '')}")
+    detail_b.markdown(f"**Temporada:** {selected_row.get('season', '')}")
+    detail_c.markdown(f"**Fin de contrato:** {selected_row.get('contract_end', '')}")
+    detail_c.markdown(f"**Valor de mercado:** {format_euros(selected_row.get('market_value', 0))}")
+
+
+def render_intro() -> None:
+    st.markdown(
+        "Aplicación de scouting basada en datos para buscar jugadores, comparar perfiles, "
+        "encontrar similares y detectar oportunidades de mercado."
     )
+    with st.expander("Flujo recomendado", expanded=True):
+        st.markdown(
+            """
+1. Filtra jugadores por liga, posición, edad y minutos.
+2. Revisa la tabla y los scores.
+3. Compara perfiles.
+4. Busca jugadores similares.
+5. Usa Opportunity Finder para detectar candidatos infravalorados.
+6. Genera informes desde la pestaña de similitud.
+            """.strip()
+        )
 
 
 def main() -> None:
     st.title("Football Scout Dashboard")
+    render_intro()
 
     uploaded = st.sidebar.file_uploader("Cargar CSV", type=["csv"])
     raw = pd.read_csv(uploaded) if uploaded else load_default_data()
