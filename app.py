@@ -3,8 +3,9 @@ from __future__ import annotations
 import pandas as pd
 import streamlit as st
 
-from src.config import RADAR_METRICS, SAMPLE_DATA_PATH
+from src.config import RADAR_METRICS
 from src.data_cleaning import clean_player_data
+from src.data_sources import load_players_data
 from src.features import add_per90_metrics, add_position_percentiles
 from src.opportunity import find_market_opportunities
 from src.reports import render_scouting_report, save_scouting_report
@@ -18,7 +19,7 @@ st.set_page_config(page_title="Football Scout Dashboard", page_icon=":soccer:", 
 
 @st.cache_data(show_spinner=False)
 def load_default_data() -> pd.DataFrame:
-    return pd.read_csv(SAMPLE_DATA_PATH)
+    return load_players_data()
 
 
 @st.cache_data(show_spinner=False)

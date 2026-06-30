@@ -81,6 +81,16 @@ season, market_value, contract_end
 
 También se aceptan aliases comunes en español, por ejemplo `Jugador`, `Edad`, `Posicion`, `Equipo`, `Liga`, `Minutos`, `Goles`, `Asistencias`, `Tiros`, `Pases clave`, `Pases progresivos`, `Conducciones progresivas`, `Regates completados`, `Duelos ganados`, `Recuperaciones` e `Intercepciones`.
 
+## Data sources
+
+La fuente principal prevista es SQLite, usando por defecto `data/football_scout.db` y la tabla `players`.
+
+El proveedor externo es opcional y se activa configurando `EXTERNAL_PROVIDER_URL`. Esta capa solo prepara el punto de integración: no incluye scraping, credenciales reales ni llamadas obligatorias a servicios externos.
+
+El CSV `data/sample_players.csv` queda como fallback y dataset de demo si SQLite o el proveedor externo no devuelven datos.
+
+El upload manual de CSV en Streamlit sigue disponible y tiene prioridad sobre la carga por defecto.
+
 ## Demo use case
 
 This MVP helps identify undervalued football players through statistical filters, position-based percentiles, similarity modelling and automated scouting reports.

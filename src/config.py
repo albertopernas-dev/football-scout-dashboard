@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 
@@ -6,6 +7,10 @@ DATA_DIR = PROJECT_ROOT / "data"
 REPORTS_DIR = PROJECT_ROOT / "reports" / "generated"
 TEMPLATES_DIR = PROJECT_ROOT / "templates"
 SAMPLE_DATA_PATH = DATA_DIR / "sample_players.csv"
+DATABASE_PATH = DATA_DIR / "football_scout.db"
+PLAYERS_TABLE = "players"
+EXTERNAL_PROVIDER_URL = os.getenv("EXTERNAL_PROVIDER_URL", "")
+DATA_SOURCE_PRIORITY = ("sqlite", "external", "csv")
 REPORT_TEMPLATE_PATH = TEMPLATES_DIR / "scouting_report.html"
 
 RADAR_METRICS = [
