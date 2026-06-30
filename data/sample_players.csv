@@ -1,0 +1,13 @@
+player,team,league,season,age,position,minutes,goals,assists,xg,xa,shots,key_passes,progressive_passes,progressive_carries,completed_dribbles,duels_won,recoveries,interceptions,market_value,contract_end
+Alex Martin,North City,Premier League,2025/26,23,LW,1820,14,5,12.8,4.1,67,28,72,95,41,88,76,18,18000000,2029-06-30
+Bruno Silva,Porto Azul,Liga Portugal,2025/26,25,RW,1650,12,6,11.9,5.2,61,34,69,83,36,74,71,15,14000000,2028-06-30
+Carlos Vega,Real Norte,LaLiga,2025/26,21,LW,1220,8,3,8.4,2.9,44,18,43,71,29,55,48,10,4500000,2027-06-30
+Diego Ramos,Atletico Sur,LaLiga,2025/26,27,MF,2410,5,9,4.2,8.7,38,71,196,102,24,132,211,46,22000000,2028-06-30
+Enzo Ferrer,River East,Primera Argentina,2025/26,24,MF,2100,4,11,3.9,9.5,31,78,204,116,33,121,198,41,9000000,2027-12-31
+Felix Klein,Berlin 09,Bundesliga,2025/26,22,MF,1760,3,7,3.1,6.8,24,58,173,89,21,104,167,37,6500000,2029-06-30
+Gabriel Costa,Porto Azul,Liga Portugal,2025/26,26,CB,2520,2,3,1.4,2.2,12,21,156,42,8,181,226,71,11000000,2028-06-30
+Hugo Meyer,Berlin 09,Bundesliga,2025/26,28,CB,2680,1,4,1.1,2.8,10,24,168,38,7,196,241,82,16000000,2027-06-30
+Ivan Torres,Real Norte,LaLiga,2025/26,20,CB,1510,1,2,0.8,1.5,8,13,92,31,6,123,156,54,3000000,2029-06-30
+Jonas Reed,North City,Premier League,2025/26,29,ST,2040,16,4,14.1,3.7,73,24,61,88,31,92,69,13,32000000,2027-06-30
+Kilian Duarte,Atletico Sur,LaLiga,2025/26,23,LW,1890,6,6,5.2,6.1,42,52,149,134,44,118,184,35,8000000,2028-06-30
+Leo Grant,River East,Primera Argentina,2025/26,24,FB,2210,3,2,1.9,1.8,15,17,127,53,11,172,219,66,5500000,2027-12-31

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <title>Scouting Report - {{ player }}</title>
+    <style>
+      body {
+        color: #17202a;
+        font-family: Arial, sans-serif;
+        margin: 40px;
+      }
+      header {
+        border-bottom: 3px solid #1f7a5c;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+      }
+      h1 {
+        margin: 0 0 8px;
+      }
+      .meta {
+        color: #5d6d7e;
+      }
+      .summary {
+        background: #f4f7f6;
+        border-left: 5px solid #1f7a5c;
+        margin: 24px 0;
+        padding: 16px;
+      }
+      table {
+        border-collapse: collapse;
+        margin: 16px 0 28px;
+        width: 100%;
+      }
+      th, td {
+        border-bottom: 1px solid #d7dbdd;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background: #eef3f1;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>{{ player }}</h1>
+      <div class="meta">{{ position }} | {{ team }} | {{ league }} | Temporada: {{ season }} | Edad: {{ age }} | Minutos: {{ minutes }}</div>
+      <div class="meta">Valor de mercado: {{ market_value }} | Fin contrato: {{ contract_end }}</div>
+      <div class="meta">Generado: {{ generated_at }}</div>
+    </header>
+
+    <section class="summary">
+      <strong>Overall score:</strong> {{ overall_score }}/100<br>
+      <strong>Market Opportunity Score:</strong> {{ market_opportunity_score }}/100
+    </section>
+
+    <h2>Metricas principales por 90</h2>
+    <table>
+      <thead>
+        <tr><th>Metrica</th><th>Valor</th></tr>
+      </thead>
+      <tbody>
+        {{ metrics_rows }}
+      </tbody>
+    </table>
+
+    <h2>Jugadores similares</h2>
+    <table>
+      <thead>
+        <tr><th>Jugador</th><th>Equipo</th><th>Posicion</th><th>Similitud</th></tr>
+      </thead>
+      <tbody>
+        {{ similar_rows }}
+      </tbody>
+    </table>
+  </body>
+</html>
