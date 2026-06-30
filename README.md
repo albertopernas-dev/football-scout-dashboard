@@ -91,6 +91,16 @@ El CSV `data/sample_players.csv` queda como fallback y dataset de demo si SQLite
 
 El upload manual de CSV en Streamlit sigue disponible y tiene prioridad sobre la carga por defecto.
 
+## SQLite local ingestion
+
+Genera la base local SQLite desde el CSV de ejemplo con:
+
+```bash
+.venv\Scripts\python.exe scripts/load_sample_to_sqlite.py
+```
+
+El script carga `data/sample_players.csv` en `data/football_scout.db`, tabla `players`. Después de ejecutarlo, la app cargará SQLite como fuente principal por defecto. Si la base no existe, la capa de datos cae al CSV de demo.
+
 ## Demo use case
 
 This MVP helps identify undervalued football players through statistical filters, position-based percentiles, similarity modelling and automated scouting reports.

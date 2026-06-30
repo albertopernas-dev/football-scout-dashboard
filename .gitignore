@@ -4,6 +4,7 @@ __pycache__/
 .pytest_cache/
 .streamlit/secrets.toml
 reports/generated/*.html
+data/football_scout.db
 *.log
 .DS_Store
 Thumbs.db
