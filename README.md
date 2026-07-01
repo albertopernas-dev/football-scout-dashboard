@@ -160,6 +160,20 @@ Después de guardar un payload con `fetch_api_football_players_raw.py`, puedes i
 .venv\Scripts\python.exe scripts/inspect_api_football_payload.py --input data/raw/api_football_players_raw.json
 ```
 
+## Generic API-Football endpoint fetch
+
+El fetch genérico sirve para investigar endpoints de API-Football antes de implementar ingesta. Usa `--endpoint` y parámetros repetibles `--param key=value`, requiere `API_FOOTBALL_KEY` en la sesión y guarda JSON bruto en `data/raw/`.
+
+```powershell
+.venv\Scripts\python.exe scripts/fetch_api_football_raw_endpoint.py --endpoint players --param league=140 --param season=2024 --param team=541 --output data/raw/api_football_players_real_madrid.json
+```
+
+Ejemplo para probar squads:
+
+```powershell
+.venv\Scripts\python.exe scripts/fetch_api_football_raw_endpoint.py --endpoint players/squads --param team=541 --output data/raw/api_football_squads_real_madrid.json
+```
+
 ## Demo use case
 
 This MVP helps identify undervalued football players through statistical filters, position-based percentiles, similarity modelling and automated scouting reports.
