@@ -93,6 +93,8 @@ El upload manual de CSV en Streamlit sigue disponible y tiene prioridad sobre la
 
 La app muestra en la interfaz la fuente activa de datos para distinguir entre SQLite, proveedor externo, CSV fallback o upload manual.
 
+La decisión técnica sobre proveedores de datos está documentada en [`docs/data_provider_decision.md`](docs/data_provider_decision.md).
+
 ## SQLite local ingestion
 
 Genera la base local SQLite desde el CSV de ejemplo con:
