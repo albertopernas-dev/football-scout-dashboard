@@ -133,6 +133,19 @@ Todavía no hay conexión real a un proveedor específico, credenciales ni scrap
 
 Existe un cliente HTTP mínimo preparado para API-Football / API-Sports. Usa `API_FOOTBALL_KEY`, `API_FOOTBALL_BASE_URL` y `API_FOOTBALL_TIMEOUT_SECONDS`, pero todavía no está conectado a la ingesta real ni incluye credenciales.
 
+## Manual API-Football raw fetch
+
+El script manual permite inspeccionar payloads reales de API-Football antes de normalizar o conectar la ingesta. Requiere `API_FOOTBALL_KEY` definida en la sesión y guarda por defecto en `data/raw/api_football_players_raw.json`.
+
+`data/raw/` está ignorado por git para evitar versionar respuestas crudas del proveedor.
+
+Ejemplo en PowerShell:
+
+```powershell
+$env:API_FOOTBALL_KEY="tu_clave"
+.venv\Scripts\python.exe scripts/fetch_api_football_players_raw.py --league-id 140 --season 2024 --page 1
+```
+
 ## Demo use case
 
 This MVP helps identify undervalued football players through statistical filters, position-based percentiles, similarity modelling and automated scouting reports.
