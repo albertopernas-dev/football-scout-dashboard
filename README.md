@@ -129,6 +129,10 @@ Los datos externos se normalizan al esquema interno antes de guardarse en SQLite
 
 Todavía no hay conexión real a un proveedor específico, credenciales ni scraping. Esta capa solo prepara la transformación de payloads externos hacia columnas canónicas como `player`, `team`, `league`, `minutes`, `goals`, `assists` y métricas relacionadas.
 
+## API-Football client
+
+Existe un cliente HTTP mínimo preparado para API-Football / API-Sports. Usa `API_FOOTBALL_KEY`, `API_FOOTBALL_BASE_URL` y `API_FOOTBALL_TIMEOUT_SECONDS`, pero todavía no está conectado a la ingesta real ni incluye credenciales.
+
 ## Demo use case
 
 This MVP helps identify undervalued football players through statistical filters, position-based percentiles, similarity modelling and automated scouting reports.
