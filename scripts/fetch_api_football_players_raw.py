@@ -24,6 +24,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--league-id", type=int, required=True)
     parser.add_argument("--season", type=int, required=True)
     parser.add_argument("--page", type=int, default=1)
+    parser.add_argument("--team-id", type=int, default=None)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT_PATH)
     return parser
 
@@ -59,6 +60,7 @@ def main() -> None:
         league_id=args.league_id,
         season=args.season,
         page=args.page,
+        team_id=args.team_id,
     )
     output_path = save_json(payload, args.output)
     response_count = count_response_records(payload)
@@ -66,6 +68,8 @@ def main() -> None:
     print(f"League ID: {args.league_id}")
     print(f"Season: {args.season}")
     print(f"Page: {args.page}")
+    if args.team_id is not None:
+        print(f"Team ID: {args.team_id}")
     print(f"Output path: {output_path}")
     if response_count is not None:
         print(f"Response records: {response_count}")

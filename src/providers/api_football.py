@@ -34,14 +34,24 @@ class ApiFootballClient:
         headers = {"x-apisports-key": self.api_key}
         return self.requester(url, headers, params, self.timeout_seconds)
 
-    def fetch_players(self, league_id: int, season: int, page: int = 1) -> dict:
+    def fetch_players(
+        self,
+        league_id: int,
+        season: int,
+        page: int = 1,
+        team_id: int | None = None,
+    ) -> dict:
+        params = {
+            "league": league_id,
+            "season": season,
+            "page": page,
+        }
+        if team_id is not None:
+            params["team"] = team_id
+
         return self.get(
             "players",
-            params={
-                "league": league_id,
-                "season": season,
-                "page": page,
-            },
+            params=params,
         )
 
 

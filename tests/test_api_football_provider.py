@@ -67,6 +67,24 @@ def test_fetch_players_calls_players_endpoint_with_expected_params():
     ]
 
 
+def test_fetch_players_adds_team_param_when_team_id_is_provided():
+    calls = []
+
+    def requester(url, headers, params, timeout_seconds):
+        calls.append(params)
+        return {"response": []}
+
+    client = ApiFootballClient(
+        api_key="test-key",
+        base_url="https://api.example.test",
+        requester=requester,
+    )
+
+    client.fetch_players(league_id=140, season=2024, page=1, team_id=541)
+
+    assert calls == [{"league": 140, "season": 2024, "page": 1, "team": 541}]
+
+
 def test_base_url_trailing_slash_does_not_generate_double_slash():
     calls = []
 

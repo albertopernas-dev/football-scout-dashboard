@@ -146,6 +146,12 @@ $env:API_FOOTBALL_KEY="tu_clave"
 .venv\Scripts\python.exe scripts/fetch_api_football_players_raw.py --league-id 140 --season 2024 --page 1
 ```
 
+Para probar una consulta más concreta por equipo:
+
+```powershell
+.venv\Scripts\python.exe scripts/fetch_api_football_players_raw.py --league-id 140 --season 2024 --team-id 541 --page 1 --output data/raw/api_football_laliga_real_madrid_2024.json
+```
+
 ## Inspect API-Football raw payload
 
 Después de guardar un payload con `fetch_api_football_players_raw.py`, puedes inspeccionar su estructura y revisar un mapping de muestra hacia el esquema canónico antes de normalizar o ingestar datos reales.

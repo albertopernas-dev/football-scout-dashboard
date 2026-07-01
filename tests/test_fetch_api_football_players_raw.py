@@ -34,7 +34,16 @@ def test_build_parser_parses_required_arguments_and_defaults():
     assert args.league_id == 140
     assert args.season == 2024
     assert args.page == 1
+    assert args.team_id is None
     assert args.output == Path("data/raw/api_football_players_raw.json")
+
+
+def test_build_parser_accepts_optional_team_id():
+    args = build_parser().parse_args(
+        ["--league-id", "140", "--season", "2024", "--team-id", "541"]
+    )
+
+    assert args.team_id == 541
 
 
 def test_main_exits_when_api_key_is_empty_and_does_not_create_output(tmp_path, monkeypatch):
@@ -48,6 +57,8 @@ def test_main_exits_when_api_key_is_empty_and_does_not_create_output(tmp_path, m
             "140",
             "--season",
             "2024",
+            "--team-id",
+            "541",
             "--output",
             str(output_path),
         ],
