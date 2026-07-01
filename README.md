@@ -107,12 +107,15 @@ El script carga `data/sample_players.csv` en `data/football_scout.db`, tabla `pl
 
 La app permite preparar una ingesta desde `EXTERNAL_PROVIDER_URL` hacia SQLite. El proveedor debe devolver JSON como lista de jugadores o como objeto con clave `players`.
 
-`.env.example` es solo una plantilla. El proyecto actualmente no carga archivos `.env` automaticamente, asi que define `EXTERNAL_PROVIDER_URL` en la sesion antes de ejecutar la ingesta.
+`EXTERNAL_PROVIDER_URL` define de dónde cargar datos. `EXTERNAL_PROVIDER_NAME` define cómo normalizarlos. Valores disponibles: `generic` y `api_football`.
+
+`.env.example` es solo una plantilla. El proyecto actualmente no carga archivos `.env` automáticamente, así que define las variables en la sesión antes de ejecutar la ingesta.
 
 Ejemplo en PowerShell:
 
 ```powershell
 $env:EXTERNAL_PROVIDER_URL="https://example.com/players.json"
+$env:EXTERNAL_PROVIDER_NAME="api_football"
 .venv\Scripts\python.exe scripts/load_external_to_sqlite.py
 ```
 

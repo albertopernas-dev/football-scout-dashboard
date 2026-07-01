@@ -10,6 +10,7 @@ SAMPLE_DATA_PATH = DATA_DIR / "sample_players.csv"
 DATABASE_PATH = DATA_DIR / "football_scout.db"
 PLAYERS_TABLE = "players"
 EXTERNAL_PROVIDER_URL = os.getenv("EXTERNAL_PROVIDER_URL", "")
+EXTERNAL_PROVIDER_NAME = os.getenv("EXTERNAL_PROVIDER_NAME", "generic")
 DATA_SOURCE_PRIORITY = ("sqlite", "external", "csv")
 REPORT_TEMPLATE_PATH = TEMPLATES_DIR / "scouting_report.html"
 
