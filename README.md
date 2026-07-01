@@ -174,6 +174,14 @@ Ejemplo para probar squads:
 .venv\Scripts\python.exe scripts/fetch_api_football_raw_endpoint.py --endpoint players/squads --param team=541 --output data/raw/api_football_squads_real_madrid.json
 ```
 
+## Inspect API-Football fixture players payload
+
+Los payloads de `fixtures/players` pueden inspeccionarse y aplanarse antes de decidir el mapping hacia SQLite.
+
+```powershell
+.venv\Scripts\python.exe scripts/inspect_api_football_fixture_players_payload.py --input data/raw/api_football_fixture_players_1208494.json --limit 20
+```
+
 ## Demo use case
 
 This MVP helps identify undervalued football players through statistical filters, position-based percentiles, similarity modelling and automated scouting reports.
