@@ -116,6 +116,12 @@ $env:EXTERNAL_PROVIDER_URL="https://example.com/players.json"
 
 El script carga los datos en `data/football_scout.db`, tabla `players`. Todavía no hay proveedor específico implementado, credenciales reales ni scraping.
 
+## External normalization
+
+Los datos externos se normalizan al esquema interno antes de guardarse en SQLite. Existe soporte genérico para registros planos con aliases comunes y un primer adaptador preparado para estructuras tipo API-Football.
+
+Todavía no hay conexión real a un proveedor específico, credenciales ni scraping. Esta capa solo prepara la transformación de payloads externos hacia columnas canónicas como `player`, `team`, `league`, `minutes`, `goals`, `assists` y métricas relacionadas.
+
 ## Demo use case
 
 This MVP helps identify undervalued football players through statistical filters, position-based percentiles, similarity modelling and automated scouting reports.

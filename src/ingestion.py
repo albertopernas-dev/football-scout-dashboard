@@ -6,6 +6,7 @@ from pathlib import Path
 import pandas as pd
 
 from src.data_sources import Fetcher, load_players_from_external_provider
+from src.external_normalization import normalize_external_players
 
 
 def load_csv_to_sqlite(csv_path: str | Path, database_path: str | Path, table_name: str) -> int:
@@ -26,11 +27,13 @@ def load_external_to_sqlite(
     database_path: str | Path,
     table_name: str,
     fetcher: Fetcher | None = None,
+    provider: str = "generic",
 ) -> int:
     if not url:
         raise ValueError("EXTERNAL_PROVIDER_URL is required to load external player data.")
 
     data = load_players_from_external_provider(url, fetcher=fetcher)
+    data = normalize_external_players(data, provider=provider)
     if data.empty:
         raise ValueError("No player data returned by external provider.")
 

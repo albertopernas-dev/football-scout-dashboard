@@ -92,3 +92,71 @@ def test_load_external_to_sqlite_uses_injected_fetcher_without_real_network(tmp_
 
     assert row_count == 1
     assert calls == ["https://example.test/players"]
+
+
+def test_load_external_to_sqlite_normalizes_provider_payload(tmp_path):
+    database_path = tmp_path / "football_scout.db"
+
+    def fetcher(url):
+        return [
+            {
+                "player": {"name": "Player Name", "age": 22},
+                "statistics": [
+                    {
+                        "team": {"name": "Team A"},
+                        "league": {"name": "League A", "season": 2025},
+                        "games": {"position": "Attacker", "minutes": 1200},
+                        "goals": {"total": 10, "assists": 4},
+                    }
+                ],
+            }
+        ]
+
+    row_count = load_external_to_sqlite(
+        "https://example.test/players",
+        database_path,
+        "players",
+        fetcher=fetcher,
+        provider="api_football",
+    )
+    loaded = load_players_from_sqlite(database_path, "players")
+
+    assert row_count == 1
+    assert loaded.loc[0, "player"] == "Player Name"
+    assert loaded.loc[0, "team"] == "Team A"
+    assert loaded.loc[0, "goals"] == 10
+
+
+def test_load_external_to_sqlite_normalizes_api_football_response_payload(tmp_path):
+    database_path = tmp_path / "football_scout.db"
+
+    def fetcher(url):
+        return {
+            "response": [
+                {
+                    "player": {"name": "Player Name", "age": 22},
+                    "statistics": [
+                        {
+                            "team": {"name": "Team A"},
+                            "league": {"name": "League A", "season": 2025},
+                            "games": {"position": "Attacker", "minutes": 1200},
+                            "goals": {"total": 10, "assists": 4},
+                        }
+                    ],
+                }
+            ]
+        }
+
+    row_count = load_external_to_sqlite(
+        "https://example.test/players",
+        database_path,
+        "players",
+        fetcher=fetcher,
+        provider="api_football",
+    )
+    loaded = load_players_from_sqlite(database_path, "players")
+
+    assert row_count == 1
+    assert loaded.loc[0, "player"] == "Player Name"
+    assert loaded.loc[0, "team"] == "Team A"
+    assert loaded.loc[0, "goals"] == 10

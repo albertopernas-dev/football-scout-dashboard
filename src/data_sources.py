@@ -44,7 +44,7 @@ def _records_from_external_payload(payload: object) -> list[dict]:
     if isinstance(payload, str):
         payload = json.loads(payload)
     if isinstance(payload, dict):
-        payload = payload.get("players", [])
+        payload = payload.get("players", payload.get("response", []))
     if isinstance(payload, list):
         return [record for record in payload if isinstance(record, dict)]
     return []

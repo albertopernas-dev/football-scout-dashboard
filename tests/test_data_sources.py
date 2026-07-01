@@ -88,6 +88,15 @@ def test_load_players_from_external_provider_accepts_players_dict_response():
     assert result.to_dict("records") == [{"player": "External", "age": 19}]
 
 
+def test_load_players_from_external_provider_accepts_response_dict_response():
+    def fetcher(url):
+        return {"response": [{"player": "Ana", "age": 20}]}
+
+    result = load_players_from_external_provider("https://example.test/players", fetcher=fetcher)
+
+    assert result.to_dict("records") == [{"player": "Ana", "age": 20}]
+
+
 def test_load_players_data_raises_clear_error_when_no_source_has_data(tmp_path):
     with pytest.raises(ValueError, match="No player data could be loaded"):
         load_players_data(
