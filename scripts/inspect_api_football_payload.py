@@ -13,6 +13,21 @@ if str(PROJECT_ROOT) not in sys.path:
 
 
 DEFAULT_INPUT_PATH = Path("data/raw/api_football_players_raw.json")
+CANONICAL_FIELDS = [
+    "player",
+    "age",
+    "team",
+    "league",
+    "season",
+    "position",
+    "minutes",
+    "goals",
+    "assists",
+    "shots",
+    "key_passes",
+    "duels_won",
+    "interceptions",
+]
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -71,6 +86,40 @@ def extract_api_football_sample_mapping(payload: dict) -> dict[str, object]:
     if not item:
         return {}
 
+    return _map_api_football_item(item)
+
+
+def extract_api_football_mappings(payload: dict) -> list[dict[str, object]]:
+    response = payload.get("response")
+    if not isinstance(response, list):
+        return []
+
+    return [_map_api_football_item(item) for item in response if isinstance(item, dict)]
+
+
+def calculate_mapping_coverage(mappings: list[dict[str, object]]) -> dict[str, dict[str, int | float]]:
+    if not mappings:
+        return {}
+
+    total = len(mappings)
+    coverage = {}
+    for field in CANONICAL_FIELDS:
+        present = sum(1 for mapping in mappings if field in mapping and mapping[field] is not None)
+        coverage[field] = {
+            "present": present,
+            "total": total,
+            "coverage_pct": round((present / total) * 100, 1),
+        }
+    return coverage
+
+
+def find_richest_mapping(mappings: list[dict[str, object]]) -> dict[str, object]:
+    if not mappings:
+        return {}
+    return max(mappings, key=lambda mapping: sum(1 for value in mapping.values() if value is not None))
+
+
+def _map_api_football_item(item: dict) -> dict[str, object]:
     stats = _first_statistics_item(item)
     row = {
         "player": _nested_get(item, ("player", "name")),
@@ -120,6 +169,9 @@ def main() -> None:
     payload = load_payload(args.input)
     item_keys = extract_response_item_keys(payload)
     sample_mapping = extract_api_football_sample_mapping(payload)
+    mappings = extract_api_football_mappings(payload)
+    coverage = calculate_mapping_coverage(mappings)
+    richest_mapping = find_richest_mapping(mappings)
 
     print(f"Input path: {args.input}")
     print(f"Top-level keys: {extract_top_level_keys(payload)}")
@@ -127,8 +179,18 @@ def main() -> None:
     print(f"First response item keys: {item_keys.get('item', [])}")
     print(f"Player keys: {item_keys.get('player', [])}")
     print(f"Statistics[0] keys: {item_keys.get('statistics_0', [])}")
-    print("Sample canonical mapping:")
+    print("Sample canonical mapping (first response item):")
     print(json.dumps(sample_mapping, indent=2, ensure_ascii=False))
+    print("Canonical field coverage:")
+    for field in CANONICAL_FIELDS:
+        field_coverage = coverage.get(field)
+        if field_coverage:
+            print(
+                f"- {field}: {field_coverage['present']}/{field_coverage['total']} "
+                f"({field_coverage['coverage_pct']}%)"
+            )
+    print("Richest canonical mapping:")
+    print(json.dumps(richest_mapping, indent=2, ensure_ascii=False))
 
 
 if __name__ == "__main__":

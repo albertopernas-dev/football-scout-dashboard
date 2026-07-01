@@ -3,10 +3,13 @@ import json
 import pytest
 
 from scripts.inspect_api_football_payload import (
+    calculate_mapping_coverage,
     count_response_records,
     extract_api_football_sample_mapping,
+    extract_api_football_mappings,
     extract_response_item_keys,
     extract_top_level_keys,
+    find_richest_mapping,
     load_payload,
 )
 
@@ -34,6 +37,26 @@ def _sample_payload():
             }
         ]
     }
+
+
+def _multi_player_payload():
+    payload = _sample_payload()
+    payload["response"].append(
+        {
+            "player": {
+                "name": "Second Player",
+                "age": 25,
+            },
+            "statistics": [
+                {
+                    "team": {"name": "Team B"},
+                    "games": {"minutes": 0},
+                    "goals": {"total": 0, "assists": 0},
+                }
+            ],
+        }
+    )
+    return payload
 
 
 def test_load_payload_reads_valid_json(tmp_path):
@@ -104,3 +127,47 @@ def test_extract_api_football_sample_mapping_does_not_break_when_optional_fields
     payload = {"response": [{"player": {"name": "Ana"}, "statistics": [{}]}]}
 
     assert extract_api_football_sample_mapping(payload) == {"player": "Ana"}
+
+
+def test_extract_api_football_mappings_returns_all_players():
+    mappings = extract_api_football_mappings(_multi_player_payload())
+
+    assert len(mappings) == 2
+    assert mappings[0]["player"] == "Player Name"
+    assert mappings[1] == {
+        "player": "Second Player",
+        "age": 25,
+        "team": "Team B",
+        "minutes": 0,
+        "goals": 0,
+        "assists": 0,
+    }
+
+
+def test_calculate_mapping_coverage_counts_present_fields_including_zero():
+    coverage = calculate_mapping_coverage(
+        [
+            {"player": "A", "goals": 0, "minutes": 0},
+            {"player": "B", "goals": 2},
+            {"player": "C", "goals": None},
+        ]
+    )
+
+    assert coverage["player"] == {"present": 3, "total": 3, "coverage_pct": 100.0}
+    assert coverage["goals"] == {"present": 2, "total": 3, "coverage_pct": 66.7}
+    assert coverage["minutes"] == {"present": 1, "total": 3, "coverage_pct": 33.3}
+
+
+def test_calculate_mapping_coverage_returns_empty_dict_for_empty_mappings():
+    assert calculate_mapping_coverage([]) == {}
+
+
+def test_find_richest_mapping_returns_record_with_most_fields():
+    mappings = [
+        {"player": "A"},
+        {"player": "B", "goals": 0, "minutes": 10},
+        {"player": "C", "goals": 2},
+    ]
+
+    assert find_richest_mapping(mappings) == {"player": "B", "goals": 0, "minutes": 10}
+    assert find_richest_mapping([]) == {}
