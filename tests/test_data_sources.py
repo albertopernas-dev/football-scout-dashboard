@@ -5,6 +5,7 @@ import pytest
 
 from src.data_sources import (
     load_players_data,
+    load_players_data_with_metadata,
     load_players_from_csv,
     load_players_from_external_provider,
     load_players_from_sqlite,
@@ -123,6 +124,78 @@ def test_load_players_data_respects_source_priority(tmp_path):
     )
 
     assert result["player"].tolist() == ["External"]
+
+
+def test_load_players_data_with_metadata_returns_sqlite_source(tmp_path):
+    database_path = tmp_path / "players.db"
+    _write_sqlite(database_path)
+
+    result, metadata = load_players_data_with_metadata(
+        database_path=database_path,
+        table_name="players",
+        external_url="",
+        csv_path=tmp_path / "missing.csv",
+    )
+
+    assert result["player"].tolist() == ["Ana", "Bea"]
+    assert metadata == {
+        "source": "sqlite",
+        "path": str(database_path),
+        "table": "players",
+        "row_count": 2,
+    }
+
+
+def test_load_players_data_with_metadata_returns_external_source(tmp_path):
+    result, metadata = load_players_data_with_metadata(
+        database_path=tmp_path / "missing.db",
+        table_name="players",
+        external_url="https://example.test/players",
+        csv_path=tmp_path / "missing.csv",
+        fetcher=lambda url: [{"player": "External", "age": 20}],
+        priority=("external", "csv"),
+    )
+
+    assert result["player"].tolist() == ["External"]
+    assert metadata == {
+        "source": "external",
+        "url": "https://example.test/players",
+        "row_count": 1,
+    }
+
+
+def test_load_players_data_with_metadata_returns_csv_source(tmp_path):
+    csv_path = tmp_path / "players.csv"
+    _players().to_csv(csv_path, index=False)
+
+    result, metadata = load_players_data_with_metadata(
+        database_path=tmp_path / "missing.db",
+        table_name="players",
+        external_url="",
+        csv_path=csv_path,
+    )
+
+    assert result["player"].tolist() == ["Ana", "Bea"]
+    assert metadata == {
+        "source": "csv",
+        "path": str(csv_path),
+        "row_count": 2,
+    }
+
+
+def test_load_players_data_still_returns_only_dataframe(tmp_path):
+    csv_path = tmp_path / "players.csv"
+    _players().to_csv(csv_path, index=False)
+
+    result = load_players_data(
+        database_path=tmp_path / "missing.db",
+        table_name="players",
+        external_url="",
+        csv_path=csv_path,
+    )
+
+    assert isinstance(result, pd.DataFrame)
+    assert result["player"].tolist() == ["Ana", "Bea"]
 
 
 def test_load_players_from_csv_returns_empty_for_missing_file(tmp_path):

@@ -5,7 +5,7 @@ import streamlit as st
 
 from src.config import RADAR_METRICS
 from src.data_cleaning import clean_player_data
-from src.data_sources import load_players_data
+from src.data_sources import load_players_data_with_metadata
 from src.features import add_per90_metrics, add_position_percentiles
 from src.opportunity import find_market_opportunities
 from src.reports import render_scouting_report, save_scouting_report
@@ -18,8 +18,8 @@ st.set_page_config(page_title="Football Scout Dashboard", page_icon=":soccer:", 
 
 
 @st.cache_data(show_spinner=False)
-def load_default_data() -> pd.DataFrame:
-    return load_players_data()
+def load_default_data_with_metadata() -> tuple[pd.DataFrame, dict]:
+    return load_players_data_with_metadata()
 
 
 @st.cache_data(show_spinner=False)
@@ -327,18 +327,54 @@ def render_intro() -> None:
         )
 
 
+def render_data_source(metadata: dict) -> None:
+    source_labels = {
+        "sqlite": "SQLite",
+        "external": "Proveedor externo",
+        "csv": "CSV fallback",
+        "upload": "Upload manual",
+    }
+    source = metadata.get("source", "unknown")
+    with st.expander("Fuente de datos", expanded=False):
+        st.markdown(f"**Fuente activa:** {source_labels.get(source, source)}")
+        st.markdown(f"**Filas cargadas:** {metadata.get('row_count', 0)}")
+        if source == "sqlite":
+            st.markdown(f"**Base de datos:** `{metadata.get('path', '')}`")
+            st.markdown(f"**Tabla:** `{metadata.get('table', '')}`")
+        elif source == "external":
+            st.markdown(f"**URL:** `{metadata.get('url', '')}`")
+        elif source == "csv":
+            st.markdown(f"**CSV:** `{metadata.get('path', '')}`")
+        elif source == "upload":
+            st.markdown(f"**Archivo:** `{metadata.get('path', '')}`")
+
+
 def main() -> None:
     st.title("Football Scout Dashboard")
     render_intro()
 
     uploaded = st.sidebar.file_uploader("Cargar CSV", type=["csv"])
-    raw = pd.read_csv(uploaded) if uploaded else load_default_data()
+    if uploaded:
+        raw = pd.read_csv(uploaded)
+        data_source_metadata = {
+            "source": "upload",
+            "path": uploaded.name,
+            "row_count": len(raw),
+        }
+    else:
+        try:
+            raw, data_source_metadata = load_default_data_with_metadata()
+        except ValueError as exc:
+            st.error(str(exc))
+            st.stop()
 
     try:
         df = prepare_data(raw)
     except ValueError as exc:
         st.error(str(exc))
         st.stop()
+
+    render_data_source(data_source_metadata)
 
     filtered = filter_data(df)
     kpi_a, kpi_b, kpi_c, kpi_d = st.columns(4)

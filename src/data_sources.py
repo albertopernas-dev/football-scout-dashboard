@@ -79,10 +79,38 @@ def load_players_data(
     priority: tuple[str, ...] = DATA_SOURCE_PRIORITY,
     fetcher: Fetcher | None = None,
 ) -> pd.DataFrame:
+    data, _metadata = load_players_data_with_metadata(
+        database_path=database_path,
+        table_name=table_name,
+        external_url=external_url,
+        csv_path=csv_path,
+        priority=priority,
+        fetcher=fetcher,
+    )
+    return data
+
+
+def load_players_data_with_metadata(
+    database_path: str | Path = DATABASE_PATH,
+    table_name: str = PLAYERS_TABLE,
+    external_url: str = EXTERNAL_PROVIDER_URL,
+    csv_path: str | Path = SAMPLE_DATA_PATH,
+    priority: tuple[str, ...] = DATA_SOURCE_PRIORITY,
+    fetcher: Fetcher | None = None,
+) -> tuple[pd.DataFrame, dict]:
     loaders = {
-        "sqlite": lambda: load_players_from_sqlite(database_path, table_name),
-        "external": lambda: load_players_from_external_provider(external_url, fetcher=fetcher),
-        "csv": lambda: load_players_from_csv(csv_path),
+        "sqlite": lambda: (
+            load_players_from_sqlite(database_path, table_name),
+            {"source": "sqlite", "path": str(database_path), "table": table_name},
+        ),
+        "external": lambda: (
+            load_players_from_external_provider(external_url, fetcher=fetcher),
+            {"source": "external", "url": external_url},
+        ),
+        "csv": lambda: (
+            load_players_from_csv(csv_path),
+            {"source": "csv", "path": str(csv_path)},
+        ),
     }
 
     for source in priority:
@@ -90,10 +118,11 @@ def load_players_data(
         if loader is None:
             continue
         try:
-            data = loader()
+            data, metadata = loader()
         except Exception:
             data = pd.DataFrame()
+            metadata = {}
         if not data.empty:
-            return data
+            return data, {**metadata, "row_count": len(data)}
 
     raise ValueError("No player data could be loaded from SQLite, external provider, or CSV fallback.")
