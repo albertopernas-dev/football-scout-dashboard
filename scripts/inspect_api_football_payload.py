@@ -28,6 +28,19 @@ CANONICAL_FIELDS = [
     "duels_won",
     "interceptions",
 ]
+METRIC_PREVIEW_FIELDS = [
+    "player",
+    "team",
+    "position",
+    "minutes",
+    "goals",
+    "assists",
+    "shots",
+    "key_passes",
+    "duels_won",
+    "interceptions",
+]
+ACTIVITY_FIELDS = ["shots", "key_passes", "duels_won", "goals", "assists", "interceptions"]
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -179,6 +192,67 @@ def find_richest_mapping(mappings: list[dict[str, object]]) -> dict[str, object]
     return max(mappings, key=lambda mapping: sum(1 for value in mapping.values() if value is not None))
 
 
+def extract_metric_preview_rows(
+    mappings: list[dict[str, object]],
+    limit: int = 20,
+) -> list[dict[str, object]]:
+    return [
+        {field: mapping.get(field) for field in METRIC_PREVIEW_FIELDS}
+        for mapping in mappings[:limit]
+    ]
+
+
+def detect_metric_anomalies(
+    mappings: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    anomalies = []
+    for mapping in mappings:
+        player = mapping.get("player")
+        team = mapping.get("team")
+        minutes = mapping.get("minutes")
+        positive_activity_fields = [
+            field for field in ACTIVITY_FIELDS if _is_positive_number(mapping.get(field))
+        ]
+
+        if minutes == 0 and positive_activity_fields:
+            anomalies.append(
+                {
+                    "player": player,
+                    "team": team,
+                    "type": "minutes_zero_with_activity",
+                    "details": f"minutes is 0 but positive activity exists: {', '.join(positive_activity_fields)}",
+                }
+            )
+        if minutes is None and positive_activity_fields:
+            anomalies.append(
+                {
+                    "player": player,
+                    "team": team,
+                    "type": "minutes_missing_with_activity",
+                    "details": f"minutes is missing but positive activity exists: {', '.join(positive_activity_fields)}",
+                }
+            )
+        if _is_positive_number(mapping.get("goals")) and (minutes is None or minutes == 0):
+            anomalies.append(
+                {
+                    "player": player,
+                    "team": team,
+                    "type": "goals_without_minutes",
+                    "details": "goals is positive while minutes is missing or 0",
+                }
+            )
+        if _is_positive_number(mapping.get("assists")) and (minutes is None or minutes == 0):
+            anomalies.append(
+                {
+                    "player": player,
+                    "team": team,
+                    "type": "assists_without_minutes",
+                    "details": "assists is positive while minutes is missing or 0",
+                }
+            )
+    return anomalies
+
+
 def compare_mapping_strategies(payload: dict) -> dict[str, dict[str, dict[str, int | float]]]:
     return {
         strategy: calculate_mapping_coverage(extract_api_football_mappings(payload, strategy=strategy))
@@ -261,6 +335,13 @@ def _nested_get(record: dict, path: tuple[str, ...]) -> Any:
     return value
 
 
+def _is_positive_number(value: object) -> bool:
+    try:
+        return float(value) > 0
+    except (TypeError, ValueError):
+        return False
+
+
 def main() -> None:
     args = build_parser().parse_args()
     payload = load_payload(args.input)
@@ -272,6 +353,9 @@ def main() -> None:
     statistics_summary = count_statistics_entries(payload)
     strategy_comparison = compare_mapping_strategies(payload)
     statistics_contexts = extract_statistics_contexts(payload)
+    preview_mappings = extract_api_football_mappings(payload, strategy="first")
+    metric_preview_rows = extract_metric_preview_rows(preview_mappings)
+    metric_anomalies = detect_metric_anomalies(preview_mappings)
 
     print(f"Input path: {args.input}")
     print(f"Top-level keys: {extract_top_level_keys(payload)}")
@@ -308,6 +392,10 @@ def main() -> None:
                 )
     print("Statistics contexts examples:")
     print(json.dumps(statistics_contexts[:5], indent=2, ensure_ascii=False))
+    print("Metric preview rows:")
+    print(json.dumps(metric_preview_rows, indent=2, ensure_ascii=False))
+    print("Metric anomalies:")
+    print(json.dumps(metric_anomalies[:20], indent=2, ensure_ascii=False))
 
 
 if __name__ == "__main__":

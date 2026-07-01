@@ -7,14 +7,17 @@ from scripts.inspect_api_football_payload import (
     compare_mapping_strategies,
     count_statistics_entries,
     count_response_records,
+    detect_metric_anomalies,
     extract_api_football_sample_mapping,
     extract_api_football_mappings,
+    extract_metric_preview_rows,
     extract_response_item_keys,
     extract_statistics_contexts,
     extract_top_level_keys,
     find_richest_mapping,
     load_payload,
     map_api_football_item_with_strategy,
+    _is_positive_number,
 )
 
 
@@ -298,3 +301,70 @@ def test_compare_mapping_strategies_returns_expected_strategy_keys():
     assert comparison["first"]["minutes"]["present"] == 1
     assert comparison["richest"]["minutes"]["present"] == 2
     assert comparison["prefer_minutes"]["minutes"]["present"] == 2
+
+
+def test_extract_metric_preview_rows_returns_expected_columns_and_none_for_missing_fields():
+    rows = extract_metric_preview_rows([{"player": "A", "team": "Team A", "goals": 1}])
+
+    assert rows == [
+        {
+            "player": "A",
+            "team": "Team A",
+            "position": None,
+            "minutes": None,
+            "goals": 1,
+            "assists": None,
+            "shots": None,
+            "key_passes": None,
+            "duels_won": None,
+            "interceptions": None,
+        }
+    ]
+
+
+def test_extract_metric_preview_rows_respects_limit():
+    rows = extract_metric_preview_rows(
+        [{"player": "A"}, {"player": "B"}, {"player": "C"}],
+        limit=2,
+    )
+
+    assert [row["player"] for row in rows] == ["A", "B"]
+
+
+def test_detect_metric_anomalies_detects_minutes_zero_with_activity():
+    anomalies = detect_metric_anomalies(
+        [{"player": "Juanmi Latasa", "team": "Real Madrid", "minutes": 0, "shots": 29}]
+    )
+
+    assert anomalies[0]["type"] == "minutes_zero_with_activity"
+    assert anomalies[0]["player"] == "Juanmi Latasa"
+
+
+def test_detect_metric_anomalies_detects_minutes_missing_with_activity():
+    anomalies = detect_metric_anomalies([{"player": "A", "duels_won": 135}])
+
+    assert anomalies[0]["type"] == "minutes_missing_with_activity"
+
+
+def test_detect_metric_anomalies_detects_goals_and_assists_without_minutes():
+    anomalies = detect_metric_anomalies(
+        [{"player": "A", "team": "Team A", "minutes": 0, "goals": 2, "assists": 1}]
+    )
+
+    assert [anomaly["type"] for anomaly in anomalies] == [
+        "minutes_zero_with_activity",
+        "goals_without_minutes",
+        "assists_without_minutes",
+    ]
+
+
+def test_detect_metric_anomalies_returns_empty_list_when_metrics_are_consistent():
+    assert detect_metric_anomalies([{"player": "A", "minutes": 900, "goals": 2, "shots": 10}]) == []
+
+
+def test_is_positive_number_treats_zero_and_invalid_strings_as_not_positive():
+    assert _is_positive_number(1) is True
+    assert _is_positive_number(0) is False
+    assert _is_positive_number(None) is False
+    assert _is_positive_number("bad") is False
+    assert _is_positive_number("2.5") is True
