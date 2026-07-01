@@ -4,13 +4,17 @@ import pytest
 
 from scripts.inspect_api_football_payload import (
     calculate_mapping_coverage,
+    compare_mapping_strategies,
+    count_statistics_entries,
     count_response_records,
     extract_api_football_sample_mapping,
     extract_api_football_mappings,
     extract_response_item_keys,
+    extract_statistics_contexts,
     extract_top_level_keys,
     find_richest_mapping,
     load_payload,
+    map_api_football_item_with_strategy,
 )
 
 
@@ -57,6 +61,45 @@ def _multi_player_payload():
         }
     )
     return payload
+
+
+def _multi_statistics_payload():
+    return {
+        "response": [
+            {
+                "player": {"name": "Multi Stats Player", "age": 24},
+                "statistics": [
+                    {
+                        "team": {"name": "Team Without Minutes"},
+                        "league": {"name": "League A", "season": 2024},
+                        "games": {"position": "Forward"},
+                        "shots": {"total": 29},
+                        "passes": {"key": 13},
+                        "duels": {"won": 135},
+                    },
+                    {
+                        "team": {"name": "Team With Minutes"},
+                        "league": {"name": "League A", "season": 2024},
+                        "games": {"position": "Forward", "minutes": 0},
+                        "goals": {"total": 0, "assists": 0},
+                        "shots": {"total": 2},
+                    },
+                ],
+            },
+            {
+                "player": {"name": "Single Stats Player", "age": 28},
+                "statistics": [
+                    {
+                        "team": {"name": "Team C"},
+                        "league": {"name": "League B", "season": 2024},
+                        "games": {"position": "Midfielder", "minutes": 900},
+                        "goals": {"total": 3},
+                        "tackles": {"interceptions": 12},
+                    }
+                ],
+            },
+        ]
+    }
 
 
 def test_load_payload_reads_valid_json(tmp_path):
@@ -171,3 +214,87 @@ def test_find_richest_mapping_returns_record_with_most_fields():
 
     assert find_richest_mapping(mappings) == {"player": "B", "goals": 0, "minutes": 10}
     assert find_richest_mapping([]) == {}
+
+
+def test_count_statistics_entries_calculates_totals_and_average():
+    assert count_statistics_entries(_multi_statistics_payload()) == {
+        "players": 2,
+        "total_statistics_entries": 3,
+        "players_with_multiple_statistics": 1,
+        "avg_statistics_per_player": 1.5,
+    }
+    assert count_statistics_entries({}) == {
+        "players": 0,
+        "total_statistics_entries": 0,
+        "players_with_multiple_statistics": 0,
+        "avg_statistics_per_player": 0.0,
+    }
+
+
+def test_extract_statistics_contexts_returns_context_for_each_statistics_entry():
+    contexts = extract_statistics_contexts(_multi_statistics_payload())
+
+    assert contexts[0] == {
+        "player": "Multi Stats Player",
+        "stat_index": 0,
+        "team": "Team Without Minutes",
+        "league": "League A",
+        "season": 2024,
+        "position": "Forward",
+        "has_minutes": False,
+        "has_goals": False,
+        "has_assists": False,
+        "has_shots": True,
+        "has_key_passes": True,
+        "has_duels_won": True,
+        "has_interceptions": False,
+    }
+    assert contexts[1]["team"] == "Team With Minutes"
+    assert contexts[1]["has_minutes"] is True
+    assert contexts[1]["has_goals"] is True
+    assert contexts[1]["has_assists"] is True
+
+
+def test_map_api_football_item_with_strategy_first_uses_first_statistics_entry():
+    item = _multi_statistics_payload()["response"][0]
+
+    mapping = map_api_football_item_with_strategy(item, strategy="first")
+
+    assert mapping["team"] == "Team Without Minutes"
+    assert "minutes" not in mapping
+    assert mapping["shots"] == 29
+
+
+def test_map_api_football_item_with_strategy_richest_uses_entry_with_most_fields():
+    item = _multi_statistics_payload()["response"][0]
+
+    mapping = map_api_football_item_with_strategy(item, strategy="richest")
+
+    assert mapping["team"] == "Team With Minutes"
+    assert mapping["minutes"] == 0
+    assert mapping["goals"] == 0
+
+
+def test_map_api_football_item_with_strategy_prefer_minutes_prioritizes_minutes_entry():
+    item = _multi_statistics_payload()["response"][0]
+
+    mapping = map_api_football_item_with_strategy(item, strategy="prefer_minutes")
+
+    assert mapping["team"] == "Team With Minutes"
+    assert mapping["minutes"] == 0
+
+
+def test_extract_api_football_mappings_keeps_first_strategy_by_default():
+    mappings = extract_api_football_mappings(_multi_statistics_payload())
+
+    assert mappings[0]["team"] == "Team Without Minutes"
+    assert "minutes" not in mappings[0]
+
+
+def test_compare_mapping_strategies_returns_expected_strategy_keys():
+    comparison = compare_mapping_strategies(_multi_statistics_payload())
+
+    assert set(comparison) == {"first", "richest", "prefer_minutes"}
+    assert comparison["first"]["minutes"]["present"] == 1
+    assert comparison["richest"]["minutes"]["present"] == 2
+    assert comparison["prefer_minutes"]["minutes"]["present"] == 2

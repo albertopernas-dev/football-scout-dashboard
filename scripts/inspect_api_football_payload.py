@@ -81,20 +81,80 @@ def extract_response_item_keys(payload: dict) -> dict[str, list[str]]:
     return keys
 
 
+def count_statistics_entries(payload: dict) -> dict[str, int | float]:
+    response = payload.get("response")
+    if not isinstance(response, list):
+        return {
+            "players": 0,
+            "total_statistics_entries": 0,
+            "players_with_multiple_statistics": 0,
+            "avg_statistics_per_player": 0.0,
+        }
+
+    players = len(response)
+    total_statistics_entries = 0
+    players_with_multiple_statistics = 0
+    for item in response:
+        statistics = item.get("statistics") if isinstance(item, dict) else None
+        entry_count = len(statistics) if isinstance(statistics, list) else 0
+        total_statistics_entries += entry_count
+        if entry_count > 1:
+            players_with_multiple_statistics += 1
+
+    avg_statistics_per_player = round(total_statistics_entries / players, 2) if players else 0.0
+    return {
+        "players": players,
+        "total_statistics_entries": total_statistics_entries,
+        "players_with_multiple_statistics": players_with_multiple_statistics,
+        "avg_statistics_per_player": avg_statistics_per_player,
+    }
+
+
+def extract_statistics_contexts(payload: dict) -> list[dict[str, object]]:
+    response = payload.get("response")
+    if not isinstance(response, list):
+        return []
+
+    contexts = []
+    for item in response:
+        if not isinstance(item, dict):
+            continue
+        player_name = _nested_get(item, ("player", "name"))
+        for stat_index, stats in enumerate(_statistics_items(item)):
+            contexts.append(
+                {
+                    "player": player_name,
+                    "stat_index": stat_index,
+                    "team": _nested_get(stats, ("team", "name")),
+                    "league": _nested_get(stats, ("league", "name")),
+                    "season": _nested_get(stats, ("league", "season")),
+                    "position": _nested_get(stats, ("games", "position")),
+                    "has_minutes": _nested_get(stats, ("games", "minutes")) is not None,
+                    "has_goals": _nested_get(stats, ("goals", "total")) is not None,
+                    "has_assists": _nested_get(stats, ("goals", "assists")) is not None,
+                    "has_shots": _nested_get(stats, ("shots", "total")) is not None,
+                    "has_key_passes": _nested_get(stats, ("passes", "key")) is not None,
+                    "has_duels_won": _nested_get(stats, ("duels", "won")) is not None,
+                    "has_interceptions": _nested_get(stats, ("tackles", "interceptions")) is not None,
+                }
+            )
+    return contexts
+
+
 def extract_api_football_sample_mapping(payload: dict) -> dict[str, object]:
     item = _first_response_item(payload)
     if not item:
         return {}
 
-    return _map_api_football_item(item)
+    return map_api_football_item_with_strategy(item)
 
 
-def extract_api_football_mappings(payload: dict) -> list[dict[str, object]]:
+def extract_api_football_mappings(payload: dict, strategy: str = "first") -> list[dict[str, object]]:
     response = payload.get("response")
     if not isinstance(response, list):
         return []
 
-    return [_map_api_football_item(item) for item in response if isinstance(item, dict)]
+    return [map_api_football_item_with_strategy(item, strategy=strategy) for item in response if isinstance(item, dict)]
 
 
 def calculate_mapping_coverage(mappings: list[dict[str, object]]) -> dict[str, dict[str, int | float]]:
@@ -119,8 +179,41 @@ def find_richest_mapping(mappings: list[dict[str, object]]) -> dict[str, object]
     return max(mappings, key=lambda mapping: sum(1 for value in mapping.values() if value is not None))
 
 
-def _map_api_football_item(item: dict) -> dict[str, object]:
-    stats = _first_statistics_item(item)
+def compare_mapping_strategies(payload: dict) -> dict[str, dict[str, dict[str, int | float]]]:
+    return {
+        strategy: calculate_mapping_coverage(extract_api_football_mappings(payload, strategy=strategy))
+        for strategy in ("first", "richest", "prefer_minutes")
+    }
+
+
+def map_api_football_item_with_strategy(item: dict, strategy: str = "first") -> dict[str, object]:
+    statistics = _statistics_items(item)
+    if strategy == "first":
+        stats = statistics[0] if statistics else {}
+        return _map_api_football_item_with_stats(item, stats)
+
+    if strategy == "richest":
+        return _richest_mapping_for_statistics(item, statistics)
+
+    if strategy == "prefer_minutes":
+        stats_with_minutes = [
+            stats for stats in statistics if _nested_get(stats, ("games", "minutes")) is not None
+        ]
+        if stats_with_minutes:
+            return _richest_mapping_for_statistics(item, stats_with_minutes)
+        return _richest_mapping_for_statistics(item, statistics)
+
+    raise ValueError(f"Unsupported API-Football mapping strategy: {strategy}")
+
+
+def _richest_mapping_for_statistics(item: dict, statistics: list[dict[str, Any]]) -> dict[str, object]:
+    if not statistics:
+        return _map_api_football_item_with_stats(item, {})
+    mappings = [_map_api_football_item_with_stats(item, stats) for stats in statistics]
+    return find_richest_mapping(mappings)
+
+
+def _map_api_football_item_with_stats(item: dict, stats: dict) -> dict[str, object]:
     row = {
         "player": _nested_get(item, ("player", "name")),
         "age": _nested_get(item, ("player", "age")),
@@ -148,11 +241,15 @@ def _first_response_item(payload: dict) -> dict[str, Any]:
 
 
 def _first_statistics_item(item: dict) -> dict[str, Any]:
+    statistics = _statistics_items(item)
+    return statistics[0] if statistics else {}
+
+
+def _statistics_items(item: dict) -> list[dict[str, Any]]:
     statistics = item.get("statistics")
     if not isinstance(statistics, list) or not statistics:
-        return {}
-    first = statistics[0]
-    return first if isinstance(first, dict) else {}
+        return []
+    return [entry for entry in statistics if isinstance(entry, dict)]
 
 
 def _nested_get(record: dict, path: tuple[str, ...]) -> Any:
@@ -172,6 +269,9 @@ def main() -> None:
     mappings = extract_api_football_mappings(payload)
     coverage = calculate_mapping_coverage(mappings)
     richest_mapping = find_richest_mapping(mappings)
+    statistics_summary = count_statistics_entries(payload)
+    strategy_comparison = compare_mapping_strategies(payload)
+    statistics_contexts = extract_statistics_contexts(payload)
 
     print(f"Input path: {args.input}")
     print(f"Top-level keys: {extract_top_level_keys(payload)}")
@@ -191,6 +291,23 @@ def main() -> None:
             )
     print("Richest canonical mapping:")
     print(json.dumps(richest_mapping, indent=2, ensure_ascii=False))
+    print("Statistics summary:")
+    print(f"- Players: {statistics_summary['players']}")
+    print(f"- Total statistics entries: {statistics_summary['total_statistics_entries']}")
+    print(f"- Players with multiple statistics: {statistics_summary['players_with_multiple_statistics']}")
+    print(f"- Avg statistics per player: {statistics_summary['avg_statistics_per_player']}")
+    print("Strategy coverage comparison:")
+    for strategy, strategy_coverage in strategy_comparison.items():
+        print(f"{strategy}:")
+        for field in CANONICAL_FIELDS:
+            field_coverage = strategy_coverage.get(field)
+            if field_coverage:
+                print(
+                    f"- {field}: {field_coverage['present']}/{field_coverage['total']} "
+                    f"({field_coverage['coverage_pct']}%)"
+                )
+    print("Statistics contexts examples:")
+    print(json.dumps(statistics_contexts[:5], indent=2, ensure_ascii=False))
 
 
 if __name__ == "__main__":
