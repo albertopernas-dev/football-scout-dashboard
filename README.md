@@ -146,6 +146,14 @@ $env:API_FOOTBALL_KEY="tu_clave"
 .venv\Scripts\python.exe scripts/fetch_api_football_players_raw.py --league-id 140 --season 2024 --page 1
 ```
 
+## Inspect API-Football raw payload
+
+Después de guardar un payload con `fetch_api_football_players_raw.py`, puedes inspeccionar su estructura y revisar un mapping de muestra hacia el esquema canónico antes de normalizar o ingestar datos reales.
+
+```powershell
+.venv\Scripts\python.exe scripts/inspect_api_football_payload.py --input data/raw/api_football_players_raw.json
+```
+
 ## Demo use case
 
 This MVP helps identify undervalued football players through statistical filters, position-based percentiles, similarity modelling and automated scouting reports.
