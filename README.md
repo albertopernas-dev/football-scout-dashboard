@@ -206,6 +206,16 @@ El JSON canónico de API-Football puede cargarse en SQLite reemplazando la tabla
 .venv\Scripts\python.exe scripts/load_api_football_canonical_to_sqlite.py --input data/raw/api_football_players_canonical_sample.json
 ```
 
+## Build SQLite from local API-Football fixture player files
+
+Pipeline local/offline para tomar JSON locales de `fixtures/players`, agregarlos por jugador/equipo, normalizarlos al schema canónico y reemplazar la tabla SQLite en un solo comando. No hace llamadas a internet y permite completar `league` y `season` cuando el payload no trae ese contexto.
+
+```powershell
+.venv\Scripts\python.exe scripts/build_api_football_sqlite_from_fixture_players.py --input data/raw/api_football_fixture_players_1208494.json --input data/raw/api_football_fixture_players_real_madrid_sample.json --league LaLiga --season 2024 --canonical-output data/raw/api_football_players_canonical_sample.json
+```
+
+También se puede usar `--input-glob "data/raw/api_football_fixture_players_*.json"` y guardar el agregado intermedio con `--aggregated-output`.
+
 ## Demo use case
 
 This MVP helps identify undervalued football players through statistical filters, position-based percentiles, similarity modelling and automated scouting reports.
