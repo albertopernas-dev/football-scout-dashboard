@@ -182,6 +182,14 @@ Los payloads de `fixtures/players` pueden inspeccionarse y aplanarse antes de de
 .venv\Scripts\python.exe scripts/inspect_api_football_fixture_players_payload.py --input data/raw/api_football_fixture_players_1208494.json --limit 20
 ```
 
+## Aggregate API-Football fixture players
+
+Los payloads locales de `fixtures/players` pueden agregarse offline por jugador/equipo antes de conectar SQLite.
+
+```powershell
+.venv\Scripts\python.exe scripts/aggregate_api_football_fixture_players.py --input data/raw/api_football_fixture_players_1208494.json --input data/raw/api_football_fixture_players_real_madrid_sample.json --output data/raw/api_football_fixture_players_aggregated_sample.json
+```
+
 ## Demo use case
 
 This MVP helps identify undervalued football players through statistical filters, position-based percentiles, similarity modelling and automated scouting reports.
