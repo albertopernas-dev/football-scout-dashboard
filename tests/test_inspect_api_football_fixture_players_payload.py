@@ -9,6 +9,9 @@ from scripts.inspect_api_football_fixture_players_payload import (
     extract_preview_rows,
     flatten_fixture_players,
     load_payload,
+    split_active_rows,
+    summarize_anomalies,
+    summarize_participation,
 )
 
 
@@ -186,3 +189,70 @@ def test_is_positive_number_handles_invalid_strings():
     assert _is_positive_number(0) is False
     assert _is_positive_number(None) is False
     assert _is_positive_number("not-a-number") is False
+
+
+def test_split_active_rows_classifies_positive_minutes_as_active():
+    rows = [{"player": "A", "minutes": 90}, {"player": "B", "minutes": "45"}]
+
+    split = split_active_rows(rows)
+
+    assert split["active"] == rows
+    assert split["inactive"] == []
+
+
+def test_split_active_rows_classifies_missing_zero_and_invalid_minutes_as_inactive():
+    rows = [
+        {"player": "A", "minutes": None},
+        {"player": "B", "minutes": 0},
+        {"player": "C", "minutes": "bad"},
+    ]
+
+    split = split_active_rows(rows)
+
+    assert split["active"] == []
+    assert split["inactive"] == rows
+
+
+def test_summarize_participation_calculates_counts_and_percentage():
+    rows = [{"minutes": 90}, {"minutes": "45"}, {"minutes": 0}, {"minutes": None}]
+
+    assert summarize_participation(rows) == {
+        "total_rows": 4,
+        "active_rows": 2,
+        "inactive_rows": 2,
+        "active_pct": 50.0,
+    }
+
+
+def test_summarize_participation_empty_rows_does_not_break():
+    assert summarize_participation([]) == {
+        "total_rows": 0,
+        "active_rows": 0,
+        "inactive_rows": 0,
+        "active_pct": 0.0,
+    }
+
+
+def test_calculate_field_coverage_on_active_rows_improves_coverage_when_inactive_rows_lack_metrics():
+    rows = flatten_fixture_players(_fixture_players_payload())
+    active_rows = split_active_rows(rows)["active"]
+
+    all_coverage = calculate_field_coverage(rows)
+    active_coverage = calculate_field_coverage(active_rows)
+
+    assert all_coverage["minutes"]["coverage_pct"] == 75.0
+    assert active_coverage["minutes"]["coverage_pct"] == 100.0
+    assert active_coverage["rating"]["coverage_pct"] > all_coverage["rating"]["coverage_pct"]
+
+
+def test_summarize_anomalies_counts_by_type():
+    anomalies = [
+        {"type": "minutes_missing"},
+        {"type": "minutes_missing"},
+        {"type": "rating_missing_with_minutes"},
+    ]
+
+    assert summarize_anomalies(anomalies) == {
+        "minutes_missing": 2,
+        "rating_missing_with_minutes": 1,
+    }

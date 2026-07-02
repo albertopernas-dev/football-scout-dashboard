@@ -156,6 +156,31 @@ def calculate_field_coverage(rows: list[dict[str, object]]) -> dict[str, dict[st
     return coverage
 
 
+def split_active_rows(rows: list[dict[str, object]]) -> dict[str, list[dict[str, object]]]:
+    active = []
+    inactive = []
+    for row in rows:
+        if _is_positive_number(row.get("minutes")):
+            active.append(row)
+        else:
+            inactive.append(row)
+    return {"active": active, "inactive": inactive}
+
+
+def summarize_participation(rows: list[dict[str, object]]) -> dict[str, int | float]:
+    split = split_active_rows(rows)
+    total_rows = len(rows)
+    active_rows = len(split["active"])
+    inactive_rows = len(split["inactive"])
+    active_pct = round((active_rows / total_rows) * 100, 1) if total_rows else 0.0
+    return {
+        "total_rows": total_rows,
+        "active_rows": active_rows,
+        "inactive_rows": inactive_rows,
+        "active_pct": active_pct,
+    }
+
+
 def extract_preview_rows(rows: list[dict[str, object]], limit: int = 20) -> list[dict[str, object]]:
     return rows[:limit]
 
@@ -209,6 +234,16 @@ def detect_fixture_player_anomalies(rows: list[dict[str, object]]) -> list[dict[
     return anomalies
 
 
+def summarize_anomalies(anomalies: list[dict[str, object]]) -> dict[str, int]:
+    summary = {}
+    for anomaly in anomalies:
+        anomaly_type = anomaly.get("type")
+        if anomaly_type is None:
+            continue
+        summary[str(anomaly_type)] = summary.get(str(anomaly_type), 0) + 1
+    return summary
+
+
 def _first_statistics_item(player_item: dict) -> dict[str, Any]:
     statistics = player_item.get("statistics")
     if not isinstance(statistics, list) or not statistics:
@@ -237,17 +272,34 @@ def main() -> None:
     args = build_parser().parse_args()
     payload = load_payload(args.input)
     rows = flatten_fixture_players(payload)
-    coverage = calculate_field_coverage(rows)
+    split_rows = split_active_rows(rows)
+    participation_summary = summarize_participation(rows)
+    coverage_all_rows = calculate_field_coverage(rows)
+    coverage_active_rows = calculate_field_coverage(split_rows["active"])
     anomalies = detect_fixture_player_anomalies(rows)
+    anomaly_summary = summarize_anomalies(anomalies)
     teams = sorted({row["team"] for row in rows if row.get("team") is not None})
 
     print(f"Input path: {args.input}")
     print(f"Fixture ID: {_nested_get(payload, ('parameters', 'fixture'))}")
     print(f"Teams: {teams}")
     print(f"Rows: {len(rows)}")
-    print("Field coverage:")
+    print("Participation summary:")
+    print(f"- Total rows: {participation_summary['total_rows']}")
+    print(f"- Active rows: {participation_summary['active_rows']}")
+    print(f"- Inactive rows: {participation_summary['inactive_rows']}")
+    print(f"- Active pct: {participation_summary['active_pct']}%")
+    print("Field coverage - all rows:")
     for field in OUTPUT_FIELDS:
-        field_coverage = coverage.get(field)
+        field_coverage = coverage_all_rows.get(field)
+        if field_coverage:
+            print(
+                f"- {field}: {field_coverage['present']}/{field_coverage['total']} "
+                f"({field_coverage['coverage_pct']}%)"
+            )
+    print("Field coverage - active rows:")
+    for field in OUTPUT_FIELDS:
+        field_coverage = coverage_active_rows.get(field)
         if field_coverage:
             print(
                 f"- {field}: {field_coverage['present']}/{field_coverage['total']} "
@@ -255,6 +307,9 @@ def main() -> None:
             )
     print("Preview rows:")
     print(json.dumps(extract_preview_rows(rows, limit=args.limit), indent=2, ensure_ascii=False))
+    print("Anomaly summary:")
+    for anomaly_type, count in anomaly_summary.items():
+        print(f"- {anomaly_type}: {count}")
     print("Anomalies:")
     print(json.dumps(anomalies[:20], indent=2, ensure_ascii=False))
 
