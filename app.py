@@ -30,11 +30,35 @@ def prepare_data(raw: pd.DataFrame) -> pd.DataFrame:
     return add_profile_scores(percentiles)
 
 
-def format_euros(value: object) -> str:
+def is_false_flag(value: object) -> bool:
+    if value is None:
+        return False
+    try:
+        if pd.isna(value):
+            return False
+    except (TypeError, ValueError):
+        pass
+    if isinstance(value, str):
+        return value.strip().lower() == "false"
+    return bool(value) is False
+
+
+def format_euros(value: object, value_known: object | None = None) -> str:
+    if is_false_flag(value_known):
+        return "Desconocido"
     amount = pd.to_numeric(pd.Series([value]), errors="coerce").iloc[0]
     if pd.isna(amount) or amount <= 0:
         return "Desconocido"
     return f"{int(amount):,}".replace(",", ".") + " €"
+
+
+def format_age(value: object, age_known: object | None = None) -> str:
+    if is_false_flag(age_known):
+        return "Desconocida"
+    age = pd.to_numeric(pd.Series([value]), errors="coerce").iloc[0]
+    if pd.isna(age) or age <= 0:
+        return "Desconocida"
+    return str(int(age))
 
 
 def format_score(value: object, decimals: int = 1) -> str:
@@ -54,6 +78,7 @@ def format_number(value: object, decimals: int = 2) -> str:
 def format_display_columns(
     df: pd.DataFrame,
     currency_columns: list[str] | None = None,
+    age_columns: list[str] | None = None,
     one_decimal_columns: list[str] | None = None,
     two_decimal_columns: list[str] | None = None,
     three_decimal_columns: list[str] | None = None,
@@ -61,7 +86,23 @@ def format_display_columns(
     display_df = df.copy()
     for column in currency_columns or []:
         if column in display_df.columns:
-            display_df[column] = display_df[column].apply(format_euros)
+            known_column = f"{column}_known"
+            if known_column in display_df.columns:
+                display_df[column] = display_df.apply(
+                    lambda row: format_euros(row[column], row[known_column]),
+                    axis=1,
+                )
+            else:
+                display_df[column] = display_df[column].apply(format_euros)
+    for column in age_columns or []:
+        if column in display_df.columns:
+            if "age_known" in display_df.columns:
+                display_df[column] = display_df.apply(
+                    lambda row: format_age(row[column], row["age_known"]),
+                    axis=1,
+                )
+            else:
+                display_df[column] = display_df[column].apply(format_age)
     for column in one_decimal_columns or []:
         if column in display_df.columns:
             display_df[column] = display_df[column].apply(lambda value: format_score(value, 1))
@@ -71,6 +112,9 @@ def format_display_columns(
     for column in three_decimal_columns or []:
         if column in display_df.columns:
             display_df[column] = display_df[column].apply(lambda value: format_number(value, 3))
+    display_df = display_df.drop(
+        columns=[column for column in ["age_known", "market_value_known"] if column in display_df.columns]
+    )
     return display_df
 
 
@@ -105,11 +149,13 @@ def player_table(df: pd.DataFrame) -> None:
     display_columns = [
         "player",
         "age",
+        "age_known",
         "position",
         "team",
         "league",
         "minutes",
         "market_value",
+        "market_value_known",
         "contract_end",
         "overall_score",
         "market_opportunity_score",
@@ -128,6 +174,7 @@ def player_table(df: pd.DataFrame) -> None:
     display_df = format_display_columns(
         sorted_df,
         currency_columns=["market_value"],
+        age_columns=["age"],
         one_decimal_columns=[
             "overall_score",
             "market_opportunity_score",
@@ -179,10 +226,12 @@ def similarity_and_report_view(df: pd.DataFrame) -> None:
     similar_columns = [
         "player",
         "age",
+        "age_known",
         "position",
         "team",
         "league",
         "market_value",
+        "market_value_known",
         "similarity",
         "overall_score",
         "market_opportunity_score",
@@ -190,6 +239,7 @@ def similarity_and_report_view(df: pd.DataFrame) -> None:
     similar_display = format_display_columns(
         similar[[column for column in similar_columns if column in similar.columns]],
         currency_columns=["market_value"],
+        age_columns=["age"],
         one_decimal_columns=["overall_score", "market_opportunity_score"],
         three_decimal_columns=["similarity"],
     )
@@ -253,12 +303,14 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
     ranking_columns = [
         "player",
         "age",
+        "age_known",
         "position",
         "team",
         "league",
         "season",
         "minutes",
         "market_value",
+        "market_value_known",
         "contract_end",
         "overall_score",
         "attacking_impact_score",
@@ -271,6 +323,7 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
     opportunity_display = format_display_columns(
         opportunities[[column for column in ranking_columns if column in opportunities.columns]],
         currency_columns=["market_value"],
+        age_columns=["age"],
         one_decimal_columns=[
             "overall_score",
             "attacking_impact_score",
@@ -297,8 +350,11 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
     card_a, card_b, card_c, card_d = st.columns(4)
     card_a.metric("Overall", selected_row.get("overall_score", 0))
     card_b.metric("Opportunity", selected_row.get("market_opportunity_score", 0))
-    card_c.metric("Edad", selected_row.get("age", ""))
-    card_d.metric("Valor de mercado", format_euros(selected_row.get("market_value", 0)))
+    card_c.metric("Edad", format_age(selected_row.get("age", ""), selected_row.get("age_known", None)))
+    card_d.metric(
+        "Valor de mercado",
+        format_euros(selected_row.get("market_value", 0), selected_row.get("market_value_known", None)),
+    )
 
     detail_a, detail_b, detail_c = st.columns(3)
     detail_a.markdown(f"**Posición:** {selected_row.get('position', '')}")
@@ -306,7 +362,10 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
     detail_b.markdown(f"**Liga:** {selected_row.get('league', '')}")
     detail_b.markdown(f"**Temporada:** {selected_row.get('season', '')}")
     detail_c.markdown(f"**Fin de contrato:** {selected_row.get('contract_end', '')}")
-    detail_c.markdown(f"**Valor de mercado:** {format_euros(selected_row.get('market_value', 0))}")
+    detail_c.markdown(
+        f"**Valor de mercado:** "
+        f"{format_euros(selected_row.get('market_value', 0), selected_row.get('market_value_known', None))}"
+    )
 
 
 def render_intro() -> None:
