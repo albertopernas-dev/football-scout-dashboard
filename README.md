@@ -198,6 +198,14 @@ El JSON agregado offline puede convertirse a filas compatibles con el schema de 
 .venv\Scripts\python.exe scripts/normalize_api_football_aggregated_players.py --input data/raw/api_football_fixture_players_aggregated_sample.json --output data/raw/api_football_players_canonical_sample.json
 ```
 
+## Load API-Football canonical players to SQLite
+
+El JSON canónico de API-Football puede cargarse en SQLite reemplazando la tabla `players`. Los archivos `data/raw/` y `data/football_scout.db` siguen ignorados por git.
+
+```powershell
+.venv\Scripts\python.exe scripts/load_api_football_canonical_to_sqlite.py --input data/raw/api_football_players_canonical_sample.json
+```
+
 ## Demo use case
 
 This MVP helps identify undervalued football players through statistical filters, position-based percentiles, similarity modelling and automated scouting reports.

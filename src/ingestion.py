@@ -22,6 +22,19 @@ def load_csv_to_sqlite(csv_path: str | Path, database_path: str | Path, table_na
     return len(data)
 
 
+def load_records_to_sqlite(
+    records: list[dict[str, object]],
+    database_path: str | Path,
+    table_name: str,
+) -> int:
+    data = pd.DataFrame(records)
+    target = Path(database_path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with sqlite3.connect(target) as connection:
+        data.to_sql(table_name, connection, index=False, if_exists="replace")
+    return len(data)
+
+
 def load_external_to_sqlite(
     url: str,
     database_path: str | Path,

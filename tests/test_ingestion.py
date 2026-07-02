@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 
 from src.data_sources import load_players_from_sqlite
-from src.ingestion import load_csv_to_sqlite, load_external_to_sqlite
+from src.ingestion import load_csv_to_sqlite, load_external_to_sqlite, load_records_to_sqlite
 
 
 def test_load_csv_to_sqlite_creates_players_table_and_returns_row_count(tmp_path):
@@ -160,3 +160,25 @@ def test_load_external_to_sqlite_normalizes_api_football_response_payload(tmp_pa
     assert loaded.loc[0, "player"] == "Player Name"
     assert loaded.loc[0, "team"] == "Team A"
     assert loaded.loc[0, "goals"] == 10
+
+
+def test_load_records_to_sqlite_creates_parent_database_and_returns_count(tmp_path):
+    database_path = tmp_path / "nested" / "football_scout.db"
+    records = [{"player": "Ana", "team": "Madrid"}, {"player": "Bea", "team": "Barcelona"}]
+
+    row_count = load_records_to_sqlite(records, database_path, "players")
+    loaded = load_players_from_sqlite(database_path, "players")
+
+    assert row_count == 2
+    assert loaded["player"].tolist() == ["Ana", "Bea"]
+
+
+def test_load_records_to_sqlite_replaces_existing_table(tmp_path):
+    database_path = tmp_path / "football_scout.db"
+    load_records_to_sqlite([{"player": "Old"}], database_path, "players")
+
+    row_count = load_records_to_sqlite([{"player": "New"}], database_path, "players")
+    loaded = load_players_from_sqlite(database_path, "players")
+
+    assert row_count == 1
+    assert loaded["player"].tolist() == ["New"]
