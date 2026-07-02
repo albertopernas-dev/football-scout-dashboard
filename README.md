@@ -182,6 +182,24 @@ Los payloads de `fixtures/players` pueden inspeccionarse y aplanarse antes de de
 .venv\Scripts\python.exe scripts/inspect_api_football_fixture_players_payload.py --input data/raw/api_football_fixture_players_1208494.json --limit 20
 ```
 
+## Fetch API-Football fixture player payloads in batch
+
+Descarga payloads `fixtures/players` a partir de un JSON local del endpoint `fixtures`, usando caché local y un límite máximo por ejecución. Este paso solo guarda JSON bruto en `data/raw/fixture_players`; no agrega, no normaliza y no carga SQLite.
+
+Dry-run para revisar qué fixtures descargaría sin llamar a la API:
+
+```powershell
+.venv\Scripts\python.exe scripts/fetch_api_football_fixture_players_batch.py --fixtures data/raw/api_football_laliga_2024_finished_fixtures.json --output-dir data/raw/fixture_players --limit 5 --dry-run
+```
+
+Ejecución real limitada:
+
+```powershell
+.venv\Scripts\python.exe scripts/fetch_api_football_fixture_players_batch.py --fixtures data/raw/api_football_laliga_2024_finished_fixtures.json --output-dir data/raw/fixture_players --limit 5
+```
+
+Usa `--force` para sobrescribir archivos ya cacheados y `--status FT --status AET --status PEN` para filtrar por estado si el JSON de fixtures contiene más partidos.
+
 ## Aggregate API-Football fixture players
 
 Los payloads locales de `fixtures/players` pueden agregarse offline por jugador/equipo antes de conectar SQLite.
