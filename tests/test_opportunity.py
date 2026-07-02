@@ -54,6 +54,48 @@ def test_find_market_opportunities_filters_contract_within_months_with_fixed_dat
     assert result["player"].tolist() == ["C", "A"]
 
 
+def test_find_market_opportunities_keeps_unknown_age_when_age_filter_is_applied():
+    df = pd.DataFrame(
+        {
+            "player": ["Unknown Age", "Old Player"],
+            "position": ["LW", "LW"],
+            "age": [25, 30],
+            "age_known": [False, True],
+            "minutes": [1200, 1200],
+            "market_value": [None, None],
+            "contract_end": [None, None],
+            "market_opportunity_score": [80.0, 70.0],
+        }
+    )
+
+    result = find_market_opportunities(df, max_age=23, min_minutes=0)
+
+    assert result["player"].tolist() == ["Unknown Age"]
+
+
+def test_find_market_opportunities_does_not_treat_unknown_contract_as_contract_upcoming():
+    df = pd.DataFrame(
+        {
+            "player": ["Unknown Contract", "Upcoming Contract"],
+            "position": ["LW", "LW"],
+            "age": [22, 22],
+            "minutes": [1200, 1200],
+            "market_value": [1_000_000, 1_000_000],
+            "contract_end": [None, "2026-12-31"],
+            "market_opportunity_score": [90.0, 80.0],
+        }
+    )
+
+    result = find_market_opportunities(
+        df,
+        min_minutes=0,
+        contract_within_months=12,
+        as_of_date="2026-06-30",
+    )
+
+    assert result["player"].tolist() == ["Upcoming Contract"]
+
+
 def test_find_market_opportunities_requires_market_opportunity_score():
     df = _players().drop(columns=["market_opportunity_score"])
 

@@ -105,6 +105,7 @@ def test_normalized_rows_are_compatible_with_cleaning_and_features_pipeline():
         featured.columns
     )
     assert featured.loc[0, "player"] == "Player One"
-    assert featured.loc[0, "age"] == 0
+    assert featured.loc[0, "age"] == 25
+    assert not featured.loc[0, "age_known"]
     assert featured.loc[0, "league"] == "Unknown"
     assert featured.loc[0, "goals_per90"] == 2.0

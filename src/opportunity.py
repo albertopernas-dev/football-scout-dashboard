@@ -26,7 +26,11 @@ def find_market_opportunities(
 
     if max_age is not None and "age" in result.columns:
         ages = pd.to_numeric(result["age"], errors="coerce")
-        result = result[ages <= max_age]
+        if "age_known" in result.columns:
+            age_known = result["age_known"].fillna(False).astype(bool)
+        else:
+            age_known = ages.notna() & ages.gt(0)
+        result = result[(~age_known) | (ages <= max_age)]
 
     if min_minutes is not None and "minutes" in result.columns:
         minutes = pd.to_numeric(result["minutes"], errors="coerce").fillna(0)

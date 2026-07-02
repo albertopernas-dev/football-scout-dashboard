@@ -52,6 +52,7 @@ def test_clean_player_data_coerces_numeric_and_fills_stats():
     cleaned = clean_player_data(df)
 
     assert cleaned.loc[0, "age"] == 22
+    assert cleaned.loc[0, "age_known"]
     assert cleaned.loc[0, "minutes"] == 900
     assert cleaned.loc[0, "assists"] == 0
     assert cleaned.loc[0, "xa"] == 0
@@ -76,4 +77,42 @@ def test_clean_player_data_supports_market_schema_aliases():
 
     assert cleaned.loc[0, "season"] == "2025/26"
     assert cleaned.loc[0, "market_value"] == 3500000
+    assert cleaned.loc[0, "market_value_known"]
     assert cleaned.loc[0, "contract_end"] == "2028-06-30"
+
+
+def test_clean_player_data_keeps_unknown_age_neutral_and_marks_it_unknown():
+    df = pd.DataFrame(
+        {
+            "player": ["Unknown Age"],
+            "age": [None],
+            "position": ["FW"],
+            "team": ["Madrid"],
+            "league": ["LaLiga"],
+            "minutes": [900],
+        }
+    )
+
+    cleaned = clean_player_data(df)
+
+    assert cleaned.loc[0, "age"] == 25
+    assert not cleaned.loc[0, "age_known"]
+
+
+def test_clean_player_data_keeps_missing_market_value_unknown_not_zero():
+    df = pd.DataFrame(
+        {
+            "player": ["Unknown Value"],
+            "age": [22],
+            "position": ["FW"],
+            "team": ["Madrid"],
+            "league": ["LaLiga"],
+            "minutes": [900],
+            "market_value": [None],
+        }
+    )
+
+    cleaned = clean_player_data(df)
+
+    assert pd.isna(cleaned.loc[0, "market_value"])
+    assert not cleaned.loc[0, "market_value_known"]

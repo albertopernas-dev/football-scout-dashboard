@@ -184,6 +184,38 @@ def test_single_positive_market_value_is_neutral_not_extreme_boost():
     assert scores["Known Value"] == scores["Unknown Value"]
 
 
+def test_unknown_or_zero_age_is_neutral_not_extreme_young_bonus():
+    df = pd.DataFrame(
+        {
+            "player": ["Unknown Age", "Zero Age", "Neutral Age", "Young Player"],
+            "position": ["FW", "FW", "FW", "FW"],
+            "age": [None, 0, 25, 20],
+            "age_known": [False, False, True, True],
+            "minutes": [1800, 1800, 1800, 1800],
+            "market_value": [0, 0, 0, 0],
+            "contract_end": [None, None, None, None],
+            "goals_per90_pct": [80, 80, 80, 80],
+            "xg_per90_pct": [80, 80, 80, 80],
+            "shots_per90_pct": [80, 80, 80, 80],
+            "completed_dribbles_per90_pct": [80, 80, 80, 80],
+        }
+    )
+
+    result = add_profile_scores(df, as_of_date="2026-06-30")
+
+    scores = result.set_index("player")["market_opportunity_score"]
+    assert scores["Unknown Age"] == scores["Zero Age"] == scores["Neutral Age"]
+    assert scores["Young Player"] > scores["Neutral Age"]
+
+
+def test_missing_contract_end_is_neutral_not_contract_bonus():
+    contract_dates = pd.Series([None, "", "not-a-date"])
+
+    scores = _contract_opportunity_score(contract_dates, as_of_date="2026-06-30")
+
+    assert scores.tolist() == [50, 50, 50]
+
+
 def test_contract_opportunity_score_uses_fixed_as_of_date():
     contract_dates = pd.Series(
         [

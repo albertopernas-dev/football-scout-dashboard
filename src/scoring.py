@@ -209,14 +209,26 @@ def _contract_opportunity_score(
     return score
 
 
+def _age_opportunity_score(df: pd.DataFrame, index: pd.Index) -> pd.Series:
+    age = pd.to_numeric(df["age"], errors="coerce") if "age" in df.columns else pd.Series(pd.NA, index=index)
+    if "age_known" in df.columns:
+        known = df["age_known"].fillna(False).astype(bool) & age.gt(0)
+    else:
+        known = age.gt(0)
+
+    score = pd.Series(50.0, index=index)
+    if known.any():
+        score.loc[known] = (100 - ((age.loc[known] - 18) / 14 * 100)).clip(0, 100)
+    return score
+
+
 def _market_opportunity_score(
     df: pd.DataFrame,
     as_of_date: str | date | pd.Timestamp | None = None,
 ) -> pd.Series:
     performance = df["overall_score"] if "overall_score" in df.columns else pd.Series(50.0, index=df.index)
-    age = df["age"] if "age" in df.columns else pd.Series(25, index=df.index)
     minutes = df["minutes"] if "minutes" in df.columns else pd.Series(900, index=df.index)
-    age_score = (100 - ((pd.to_numeric(age, errors="coerce").fillna(25) - 18) / 14 * 100)).clip(0, 100)
+    age_score = _age_opportunity_score(df, df.index)
     minutes_score = (pd.to_numeric(minutes, errors="coerce").fillna(0).clip(0, 1800) / 1800 * 100).round(1)
     if "market_value" in df.columns:
         value_score = _market_value_score(df["market_value"], df.index)
