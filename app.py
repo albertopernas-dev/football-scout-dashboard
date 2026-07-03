@@ -165,6 +165,64 @@ def apply_age_filter(df: pd.DataFrame, selected_range: tuple[int, int] | None) -
     return df[mask]
 
 
+def calculate_data_quality_metrics(df: pd.DataFrame) -> dict[str, object]:
+    players_count = len(df)
+
+    age_known = _known_flag_or_numeric_positive(df, flag_column="age_known", value_column="age")
+    market_value_known = _known_flag_or_numeric_positive(
+        df,
+        flag_column="market_value_known",
+        value_column="market_value",
+    )
+    contract_known = _contract_known_mask(df)
+    minutes = pd.to_numeric(df.get("minutes", pd.Series(dtype="float64")), errors="coerce").fillna(0)
+
+    return {
+        "players_count": players_count,
+        "teams_count": _nunique_if_exists(df, "team"),
+        "leagues_count": _nunique_if_exists(df, "league"),
+        "total_minutes": int(minutes.sum()) if not minutes.empty else 0,
+        "age_known_count": int(age_known.sum()),
+        "age_known_pct": _pct(age_known.sum(), players_count),
+        "market_value_known_count": int(market_value_known.sum()),
+        "market_value_known_pct": _pct(market_value_known.sum(), players_count),
+        "contract_known_count": int(contract_known.sum()),
+        "contract_known_pct": _pct(contract_known.sum(), players_count),
+        "positions_count": _nunique_if_exists(df, "position"),
+    }
+
+
+def _known_flag_or_numeric_positive(df: pd.DataFrame, flag_column: str, value_column: str) -> pd.Series:
+    if df.empty:
+        return pd.Series(dtype=bool)
+    if flag_column in df.columns:
+        return df[flag_column].apply(is_true_flag)
+    if value_column not in df.columns:
+        return pd.Series([False] * len(df), index=df.index)
+    values = pd.to_numeric(df[value_column], errors="coerce")
+    return values.notna() & (values > 0)
+
+
+def _contract_known_mask(df: pd.DataFrame) -> pd.Series:
+    if df.empty:
+        return pd.Series(dtype=bool)
+    if "contract_end" not in df.columns:
+        return pd.Series([False] * len(df), index=df.index)
+    return df["contract_end"].apply(lambda value: value is not None and not pd.isna(value) and str(value).strip() != "")
+
+
+def _nunique_if_exists(df: pd.DataFrame, column: str) -> int:
+    if column not in df.columns:
+        return 0
+    return int(df[column].dropna().nunique())
+
+
+def _pct(count: int | float, total: int) -> float:
+    if total <= 0:
+        return 0.0
+    return round((float(count) / total) * 100, 1)
+
+
 def filter_data(df: pd.DataFrame) -> pd.DataFrame:
     with st.sidebar:
         st.header("Filtros")
@@ -466,6 +524,21 @@ def render_data_source(metadata: dict) -> None:
             st.markdown(f"**Archivo:** `{metadata.get('path', '')}`")
 
 
+def render_data_quality(metrics: dict[str, object]) -> None:
+    with st.expander("Calidad de datos", expanded=False):
+        row_a = st.columns(4)
+        row_a[0].metric("Jugadores", metrics["players_count"])
+        row_a[1].metric("Equipos", metrics["teams_count"])
+        row_a[2].metric("Ligas", metrics["leagues_count"])
+        row_a[3].metric("Minutos totales", metrics["total_minutes"])
+
+        row_b = st.columns(4)
+        row_b[0].metric("Posiciones", metrics["positions_count"])
+        row_b[1].metric("Edad conocida", f"{metrics['age_known_pct']}%")
+        row_b[2].metric("Valor mercado conocido", f"{metrics['market_value_known_pct']}%")
+        row_b[3].metric("Contrato conocido", f"{metrics['contract_known_pct']}%")
+
+
 def main() -> None:
     st.title("Football Scout Dashboard")
     render_intro()
@@ -492,6 +565,7 @@ def main() -> None:
         st.stop()
 
     render_data_source(data_source_metadata)
+    render_data_quality(calculate_data_quality_metrics(df))
 
     filtered = filter_data(df)
     kpi_a, kpi_b, kpi_c, kpi_d = st.columns(4)
