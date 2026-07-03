@@ -35,6 +35,8 @@ class DownloadPlan:
     found: int
     cached: list[DownloadItem]
     to_download: list[DownloadItem]
+    pending_before_limit: int
+    remaining_after_plan: int
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -101,13 +103,19 @@ def resolve_download_plan(
     for fixture_id in fixture_ids:
         output_path = output_path_for_fixture(output_dir, fixture_id)
         item = DownloadItem(fixture_id=fixture_id, output_path=output_path)
-        if output_path.exists() and not force:
+        if output_path.exists():
             cached.append(item)
-        else:
+        if force or not output_path.exists():
             pending.append(item)
 
     limited_pending = pending[: max(limit, 0)]
-    return DownloadPlan(found=len(fixture_ids), cached=cached, to_download=limited_pending)
+    return DownloadPlan(
+        found=len(fixture_ids),
+        cached=cached,
+        to_download=limited_pending,
+        pending_before_limit=len(pending),
+        remaining_after_plan=max(len(pending) - len(limited_pending), 0),
+    )
 
 
 def save_json(payload: dict, output_path: Path) -> Path:
@@ -135,13 +143,17 @@ def fetch_fixture_players_batch(
             payload = client.get("fixtures/players", params={"fixture": item.fixture_id})
             save_json(payload, item.output_path)
             downloaded += 1
+    total_covered_after_run = len(plan.cached) + (len(plan.to_download) if dry_run else downloaded)
 
     return {
         "fixtures_found": plan.found,
         "already_cached": len(plan.cached),
+        "pending_before_limit": plan.pending_before_limit,
         "planned_downloads": len(plan.to_download),
+        "remaining_after_plan": plan.remaining_after_plan,
         "downloaded": downloaded,
         "skipped": len(plan.cached),
+        "total_covered_after_run": total_covered_after_run,
         "output_dir": output_dir,
         "dry_run": dry_run,
         "planned_fixture_ids": [item.fixture_id for item in plan.to_download],
@@ -189,9 +201,12 @@ def _parse_statuses(values: list[str] | None) -> set[str] | None:
 def _print_summary(summary: dict[str, object]) -> None:
     print(f"Fixtures found: {summary['fixtures_found']}")
     print(f"Already cached: {summary['already_cached']}")
+    print(f"Pending before limit: {summary['pending_before_limit']}")
     print(f"Planned downloads: {summary['planned_downloads']}")
+    print(f"Remaining after plan: {summary['remaining_after_plan']}")
     print(f"Downloaded: {summary['downloaded']}")
     print(f"Skipped: {summary['skipped']}")
+    print(f"Total covered after run: {summary['total_covered_after_run']}")
     print(f"Output dir: {summary['output_dir']}")
     print(f"Dry run: {str(summary['dry_run']).lower()}")
     print(f"Planned fixture IDs: {summary['planned_fixture_ids']}")

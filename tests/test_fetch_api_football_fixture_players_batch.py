@@ -60,6 +60,8 @@ def test_resolve_download_plan_skips_cached_without_force_and_applies_limit(tmp_
 
     assert [item.fixture_id for item in plan.cached] == [1001]
     assert [item.fixture_id for item in plan.to_download] == [1002, 1003]
+    assert plan.pending_before_limit == 3
+    assert plan.remaining_after_plan == 1
 
 
 def test_resolve_download_plan_includes_cached_with_force(tmp_path):
@@ -71,8 +73,23 @@ def test_resolve_download_plan_includes_cached_with_force(tmp_path):
 
     plan = resolve_download_plan([1001, 1002], output_dir, limit=10, force=True)
 
-    assert plan.cached == []
+    assert [item.fixture_id for item in plan.cached] == [1001]
     assert [item.fixture_id for item in plan.to_download] == [1001, 1002]
+
+
+def test_resolve_download_plan_with_force_counts_all_fixtures_as_pending(tmp_path):
+    from scripts.fetch_api_football_fixture_players_batch import resolve_download_plan
+
+    output_dir = tmp_path / "fixture_players"
+    output_dir.mkdir()
+    (output_dir / "api_football_fixture_players_1001.json").write_text("{}", encoding="utf-8")
+
+    plan = resolve_download_plan([1001, 1002], output_dir, limit=1, force=True)
+
+    assert [item.fixture_id for item in plan.cached] == [1001]
+    assert [item.fixture_id for item in plan.to_download] == [1001]
+    assert plan.pending_before_limit == 2
+    assert plan.remaining_after_plan == 1
 
 
 def test_output_path_for_fixture_uses_expected_name(tmp_path):
@@ -97,6 +114,9 @@ def test_dry_run_does_not_call_client_or_create_files(tmp_path):
     )
 
     assert summary["planned_downloads"] == 1
+    assert summary["pending_before_limit"] == 2
+    assert summary["remaining_after_plan"] == 1
+    assert summary["total_covered_after_run"] == 1
     assert summary["downloaded"] == 0
     assert summary["dry_run"] is True
     assert not (tmp_path / "fixture_players").exists()
@@ -123,6 +143,9 @@ def test_batch_fetch_with_fake_client_creates_expected_json_files(tmp_path):
         {"endpoint": "fixtures/players", "params": {"fixture": 1001}},
         {"endpoint": "fixtures/players", "params": {"fixture": 1002}},
     ]
+    assert summary["pending_before_limit"] == 2
+    assert summary["remaining_after_plan"] == 0
+    assert summary["total_covered_after_run"] == 2
     assert summary["downloaded"] == 2
     first = tmp_path / "fixture_players" / "api_football_fixture_players_1001.json"
     second = tmp_path / "fixture_players" / "api_football_fixture_players_1002.json"
