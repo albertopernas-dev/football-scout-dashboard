@@ -240,6 +240,14 @@ Pipeline local/offline para tomar JSON locales de `fixtures/players`, agregarlos
 
 También se puede usar `--input-glob "data/raw/api_football_fixture_players_*.json"` y guardar el agregado intermedio con `--aggregated-output`.
 
+## Show local dataset status
+
+Resume el estado local del dataset sin llamar a internet ni modificar SQLite: fixtures totales, payloads `fixtures/players` cacheados, pendientes y cobertura básica de la tabla `players`.
+
+```powershell
+.venv\Scripts\python.exe scripts/show_local_dataset_status.py --fixtures data/raw/api_football_laliga_2024_finished_fixtures.json --fixture-players-dir data/raw/fixture_players --league LaLiga --season 2024
+```
+
 ## Demo use case
 
 This MVP helps identify undervalued football players through statistical filters, position-based percentiles, similarity modelling and automated scouting reports.

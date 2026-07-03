@@ -1,6 +1,6 @@
 import pandas as pd
 
-from app import calculate_data_quality_metrics
+from src.data_quality import calculate_data_quality_metrics
 
 
 def test_calculate_data_quality_metrics_uses_known_flags():
