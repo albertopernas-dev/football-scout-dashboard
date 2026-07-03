@@ -43,6 +43,19 @@ def is_false_flag(value: object) -> bool:
     return bool(value) is False
 
 
+def is_true_flag(value: object) -> bool:
+    if value is None:
+        return False
+    try:
+        if pd.isna(value):
+            return False
+    except (TypeError, ValueError):
+        pass
+    if isinstance(value, str):
+        return value.strip().lower() == "true"
+    return bool(value) is True
+
+
 def format_euros(value: object, value_known: object | None = None) -> str:
     if is_false_flag(value_known):
         return "Desconocido"
@@ -118,6 +131,40 @@ def format_display_columns(
     return display_df
 
 
+def get_known_age_values(df: pd.DataFrame) -> pd.Series:
+    if "age" not in df.columns:
+        return pd.Series(dtype="int64")
+
+    ages = pd.to_numeric(df["age"], errors="coerce")
+    valid_mask = ages.notna() & (ages > 0)
+    if "age_known" in df.columns:
+        valid_mask = valid_mask & df["age_known"].apply(is_true_flag)
+
+    return ages[valid_mask].astype(int).drop_duplicates().sort_values()
+
+
+def get_known_age_bounds(df: pd.DataFrame) -> tuple[int, int] | None:
+    ages = get_known_age_values(df)
+    if ages.empty:
+        return None
+    min_age = int(ages.min())
+    max_age = int(ages.max())
+    if min_age == max_age:
+        return None
+    return min_age, max_age
+
+
+def apply_age_filter(df: pd.DataFrame, selected_range: tuple[int, int] | None) -> pd.DataFrame:
+    if selected_range is None or "age" not in df.columns:
+        return df
+
+    ages = pd.to_numeric(df["age"], errors="coerce")
+    mask = ages.between(selected_range[0], selected_range[1])
+    if "age_known" in df.columns:
+        mask = mask & df["age_known"].apply(is_true_flag)
+    return df[mask]
+
+
 def filter_data(df: pd.DataFrame) -> pd.DataFrame:
     with st.sidebar:
         st.header("Filtros")
@@ -128,16 +175,27 @@ def filter_data(df: pd.DataFrame) -> pd.DataFrame:
             default=sorted(df["position"].unique()),
         )
         teams = st.multiselect("Equipo", sorted(df["team"].unique()))
-        age_range = st.slider("Rango de edad", int(df["age"].min()), int(df["age"].max()), (int(df["age"].min()), int(df["age"].max())))
+        age_values = get_known_age_values(df)
+        age_bounds = get_known_age_bounds(df)
+        age_range = None
+        if age_bounds is None:
+            if age_values.empty:
+                st.info("Edad no disponible en la fuente actual.")
+            else:
+                st.caption(f"Todas las edades conocidas son {int(age_values.iloc[0])}.")
+        else:
+            age_range = st.slider("Rango de edad", age_bounds[0], age_bounds[1], age_bounds)
+            if age_range == age_bounds:
+                age_range = None
         min_minutes = st.slider("Minutos mínimos", 0, int(df["minutes"].max()), min(900, int(df["minutes"].max())))
         search = st.text_input("Buscar jugador")
 
     filtered = df[
         df["league"].isin(leagues)
         & df["position"].isin(positions)
-        & df["age"].between(age_range[0], age_range[1])
         & (df["minutes"] >= min_minutes)
     ]
+    filtered = apply_age_filter(filtered, age_range)
     if teams:
         filtered = filtered[filtered["team"].isin(teams)]
     if search:
