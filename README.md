@@ -198,7 +198,13 @@ Ejecución real limitada:
 .venv\Scripts\python.exe scripts/fetch_api_football_fixture_players_batch.py --fixtures data/raw/api_football_laliga_2024_finished_fixtures.json --output-dir data/raw/fixture_players --limit 5
 ```
 
-Usa `--force` para sobrescribir archivos ya cacheados y `--status FT --status AET --status PEN` para filtrar por estado si el JSON de fixtures contiene más partidos.
+Para tandas reales, usa límites pequeños y un delay entre requests:
+
+```powershell
+.venv\Scripts\python.exe scripts/fetch_api_football_fixture_players_batch.py --fixtures data/raw/api_football_laliga_2024_finished_fixtures.json --output-dir data/raw/fixture_players --limit 5 --delay-seconds 2
+```
+
+Usa `--force` para sobrescribir archivos ya cacheados, `--continue-on-error` para continuar ante errores no relacionados con rate limit y `--status FT --status AET --status PEN` para filtrar por estado si el JSON de fixtures contiene más partidos. Si aparece un error `429 Too Many Requests`, espera antes de continuar; el script lo marca como rate limit y se detiene para evitar seguir golpeando la API.
 
 ## Aggregate API-Football fixture players
 

@@ -3,9 +3,10 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import time
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Protocol
+from typing import Callable, Protocol
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -48,6 +49,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--limit", type=int, default=10)
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--continue-on-error", action="store_true")
+    parser.add_argument("--delay-seconds", type=float, default=0.0)
     parser.add_argument("--status", action="append", default=None)
     return parser
 
@@ -134,15 +137,33 @@ def fetch_fixture_players_batch(
     client: FixturePlayersClient,
     force: bool = False,
     dry_run: bool = False,
+    continue_on_error: bool = False,
+    delay_seconds: float = 0.0,
+    sleep_func: Callable[[float], None] = time.sleep,
 ) -> dict[str, object]:
     plan = resolve_download_plan(fixture_ids, output_dir, limit=limit, force=force)
     downloaded = 0
+    errors = []
+    rate_limited = False
+    stopped_early = False
 
     if not dry_run:
-        for item in plan.to_download:
-            payload = client.get("fixtures/players", params={"fixture": item.fixture_id})
-            save_json(payload, item.output_path)
-            downloaded += 1
+        for index, item in enumerate(plan.to_download):
+            try:
+                payload = client.get("fixtures/players", params={"fixture": item.fixture_id})
+                save_json(payload, item.output_path)
+                downloaded += 1
+            except Exception as exc:
+                error_message = str(exc)
+                errors.append({"fixture_id": item.fixture_id, "error": error_message})
+                rate_limited = _is_rate_limit_error(error_message)
+                if rate_limited or not continue_on_error:
+                    stopped_early = True
+                    break
+                continue
+
+            if delay_seconds > 0 and index < len(plan.to_download) - 1:
+                sleep_func(delay_seconds)
     total_covered_after_run = len(plan.cached) + (len(plan.to_download) if dry_run else downloaded)
 
     return {
@@ -154,6 +175,11 @@ def fetch_fixture_players_batch(
         "downloaded": downloaded,
         "skipped": len(plan.cached),
         "total_covered_after_run": total_covered_after_run,
+        "failed": len(errors),
+        "failed_fixture_ids": [error["fixture_id"] for error in errors],
+        "errors": errors,
+        "rate_limited": rate_limited,
+        "stopped_early": stopped_early,
         "output_dir": output_dir,
         "dry_run": dry_run,
         "planned_fixture_ids": [item.fixture_id for item in plan.to_download],
@@ -185,8 +211,15 @@ def main() -> None:
         client=client,
         force=args.force,
         dry_run=args.dry_run,
+        continue_on_error=args.continue_on_error,
+        delay_seconds=args.delay_seconds,
     )
     _print_summary(summary)
+    if summary["stopped_early"] and summary["errors"]:
+        first_error = summary["errors"][0]
+        raise SystemExit(
+            f"Batch stopped early at fixture {first_error['fixture_id']}: {first_error['error']}"
+        )
 
 
 def _parse_statuses(values: list[str] | None) -> set[str] | None:
@@ -207,10 +240,18 @@ def _print_summary(summary: dict[str, object]) -> None:
     print(f"Downloaded: {summary['downloaded']}")
     print(f"Skipped: {summary['skipped']}")
     print(f"Total covered after run: {summary['total_covered_after_run']}")
+    print(f"Failed: {summary['failed']}")
+    print(f"Rate limited: {str(summary['rate_limited']).lower()}")
+    print(f"Stopped early: {str(summary['stopped_early']).lower()}")
+    print(f"Failed fixture IDs: {summary['failed_fixture_ids']}")
     print(f"Output dir: {summary['output_dir']}")
     print(f"Dry run: {str(summary['dry_run']).lower()}")
     print(f"Planned fixture IDs: {summary['planned_fixture_ids']}")
     print(f"Cached fixture IDs: {summary['cached_fixture_ids']}")
+    if summary["errors"]:
+        print("Error details:")
+        for error in summary["errors"][:5]:
+            print(f"- Fixture {error['fixture_id']}: {error['error']}")
 
 
 def _nested_get(record: dict, path: tuple[str, ...]) -> object:
@@ -227,6 +268,10 @@ def _to_int(value: object) -> int | None:
         return int(value)
     except (TypeError, ValueError):
         return None
+
+
+def _is_rate_limit_error(error_message: str) -> bool:
+    return "429" in error_message or "Too Many Requests" in error_message
 
 
 class _DryRunClient:

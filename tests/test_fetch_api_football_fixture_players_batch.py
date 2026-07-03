@@ -101,6 +101,8 @@ def test_output_path_for_fixture_uses_expected_name(tmp_path):
 def test_dry_run_does_not_call_client_or_create_files(tmp_path):
     from scripts.fetch_api_football_fixture_players_batch import fetch_fixture_players_batch
 
+    sleeps = []
+
     class FakeClient:
         def get(self, endpoint, params=None):
             raise AssertionError("client should not be called in dry-run")
@@ -111,6 +113,8 @@ def test_dry_run_does_not_call_client_or_create_files(tmp_path):
         limit=1,
         client=FakeClient(),
         dry_run=True,
+        delay_seconds=5,
+        sleep_func=sleeps.append,
     )
 
     assert summary["planned_downloads"] == 1
@@ -119,6 +123,7 @@ def test_dry_run_does_not_call_client_or_create_files(tmp_path):
     assert summary["total_covered_after_run"] == 1
     assert summary["downloaded"] == 0
     assert summary["dry_run"] is True
+    assert sleeps == []
     assert not (tmp_path / "fixture_players").exists()
 
 
@@ -151,3 +156,117 @@ def test_batch_fetch_with_fake_client_creates_expected_json_files(tmp_path):
     second = tmp_path / "fixture_players" / "api_football_fixture_players_1002.json"
     assert json.loads(first.read_text(encoding="utf-8")) == {"response": [{"fixture": 1001}]}
     assert json.loads(second.read_text(encoding="utf-8")) == {"response": [{"fixture": 1002}]}
+
+
+def test_batch_fetch_stops_after_first_error_by_default(tmp_path):
+    from scripts.fetch_api_football_fixture_players_batch import fetch_fixture_players_batch
+
+    calls = []
+
+    class FakeClient:
+        def get(self, endpoint, params=None):
+            fixture_id = params["fixture"]
+            calls.append(fixture_id)
+            if fixture_id == 1002:
+                raise RuntimeError("temporary API failure")
+            return {"response": [{"fixture": fixture_id}]}
+
+    summary = fetch_fixture_players_batch(
+        fixture_ids=[1001, 1002, 1003],
+        output_dir=tmp_path / "fixture_players",
+        limit=10,
+        client=FakeClient(),
+    )
+
+    assert calls == [1001, 1002]
+    assert summary["downloaded"] == 1
+    assert summary["failed"] == 1
+    assert summary["failed_fixture_ids"] == [1002]
+    assert summary["errors"] == [{"fixture_id": 1002, "error": "temporary API failure"}]
+    assert summary["stopped_early"] is True
+    assert summary["rate_limited"] is False
+    assert (tmp_path / "fixture_players" / "api_football_fixture_players_1001.json").exists()
+    assert not (tmp_path / "fixture_players" / "api_football_fixture_players_1003.json").exists()
+
+
+def test_batch_fetch_continues_after_non_rate_limit_error_when_enabled(tmp_path):
+    from scripts.fetch_api_football_fixture_players_batch import fetch_fixture_players_batch
+
+    calls = []
+
+    class FakeClient:
+        def get(self, endpoint, params=None):
+            fixture_id = params["fixture"]
+            calls.append(fixture_id)
+            if fixture_id == 1002:
+                raise RuntimeError("temporary API failure")
+            return {"response": [{"fixture": fixture_id}]}
+
+    summary = fetch_fixture_players_batch(
+        fixture_ids=[1001, 1002, 1003],
+        output_dir=tmp_path / "fixture_players",
+        limit=10,
+        client=FakeClient(),
+        continue_on_error=True,
+    )
+
+    assert calls == [1001, 1002, 1003]
+    assert summary["downloaded"] == 2
+    assert summary["failed"] == 1
+    assert summary["failed_fixture_ids"] == [1002]
+    assert summary["stopped_early"] is False
+    assert summary["rate_limited"] is False
+    assert (tmp_path / "fixture_players" / "api_football_fixture_players_1001.json").exists()
+    assert (tmp_path / "fixture_players" / "api_football_fixture_players_1003.json").exists()
+
+
+def test_batch_fetch_stops_on_rate_limit_even_with_continue_on_error(tmp_path):
+    from scripts.fetch_api_football_fixture_players_batch import fetch_fixture_players_batch
+
+    calls = []
+
+    class FakeClient:
+        def get(self, endpoint, params=None):
+            fixture_id = params["fixture"]
+            calls.append(fixture_id)
+            if fixture_id == 1002:
+                raise RuntimeError("API-Football HTTP error 429: Too Many Requests")
+            return {"response": [{"fixture": fixture_id}]}
+
+    summary = fetch_fixture_players_batch(
+        fixture_ids=[1001, 1002, 1003],
+        output_dir=tmp_path / "fixture_players",
+        limit=10,
+        client=FakeClient(),
+        continue_on_error=True,
+    )
+
+    assert calls == [1001, 1002]
+    assert summary["downloaded"] == 1
+    assert summary["failed"] == 1
+    assert summary["failed_fixture_ids"] == [1002]
+    assert summary["rate_limited"] is True
+    assert summary["stopped_early"] is True
+    assert not (tmp_path / "fixture_players" / "api_football_fixture_players_1003.json").exists()
+
+
+def test_batch_fetch_sleeps_between_real_downloads(tmp_path):
+    from scripts.fetch_api_football_fixture_players_batch import fetch_fixture_players_batch
+
+    sleeps = []
+
+    class FakeClient:
+        def get(self, endpoint, params=None):
+            return {"response": [{"fixture": params["fixture"]}]}
+
+    summary = fetch_fixture_players_batch(
+        fixture_ids=[1001, 1002, 1003],
+        output_dir=tmp_path / "fixture_players",
+        limit=3,
+        client=FakeClient(),
+        delay_seconds=2.5,
+        sleep_func=sleeps.append,
+    )
+
+    assert summary["downloaded"] == 3
+    assert sleeps == [2.5, 2.5]
