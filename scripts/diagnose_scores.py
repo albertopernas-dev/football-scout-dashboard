@@ -18,7 +18,12 @@ from src.features import add_per90_metrics, add_position_percentiles
 from src.scoring import PROFILE_SCORE_COLUMNS, PROFILE_WEIGHTS, add_profile_scores
 
 
-SCORE_COLUMNS = ("overall_score", "market_opportunity_score")
+SCORE_COLUMNS = (
+    "overall_score",
+    "sample_adjusted_overall_score",
+    "market_opportunity_score",
+    "sample_adjusted_market_opportunity_score",
+)
 DEFAULT_DISPLAY_COLUMNS = (
     "player",
     "team",
@@ -30,7 +35,9 @@ DEFAULT_DISPLAY_COLUMNS = (
     "minutes_sample_label",
     "is_minutes_qualified",
     "overall_score",
+    "sample_adjusted_overall_score",
     "market_opportunity_score",
+    "sample_adjusted_market_opportunity_score",
     *PROFILE_SCORE_COLUMNS,
 )
 

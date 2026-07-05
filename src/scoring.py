@@ -168,6 +168,20 @@ def add_profile_scores(df: pd.DataFrame, as_of_date: str | date | pd.Timestamp |
 
     result["overall_score"] = result.apply(_weighted_overall_score, axis=1)
     result["market_opportunity_score"] = _market_opportunity_score(result, as_of_date=as_of_date)
+    result["sample_adjusted_overall_score"] = result.apply(
+        lambda row: adjust_score_by_minutes_reliability(
+            row["overall_score"],
+            row["minutes_reliability_score"],
+        ),
+        axis=1,
+    )
+    result["sample_adjusted_market_opportunity_score"] = result.apply(
+        lambda row: adjust_score_by_minutes_reliability(
+            row["market_opportunity_score"],
+            row["minutes_reliability_score"],
+        ),
+        axis=1,
+    )
 
     result["scoring_score"] = result["attacking_impact_score"]
     result["creation_score"] = result["chance_creation_score"]
@@ -192,6 +206,18 @@ def add_minutes_reliability(
     return result
 
 
+def adjust_score_by_minutes_reliability(
+    score: object,
+    minutes_reliability_score: object,
+    baseline: float = 50.0,
+) -> float:
+    score_value = _coerce_number(score, default=baseline)
+    reliability = _coerce_number(minutes_reliability_score, default=0.0)
+    reliability = min(max(reliability, 0.0), 100.0)
+    adjusted = baseline + (score_value - baseline) * (reliability / 100)
+    return round(float(adjusted), 1)
+
+
 def _market_value_score(series: pd.Series, index: pd.Index) -> pd.Series:
     values = pd.to_numeric(series, errors="coerce")
     score = pd.Series(50.0, index=index)
@@ -204,6 +230,13 @@ def _market_value_score(series: pd.Series, index: pd.Index) -> pd.Series:
     else:
         score.loc[positive.index] = (100 - ((positive - positive.min()) / spread * 100)).round(1)
     return score.clip(0, 100)
+
+
+def _coerce_number(value: object, default: float) -> float:
+    numeric = pd.to_numeric(pd.Series([value]), errors="coerce").iloc[0]
+    if pd.isna(numeric):
+        return default
+    return float(numeric)
 
 
 def _contract_opportunity_score(

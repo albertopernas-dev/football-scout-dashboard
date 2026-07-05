@@ -1,6 +1,11 @@
 import pandas as pd
 
-from src.scoring import _contract_opportunity_score, add_minutes_reliability, add_profile_scores
+from src.scoring import (
+    _contract_opportunity_score,
+    add_minutes_reliability,
+    add_profile_scores,
+    adjust_score_by_minutes_reliability,
+)
 
 
 def test_add_profile_scores_creates_role_scores():
@@ -275,3 +280,52 @@ def test_add_profile_scores_includes_minutes_reliability_columns():
     assert result.loc[0, "minutes_reliability_score"] == 50.0
     assert result.loc[0, "minutes_sample_label"] == "Muestra media"
     assert not bool(result.loc[0, "is_minutes_qualified"])
+
+
+def test_adjust_score_by_minutes_reliability_keeps_score_at_full_reliability():
+    assert adjust_score_by_minutes_reliability(82, 100) == 82.0
+
+
+def test_adjust_score_by_minutes_reliability_returns_baseline_at_zero_reliability():
+    assert adjust_score_by_minutes_reliability(82, 0) == 50.0
+
+
+def test_adjust_score_by_minutes_reliability_moves_score_halfway_to_baseline():
+    assert adjust_score_by_minutes_reliability(80, 50) == 65.0
+
+
+def test_adjust_score_by_minutes_reliability_uses_baseline_for_invalid_score():
+    assert adjust_score_by_minutes_reliability(pd.NA, 100) == 50.0
+
+
+def test_adjust_score_by_minutes_reliability_uses_zero_reliability_for_invalid_reliability():
+    assert adjust_score_by_minutes_reliability(80, pd.NA) == 50.0
+
+
+def test_adjust_score_by_minutes_reliability_clips_reliability_above_100():
+    assert adjust_score_by_minutes_reliability(80, 150) == 80.0
+
+
+def test_adjust_score_by_minutes_reliability_clips_reliability_below_0():
+    assert adjust_score_by_minutes_reliability(80, -10) == 50.0
+
+
+def test_add_profile_scores_includes_sample_adjusted_scores_without_changing_original_scores():
+    df = pd.DataFrame(
+        {
+            "player": ["A"],
+            "position": ["FW"],
+            "minutes": [450],
+            "goals_per90_pct": [95],
+            "xg_per90_pct": [95],
+            "shots_per90_pct": [95],
+            "completed_dribbles_per90_pct": [95],
+        }
+    )
+
+    result = add_profile_scores(df)
+
+    assert "sample_adjusted_overall_score" in result.columns
+    assert "sample_adjusted_market_opportunity_score" in result.columns
+    assert result.loc[0, "overall_score"] > 50.0
+    assert 50.0 < result.loc[0, "sample_adjusted_overall_score"] < result.loc[0, "overall_score"]
