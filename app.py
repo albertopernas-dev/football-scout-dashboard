@@ -7,7 +7,7 @@ import streamlit as st
 
 from src.config import DATABASE_PATH, RADAR_METRICS
 from src.data_cleaning import clean_player_data
-from src.data_quality import calculate_data_quality_metrics
+from src.data_quality import calculate_data_quality_metrics, calculate_market_context_availability
 from src.data_sources import load_players_data_with_metadata
 from src.features import add_per90_metrics, add_position_percentiles
 from src.opportunity import find_market_opportunities
@@ -82,6 +82,15 @@ def format_age(value: object, age_known: object | None = None) -> str:
     if pd.isna(age) or age <= 0:
         return "Desconocida"
     return str(int(age))
+
+
+def market_context_warning_message(market_context: dict[str, object]) -> str | None:
+    if market_context.get("has_market_context"):
+        return None
+    return (
+        "Ranking basado principalmente en rendimiento deportivo. Faltan edad, valor de mercado "
+        "y contrato para evaluar oportunidad real de mercado."
+    )
 
 
 def format_score(value: object, decimals: int = 1) -> str:
@@ -334,6 +343,10 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
     if df.empty:
         st.info("Ajusta los filtros para seleccionar jugadores.")
         return
+    market_context = calculate_market_context_availability(df)
+    warning_message = market_context_warning_message(market_context)
+    if warning_message:
+        st.warning(warning_message)
 
     available_positions = sorted(df["position"].dropna().unique()) if "position" in df.columns else []
     controls_a, controls_b, controls_c = st.columns(3)

@@ -30,6 +30,21 @@ def calculate_data_quality_metrics(df: pd.DataFrame) -> dict[str, object]:
     }
 
 
+def calculate_market_context_availability(df: pd.DataFrame) -> dict[str, object]:
+    metrics = calculate_data_quality_metrics(df)
+    age_known_pct = float(metrics["age_known_pct"])
+    market_value_known_pct = float(metrics["market_value_known_pct"])
+    contract_known_pct = float(metrics["contract_known_pct"])
+    return {
+        "age_known_pct": age_known_pct,
+        "market_value_known_pct": market_value_known_pct,
+        "contract_known_pct": contract_known_pct,
+        "has_market_context": any(
+            pct > 0 for pct in [age_known_pct, market_value_known_pct, contract_known_pct]
+        ),
+    }
+
+
 def _known_flag_or_numeric_positive(df: pd.DataFrame, flag_column: str, value_column: str) -> pd.Series:
     if df.empty:
         return pd.Series(dtype=bool)

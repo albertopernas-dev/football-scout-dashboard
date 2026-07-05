@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.data_quality import calculate_data_quality_metrics
+from src.data_quality import calculate_data_quality_metrics, calculate_market_context_availability
 
 
 def test_calculate_data_quality_metrics_uses_known_flags():
@@ -74,3 +74,41 @@ def test_calculate_data_quality_metrics_empty_dataframe_does_not_break():
     assert metrics["market_value_known_pct"] == 0.0
     assert metrics["contract_known_count"] == 0
     assert metrics["contract_known_pct"] == 0.0
+
+
+def test_calculate_market_context_availability_is_false_when_all_market_context_is_unknown():
+    df = pd.DataFrame(
+        {
+            "age": [25, 25],
+            "age_known": [False, False],
+            "market_value": [None, None],
+            "market_value_known": [False, False],
+            "contract_end": [None, ""],
+        }
+    )
+
+    context = calculate_market_context_availability(df)
+
+    assert context == {
+        "age_known_pct": 0.0,
+        "market_value_known_pct": 0.0,
+        "contract_known_pct": 0.0,
+        "has_market_context": False,
+    }
+
+
+def test_calculate_market_context_availability_is_true_with_partial_market_value_context():
+    df = pd.DataFrame(
+        {
+            "age": [25, 25],
+            "age_known": [False, False],
+            "market_value": [1_000_000, None],
+            "market_value_known": [True, False],
+            "contract_end": [None, ""],
+        }
+    )
+
+    context = calculate_market_context_availability(df)
+
+    assert context["market_value_known_pct"] == 50.0
+    assert context["has_market_context"] is True
