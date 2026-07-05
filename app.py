@@ -193,6 +193,13 @@ def apply_age_filter(df: pd.DataFrame, selected_range: tuple[int, int] | None) -
     return df[mask]
 
 
+def sort_players_for_display(df: pd.DataFrame) -> pd.DataFrame:
+    sort_column = "sample_adjusted_overall_score" if "sample_adjusted_overall_score" in df.columns else "overall_score"
+    if sort_column not in df.columns:
+        return df
+    return df.sort_values(sort_column, ascending=False)
+
+
 def filter_data(df: pd.DataFrame) -> pd.DataFrame:
     with st.sidebar:
         st.header("Filtros")
@@ -261,7 +268,7 @@ def player_table(df: pd.DataFrame) -> None:
         "xa_per90",
     ]
     visible_columns = [column for column in display_columns if column in df.columns]
-    sorted_df = df[visible_columns].sort_values("overall_score", ascending=False)
+    sorted_df = sort_players_for_display(df[visible_columns])
     display_df = format_display_columns(
         sorted_df,
         currency_columns=["market_value"],
@@ -280,6 +287,7 @@ def player_table(df: pd.DataFrame) -> None:
         ],
         two_decimal_columns=["goals_per90", "assists_per90", "xg_per90", "xa_per90"],
     )
+    st.caption("El orden recomendado usa el score ajustado por fiabilidad de minutos.")
     st.dataframe(
         display_df,
         width="stretch",
@@ -398,6 +406,7 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
         )
         return
 
+    st.caption("El orden recomendado usa el score ajustado por fiabilidad de minutos.")
     ranking_columns = [
         "player",
         "age",

@@ -1,6 +1,6 @@
 import pandas as pd
 
-from app import format_age, format_display_columns, format_euros
+from app import format_age, format_display_columns, format_euros, sort_players_for_display
 
 
 def test_format_age_shows_unknown_when_age_known_is_false():

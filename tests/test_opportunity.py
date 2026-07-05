@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from src.opportunity import find_market_opportunities
+from src.opportunity import find_market_opportunities, sort_opportunities
 
 
 def _players() -> pd.DataFrame:
@@ -22,6 +22,31 @@ def test_find_market_opportunities_sorts_by_market_opportunity_descending():
     result = find_market_opportunities(_players(), min_minutes=0)
 
     assert result["player"].tolist() == ["C", "A", "B", "D"]
+
+
+def test_find_market_opportunities_sorts_by_sample_adjusted_market_opportunity_when_available():
+    df = _players()
+    df["sample_adjusted_market_opportunity_score"] = [70.0, 95.0, 80.0, 65.0]
+
+    result = find_market_opportunities(df, min_minutes=0)
+
+    assert result["player"].tolist() == ["B", "C", "A", "D"]
+
+
+def test_sort_opportunities_falls_back_to_market_opportunity_score():
+    result = sort_opportunities(_players())
+
+    assert result["player"].tolist() == ["C", "A", "B", "D"]
+
+
+def test_sort_opportunities_keeps_unqualified_players():
+    df = _players()
+    df["sample_adjusted_market_opportunity_score"] = [70.0, 95.0, 80.0, 65.0]
+    df["is_minutes_qualified"] = [True, False, True, True]
+
+    result = sort_opportunities(df)
+
+    assert "B" in result["player"].tolist()
 
 
 def test_find_market_opportunities_filters_by_max_age():

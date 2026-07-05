@@ -46,4 +46,13 @@ def find_market_opportunities(
         contract_dates = pd.to_datetime(result["contract_end"], errors="coerce")
         result = result[contract_dates.notna() & (contract_dates <= max_contract_date)]
 
-    return result.sort_values("market_opportunity_score", ascending=False).head(top_n).reset_index(drop=True)
+    return sort_opportunities(result).head(top_n).reset_index(drop=True)
+
+
+def sort_opportunities(df: pd.DataFrame) -> pd.DataFrame:
+    sort_column = (
+        "sample_adjusted_market_opportunity_score"
+        if "sample_adjusted_market_opportunity_score" in df.columns
+        else "market_opportunity_score"
+    )
+    return df.sort_values(sort_column, ascending=False)
