@@ -27,6 +27,8 @@ def test_summarize_scoring_columns_marks_missing_and_zero_only_columns():
     assert summary["missing"] == ["xa_per90"]
     assert summary["percentile_available"] == ["goals_per90_pct"]
     assert summary["zero_only"] == ["xg_per90"]
+    assert summary["used_by_scoring"] == ["goals_per90"]
+    assert summary["ignored_no_signal"] == ["xg_per90"]
 
 
 def test_calculate_score_distribution_returns_basic_percentiles():

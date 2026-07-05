@@ -5,6 +5,8 @@ from src.scoring import (
     add_minutes_reliability,
     add_profile_scores,
     adjust_score_by_minutes_reliability,
+    informative_profile_weights,
+    is_metric_informative,
 )
 
 
@@ -69,9 +71,13 @@ def test_overall_score_uses_position_specific_weights():
         {
             "player": ["Striker", "Center Back"],
             "position": ["ST", "CB"],
+            "goals_per90": [1.0, 0.1],
             "goals_per90_pct": [100, 100],
+            "xg_per90": [1.0, 0.1],
             "xg_per90_pct": [100, 100],
+            "shots_per90": [4.0, 1.0],
             "shots_per90_pct": [100, 100],
+            "completed_dribbles_per90": [0, 0],
             "completed_dribbles_per90_pct": [0, 0],
             "assists_per90_pct": [0, 0],
             "xa_per90_pct": [0, 0],
@@ -313,13 +319,17 @@ def test_adjust_score_by_minutes_reliability_clips_reliability_below_0():
 def test_add_profile_scores_includes_sample_adjusted_scores_without_changing_original_scores():
     df = pd.DataFrame(
         {
-            "player": ["A"],
-            "position": ["FW"],
-            "minutes": [450],
-            "goals_per90_pct": [95],
-            "xg_per90_pct": [95],
-            "shots_per90_pct": [95],
-            "completed_dribbles_per90_pct": [95],
+            "player": ["A", "B"],
+            "position": ["FW", "FW"],
+            "minutes": [450, 900],
+            "goals_per90": [0.6, 0.1],
+            "goals_per90_pct": [95, 20],
+            "xg_per90": [0.5, 0.1],
+            "xg_per90_pct": [95, 20],
+            "shots_per90": [3.0, 1.0],
+            "shots_per90_pct": [95, 20],
+            "completed_dribbles_per90": [2.0, 0.2],
+            "completed_dribbles_per90_pct": [95, 20],
         }
     )
 
@@ -327,5 +337,111 @@ def test_add_profile_scores_includes_sample_adjusted_scores_without_changing_ori
 
     assert "sample_adjusted_overall_score" in result.columns
     assert "sample_adjusted_market_opportunity_score" in result.columns
-    assert result.loc[0, "overall_score"] > 50.0
-    assert 50.0 < result.loc[0, "sample_adjusted_overall_score"] < result.loc[0, "overall_score"]
+    assert result.loc[result["player"] == "A", "overall_score"].iloc[0] > 50.0
+    adjusted = result.loc[result["player"] == "A", "sample_adjusted_overall_score"].iloc[0]
+    original = result.loc[result["player"] == "A", "overall_score"].iloc[0]
+    assert 50.0 < adjusted < original
+
+
+def test_is_metric_informative_returns_false_for_all_zero_values():
+    df = pd.DataFrame({"xg_per90": [0, 0, 0]})
+
+    assert is_metric_informative(df, "xg_per90") is False
+
+
+def test_is_metric_informative_returns_false_for_constant_non_zero_values():
+    df = pd.DataFrame({"xg_per90": [1, 1, 1]})
+
+    assert is_metric_informative(df, "xg_per90") is False
+
+
+def test_is_metric_informative_returns_true_for_varied_values():
+    df = pd.DataFrame({"xg_per90": [0, 1, 2]})
+
+    assert is_metric_informative(df, "xg_per90") is True
+
+
+def test_is_metric_informative_returns_false_for_missing_column():
+    df = pd.DataFrame({"goals_per90": [0, 1, 2]})
+
+    assert is_metric_informative(df, "xg_per90") is False
+
+
+def test_is_metric_informative_can_fallback_to_percentile_variation():
+    df = pd.DataFrame({"xg_per90_pct": [10, 50, 90]})
+
+    assert is_metric_informative(df, "xg_per90") is True
+
+
+def test_informative_profile_weights_keeps_only_metrics_with_signal():
+    df = pd.DataFrame(
+        {
+            "goals_per90": [0.2, 0.4],
+            "xg_per90": [0, 0],
+        }
+    )
+
+    weights = informative_profile_weights(df, {"goals_per90": 0.4, "xg_per90": 0.6})
+
+    assert weights == {"goals_per90": 0.4}
+
+
+def test_scoring_ignores_zero_only_metric_instead_of_diluting_profile_score():
+    df = pd.DataFrame(
+        {
+            "player": ["A", "B"],
+            "position": ["FW", "FW"],
+            "minutes": [900, 900],
+            "goals_per90": [0.1, 0.5],
+            "goals_per90_pct": [20, 100],
+            "xg_per90": [0, 0],
+            "xg_per90_pct": [0, 0],
+            "shots_per90": [0, 0],
+            "shots_per90_pct": [0, 0],
+            "completed_dribbles_per90": [0, 0],
+            "completed_dribbles_per90_pct": [0, 0],
+        }
+    )
+
+    result = add_profile_scores(df)
+
+    assert result["attacking_impact_score"].tolist() == [20.0, 100.0]
+
+
+def test_profile_score_is_neutral_when_no_metrics_are_informative():
+    df = pd.DataFrame(
+        {
+            "player": ["A", "B"],
+            "position": ["FW", "FW"],
+            "minutes": [900, 900],
+            "goals_per90": [0, 0],
+            "xg_per90": [0, 0],
+            "shots_per90": [0, 0],
+            "completed_dribbles_per90": [0, 0],
+        }
+    )
+
+    result = add_profile_scores(df)
+
+    assert result["attacking_impact_score"].tolist() == [50.0, 50.0]
+
+
+def test_metric_reenters_scoring_when_it_has_real_variation():
+    df = pd.DataFrame(
+        {
+            "player": ["A", "B"],
+            "position": ["FW", "FW"],
+            "minutes": [900, 900],
+            "goals_per90": [0.1, 0.5],
+            "goals_per90_pct": [20, 100],
+            "xg_per90": [0.2, 0.8],
+            "xg_per90_pct": [100, 20],
+            "shots_per90": [0, 0],
+            "completed_dribbles_per90": [0, 0],
+        }
+    )
+
+    result = add_profile_scores(df)
+
+    assert result["attacking_impact_score"].tolist() == [56.9, 63.1]
+    assert {"overall_score", "sample_adjusted_overall_score"}.issubset(result.columns)

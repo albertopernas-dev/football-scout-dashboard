@@ -124,6 +124,26 @@ def _neutral_score(index: pd.Index) -> pd.Series:
     return pd.Series(50.0, index=index)
 
 
+def is_metric_informative(df: pd.DataFrame, metric_column: str) -> bool:
+    if metric_column in df.columns:
+        return _series_has_signal(df[metric_column])
+
+    percentile_column = f"{metric_column}_pct"
+    if percentile_column in df.columns:
+        # Some tests or imported datasets may provide only percentiles; use them
+        # only when they carry real variation.
+        return _series_has_signal(df[percentile_column])
+    return False
+
+
+def informative_profile_weights(df: pd.DataFrame, profile_weights: dict[str, float]) -> dict[str, float]:
+    return {
+        metric: weight
+        for metric, weight in profile_weights.items()
+        if is_metric_informative(df, metric)
+    }
+
+
 def _metric_score(df: pd.DataFrame, metric: str) -> pd.Series:
     percentile_column = f"{metric}_pct"
     if percentile_column in df.columns:
@@ -158,9 +178,14 @@ def add_profile_scores(df: pd.DataFrame, as_of_date: str | date | pd.Timestamp |
     weighted_scores = []
 
     for score_name, weights in PROFILE_WEIGHTS.items():
+        active_weights = informative_profile_weights(result, weights)
+        if not active_weights:
+            result[score_name] = 50.0
+            weighted_scores.append(score_name)
+            continue
         score = pd.Series(0.0, index=result.index)
         total_weight = 0.0
-        for metric, weight in weights.items():
+        for metric, weight in active_weights.items():
             score = score + _metric_score(result, metric) * weight
             total_weight += weight
         result[score_name] = (score / total_weight).round(1) if total_weight else 0
@@ -237,6 +262,15 @@ def _coerce_number(value: object, default: float) -> float:
     if pd.isna(numeric):
         return default
     return float(numeric)
+
+
+def _series_has_signal(series: pd.Series) -> bool:
+    values = pd.to_numeric(series, errors="coerce").dropna()
+    if values.empty:
+        return False
+    if values.eq(0).all():
+        return False
+    return values.nunique() >= 2
 
 
 def _contract_opportunity_score(

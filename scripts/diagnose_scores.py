@@ -15,7 +15,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from src.data_cleaning import clean_player_data
 from src.data_sources import load_players_data_with_metadata
 from src.features import add_per90_metrics, add_position_percentiles
-from src.scoring import PROFILE_SCORE_COLUMNS, PROFILE_WEIGHTS, add_profile_scores
+from src.scoring import PROFILE_SCORE_COLUMNS, PROFILE_WEIGHTS, add_profile_scores, is_metric_informative
 
 
 SCORE_COLUMNS = (
@@ -63,11 +63,15 @@ def summarize_scoring_columns(
     missing = [column for column in columns if column not in df.columns]
     percentile_available = [f"{column}_pct" for column in columns if f"{column}_pct" in df.columns]
     zero_only = [column for column in available if _is_zero_only(df[column])]
+    used_by_scoring = [column for column in columns if is_metric_informative(df, column)]
+    ignored_no_signal = [column for column in available if column not in used_by_scoring]
     return {
         "available": available,
         "missing": missing,
         "percentile_available": percentile_available,
         "zero_only": zero_only,
+        "used_by_scoring": used_by_scoring,
+        "ignored_no_signal": ignored_no_signal,
     }
 
 
@@ -180,6 +184,8 @@ def main() -> None:
     print(f"- Percentiles available: {', '.join(scoring_columns['percentile_available']) or 'None'}")
     print(f"- Missing: {', '.join(scoring_columns['missing']) or 'None'}")
     print(f"- Present but zero-only: {', '.join(scoring_columns['zero_only']) or 'None'}")
+    print(f"- Used by scoring: {', '.join(scoring_columns['used_by_scoring']) or 'None'}")
+    print(f"- Ignored, no signal: {', '.join(scoring_columns['ignored_no_signal']) or 'None'}")
 
     print("\nScore distribution:")
     print(json.dumps(calculate_score_distribution(df), indent=2, ensure_ascii=False))
