@@ -26,6 +26,9 @@ DEFAULT_DISPLAY_COLUMNS = (
     "league",
     "season",
     "minutes",
+    "minutes_reliability_score",
+    "minutes_sample_label",
+    "is_minutes_qualified",
     "overall_score",
     "market_opportunity_score",
     *PROFILE_SCORE_COLUMNS,
@@ -140,6 +143,21 @@ def find_low_minutes_in_top_rankings(
     return result
 
 
+def minutes_sample_distribution(df: pd.DataFrame) -> dict[str, int]:
+    if "minutes_sample_label" not in df.columns:
+        return {}
+    counts = df["minutes_sample_label"].value_counts(dropna=False)
+    return {str(label): int(count) for label, count in counts.items()}
+
+
+def top_unqualified_count(df: pd.DataFrame, score_column: str, n: int = 10) -> int:
+    if "is_minutes_qualified" not in df.columns or score_column not in df.columns:
+        return 0
+    top = df.sort_values(score_column, ascending=False).head(n)
+    qualified = top["is_minutes_qualified"].fillna(False).astype(bool)
+    return int((~qualified).sum())
+
+
 def main() -> None:
     _configure_stdout()
     raw, metadata = load_players_data_with_metadata()
@@ -158,6 +176,18 @@ def main() -> None:
 
     print("\nScore distribution:")
     print(json.dumps(calculate_score_distribution(df), indent=2, ensure_ascii=False))
+
+    print("\nMinutes sample distribution:")
+    sample_distribution = minutes_sample_distribution(df)
+    if sample_distribution:
+        for label, count in sample_distribution.items():
+            print(f"- {label}: {count}")
+    else:
+        print("- No sample labels available.")
+
+    print("\nUnqualified players in top 10:")
+    for score_column in SCORE_COLUMNS:
+        print(f"- {score_column}: {top_unqualified_count(df, score_column, n=10)}")
 
     for score_column in SCORE_COLUMNS:
         print(f"\nTop 10 {score_column}:")

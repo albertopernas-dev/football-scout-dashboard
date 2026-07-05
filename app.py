@@ -93,6 +93,15 @@ def market_context_warning_message(market_context: dict[str, object]) -> str | N
     )
 
 
+def minutes_sample_warning_message(df: pd.DataFrame) -> str | None:
+    if "is_minutes_qualified" not in df.columns:
+        return None
+    qualified = df["is_minutes_qualified"].fillna(False).astype(bool)
+    if qualified.all():
+        return None
+    return "Algunos jugadores tienen pocos minutos; interpreta su ranking como señal exploratoria."
+
+
 def format_score(value: object, decimals: int = 1) -> str:
     number = pd.to_numeric(pd.Series([value]), errors="coerce").iloc[0]
     if pd.isna(number):
@@ -231,6 +240,9 @@ def player_table(df: pd.DataFrame) -> None:
         "team",
         "league",
         "minutes",
+        "minutes_reliability_score",
+        "minutes_sample_label",
+        "is_minutes_qualified",
         "market_value",
         "market_value_known",
         "contract_end",
@@ -255,6 +267,7 @@ def player_table(df: pd.DataFrame) -> None:
         one_decimal_columns=[
             "overall_score",
             "market_opportunity_score",
+            "minutes_reliability_score",
             "attacking_impact_score",
             "chance_creation_score",
             "ball_progression_score",
@@ -390,6 +403,9 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
         "league",
         "season",
         "minutes",
+        "minutes_reliability_score",
+        "minutes_sample_label",
+        "is_minutes_qualified",
         "market_value",
         "market_value_known",
         "contract_end",
@@ -413,8 +429,12 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
             "defensive_impact_score",
             "dribbling_threat_score",
             "market_opportunity_score",
+            "minutes_reliability_score",
         ],
     )
+    minutes_warning = minutes_sample_warning_message(opportunities)
+    if minutes_warning:
+        st.info(minutes_warning)
     st.dataframe(
         opportunity_display,
         width="stretch",
@@ -443,6 +463,7 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
     detail_b.markdown(f"**Liga:** {selected_row.get('league', '')}")
     detail_b.markdown(f"**Temporada:** {selected_row.get('season', '')}")
     detail_c.markdown(f"**Fin de contrato:** {selected_row.get('contract_end', '')}")
+    detail_c.markdown(f"**Muestra:** {selected_row.get('minutes_sample_label', '')}")
     detail_c.markdown(
         f"**Valor de mercado:** "
         f"{format_euros(selected_row.get('market_value', 0), selected_row.get('market_value_known', None))}"

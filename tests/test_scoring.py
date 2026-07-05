@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.scoring import _contract_opportunity_score, add_profile_scores
+from src.scoring import _contract_opportunity_score, add_minutes_reliability, add_profile_scores
 
 
 def test_add_profile_scores_creates_role_scores():
@@ -233,3 +233,45 @@ def test_contract_opportunity_score_uses_fixed_as_of_date():
     scores = _contract_opportunity_score(contract_dates, as_of_date="2026-06-30")
 
     assert scores.tolist() == [100, 100, 90, 70, 50, 35, 50, 50]
+
+
+def test_add_minutes_reliability_scores_boundary_values():
+    df = pd.DataFrame(
+        {
+            "player": ["Zero", "Low", "Medium Start", "Medium End", "Qualified", "Over"],
+            "minutes": [0, 299, 300, 899, 900, 1200],
+        }
+    )
+
+    result = add_minutes_reliability(df)
+
+    assert result["minutes_reliability_score"].tolist() == [0.0, 33.2, 33.3, 99.9, 100.0, 100.0]
+    assert result["minutes_sample_label"].tolist() == [
+        "Muestra baja",
+        "Muestra baja",
+        "Muestra media",
+        "Muestra media",
+        "Muestra fiable",
+        "Muestra fiable",
+    ]
+    assert result["is_minutes_qualified"].tolist() == [False, False, False, False, True, True]
+
+
+def test_add_profile_scores_includes_minutes_reliability_columns():
+    df = pd.DataFrame(
+        {
+            "player": ["A"],
+            "position": ["FW"],
+            "minutes": [450],
+            "goals_per90_pct": [80],
+            "xg_per90_pct": [80],
+            "shots_per90_pct": [80],
+            "completed_dribbles_per90_pct": [80],
+        }
+    )
+
+    result = add_profile_scores(df)
+
+    assert result.loc[0, "minutes_reliability_score"] == 50.0
+    assert result.loc[0, "minutes_sample_label"] == "Muestra media"
+    assert not bool(result.loc[0, "is_minutes_qualified"])

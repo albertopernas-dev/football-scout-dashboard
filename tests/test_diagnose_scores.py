@@ -5,7 +5,9 @@ import pandas as pd
 from scripts.diagnose_scores import (
     calculate_score_distribution,
     find_low_minutes_in_top_rankings,
+    minutes_sample_distribution,
     summarize_scoring_columns,
+    top_unqualified_count,
     top_rankings,
 )
 
@@ -71,3 +73,21 @@ def test_find_low_minutes_in_top_rankings_flags_top_score_outliers():
 
     assert result["overall_score"]["player"].tolist() == ["Low"]
     assert result["market_opportunity_score"]["player"].tolist() == ["Low"]
+
+
+def test_minutes_sample_distribution_counts_labels():
+    df = pd.DataFrame({"minutes_sample_label": ["Muestra baja", "Muestra fiable", "Muestra baja"]})
+
+    assert minutes_sample_distribution(df) == {"Muestra baja": 2, "Muestra fiable": 1}
+
+
+def test_top_unqualified_count_counts_unqualified_players_in_top_n():
+    df = pd.DataFrame(
+        {
+            "player": ["A", "B", "C"],
+            "overall_score": [90.0, 80.0, 70.0],
+            "is_minutes_qualified": [False, True, False],
+        }
+    )
+
+    assert top_unqualified_count(df, "overall_score", n=2) == 1

@@ -109,6 +109,7 @@ POSITION_SCORE_WEIGHTS = {
 }
 
 PROFILE_SCORE_COLUMNS = list(PROFILE_WEIGHTS)
+QUALIFIED_MINUTES_THRESHOLD = 900
 
 
 def _minmax_100(series: pd.Series) -> pd.Series:
@@ -153,7 +154,7 @@ def _weighted_overall_score(row: pd.Series) -> float:
 
 
 def add_profile_scores(df: pd.DataFrame, as_of_date: str | date | pd.Timestamp | None = None) -> pd.DataFrame:
-    result = df.copy()
+    result = add_minutes_reliability(df)
     weighted_scores = []
 
     for score_name, weights in PROFILE_WEIGHTS.items():
@@ -172,6 +173,22 @@ def add_profile_scores(df: pd.DataFrame, as_of_date: str | date | pd.Timestamp |
     result["creation_score"] = result["chance_creation_score"]
     result["progression_score"] = result["ball_progression_score"]
     result["defensive_score"] = result["defensive_impact_score"]
+    return result
+
+
+def add_minutes_reliability(
+    df: pd.DataFrame,
+    qualified_minutes_threshold: int = QUALIFIED_MINUTES_THRESHOLD,
+) -> pd.DataFrame:
+    result = df.copy()
+    minutes = pd.to_numeric(result.get("minutes", pd.Series(0, index=result.index)), errors="coerce").fillna(0)
+    threshold = max(float(qualified_minutes_threshold), 1.0)
+
+    result["minutes_reliability_score"] = (minutes.clip(lower=0, upper=threshold) / threshold * 100).round(1)
+    result["is_minutes_qualified"] = minutes >= threshold
+    result["minutes_sample_label"] = "Muestra baja"
+    result.loc[(minutes >= 300) & (minutes < threshold), "minutes_sample_label"] = "Muestra media"
+    result.loc[minutes >= threshold, "minutes_sample_label"] = "Muestra fiable"
     return result
 
 
