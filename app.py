@@ -102,6 +102,15 @@ def minutes_sample_warning_message(df: pd.DataFrame) -> str | None:
     return "Algunos jugadores tienen pocos minutos; interpreta su ranking como señal exploratoria."
 
 
+def goalkeeper_comparability_warning_message(df: pd.DataFrame) -> str | None:
+    if "is_general_ranking_comparable" not in df.columns:
+        return None
+    comparable = df["is_general_ranking_comparable"].fillna(True).astype(bool)
+    if comparable.all():
+        return None
+    return "Los porteros no son plenamente comparables con el scoring general."
+
+
 def format_score(value: object, decimals: int = 1) -> str:
     number = pd.to_numeric(pd.Series([value]), errors="coerce").iloc[0]
     if pd.isna(number):
@@ -244,6 +253,8 @@ def player_table(df: pd.DataFrame) -> None:
         "age",
         "age_known",
         "position",
+        "scoring_scope",
+        "is_general_ranking_comparable",
         "team",
         "league",
         "minutes",
@@ -257,6 +268,7 @@ def player_table(df: pd.DataFrame) -> None:
         "sample_adjusted_overall_score",
         "market_opportunity_score",
         "sample_adjusted_market_opportunity_score",
+        "goalkeeper_score",
         "attacking_impact_score",
         "chance_creation_score",
         "ball_progression_score",
@@ -278,6 +290,7 @@ def player_table(df: pd.DataFrame) -> None:
             "sample_adjusted_overall_score",
             "market_opportunity_score",
             "sample_adjusted_market_opportunity_score",
+            "goalkeeper_score",
             "minutes_reliability_score",
             "attacking_impact_score",
             "chance_creation_score",
@@ -330,6 +343,8 @@ def similarity_and_report_view(df: pd.DataFrame) -> None:
         "age",
         "age_known",
         "position",
+        "scoring_scope",
+        "is_general_ranking_comparable",
         "team",
         "league",
         "market_value",
@@ -412,6 +427,8 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
         "age",
         "age_known",
         "position",
+        "scoring_scope",
+        "is_general_ranking_comparable",
         "team",
         "league",
         "season",
@@ -424,6 +441,7 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
         "contract_end",
         "overall_score",
         "sample_adjusted_overall_score",
+        "goalkeeper_score",
         "attacking_impact_score",
         "chance_creation_score",
         "ball_progression_score",
@@ -439,6 +457,7 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
         one_decimal_columns=[
             "overall_score",
             "sample_adjusted_overall_score",
+            "goalkeeper_score",
             "attacking_impact_score",
             "chance_creation_score",
             "ball_progression_score",
@@ -452,6 +471,9 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
     minutes_warning = minutes_sample_warning_message(opportunities)
     if minutes_warning:
         st.info(minutes_warning)
+    goalkeeper_warning = goalkeeper_comparability_warning_message(opportunities)
+    if goalkeeper_warning:
+        st.info(goalkeeper_warning)
     st.dataframe(
         opportunity_display,
         width="stretch",

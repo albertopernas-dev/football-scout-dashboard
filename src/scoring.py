@@ -110,6 +110,11 @@ POSITION_SCORE_WEIGHTS = {
 
 PROFILE_SCORE_COLUMNS = list(PROFILE_WEIGHTS)
 QUALIFIED_MINUTES_THRESHOLD = 900
+GOALKEEPER_METRIC_WEIGHTS = {
+    "saves_per90": 0.50,
+    "rating_avg": 0.35,
+    "clean_sheets": 0.15,
+}
 
 
 def _minmax_100(series: pd.Series) -> pd.Series:
@@ -134,6 +139,10 @@ def is_metric_informative(df: pd.DataFrame, metric_column: str) -> bool:
         # only when they carry real variation.
         return _series_has_signal(df[percentile_column])
     return False
+
+
+def is_goalkeeper_position(position: object) -> bool:
+    return str(position).strip().upper() in {"GOALKEEPER", "GK", "G"}
 
 
 def informative_profile_weights(df: pd.DataFrame, profile_weights: dict[str, float]) -> dict[str, float]:
@@ -212,6 +221,37 @@ def add_profile_scores(df: pd.DataFrame, as_of_date: str | date | pd.Timestamp |
     result["creation_score"] = result["chance_creation_score"]
     result["progression_score"] = result["ball_progression_score"]
     result["defensive_score"] = result["defensive_impact_score"]
+    result = add_goalkeeper_context(result)
+    return result
+
+
+def add_goalkeeper_context(df: pd.DataFrame) -> pd.DataFrame:
+    result = df.copy()
+    positions = result["position"] if "position" in result.columns else pd.Series("", index=result.index)
+    is_goalkeeper = positions.apply(is_goalkeeper_position)
+
+    result["is_goalkeeper"] = is_goalkeeper
+    result["is_general_ranking_comparable"] = ~is_goalkeeper
+    result["scoring_scope"] = "General"
+    result["goalkeeper_score"] = pd.NA
+
+    if not is_goalkeeper.any():
+        return result
+
+    goalkeeper_df = result.loc[is_goalkeeper]
+    gk_weights = informative_profile_weights(goalkeeper_df, GOALKEEPER_METRIC_WEIGHTS)
+    if not gk_weights:
+        result.loc[is_goalkeeper, "scoring_scope"] = "Goalkeeper limited"
+        result.loc[is_goalkeeper, "goalkeeper_score"] = 50.0
+        return result
+
+    score = pd.Series(0.0, index=goalkeeper_df.index)
+    total_weight = 0.0
+    for metric, weight in gk_weights.items():
+        score = score + _metric_score(goalkeeper_df, metric) * weight
+        total_weight += weight
+    result.loc[is_goalkeeper, "scoring_scope"] = "Goalkeeper"
+    result.loc[is_goalkeeper, "goalkeeper_score"] = (score / total_weight).round(1)
     return result
 
 

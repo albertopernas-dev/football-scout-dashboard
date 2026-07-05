@@ -6,6 +6,7 @@ from src.scoring import (
     add_profile_scores,
     adjust_score_by_minutes_reliability,
     informative_profile_weights,
+    is_goalkeeper_position,
     is_metric_informative,
 )
 
@@ -445,3 +446,92 @@ def test_metric_reenters_scoring_when_it_has_real_variation():
 
     assert result["attacking_impact_score"].tolist() == [56.9, 63.1]
     assert {"overall_score", "sample_adjusted_overall_score"}.issubset(result.columns)
+
+
+def test_is_goalkeeper_position_detects_common_goalkeeper_labels():
+    assert is_goalkeeper_position("Goalkeeper") is True
+    assert is_goalkeeper_position("GK") is True
+    assert is_goalkeeper_position("G") is True
+
+
+def test_is_goalkeeper_position_ignores_field_positions():
+    assert is_goalkeeper_position("Defender") is False
+    assert is_goalkeeper_position("Midfielder") is False
+    assert is_goalkeeper_position("Forward") is False
+
+
+def test_goalkeeper_without_gk_metrics_is_marked_limited_and_not_comparable():
+    df = pd.DataFrame(
+        {
+            "player": ["Keeper", "Forward"],
+            "position": ["Goalkeeper", "Forward"],
+            "minutes": [1800, 1800],
+            "goals_per90": [0, 0.5],
+            "shots_per90": [0, 2.0],
+        }
+    )
+
+    result = add_profile_scores(df)
+    rows = result.set_index("player")
+
+    assert bool(rows.loc["Keeper", "is_goalkeeper"]) is True
+    assert rows.loc["Keeper", "scoring_scope"] == "Goalkeeper limited"
+    assert bool(rows.loc["Keeper", "is_general_ranking_comparable"]) is False
+    assert rows.loc["Keeper", "goalkeeper_score"] == 50.0
+    assert bool(rows.loc["Forward", "is_general_ranking_comparable"]) is True
+    assert rows.loc["Forward", "scoring_scope"] == "General"
+
+
+def test_goalkeeper_score_uses_gk_metrics_when_they_have_signal():
+    df = pd.DataFrame(
+        {
+            "player": ["Keeper A", "Keeper B"],
+            "position": ["Goalkeeper", "Goalkeeper"],
+            "minutes": [1800, 1800],
+            "saves_per90": [4.0, 2.0],
+            "saves_per90_pct": [100, 20],
+            "rating_avg": [7.2, 6.5],
+            "rating_avg_pct": [90, 30],
+        }
+    )
+
+    result = add_profile_scores(df)
+
+    assert result["goalkeeper_score"].tolist() == [95.9, 24.1]
+    assert result["scoring_scope"].tolist() == ["Goalkeeper", "Goalkeeper"]
+    assert result["is_general_ranking_comparable"].tolist() == [False, False]
+
+
+def test_goalkeeper_metric_signal_is_evaluated_only_among_goalkeepers():
+    df = pd.DataFrame(
+        {
+            "player": ["Keeper A", "Keeper B", "Forward"],
+            "position": ["Goalkeeper", "Goalkeeper", "Forward"],
+            "minutes": [1800, 1800, 1800],
+            "rating_avg": [7.0, 7.0, 5.0],
+            "rating_avg_pct": [80, 80, 20],
+        }
+    )
+
+    result = add_profile_scores(df)
+    keeper_rows = result[result["position"] == "Goalkeeper"]
+
+    assert keeper_rows["goalkeeper_score"].tolist() == [50.0, 50.0]
+    assert keeper_rows["scoring_scope"].tolist() == ["Goalkeeper limited", "Goalkeeper limited"]
+
+
+def test_goalkeeper_score_minmax_is_calculated_only_among_goalkeepers():
+    df = pd.DataFrame(
+        {
+            "player": ["Keeper A", "Keeper B", "Forward"],
+            "position": ["Goalkeeper", "Goalkeeper", "Forward"],
+            "minutes": [1800, 1800, 1800],
+            "rating_avg": [7.0, 6.0, 10.0],
+        }
+    )
+
+    result = add_profile_scores(df)
+    keeper_rows = result[result["position"] == "Goalkeeper"]
+
+    assert keeper_rows["goalkeeper_score"].tolist() == [100.0, 0.0]
+    assert keeper_rows["scoring_scope"].tolist() == ["Goalkeeper", "Goalkeeper"]

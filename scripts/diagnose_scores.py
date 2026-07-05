@@ -15,7 +15,14 @@ if str(PROJECT_ROOT) not in sys.path:
 from src.data_cleaning import clean_player_data
 from src.data_sources import load_players_data_with_metadata
 from src.features import add_per90_metrics, add_position_percentiles
-from src.scoring import PROFILE_SCORE_COLUMNS, PROFILE_WEIGHTS, add_profile_scores, is_metric_informative
+from src.scoring import (
+    GOALKEEPER_METRIC_WEIGHTS,
+    PROFILE_SCORE_COLUMNS,
+    PROFILE_WEIGHTS,
+    add_profile_scores,
+    is_goalkeeper_position,
+    is_metric_informative,
+)
 
 
 SCORE_COLUMNS = (
@@ -169,6 +176,30 @@ def top_unqualified_count(df: pd.DataFrame, score_column: str, n: int = 10) -> i
     return int((~qualified).sum())
 
 
+def position_counts(df: pd.DataFrame) -> dict[str, int]:
+    if "position" not in df.columns:
+        return {}
+    counts = df["position"].fillna("Unknown").astype(str).value_counts()
+    return {str(position): int(count) for position, count in counts.items()}
+
+
+def goalkeeper_diagnostics(df: pd.DataFrame) -> dict[str, object]:
+    if "position" not in df.columns:
+        goalkeepers = df.iloc[0:0]
+    else:
+        goalkeepers = df[df["position"].apply(is_goalkeeper_position)]
+    available_gk_columns = [column for column in GOALKEEPER_METRIC_WEIGHTS if column in df.columns]
+    informative_gk_metrics = [
+        column for column in GOALKEEPER_METRIC_WEIGHTS if is_metric_informative(goalkeepers, column)
+    ]
+    return {
+        "goalkeepers_count": len(goalkeepers),
+        "available_gk_columns": available_gk_columns,
+        "informative_gk_metrics": informative_gk_metrics,
+        "goalkeepers": goalkeepers,
+    }
+
+
 def main() -> None:
     _configure_stdout()
     raw, metadata = load_players_data_with_metadata()
@@ -190,6 +221,16 @@ def main() -> None:
     print("\nScore distribution:")
     print(json.dumps(calculate_score_distribution(df), indent=2, ensure_ascii=False))
 
+    print("\nPosition counts:")
+    for position, count in position_counts(df).items():
+        print(f"- {position}: {count}")
+
+    gk_diagnostics = goalkeeper_diagnostics(df)
+    print("\nGoalkeeper diagnostics:")
+    print(f"- Goalkeepers: {gk_diagnostics['goalkeepers_count']}")
+    print(f"- Available GK columns: {', '.join(gk_diagnostics['available_gk_columns']) or 'None'}")
+    print(f"- Informative GK metrics: {', '.join(gk_diagnostics['informative_gk_metrics']) or 'None'}")
+
     print("\nMinutes sample distribution:")
     sample_distribution = minutes_sample_distribution(df)
     if sample_distribution:
@@ -205,6 +246,12 @@ def main() -> None:
     for score_column in SCORE_COLUMNS:
         print(f"\nTop 10 {score_column}:")
         _print_dataframe(top_rankings(df, score_column, n=10))
+
+    goalkeepers = gk_diagnostics["goalkeepers"]
+    print("\nTop 10 goalkeepers by current scores:")
+    for score_column in SCORE_COLUMNS:
+        print(f"\nGoalkeepers - {score_column}:")
+        _print_dataframe(top_rankings(goalkeepers, score_column, n=10))
 
     print("\nTop 10 overall_score by position:")
     for position, ranking in top_rankings_by_position(df, score_column="overall_score", n=10).items():

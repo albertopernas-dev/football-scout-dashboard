@@ -5,7 +5,9 @@ import pandas as pd
 from scripts.diagnose_scores import (
     calculate_score_distribution,
     find_low_minutes_in_top_rankings,
+    goalkeeper_diagnostics,
     minutes_sample_distribution,
+    position_counts,
     summarize_scoring_columns,
     top_unqualified_count,
     top_rankings,
@@ -93,3 +95,55 @@ def test_top_unqualified_count_counts_unqualified_players_in_top_n():
     )
 
     assert top_unqualified_count(df, "overall_score", n=2) == 1
+
+
+def test_position_counts_counts_players_by_position():
+    df = pd.DataFrame({"position": ["Goalkeeper", "Defender", "Goalkeeper"]})
+
+    assert position_counts(df) == {"Goalkeeper": 2, "Defender": 1}
+
+
+def test_goalkeeper_diagnostics_reports_count_and_informative_metrics():
+    df = pd.DataFrame(
+        {
+            "player": ["Keeper A", "Keeper B", "Forward"],
+            "position": ["Goalkeeper", "Goalkeeper", "Forward"],
+            "saves_per90": [3.0, 2.0, 0.0],
+            "rating_avg": [7.0, 6.5, 6.0],
+        }
+    )
+
+    diagnostics = goalkeeper_diagnostics(df)
+
+    assert diagnostics["goalkeepers_count"] == 2
+    assert "saves_per90" in diagnostics["available_gk_columns"]
+    assert "rating_avg" in diagnostics["informative_gk_metrics"]
+
+
+def test_goalkeeper_diagnostics_evaluates_metric_signal_only_among_goalkeepers():
+    df = pd.DataFrame(
+        {
+            "player": ["Keeper A", "Keeper B", "Forward"],
+            "position": ["Goalkeeper", "Goalkeeper", "Forward"],
+            "rating_avg": [7.0, 7.0, 5.0],
+        }
+    )
+
+    diagnostics = goalkeeper_diagnostics(df)
+
+    assert "rating_avg" in diagnostics["available_gk_columns"]
+    assert "rating_avg" not in diagnostics["informative_gk_metrics"]
+
+
+def test_goalkeeper_diagnostics_marks_metric_informative_when_it_varies_among_goalkeepers():
+    df = pd.DataFrame(
+        {
+            "player": ["Keeper A", "Keeper B", "Forward"],
+            "position": ["Goalkeeper", "Goalkeeper", "Forward"],
+            "rating_avg": [7.2, 6.8, 5.0],
+        }
+    )
+
+    diagnostics = goalkeeper_diagnostics(df)
+
+    assert "rating_avg" in diagnostics["informative_gk_metrics"]
