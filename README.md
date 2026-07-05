@@ -248,6 +248,28 @@ Resume el estado local del dataset sin llamar a internet ni modificar SQLite: fi
 .venv\Scripts\python.exe scripts/show_local_dataset_status.py --fixtures data/raw/api_football_laliga_2024_finished_fixtures.json --fixture-players-dir data/raw/fixture_players --league LaLiga --season 2024
 ```
 
+## Refresh local dataset
+
+Orquesta el flujo local completo: opcionalmente descarga fixtures pendientes, reconstruye SQLite desde los JSON cacheados y muestra el estado final.
+
+Solo reconstruir SQLite y mostrar estado:
+
+```powershell
+.venv\Scripts\python.exe scripts/refresh_local_dataset.py --fixtures data/raw/api_football_laliga_2024_finished_fixtures.json --fixture-players-dir data/raw/fixture_players --league LaLiga --season 2024
+```
+
+Fetch pequeño, rebuild y status:
+
+```powershell
+.venv\Scripts\python.exe scripts/refresh_local_dataset.py --fixtures data/raw/api_football_laliga_2024_finished_fixtures.json --fixture-players-dir data/raw/fixture_players --league LaLiga --season 2024 --limit 5 --delay-seconds 2
+```
+
+Dry-run sin llamadas API ni rebuild:
+
+```powershell
+.venv\Scripts\python.exe scripts/refresh_local_dataset.py --fixtures data/raw/api_football_laliga_2024_finished_fixtures.json --fixture-players-dir data/raw/fixture_players --league LaLiga --season 2024 --limit 5 --dry-run
+```
+
 ## Demo use case
 
 This MVP helps identify undervalued football players through statistical filters, position-based percentiles, similarity modelling and automated scouting reports.
