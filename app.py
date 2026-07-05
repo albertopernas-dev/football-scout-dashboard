@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import pandas as pd
 import streamlit as st
 
-from src.config import RADAR_METRICS
+from src.config import DATABASE_PATH, RADAR_METRICS
 from src.data_cleaning import clean_player_data
 from src.data_quality import calculate_data_quality_metrics
 from src.data_sources import load_players_data_with_metadata
@@ -19,7 +21,7 @@ st.set_page_config(page_title="Football Scout Dashboard", page_icon=":soccer:", 
 
 
 @st.cache_data(show_spinner=False)
-def load_default_data_with_metadata() -> tuple[pd.DataFrame, dict]:
+def load_default_data_with_metadata(sqlite_version: tuple[float, int] | None = None) -> tuple[pd.DataFrame, dict]:
     return load_players_data_with_metadata()
 
 
@@ -29,6 +31,13 @@ def prepare_data(raw: pd.DataFrame) -> pd.DataFrame:
     featured = add_per90_metrics(cleaned)
     percentiles = add_position_percentiles(featured)
     return add_profile_scores(percentiles)
+
+
+def get_sqlite_data_version(database_path: Path) -> tuple[float, int] | None:
+    if not database_path.exists():
+        return None
+    stat = database_path.stat()
+    return stat.st_mtime, stat.st_size
 
 
 def is_false_flag(value: object) -> bool:
@@ -496,7 +505,8 @@ def main() -> None:
         }
     else:
         try:
-            raw, data_source_metadata = load_default_data_with_metadata()
+            sqlite_version = get_sqlite_data_version(DATABASE_PATH)
+            raw, data_source_metadata = load_default_data_with_metadata(sqlite_version=sqlite_version)
         except ValueError as exc:
             st.error(str(exc))
             st.stop()
