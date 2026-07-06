@@ -7,7 +7,11 @@ import streamlit as st
 
 from src.config import DATABASE_PATH, RADAR_METRICS
 from src.data_cleaning import clean_player_data
-from src.data_quality import calculate_data_quality_metrics, calculate_market_context_availability
+from src.data_quality import (
+    calculate_data_quality_metrics,
+    calculate_dataset_summary,
+    calculate_market_context_availability,
+)
 from src.data_sources import load_players_data_with_metadata
 from src.features import add_per90_metrics, add_position_percentiles
 from src.opportunity import find_market_opportunities
@@ -703,6 +707,19 @@ def render_data_quality(metrics: dict[str, object]) -> None:
         row_b[3].metric("Contrato conocido", f"{metrics['contract_known_pct']}%")
 
 
+def render_dataset_summary(summary: dict[str, object]) -> None:
+    st.subheader("Resumen del dataset")
+    row = st.columns(6)
+    row[0].metric("Jugadores", summary["row_count"])
+    row[1].metric("Equipos", summary["teams_count"])
+    row[2].metric("Minutos", summary["total_minutes"])
+    row[3].metric("Muestra fiable", summary["reliable_sample_count"])
+    row[4].metric("Porteros", summary["goalkeeper_count"])
+    market_context_label = "Disponible" if summary["market_context_available"] else "Limitado"
+    row[5].metric("Contexto mercado", market_context_label)
+    st.caption("Los rankings se calculan sobre la fuente activa y respetan la fiabilidad de minutos.")
+
+
 def main() -> None:
     st.title("Football Scout Dashboard")
     render_intro()
@@ -731,6 +748,7 @@ def main() -> None:
 
     render_data_source(data_source_metadata)
     render_data_quality(calculate_data_quality_metrics(df))
+    render_dataset_summary(calculate_dataset_summary(df, data_source_metadata))
 
     filtered = filter_data(df)
     kpi_a, kpi_b, kpi_c, kpi_d = st.columns(4)

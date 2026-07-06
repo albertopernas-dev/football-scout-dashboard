@@ -1,6 +1,10 @@
 import pandas as pd
 
-from src.data_quality import calculate_data_quality_metrics, calculate_market_context_availability
+from src.data_quality import (
+    calculate_data_quality_metrics,
+    calculate_dataset_summary,
+    calculate_market_context_availability,
+)
 
 
 def test_calculate_data_quality_metrics_uses_known_flags():
@@ -112,3 +116,103 @@ def test_calculate_market_context_availability_is_true_with_partial_market_value
 
     assert context["market_value_known_pct"] == 50.0
     assert context["has_market_context"] is True
+
+
+def test_calculate_dataset_summary_empty_dataframe_does_not_break():
+    summary = calculate_dataset_summary(pd.DataFrame(), metadata={"source": "sqlite"})
+
+    assert summary["source"] == "sqlite"
+    assert summary["row_count"] == 0
+    assert summary["teams_count"] == 0
+    assert summary["leagues_count"] == 0
+    assert summary["total_minutes"] == 0
+    assert summary["reliable_sample_count"] == 0
+    assert summary["medium_or_reliable_sample_count"] == 0
+    assert summary["goalkeeper_count"] == 0
+    assert summary["general_comparable_count"] == 0
+    assert summary["market_context_available"] is False
+
+
+def test_calculate_dataset_summary_counts_reliable_samples_from_flag():
+    df = pd.DataFrame(
+        {
+            "player": ["A", "B", "C"],
+            "team": ["T1", "T1", "T2"],
+            "league": ["L1", "L1", "L1"],
+            "minutes": [900, 450, 100],
+            "is_minutes_qualified": [True, False, True],
+            "minutes_sample_label": ["Muestra fiable", "Muestra media", "Muestra baja"],
+        }
+    )
+
+    summary = calculate_dataset_summary(df)
+
+    assert summary["reliable_sample_count"] == 2
+
+
+def test_calculate_dataset_summary_counts_medium_or_reliable_samples():
+    df = pd.DataFrame(
+        {
+            "player": ["Low", "Medium", "Reliable"],
+            "minutes_sample_label": ["Muestra baja", "Muestra media", "Muestra fiable"],
+        }
+    )
+
+    summary = calculate_dataset_summary(df)
+
+    assert summary["medium_or_reliable_sample_count"] == 2
+
+
+def test_calculate_dataset_summary_counts_goalkeepers_from_flag():
+    df = pd.DataFrame(
+        {
+            "player": ["Keeper", "Forward"],
+            "is_goalkeeper": [True, False],
+            "position": ["Forward", "Forward"],
+        }
+    )
+
+    summary = calculate_dataset_summary(df)
+
+    assert summary["goalkeeper_count"] == 1
+
+
+def test_calculate_dataset_summary_counts_goalkeepers_from_position_fallback():
+    df = pd.DataFrame(
+        {
+            "player": ["Keeper", "Short GK", "Letter G", "Defender"],
+            "position": ["Goalkeeper", "GK", "G", "Defender"],
+        }
+    )
+
+    summary = calculate_dataset_summary(df)
+
+    assert summary["goalkeeper_count"] == 3
+
+
+def test_calculate_dataset_summary_market_context_false_when_context_is_unknown():
+    df = pd.DataFrame(
+        {
+            "age": [25, 25],
+            "age_known": [False, False],
+            "market_value": [None, None],
+            "market_value_known": [False, False],
+            "contract_end": [None, ""],
+        }
+    )
+
+    summary = calculate_dataset_summary(df)
+
+    assert summary["age_known_pct"] == 0.0
+    assert summary["market_value_known_pct"] == 0.0
+    assert summary["contract_known_pct"] == 0.0
+    assert summary["market_context_available"] is False
+
+
+def test_calculate_dataset_summary_source_comes_from_metadata():
+    df = pd.DataFrame({"player": ["A"]})
+
+    summary = calculate_dataset_summary(df, metadata={"source": "upload", "row_count": 99})
+
+    assert summary["source"] == "upload"
+    assert summary["row_count"] == 1

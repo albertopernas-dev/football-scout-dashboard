@@ -45,6 +45,30 @@ def calculate_market_context_availability(df: pd.DataFrame) -> dict[str, object]
     }
 
 
+def calculate_dataset_summary(df: pd.DataFrame, metadata: dict | None = None) -> dict[str, object]:
+    metadata = metadata or {}
+    quality = calculate_data_quality_metrics(df)
+    market_context = calculate_market_context_availability(df)
+    reliable_sample_count = _reliable_sample_count(df)
+    medium_or_reliable_sample_count = _medium_or_reliable_sample_count(df)
+
+    return {
+        "source": metadata.get("source", "unknown"),
+        "row_count": len(df),
+        "teams_count": quality["teams_count"],
+        "leagues_count": quality["leagues_count"],
+        "total_minutes": quality["total_minutes"],
+        "reliable_sample_count": reliable_sample_count,
+        "medium_or_reliable_sample_count": medium_or_reliable_sample_count,
+        "goalkeeper_count": _goalkeeper_count(df),
+        "general_comparable_count": _general_comparable_count(df),
+        "market_context_available": bool(market_context["has_market_context"]),
+        "age_known_pct": quality["age_known_pct"],
+        "market_value_known_pct": quality["market_value_known_pct"],
+        "contract_known_pct": quality["contract_known_pct"],
+    }
+
+
 def _known_flag_or_numeric_positive(df: pd.DataFrame, flag_column: str, value_column: str) -> pd.Series:
     if df.empty:
         return pd.Series(dtype=bool)
@@ -74,6 +98,39 @@ def _pct(count: int | float, total: int) -> float:
     if total <= 0:
         return 0.0
     return round((float(count) / total) * 100, 1)
+
+
+def _reliable_sample_count(df: pd.DataFrame) -> int:
+    if df.empty:
+        return 0
+    if "is_minutes_qualified" in df.columns:
+        return int(df["is_minutes_qualified"].apply(_is_true_flag).sum())
+    if "minutes_sample_label" in df.columns:
+        return int((df["minutes_sample_label"] == "Muestra fiable").sum())
+    return 0
+
+
+def _medium_or_reliable_sample_count(df: pd.DataFrame) -> int:
+    if df.empty or "minutes_sample_label" not in df.columns:
+        return 0
+    return int(df["minutes_sample_label"].isin(["Muestra media", "Muestra fiable"]).sum())
+
+
+def _goalkeeper_count(df: pd.DataFrame) -> int:
+    if df.empty:
+        return 0
+    if "is_goalkeeper" in df.columns:
+        return int(df["is_goalkeeper"].apply(_is_true_flag).sum())
+    if "position" not in df.columns:
+        return 0
+    positions = df["position"].fillna("").astype(str).str.strip().str.upper()
+    return int(positions.isin({"GOALKEEPER", "GK", "G"}).sum())
+
+
+def _general_comparable_count(df: pd.DataFrame) -> int:
+    if df.empty or "is_general_ranking_comparable" not in df.columns:
+        return 0
+    return int(df["is_general_ranking_comparable"].apply(_is_true_flag).sum())
 
 
 def _is_true_flag(value: object) -> bool:
