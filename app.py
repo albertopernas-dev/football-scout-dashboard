@@ -170,6 +170,10 @@ def format_number(value: object, decimals: int = 2) -> str:
     return f"{number:.{decimals}f}"
 
 
+def dataframe_to_csv_bytes(df: pd.DataFrame) -> bytes:
+    return df.to_csv(index=False).encode("utf-8-sig")
+
+
 def format_display_columns(
     df: pd.DataFrame,
     currency_columns: list[str] | None = None,
@@ -439,6 +443,13 @@ def player_table(df: pd.DataFrame) -> None:
         "Score recomendado = score bruto ajustado por fiabilidad de minutos. "
         "Los filtros de ranking no eliminan datos; solo ajustan la tabla visible."
     )
+    if not display_df.empty:
+        st.download_button(
+            "Descargar tabla visible CSV",
+            data=dataframe_to_csv_bytes(display_df),
+            file_name="football_scout_players_visible.csv",
+            mime="text/csv",
+        )
     st.dataframe(
         display_df,
         width="stretch",
@@ -639,6 +650,13 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
     goalkeeper_warning = goalkeeper_comparability_warning_message(opportunities)
     if goalkeeper_warning:
         st.info(goalkeeper_warning)
+    if not opportunity_display.empty:
+        st.download_button(
+            "Descargar oportunidades CSV",
+            data=dataframe_to_csv_bytes(opportunity_display),
+            file_name="football_scout_opportunities.csv",
+            mime="text/csv",
+        )
     st.dataframe(
         opportunity_display,
         width="stretch",

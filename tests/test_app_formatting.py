@@ -2,6 +2,7 @@ import pandas as pd
 
 from app import (
     apply_display_column_labels,
+    dataframe_to_csv_bytes,
     format_age,
     format_boolean_columns,
     format_display_columns,
@@ -117,3 +118,32 @@ def test_sort_players_for_display_uses_internal_columns_before_visual_labels():
 
     assert sorted_df["player"].tolist() == ["B", "A"]
     assert display["Jugador"].tolist() == ["B", "A"]
+
+
+def test_dataframe_to_csv_bytes_returns_bytes_without_index():
+    df = pd.DataFrame({"Jugador": ["A"], "Score recomendado": ["71.0"]}, index=[42])
+
+    csv_bytes = dataframe_to_csv_bytes(df)
+    csv_text = csv_bytes.decode("utf-8-sig")
+
+    assert isinstance(csv_bytes, bytes)
+    assert "42" not in csv_text
+    assert csv_text.splitlines()[0] == "Jugador,Score recomendado"
+
+
+def test_dataframe_to_csv_bytes_preserves_visual_columns_and_can_be_read_back():
+    df = pd.DataFrame(
+        {
+            "Jugador": ["Portero"],
+            "Muestra": ["Muestra fiable"],
+            "Muestra fiable": ["S\u00ed"],
+        }
+    )
+
+    csv_bytes = dataframe_to_csv_bytes(df)
+    restored = pd.read_csv(pd.io.common.BytesIO(csv_bytes), encoding="utf-8-sig")
+
+    assert restored.columns.tolist() == ["Jugador", "Muestra", "Muestra fiable"]
+    assert restored.loc[0, "Jugador"] == "Portero"
+    assert restored.loc[0, "Muestra"] == "Muestra fiable"
+    assert restored.loc[0, "Muestra fiable"] == "S\u00ed"
