@@ -1,6 +1,11 @@
 import pandas as pd
 
-from app import filter_by_ranking_scope, filter_by_sample_quality, sort_players_for_display
+from app import (
+    filter_by_ranking_scope,
+    filter_by_sample_quality,
+    prepare_opportunity_input,
+    sort_players_for_display,
+)
 
 
 def test_sort_players_for_display_prefers_sample_adjusted_overall_score():
@@ -132,5 +137,54 @@ def test_filter_by_sample_quality_missing_columns_does_not_break():
     df = pd.DataFrame({"player": ["A", "B"]})
 
     result = filter_by_sample_quality(df, "Solo fiable")
+
+    assert result["player"].tolist() == ["A", "B"]
+
+
+def test_prepare_opportunity_input_excludes_goalkeepers_when_general_comparable_scope_is_selected():
+    df = pd.DataFrame(
+        {
+            "player": ["Forward", "Keeper"],
+            "is_general_ranking_comparable": [True, False],
+            "is_goalkeeper": [False, True],
+        }
+    )
+
+    result = prepare_opportunity_input(df, "Solo comparables ranking general", "Todas")
+
+    assert result["player"].tolist() == ["Forward"]
+
+
+def test_prepare_opportunity_input_excludes_unreliable_samples_when_reliable_filter_is_selected():
+    df = pd.DataFrame(
+        {
+            "player": ["Low", "Reliable"],
+            "is_minutes_qualified": [False, True],
+        }
+    )
+
+    result = prepare_opportunity_input(df, "Todos", "Solo fiable")
+
+    assert result["player"].tolist() == ["Reliable"]
+
+
+def test_prepare_opportunity_input_all_filters_keep_rows_unchanged():
+    df = pd.DataFrame(
+        {
+            "player": ["A", "B"],
+            "is_general_ranking_comparable": [True, False],
+            "is_minutes_qualified": [False, True],
+        }
+    )
+
+    result = prepare_opportunity_input(df, "Todos", "Todas")
+
+    assert result["player"].tolist() == ["A", "B"]
+
+
+def test_prepare_opportunity_input_missing_columns_does_not_remove_rows():
+    df = pd.DataFrame({"player": ["A", "B"]})
+
+    result = prepare_opportunity_input(df, "Solo comparables ranking general", "Solo fiable")
 
     assert result["player"].tolist() == ["A", "B"]

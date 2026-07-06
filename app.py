@@ -326,6 +326,11 @@ def filter_by_sample_quality(df: pd.DataFrame, sample_filter: str) -> pd.DataFra
     return df
 
 
+def prepare_opportunity_input(df: pd.DataFrame, ranking_scope: str, sample_filter: str) -> pd.DataFrame:
+    scoped_df = filter_by_ranking_scope(df, ranking_scope)
+    return filter_by_sample_quality(scoped_df, sample_filter)
+
+
 def filter_data(df: pd.DataFrame) -> pd.DataFrame:
     with st.sidebar:
         st.header("Filtros")
@@ -539,9 +544,26 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
     contract_months = controls_f.slider("Meses hasta fin de contrato", 1, 60, 24, disabled=not use_contract_filter)
     top_n = st.slider("Número de resultados", 3, 25, 10)
 
+    controls_g, controls_h = st.columns(2)
+    ranking_scope = controls_g.selectbox(
+        "Ámbito ranking",
+        ["Todos", "Solo comparables ranking general", "Solo porteros"],
+        key="opportunity_ranking_scope",
+    )
+    sample_filter = controls_h.selectbox(
+        "Fiabilidad muestra",
+        ["Todas", "Media o fiable", "Solo fiable"],
+        key="opportunity_sample_filter",
+    )
+    opportunity_input = prepare_opportunity_input(df, ranking_scope, sample_filter)
+
+    if opportunity_input.empty:
+        st.info("No hay jugadores que cumplan los filtros de oportunidad.")
+        return
+
     try:
         opportunities = find_market_opportunities(
-            df,
+            opportunity_input,
             positions=positions or None,
             max_age=int(max_age),
             min_minutes=int(min_minutes),
