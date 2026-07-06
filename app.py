@@ -20,6 +20,47 @@ from src.visualizations import create_opportunity_bar_chart, create_radar_chart
 st.set_page_config(page_title="Football Scout Dashboard", page_icon=":soccer:", layout="wide")
 
 
+DISPLAY_COLUMN_LABELS = {
+    "player": "Jugador",
+    "age": "Edad",
+    "position": "Posición",
+    "team": "Equipo",
+    "league": "Liga",
+    "season": "Temporada",
+    "minutes": "Minutos",
+    "minutes_reliability_score": "Fiabilidad minutos",
+    "minutes_sample_label": "Muestra",
+    "is_minutes_qualified": "Muestra fiable",
+    "market_value": "Valor de mercado",
+    "contract_end": "Fin de contrato",
+    "overall_score": "Score bruto",
+    "sample_adjusted_overall_score": "Score recomendado",
+    "market_opportunity_score": "Oportunidad bruta",
+    "sample_adjusted_market_opportunity_score": "Oportunidad recomendada",
+    "attacking_impact_score": "Impacto ofensivo",
+    "chance_creation_score": "Creación",
+    "ball_progression_score": "Progresión",
+    "defensive_impact_score": "Impacto defensivo",
+    "dribbling_threat_score": "Amenaza regate",
+    "scoring_scope": "Ámbito scoring",
+    "is_general_ranking_comparable": "Comparable ranking general",
+    "goalkeeper_score": "Score portero",
+    "similarity": "Similitud",
+    "goals_per90": "Goles p90",
+    "assists_per90": "Asistencias p90",
+    "xg_per90": "xG p90",
+    "xa_per90": "xA p90",
+    "shots_per90": "Tiros p90",
+    "key_passes_per90": "Pases clave p90",
+    "progressive_passes_per90": "Pases progresivos p90",
+    "progressive_carries_per90": "Conducciones progresivas p90",
+    "completed_dribbles_per90": "Regates completados p90",
+    "duels_won_per90": "Duelos ganados p90",
+    "recoveries_per90": "Recuperaciones p90",
+    "interceptions_per90": "Intercepciones p90",
+}
+
+
 @st.cache_data(show_spinner=False)
 def load_default_data_with_metadata(sqlite_version: tuple[float, int] | None = None) -> tuple[pd.DataFrame, dict]:
     return load_players_data_with_metadata()
@@ -168,6 +209,47 @@ def format_display_columns(
     return display_df
 
 
+def format_boolean_value(value: object) -> str:
+    if is_true_flag(value):
+        return "Sí"
+    if is_false_flag(value):
+        return "No"
+    return ""
+
+
+def format_boolean_columns(df: pd.DataFrame, boolean_columns: list[str] | None = None) -> pd.DataFrame:
+    display_df = df.copy()
+    for column in boolean_columns or []:
+        if column in display_df.columns:
+            display_df[column] = display_df[column].apply(format_boolean_value)
+    return display_df
+
+
+def apply_display_column_labels(df: pd.DataFrame) -> pd.DataFrame:
+    return df.rename(columns=DISPLAY_COLUMN_LABELS)
+
+
+def prepare_table_display(
+    df: pd.DataFrame,
+    currency_columns: list[str] | None = None,
+    age_columns: list[str] | None = None,
+    one_decimal_columns: list[str] | None = None,
+    two_decimal_columns: list[str] | None = None,
+    three_decimal_columns: list[str] | None = None,
+    boolean_columns: list[str] | None = None,
+) -> pd.DataFrame:
+    display_df = format_display_columns(
+        df,
+        currency_columns=currency_columns,
+        age_columns=age_columns,
+        one_decimal_columns=one_decimal_columns,
+        two_decimal_columns=two_decimal_columns,
+        three_decimal_columns=three_decimal_columns,
+    )
+    display_df = format_boolean_columns(display_df, boolean_columns)
+    return apply_display_column_labels(display_df)
+
+
 def get_known_age_values(df: pd.DataFrame) -> pd.Series:
     if "age" not in df.columns:
         return pd.Series(dtype="int64")
@@ -281,7 +363,7 @@ def player_table(df: pd.DataFrame) -> None:
     ]
     visible_columns = [column for column in display_columns if column in df.columns]
     sorted_df = sort_players_for_display(df[visible_columns])
-    display_df = format_display_columns(
+    display_df = prepare_table_display(
         sorted_df,
         currency_columns=["market_value"],
         age_columns=["age"],
@@ -299,8 +381,12 @@ def player_table(df: pd.DataFrame) -> None:
             "dribbling_threat_score",
         ],
         two_decimal_columns=["goals_per90", "assists_per90", "xg_per90", "xa_per90"],
+        boolean_columns=["is_minutes_qualified", "is_general_ranking_comparable"],
     )
-    st.caption("El orden recomendado usa el score ajustado por fiabilidad de minutos.")
+    st.caption(
+        "El orden recomendado usa el score ajustado por fiabilidad de minutos. "
+        "Score recomendado = score bruto ajustado por fiabilidad de minutos."
+    )
     st.dataframe(
         display_df,
         width="stretch",
@@ -328,7 +414,12 @@ def comparison_view(df: pd.DataFrame) -> None:
 
     rows = df[df["player"].isin([player_a, player_b])]
     comparison_columns = ["player", "overall_score", "market_opportunity_score"] + selected_metrics
-    st.dataframe(rows[[column for column in comparison_columns if column in rows.columns]], width="stretch", hide_index=True)
+    comparison_display = prepare_table_display(
+        rows[[column for column in comparison_columns if column in rows.columns]],
+        one_decimal_columns=["overall_score", "market_opportunity_score"],
+        two_decimal_columns=selected_metrics,
+    )
+    st.dataframe(comparison_display, width="stretch", hide_index=True)
 
 
 def similarity_and_report_view(df: pd.DataFrame) -> None:
@@ -353,12 +444,13 @@ def similarity_and_report_view(df: pd.DataFrame) -> None:
         "overall_score",
         "market_opportunity_score",
     ]
-    similar_display = format_display_columns(
+    similar_display = prepare_table_display(
         similar[[column for column in similar_columns if column in similar.columns]],
         currency_columns=["market_value"],
         age_columns=["age"],
         one_decimal_columns=["overall_score", "market_opportunity_score"],
         three_decimal_columns=["similarity"],
+        boolean_columns=["is_general_ranking_comparable"],
     )
     st.dataframe(
         similar_display,
@@ -421,7 +513,10 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
         )
         return
 
-    st.caption("El orden recomendado usa el score ajustado por fiabilidad de minutos.")
+    st.caption(
+        "El orden recomendado usa el score ajustado por fiabilidad de minutos. "
+        "Score recomendado = score bruto ajustado por fiabilidad de minutos."
+    )
     ranking_columns = [
         "player",
         "age",
@@ -450,7 +545,7 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
         "market_opportunity_score",
         "sample_adjusted_market_opportunity_score",
     ]
-    opportunity_display = format_display_columns(
+    opportunity_display = prepare_table_display(
         opportunities[[column for column in ranking_columns if column in opportunities.columns]],
         currency_columns=["market_value"],
         age_columns=["age"],
@@ -467,6 +562,7 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
             "sample_adjusted_market_opportunity_score",
             "minutes_reliability_score",
         ],
+        boolean_columns=["is_minutes_qualified", "is_general_ranking_comparable"],
     )
     minutes_warning = minutes_sample_warning_message(opportunities)
     if minutes_warning:
