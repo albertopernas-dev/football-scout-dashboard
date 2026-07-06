@@ -95,6 +95,12 @@ La app muestra en la interfaz la fuente activa de datos para distinguir entre SQ
 
 La decisión técnica sobre proveedores de datos está documentada en [`docs/data_provider_decision.md`](docs/data_provider_decision.md).
 
+## How to use the dashboard
+
+La guia de uso esta en [`docs/user_guide.md`](docs/user_guide.md). Resume el flujo recomendado para revisar el dataset, interpretar rankings, usar Opportunity Finder, tratar porteros por separado y descargar shortlists en CSV.
+
+La metodologia de scoring esta documentada en [`docs/scoring_methodology.md`](docs/scoring_methodology.md).
+
 ## Scoring methodology
 
 El ranking recomendado usa scores ajustados por fiabilidad de minutos. Las metricas sin senal real se ignoran automaticamente, y los porteros tienen un tratamiento separado porque no son plenamente comparables con el ranking general.
