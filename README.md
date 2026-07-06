@@ -95,6 +95,12 @@ La app muestra en la interfaz la fuente activa de datos para distinguir entre SQ
 
 La decisión técnica sobre proveedores de datos está documentada en [`docs/data_provider_decision.md`](docs/data_provider_decision.md).
 
+## Scoring methodology
+
+El ranking recomendado usa scores ajustados por fiabilidad de minutos. Las metricas sin senal real se ignoran automaticamente, y los porteros tienen un tratamiento separado porque no son plenamente comparables con el ranking general.
+
+La metodologia completa de scoring, Opportunity Finder, fiabilidad por minutos y limitaciones del dataset actual esta documentada en [`docs/scoring_methodology.md`](docs/scoring_methodology.md).
+
 ## SQLite local ingestion
 
 Genera la base local SQLite desde el CSV de ejemplo con:
