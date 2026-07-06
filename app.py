@@ -291,6 +291,37 @@ def sort_players_for_display(df: pd.DataFrame) -> pd.DataFrame:
     return df.sort_values(sort_column, ascending=False)
 
 
+def filter_by_ranking_scope(df: pd.DataFrame, scope: str) -> pd.DataFrame:
+    if scope == "Todos":
+        return df
+    if scope == "Solo comparables ranking general":
+        if "is_general_ranking_comparable" not in df.columns:
+            return df
+        return df[df["is_general_ranking_comparable"].apply(is_true_flag)]
+    if scope == "Solo porteros":
+        if "is_goalkeeper" in df.columns:
+            return df[df["is_goalkeeper"].apply(is_true_flag)]
+        if "position" in df.columns:
+            positions = df["position"].fillna("").astype(str).str.strip().str.upper()
+            return df[positions.isin({"GOALKEEPER", "GK", "G"})]
+    return df
+
+
+def filter_by_sample_quality(df: pd.DataFrame, sample_filter: str) -> pd.DataFrame:
+    if sample_filter == "Todas":
+        return df
+    if sample_filter == "Media o fiable":
+        if "minutes_sample_label" not in df.columns:
+            return df
+        return df[df["minutes_sample_label"] != "Muestra baja"]
+    if sample_filter == "Solo fiable":
+        if "is_minutes_qualified" in df.columns:
+            return df[df["is_minutes_qualified"].apply(is_true_flag)]
+        if "minutes_sample_label" in df.columns:
+            return df[df["minutes_sample_label"] == "Muestra fiable"]
+    return df
+
+
 def filter_data(df: pd.DataFrame) -> pd.DataFrame:
     with st.sidebar:
         st.header("Filtros")
@@ -362,7 +393,18 @@ def player_table(df: pd.DataFrame) -> None:
         "xa_per90",
     ]
     visible_columns = [column for column in display_columns if column in df.columns]
-    sorted_df = sort_players_for_display(df[visible_columns])
+    controls_a, controls_b = st.columns(2)
+    ranking_scope = controls_a.selectbox(
+        "Ámbito ranking",
+        ["Todos", "Solo comparables ranking general", "Solo porteros"],
+    )
+    sample_filter = controls_b.selectbox(
+        "Fiabilidad muestra",
+        ["Todas", "Media o fiable", "Solo fiable"],
+    )
+    table_df = filter_by_ranking_scope(df[visible_columns], ranking_scope)
+    table_df = filter_by_sample_quality(table_df, sample_filter)
+    sorted_df = sort_players_for_display(table_df)
     display_df = prepare_table_display(
         sorted_df,
         currency_columns=["market_value"],
@@ -385,7 +427,8 @@ def player_table(df: pd.DataFrame) -> None:
     )
     st.caption(
         "El orden recomendado usa el score ajustado por fiabilidad de minutos. "
-        "Score recomendado = score bruto ajustado por fiabilidad de minutos."
+        "Score recomendado = score bruto ajustado por fiabilidad de minutos. "
+        "Los filtros de ranking no eliminan datos; solo ajustan la tabla visible."
     )
     st.dataframe(
         display_df,
