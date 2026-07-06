@@ -1,0 +1,88 @@
+# Demo Walkthrough
+
+This walkthrough is designed for a 5-10 minute portfolio or stakeholder demo. It shows the current local workflow without claiming complete market coverage or a finished professional scouting model.
+
+## Start app
+
+Run the Streamlit app from the project root:
+
+```powershell
+.venv\Scripts\streamlit.exe run app.py
+```
+
+Open the local URL shown by Streamlit. The app should load the active data source, prepare features, calculate scores and show the dashboard.
+
+## Refresh dataset
+
+If the local raw payloads are already cached, rebuild the SQLite dataset with:
+
+```powershell
+.venv\Scripts\python.exe scripts/refresh_local_dataset.py --fixtures data/raw/api_football_laliga_2024_finished_fixtures.json --fixture-players-dir data/raw/fixture_players --league LaLiga --season 2024
+```
+
+This rebuilds the local SQLite database from cached API-Football `fixtures/players` payloads. It does not require a new API call when the raw files are already present.
+
+## Check dataset summary
+
+Start at the top of the app and review:
+
+- active data source;
+- player count;
+- team count;
+- total minutes;
+- reliable sample count;
+- market context status.
+
+For the current LaLiga 2024 dataset, age, market value and contract coverage are limited. The app surfaces that context so the rankings are not presented as complete market intelligence.
+
+## Review recommended ranking
+
+Open the main player table and focus on `Score recomendado`. This is the recommended score because it adjusts the raw score by minutes reliability.
+
+Use `Score bruto` as an exploratory signal. A player with a high raw score but a low-minute sample can still be interesting, but should not be treated as equally reliable as a player with a larger sample.
+
+## Filter reliable/comparable players
+
+Use the table controls:
+
+- `Ambito ranking`: start with comparable general-ranking players.
+- `Fiabilidad muestra`: use `Media o fiable` or `Solo fiable` for a cleaner shortlist.
+
+Goalkeepers are marked separately because the general scoring model is not fully comparable for them.
+
+## Use Opportunity Finder
+
+Open Opportunity Finder and apply the same mindset:
+
+- use comparability filters;
+- use sample reliability filters;
+- adjust position, minutes and result count;
+- read the market-context warning before interpreting the ranking.
+
+In the current dataset, Opportunity Finder is closer to a performance-and-reliability shortlist than a full market opportunity model, because age, market value and contract fields are not available.
+
+## Export CSV
+
+Use the CSV download buttons to export:
+
+- the visible player table;
+- the visible Opportunity Finder results.
+
+The exports preserve the visible columns and current filters, making them useful for shortlists, review notes or external analysis.
+
+## Generate scouting report
+
+Use the similarity/reporting flow to generate an HTML scouting report for a selected player. The report is useful for a quick profile summary, comparable players and visual context.
+
+Reports should be treated as draft scouting material, not final recruitment recommendations.
+
+## Explain current limitations
+
+Be explicit about what the dashboard can and cannot claim today:
+
+- no real age source is connected yet;
+- no real market value source is connected yet;
+- no contract-end source is connected yet;
+- advanced metrics such as xG, xA, progressions and recoveries may have no signal in the current API-Football payloads;
+- goalkeeper scoring is intentionally conservative and depends on limited available goalkeeper signals;
+- rankings support scouting work, but do not replace video review, live scouting or domain judgement.

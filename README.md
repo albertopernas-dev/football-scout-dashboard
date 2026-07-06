@@ -2,6 +2,29 @@
 
 MVP de scouting futbolístico construido con Python, Streamlit, pandas, scikit-learn, Plotly y una arquitectura modular preparada para evolucionar a FastAPI + Next.js.
 
+## Project highlights
+
+- Local SQLite-first scouting dashboard.
+- API-Football fixtures/players pipeline for local dataset refreshes.
+- Sample-adjusted player rankings based on minutes reliability.
+- Metrics without signal are ignored automatically by scoring.
+- Goalkeeper comparability is handled separately from the general ranking.
+- Opportunity Finder with reliability and comparability filters.
+- CSV exports and HTML scouting reports.
+- Tests cover scoring, ingestion, app helpers, diagnostics and data-source behavior.
+
+## Demo workflow
+
+1. Refresh the local dataset.
+2. Open the Streamlit app.
+3. Review the dataset summary.
+4. Use player table filters.
+5. Use Opportunity Finder.
+6. Download a CSV shortlist.
+7. Generate a scouting report.
+
+A practical 5-10 minute demo script is available in [`docs/demo_walkthrough.md`](docs/demo_walkthrough.md).
+
 ## Funcionalidades
 
 - Carga de CSV y uso de `data/sample_players.csv` por defecto.
