@@ -25,6 +25,13 @@ MVP de scouting futbolístico construido con Python, Streamlit, pandas, scikit-l
 
 A practical 5-10 minute demo script is available in [`docs/demo_walkthrough.md`](docs/demo_walkthrough.md).
 
+## Release
+
+Current milestone: `v0.1.0`.
+
+- Release notes: [`docs/release_notes_v0_1_0.md`](docs/release_notes_v0_1_0.md)
+- Demo assets checklist: [`docs/demo_assets_checklist.md`](docs/demo_assets_checklist.md)
+
 ## Funcionalidades
 
 - Carga de CSV y uso de `data/sample_players.csv` por defecto.
