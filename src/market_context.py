@@ -39,6 +39,7 @@ MARKET_CONTEXT_OUTPUT_COLUMNS = {
     "notes": "market_context_notes",
 }
 MERGE_KEY_COLUMNS = ["player_match_key", "team_match_key", "league_match_key", "_season_match_key"]
+MERGE_SOURCE_COLUMNS = ["player", "team", "league", "season"]
 
 
 def required_market_context_columns() -> list[str]:
@@ -196,6 +197,35 @@ def calculate_market_context_enrichment_coverage(df: pd.DataFrame) -> dict[str, 
     }
 
 
+def summarize_market_context_diagnostics(
+    players_df: pd.DataFrame,
+    market_context_df: pd.DataFrame,
+    validation_errors: list[str] | None = None,
+    example_limit: int = 5,
+) -> dict[str, object]:
+    merged = merge_market_context(players_df, market_context_df)
+    duplicates = find_duplicate_market_context_keys(market_context_df)
+    coverage = calculate_market_context_enrichment_coverage(merged)
+    matched_examples = _market_context_example_rows(
+        merged[merged["market_context_matched"].fillna(False).astype(bool)],
+        limit=example_limit,
+    )
+    unmatched_examples = _find_unmatched_market_context_rows(
+        players_df,
+        market_context_df,
+        limit=example_limit,
+    )
+    return {
+        "validation_errors": list(validation_errors or []),
+        "coverage": coverage,
+        "duplicate_count": int(len(duplicates)),
+        "duplicate_rows": duplicates,
+        "matched_examples": matched_examples,
+        "unmatched_enrichment_examples": unmatched_examples,
+        "merged": merged,
+    }
+
+
 def _is_empty(value: object) -> bool:
     if value is None:
         return True
@@ -301,6 +331,50 @@ def _pct(count: int, total: int) -> float:
     if total == 0:
         return 0.0
     return round((count / total) * 100, 1)
+
+
+def _market_context_example_rows(df: pd.DataFrame, limit: int) -> pd.DataFrame:
+    columns = [
+        "player",
+        "team",
+        "league",
+        "season",
+        "market_context_age",
+        "market_context_market_value_eur",
+        "market_context_contract_end_date",
+        "market_context_confidence",
+    ]
+    display_columns = [column for column in columns if column in df.columns]
+    return df.loc[:, display_columns].head(limit).copy()
+
+
+def _find_unmatched_market_context_rows(
+    players_df: pd.DataFrame,
+    market_context_df: pd.DataFrame,
+    limit: int,
+) -> pd.DataFrame:
+    players = _prepare_for_market_context_merge(players_df)
+    context = _prepare_for_market_context_merge(market_context_df)
+    player_keys = {
+        tuple(row[column] for column in MERGE_KEY_COLUMNS)
+        for _, row in players.iterrows()
+    }
+    unmatched_mask = context.apply(
+        lambda row: tuple(row[column] for column in MERGE_KEY_COLUMNS) not in player_keys,
+        axis=1,
+    )
+    columns = [
+        "player",
+        "team",
+        "league",
+        "season",
+        "age",
+        "market_value_eur",
+        "contract_end_date",
+        "confidence",
+    ]
+    display_columns = [column for column in columns if column in context.columns]
+    return context.loc[unmatched_mask, display_columns].head(limit).copy()
 
 
 def _is_empty_row(row: pd.Series) -> bool:
