@@ -16,6 +16,15 @@
 5. Explorar exportacion batch de reportes para shortlists.
 6. Preparar screenshots o un video corto de demo.
 
+## v0.2.0 Market Context Layer
+
+- Enriquecer el dataset con edad real, valor de mercado y fecha de fin de contrato.
+- Empezar con un CSV manual de enrichment, validado y testeado.
+- Mantener fuente, confianza y cobertura visibles.
+- Usar el contexto real en Opportunity Finder cuando exista.
+- Conservar warnings claros cuando la cobertura sea parcial o nula.
+- Plan detallado: [`docs/market_context_plan.md`](docs/market_context_plan.md).
+
 ## Potential GitHub Issues
 
 - [DATA] Add player age, market value and contract source.
