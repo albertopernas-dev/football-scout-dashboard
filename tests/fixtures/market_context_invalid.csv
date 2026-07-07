@@ -1,0 +1,4 @@
+player,team,league,season,age,market_value_eur,contract_end_date,source,source_url,confidence,notes
+Bad Age FC,Bad Team,Test League,2024,14,1000000,2026-06-30,manual_review,,medium,age below range
+Bad Value FC,Bad Team,Test League,2024,24,0,2026-06-30,manual_review,,medium,value is zero
+Bad Confidence FC,Bad Team,Test League,2024,24,1000000,2026-06-30,manual_review,,certain,bad confidence

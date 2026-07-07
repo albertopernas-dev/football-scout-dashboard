@@ -20,6 +20,12 @@ Without real age, market value and contract data, the dashboard cannot reliably 
 
 Adding a Market Context Layer would let Opportunity Finder evolve from a performance signal into a more useful scouting workflow, while still showing warnings whenever context is missing or partial.
 
+## Implementation Status
+
+- CSV schema and validation module started in `src/market_context.py`.
+- App integration pending.
+- Opportunity Finder integration pending.
+
 ## Recommended Approach
 
 ### Phase 1
