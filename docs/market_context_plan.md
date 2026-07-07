@@ -22,7 +22,8 @@ Adding a Market Context Layer would let Opportunity Finder evolve from a perform
 
 ## Implementation Status
 
-- CSV schema and validation module started in `src/market_context.py`.
+- CSV schema and validation module complete in `src/market_context.py`.
+- Merge helpers for prepared player data started/completed.
 - App integration pending.
 - Opportunity Finder integration pending.
 

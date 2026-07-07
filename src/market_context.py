@@ -29,6 +29,16 @@ MATCH_KEY_COLUMNS = {
     "team": "team_match_key",
     "league": "league_match_key",
 }
+MARKET_CONTEXT_OUTPUT_COLUMNS = {
+    "age": "market_context_age",
+    "market_value_eur": "market_context_market_value_eur",
+    "contract_end_date": "market_context_contract_end_date",
+    "source": "market_context_source",
+    "source_url": "market_context_source_url",
+    "confidence": "market_context_confidence",
+    "notes": "market_context_notes",
+}
+MERGE_KEY_COLUMNS = ["player_match_key", "team_match_key", "league_match_key", "_season_match_key"]
 
 
 def required_market_context_columns() -> list[str]:
@@ -80,11 +90,110 @@ def load_market_context_csv(path: str | Path) -> tuple[pd.DataFrame, list[str]]:
     df = pd.read_csv(csv_path, keep_default_na=False)
     errors = validate_market_context_df(df)
 
-    for source_column, match_column in MATCH_KEY_COLUMNS.items():
-        if source_column in df.columns:
-            df[match_column] = df[source_column].apply(normalize_market_context_key)
+    df = prepare_players_market_context_keys(df)
 
     return df, errors
+
+
+def prepare_players_market_context_keys(df: pd.DataFrame) -> pd.DataFrame:
+    result = df.copy()
+    for source_column, match_column in MATCH_KEY_COLUMNS.items():
+        if source_column in result.columns:
+            result[match_column] = result[source_column].apply(normalize_market_context_key)
+        else:
+            result[match_column] = ""
+    return result
+
+
+def find_duplicate_market_context_keys(df: pd.DataFrame) -> pd.DataFrame:
+    prepared = _prepare_for_market_context_merge(df)
+    duplicate_mask = prepared.duplicated(MERGE_KEY_COLUMNS, keep=False)
+    return prepared.loc[duplicate_mask].drop(columns=["_season_match_key"], errors="ignore").copy()
+
+
+def merge_market_context(
+    players_df: pd.DataFrame,
+    market_context_df: pd.DataFrame,
+) -> pd.DataFrame:
+    players = _prepare_for_market_context_merge(players_df)
+    context = _prepare_context_for_merge(market_context_df)
+    duplicates = find_duplicate_market_context_keys(context)
+
+    duplicate_keys = set()
+    if not duplicates.empty:
+        duplicate_key_frame = _prepare_for_market_context_merge(duplicates)
+        duplicate_keys = {
+            tuple(row[column] for column in MERGE_KEY_COLUMNS)
+            for _, row in duplicate_key_frame.iterrows()
+        }
+
+    if context.empty:
+        merged = players.copy()
+        for output_column in MARKET_CONTEXT_OUTPUT_COLUMNS.values():
+            merged[output_column] = pd.NA
+        merged["market_context_matched"] = pd.Series([False] * len(merged), dtype=object)
+        merged["market_context_duplicate_key"] = pd.Series([False] * len(merged), dtype=object)
+        return _finalize_market_context_merge(merged)
+
+    context = context.drop_duplicates(MERGE_KEY_COLUMNS, keep="first").copy()
+    context["_market_context_matched"] = True
+    context["_market_context_duplicate_key"] = context.apply(
+        lambda row: tuple(row[column] for column in MERGE_KEY_COLUMNS) in duplicate_keys,
+        axis=1,
+    )
+
+    right_columns = MERGE_KEY_COLUMNS + [
+        *MARKET_CONTEXT_OUTPUT_COLUMNS.values(),
+        "_market_context_matched",
+        "_market_context_duplicate_key",
+    ]
+    merged = players.merge(
+        context[right_columns],
+        how="left",
+        on=MERGE_KEY_COLUMNS,
+        sort=False,
+    )
+    merged["market_context_matched"] = (
+        merged["_market_context_matched"].fillna(False).astype(bool)
+        .map(lambda value: bool(value))
+        .astype(object)
+    )
+    merged["market_context_duplicate_key"] = (
+        merged["_market_context_duplicate_key"].fillna(False).astype(bool)
+        .map(lambda value: bool(value))
+        .astype(object)
+    )
+    merged = merged.drop(
+        columns=["_market_context_matched", "_market_context_duplicate_key"],
+        errors="ignore",
+    )
+    return _finalize_market_context_merge(merged)
+
+
+def calculate_market_context_enrichment_coverage(df: pd.DataFrame) -> dict[str, float | int]:
+    row_count = int(len(df))
+    if row_count == 0:
+        return _market_context_zero_coverage(0)
+
+    matched_count = _count_truthy(df, "market_context_matched")
+    age_known_count = _count_non_empty(df, "market_context_age")
+    market_value_known_count = _count_positive_numeric(df, "market_context_market_value_eur")
+    contract_known_count = _count_parseable_dates(df, "market_context_contract_end_date")
+    high_confidence_count = _count_matching_text(df, "market_context_confidence", "high")
+
+    return {
+        "row_count": row_count,
+        "matched_count": matched_count,
+        "matched_pct": _pct(matched_count, row_count),
+        "age_known_count": age_known_count,
+        "age_known_pct": _pct(age_known_count, row_count),
+        "market_value_known_count": market_value_known_count,
+        "market_value_known_pct": _pct(market_value_known_count, row_count),
+        "contract_known_count": contract_known_count,
+        "contract_known_pct": _pct(contract_known_count, row_count),
+        "high_confidence_count": high_confidence_count,
+        "high_confidence_pct": _pct(high_confidence_count, row_count),
+    }
 
 
 def _is_empty(value: object) -> bool:
@@ -96,6 +205,102 @@ def _is_empty(value: object) -> bool:
     except (TypeError, ValueError):
         pass
     return isinstance(value, str) and value.strip() == ""
+
+
+def _prepare_for_market_context_merge(df: pd.DataFrame) -> pd.DataFrame:
+    result = prepare_players_market_context_keys(df)
+    if "season" in result.columns:
+        result["_season_match_key"] = result["season"].apply(_normalize_season_for_match)
+    else:
+        result["_season_match_key"] = ""
+    return result
+
+
+def _prepare_context_for_merge(df: pd.DataFrame) -> pd.DataFrame:
+    context = _prepare_for_market_context_merge(df)
+    for source_column, output_column in MARKET_CONTEXT_OUTPUT_COLUMNS.items():
+        if source_column in context.columns:
+            context[output_column] = context[source_column]
+        else:
+            context[output_column] = pd.NA
+    return context
+
+
+def _finalize_market_context_merge(df: pd.DataFrame) -> pd.DataFrame:
+    return df.drop(columns=["_season_match_key"], errors="ignore")
+
+
+def _normalize_season_for_match(value: object) -> str:
+    if _is_empty(value):
+        return ""
+    try:
+        numeric_value = pd.to_numeric(value, errors="coerce")
+    except (TypeError, ValueError):
+        numeric_value = pd.NA
+    if not pd.isna(numeric_value):
+        return str(int(float(numeric_value)))
+    return normalize_market_context_key(value)
+
+
+def _market_context_zero_coverage(row_count: int) -> dict[str, float | int]:
+    return {
+        "row_count": row_count,
+        "matched_count": 0,
+        "matched_pct": 0.0,
+        "age_known_count": 0,
+        "age_known_pct": 0.0,
+        "market_value_known_count": 0,
+        "market_value_known_pct": 0.0,
+        "contract_known_count": 0,
+        "contract_known_pct": 0.0,
+        "high_confidence_count": 0,
+        "high_confidence_pct": 0.0,
+    }
+
+
+def _count_truthy(df: pd.DataFrame, column: str) -> int:
+    if column not in df.columns:
+        return 0
+    return int(df[column].fillna(False).astype(bool).sum())
+
+
+def _count_non_empty(df: pd.DataFrame, column: str) -> int:
+    if column not in df.columns:
+        return 0
+    return int(df[column].apply(lambda value: not _is_empty(value)).sum())
+
+
+def _count_positive_numeric(df: pd.DataFrame, column: str) -> int:
+    if column not in df.columns:
+        return 0
+    values = pd.to_numeric(df[column], errors="coerce")
+    return int(values.gt(0).fillna(False).sum())
+
+
+def _count_parseable_dates(df: pd.DataFrame, column: str) -> int:
+    if column not in df.columns:
+        return 0
+    values = df[column]
+    non_empty = values.apply(lambda value: not _is_empty(value))
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", UserWarning)
+        parsed = pd.to_datetime(values, errors="coerce", dayfirst=True)
+    return int((non_empty & parsed.notna()).sum())
+
+
+def _count_matching_text(df: pd.DataFrame, column: str, expected: str) -> int:
+    if column not in df.columns:
+        return 0
+    values = df[column].apply(
+        lambda value: "" if _is_empty(value) else str(value).strip().lower()
+    )
+    return int(values.eq(expected).sum())
+
+
+def _pct(count: int, total: int) -> float:
+    if total == 0:
+        return 0.0
+    return round((count / total) * 100, 1)
 
 
 def _is_empty_row(row: pd.Series) -> bool:

@@ -4,8 +4,12 @@ import pandas as pd
 import pytest
 
 from src.market_context import (
+    calculate_market_context_enrichment_coverage,
+    find_duplicate_market_context_keys,
     load_market_context_csv,
+    merge_market_context,
     normalize_market_context_key,
+    prepare_players_market_context_keys,
     required_market_context_columns,
     validate_market_context_df,
     validate_market_context_schema,
@@ -222,3 +226,218 @@ def test_load_market_context_csv_raises_for_missing_file(tmp_path):
 
     with pytest.raises(FileNotFoundError):
         load_market_context_csv(missing_path)
+
+
+def sample_players_df():
+    return pd.DataFrame(
+        [
+            {
+                "player": "Vinicius Junior",
+                "team": "Real Madrid",
+                "league": "LaLiga",
+                "season": 2024,
+                "age": 25,
+                "market_value_eur": 999,
+            },
+            {
+                "player": "Test No Match",
+                "team": "Other FC",
+                "league": "LaLiga",
+                "season": 2024,
+                "age": 30,
+                "market_value_eur": 111,
+            },
+            {
+                "player": "Season Sensitive",
+                "team": "Real Madrid",
+                "league": "LaLiga",
+                "season": 2024,
+                "age": 27,
+                "market_value_eur": 222,
+            },
+        ]
+    )
+
+
+def sample_market_context_df():
+    return pd.DataFrame(
+        [
+            {
+                "player": "Vinícius   Júnior",
+                "team": "Real Madrid",
+                "league": "LaLiga",
+                "season": 2024,
+                "age": 24,
+                "market_value_eur": 120_000_000,
+                "contract_end_date": "2027-06-30",
+                "source": "manual_review",
+                "source_url": "https://example.com/vini",
+                "confidence": "high",
+                "notes": "synthetic enrichment",
+            },
+            {
+                "player": "Season Sensitive",
+                "team": "Real Madrid",
+                "league": "LaLiga",
+                "season": 2023,
+                "age": 26,
+                "market_value_eur": 1_000_000,
+                "contract_end_date": "2025-06-30",
+                "source": "manual_review",
+                "source_url": "",
+                "confidence": "medium",
+                "notes": "wrong season",
+            },
+        ]
+    )
+
+
+def test_prepare_players_market_context_keys_adds_normalized_keys_without_changing_display():
+    df = pd.DataFrame(
+        [{"player": " Vinícius   Júnior ", "team": " Real Madrid ", "league": "LaLiga"}]
+    )
+
+    prepared = prepare_players_market_context_keys(df)
+
+    assert prepared.loc[0, "player"] == " Vinícius   Júnior "
+    assert prepared.loc[0, "player_match_key"] == "vinicius junior"
+    assert prepared.loc[0, "team_match_key"] == "real madrid"
+    assert prepared.loc[0, "league_match_key"] == "laliga"
+    assert "player_match_key" not in df.columns
+
+
+def test_prepare_players_market_context_keys_creates_empty_key_when_source_column_missing():
+    df = pd.DataFrame([{"player": "Only Player"}])
+
+    prepared = prepare_players_market_context_keys(df)
+
+    assert prepared.loc[0, "player_match_key"] == "only player"
+    assert prepared.loc[0, "team_match_key"] == ""
+    assert prepared.loc[0, "league_match_key"] == ""
+
+
+def test_merge_market_context_left_join_keeps_all_players_and_matches_by_keys_and_season():
+    merged = merge_market_context(sample_players_df(), sample_market_context_df())
+
+    assert merged["player"].tolist() == ["Vinicius Junior", "Test No Match", "Season Sensitive"]
+    assert merged.loc[0, "market_context_matched"] is True
+    assert merged.loc[1, "market_context_matched"] is False
+    assert merged.loc[2, "market_context_matched"] is False
+    assert merged.loc[0, "market_context_age"] == 24
+    assert merged.loc[0, "market_context_market_value_eur"] == 120_000_000
+    assert merged.loc[0, "market_context_contract_end_date"] == "2027-06-30"
+    assert merged.loc[0, "market_context_source"] == "manual_review"
+    assert merged.loc[0, "market_context_confidence"] == "high"
+
+
+def test_merge_market_context_does_not_overwrite_existing_player_market_columns():
+    players = sample_players_df()
+
+    merged = merge_market_context(players, sample_market_context_df())
+
+    assert merged.loc[0, "age"] == 25
+    assert merged.loc[0, "market_value_eur"] == 999
+    assert "contract_end_date" not in players.columns
+
+
+def test_merge_market_context_generates_keys_when_context_df_does_not_have_them():
+    context = sample_market_context_df().drop(
+        columns=["player_match_key", "team_match_key", "league_match_key"],
+        errors="ignore",
+    )
+
+    merged = merge_market_context(sample_players_df(), context)
+
+    assert merged.loc[0, "market_context_matched"] is True
+
+
+def test_merge_market_context_marks_partial_enrichment_as_matched():
+    context = pd.DataFrame(
+        [
+            {
+                "player": "Test No Match",
+                "team": "Other FC",
+                "league": "LaLiga",
+                "season": 2024,
+                "age": "",
+                "market_value_eur": "",
+                "contract_end_date": "",
+                "source": "manual_review",
+                "source_url": "",
+                "confidence": "low",
+                "notes": "identity-only review",
+            }
+        ]
+    )
+
+    merged = merge_market_context(sample_players_df(), context)
+
+    assert merged.loc[1, "market_context_matched"] is True
+    assert merged.loc[1, "market_context_age"] == ""
+
+
+def test_find_duplicate_market_context_keys_detects_duplicate_rows():
+    context = pd.concat([sample_market_context_df().iloc[[0]], sample_market_context_df().iloc[[0]]])
+
+    duplicates = find_duplicate_market_context_keys(context)
+
+    assert len(duplicates) == 2
+    assert set(duplicates["player_match_key"]) == {"vinicius junior"}
+
+
+def test_merge_market_context_marks_duplicate_key_matches_without_exploding():
+    context = pd.concat([sample_market_context_df().iloc[[0]], sample_market_context_df().iloc[[0]]])
+
+    merged = merge_market_context(sample_players_df(), context)
+
+    assert len(merged) == 3
+    assert merged.loc[0, "market_context_matched"] is True
+    assert merged.loc[0, "market_context_duplicate_key"] is True
+    assert merged.loc[1, "market_context_duplicate_key"] is False
+
+
+def test_calculate_market_context_enrichment_coverage_counts_context_fields():
+    merged = merge_market_context(sample_players_df(), sample_market_context_df())
+
+    coverage = calculate_market_context_enrichment_coverage(merged)
+
+    assert coverage["row_count"] == 3
+    assert coverage["matched_count"] == 1
+    assert coverage["matched_pct"] == 33.3
+    assert coverage["age_known_count"] == 1
+    assert coverage["age_known_pct"] == 33.3
+    assert coverage["market_value_known_count"] == 1
+    assert coverage["market_value_known_pct"] == 33.3
+    assert coverage["contract_known_count"] == 1
+    assert coverage["contract_known_pct"] == 33.3
+    assert coverage["high_confidence_count"] == 1
+    assert coverage["high_confidence_pct"] == 33.3
+
+
+def test_calculate_market_context_enrichment_coverage_handles_empty_dataframe():
+    coverage = calculate_market_context_enrichment_coverage(pd.DataFrame())
+
+    assert coverage == {
+        "row_count": 0,
+        "matched_count": 0,
+        "matched_pct": 0.0,
+        "age_known_count": 0,
+        "age_known_pct": 0.0,
+        "market_value_known_count": 0,
+        "market_value_known_pct": 0.0,
+        "contract_known_count": 0,
+        "contract_known_pct": 0.0,
+        "high_confidence_count": 0,
+        "high_confidence_pct": 0.0,
+    }
+
+
+def test_calculate_market_context_enrichment_coverage_handles_missing_context_columns():
+    coverage = calculate_market_context_enrichment_coverage(sample_players_df())
+
+    assert coverage["row_count"] == 3
+    assert coverage["matched_count"] == 0
+    assert coverage["age_known_count"] == 0
+    assert coverage["market_value_known_count"] == 0
+    assert coverage["contract_known_count"] == 0
+    assert coverage["high_confidence_count"] == 0
