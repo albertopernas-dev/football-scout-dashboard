@@ -1,0 +1,4 @@
+player,team,league,season,age,market_value_eur,contract_end_date,source,source_url,confidence,notes
+Jude Bellingham,Real Madrid,LaLiga,2024,,,,manual_review,,medium,identity-only sample row; no real market context values
+Lamine Yamal,Barcelona,LaLiga,2024,,,,manual_review,,medium,identity-only sample row; no real market context values
+Test Unmatched Player,Missing FC,LaLiga,2024,,,,manual_review,,low,synthetic unmatched row for diagnostics

@@ -25,6 +25,8 @@ Adding a Market Context Layer would let Opportunity Finder evolve from a perform
 - CSV schema and validation module complete in `src/market_context.py`.
 - Merge helpers for prepared player data complete.
 - Diagnostics script complete in `scripts/diagnose_market_context.py`.
+- CSV template/sample added in `data/enrichment/`.
+- Real enrichment data pending.
 - App integration pending.
 - Opportunity Finder integration pending.
 
@@ -37,6 +39,8 @@ Validate and diagnose a market context CSV against the active local player datas
 ```
 
 The command reads the active dataset and the provided CSV, reports validation errors, duplicate keys, merge coverage and examples. It does not modify SQLite or the app.
+
+CSV templates and identity-only sample rows live in `data/enrichment/`.
 
 ## Recommended Approach
 

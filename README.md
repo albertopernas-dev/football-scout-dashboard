@@ -11,6 +11,7 @@ MVP de scouting futbolístico construido con Python, Streamlit, pandas, scikit-l
 - Goalkeeper comparability is handled separately from the general ranking.
 - Opportunity Finder with reliability and comparability filters.
 - CSV exports and HTML scouting reports.
+- Market context enrichment template available in `data/enrichment/`.
 - Tests cover scoring, ingestion, app helpers, diagnostics and data-source behavior.
 
 ## Demo workflow
