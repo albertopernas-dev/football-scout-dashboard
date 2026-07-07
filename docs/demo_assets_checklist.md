@@ -4,15 +4,26 @@ Use this checklist to prepare screenshots, GIFs or a short video for GitHub, por
 
 ## Screenshots To Capture
 
-- [ ] App header / dataset summary.
+- [x] App header / dataset summary.
 - [ ] Data quality panel.
-- [ ] Main player table with recommended ranking.
+- [x] Main player table with recommended ranking.
 - [ ] Ranking filters visible.
-- [ ] Opportunity Finder with filters.
+- [x] Opportunity Finder with filters.
 - [ ] CSV download buttons.
-- [ ] Similar players view.
+- [x] Similar players view.
 - [ ] HTML scouting report example.
 - [ ] Documentation links in README.
+
+## Captured Assets
+
+Screenshots included in the repository are stored in `docs/assets/screenshots/`:
+
+- `01-header-dataset-summary.png`
+- `02-main-table-ranking.png`
+- `03-opportunity-finder.png`
+- `04-similar-players-report.png`
+
+The HTML scouting report example and rendered README screenshot are not marked as completed yet.
 
 ## Recommended Demo Video Flow
 

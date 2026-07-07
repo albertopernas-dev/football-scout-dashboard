@@ -25,6 +25,24 @@ MVP de scouting futbolístico construido con Python, Streamlit, pandas, scikit-l
 
 A practical 5-10 minute demo script is available in [`docs/demo_walkthrough.md`](docs/demo_walkthrough.md).
 
+## Screenshots
+
+### Dataset summary
+
+![Dataset summary](docs/assets/screenshots/01-header-dataset-summary.png)
+
+### Recommended ranking
+
+![Recommended ranking](docs/assets/screenshots/02-main-table-ranking.png)
+
+### Opportunity Finder
+
+![Opportunity Finder](docs/assets/screenshots/03-opportunity-finder.png)
+
+### Similar players and report
+
+![Similar players and report](docs/assets/screenshots/04-similar-players-report.png)
+
 ## Release
 
 Current milestone: `v0.1.0`.
