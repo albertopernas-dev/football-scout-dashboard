@@ -33,6 +33,8 @@ Los campos principales son:
 
 Con el dataset local actual de LaLiga 2024, el contexto de mercado aparece como limitado porque no hay edad real, valor de mercado ni contrato.
 
+Si se configura `FOOTBALL_SCOUT_MARKET_CONTEXT_CSV`, la app muestra en `Fuente de datos` la cobertura del enrichment: filas emparejadas, edad, valor de mercado, contrato, errores de validacion y claves duplicadas. Si no se configura, el dashboard mantiene el contexto de mercado limitado actual.
+
 ## Player Table
 
 La tabla principal muestra el ranking recomendado de jugadores.
@@ -154,4 +156,3 @@ Limitaciones del producto:
 - El scoring ayuda a priorizar revision, pero no sustituye scouting humano.
 - La app no valida contexto tactico, rol, lesiones, contrato real ni disponibilidad.
 - Las conclusiones dependen de la calidad y cobertura de la fuente de datos activa.
-

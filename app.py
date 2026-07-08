@@ -138,6 +138,49 @@ def market_context_warning_message(market_context: dict[str, object]) -> str | N
     )
 
 
+def should_show_market_context_status(metadata: dict[str, object]) -> bool:
+    return bool(metadata.get("market_context_enabled") or metadata.get("market_context_load_error"))
+
+
+def market_context_status_from_metadata(metadata: dict[str, object]) -> dict[str, object]:
+    if metadata.get("market_context_load_error"):
+        return {
+            "show": True,
+            "enabled": False,
+            "status": "Error",
+            "csv_path": metadata.get("market_context_csv_path", ""),
+            "load_error": metadata.get("market_context_load_error", ""),
+            "warnings": ["Market context CSV could not be loaded."],
+        }
+
+    if not metadata.get("market_context_enabled"):
+        return {"show": False, "enabled": False, "warnings": []}
+
+    validation_error_count = int(metadata.get("market_context_validation_error_count", 0) or 0)
+    duplicate_count = int(metadata.get("market_context_duplicate_count", 0) or 0)
+    warnings = []
+    if validation_error_count > 0:
+        warnings.append(f"Validation errors: {validation_error_count}")
+    if duplicate_count > 0:
+        warnings.append(f"Duplicate keys: {duplicate_count}")
+
+    return {
+        "show": True,
+        "enabled": True,
+        "status": "Enabled",
+        "csv_path": metadata.get("market_context_csv_path", ""),
+        "matched_count": int(metadata.get("market_context_matched_count", 0) or 0),
+        "row_count": int(metadata.get("row_count", 0) or 0),
+        "matched_pct": float(metadata.get("market_context_matched_pct", 0.0) or 0.0),
+        "age_known_pct": float(metadata.get("market_context_age_known_pct", 0.0) or 0.0),
+        "market_value_known_pct": float(metadata.get("market_context_market_value_known_pct", 0.0) or 0.0),
+        "contract_known_pct": float(metadata.get("market_context_contract_known_pct", 0.0) or 0.0),
+        "validation_error_count": validation_error_count,
+        "duplicate_count": duplicate_count,
+        "warnings": warnings,
+    }
+
+
 def minutes_sample_warning_message(df: pd.DataFrame) -> str | None:
     if "is_minutes_qualified" not in df.columns:
         return None
@@ -730,6 +773,35 @@ def render_data_source(metadata: dict) -> None:
             st.markdown(f"**CSV:** `{metadata.get('path', '')}`")
         elif source == "upload":
             st.markdown(f"**Archivo:** `{metadata.get('path', '')}`")
+        render_market_context_status(metadata)
+
+
+def render_market_context_status(metadata: dict[str, object]) -> None:
+    status = market_context_status_from_metadata(metadata)
+    if not status["show"]:
+        return
+
+    st.divider()
+    st.markdown(f"**Market context:** {status['status']}")
+    if status.get("csv_path"):
+        st.markdown(f"**CSV:** `{status['csv_path']}`")
+
+    if status.get("load_error"):
+        st.warning(f"Market context CSV could not be loaded. {status['load_error']}")
+        return
+
+    st.markdown(
+        f"**Matched:** {status['matched_count']} / {status['row_count']} "
+        f"({status['matched_pct']}%)"
+    )
+    coverage_cols = st.columns(3)
+    coverage_cols[0].metric("Edad", f"{status['age_known_pct']}%")
+    coverage_cols[1].metric("Valor mercado", f"{status['market_value_known_pct']}%")
+    coverage_cols[2].metric("Contrato", f"{status['contract_known_pct']}%")
+    st.markdown(f"**Validation errors:** {status['validation_error_count']}")
+    st.markdown(f"**Duplicate keys:** {status['duplicate_count']}")
+    for warning in status["warnings"]:
+        st.warning(warning)
 
 
 def render_data_quality(metrics: dict[str, object]) -> None:

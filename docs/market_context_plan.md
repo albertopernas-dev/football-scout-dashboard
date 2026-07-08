@@ -27,8 +27,9 @@ Adding a Market Context Layer would let Opportunity Finder evolve from a perform
 - Diagnostics script complete in `scripts/diagnose_market_context.py`.
 - CSV template/sample added in `data/enrichment/`.
 - Optional config-based enrichment loading complete.
+- App status display complete.
 - Real enrichment data pending.
-- App integration pending.
+- App analytical integration pending.
 - Opportunity Finder integration pending.
 
 ## Diagnostic Command
