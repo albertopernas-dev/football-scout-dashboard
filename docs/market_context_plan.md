@@ -26,6 +26,7 @@ Adding a Market Context Layer would let Opportunity Finder evolve from a perform
 - Merge helpers for prepared player data complete.
 - Diagnostics script complete in `scripts/diagnose_market_context.py`.
 - CSV template/sample added in `data/enrichment/`.
+- Optional config-based enrichment loading complete.
 - Real enrichment data pending.
 - App integration pending.
 - Opportunity Finder integration pending.
@@ -41,6 +42,18 @@ Validate and diagnose a market context CSV against the active local player datas
 The command reads the active dataset and the provided CSV, reports validation errors, duplicate keys, merge coverage and examples. It does not modify SQLite or the app.
 
 CSV templates and identity-only sample rows live in `data/enrichment/`.
+
+## Optional Enrichment Loading
+
+Market context enrichment is opt-in. No CSV is loaded by default, and `data/enrichment/player_market_context_sample.csv` is only a diagnostic/sample file.
+
+To enable enrichment explicitly:
+
+```powershell
+$env:FOOTBALL_SCOUT_MARKET_CONTEXT_CSV="data/enrichment/player_market_context_sample.csv"
+```
+
+For production-like usage, point this variable to a manually reviewed CSV with real `age`, `market_value_eur`, `contract_end_date`, `source`, `confidence` and `notes`.
 
 ## Recommended Approach
 

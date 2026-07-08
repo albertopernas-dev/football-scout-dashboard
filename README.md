@@ -12,6 +12,7 @@ MVP de scouting futbolístico construido con Python, Streamlit, pandas, scikit-l
 - Opportunity Finder with reliability and comparability filters.
 - CSV exports and HTML scouting reports.
 - Market context enrichment template available in `data/enrichment/`.
+- Optional market context CSV can be enabled through `FOOTBALL_SCOUT_MARKET_CONTEXT_CSV`.
 - Tests cover scoring, ingestion, app helpers, diagnostics and data-source behavior.
 
 ## Demo workflow

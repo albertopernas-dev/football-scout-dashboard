@@ -31,6 +31,41 @@ def _write_sqlite(path, table_name="players", df=None):
         players.to_sql(table_name, connection, index=False, if_exists="replace")
 
 
+def _players_with_season() -> pd.DataFrame:
+    return pd.DataFrame(
+        {
+            "player": ["Ana", "Bea"],
+            "age": [20, 22],
+            "market_value_eur": [999, 888],
+            "position": ["LW", "RW"],
+            "team": ["Madrid", "Barcelona"],
+            "league": ["Liga F", "Liga F"],
+            "season": [2024, 2024],
+            "minutes": [1200, 900],
+        }
+    )
+
+
+def _write_market_context_csv(path):
+    pd.DataFrame(
+        [
+            {
+                "player": "Ana",
+                "team": "Madrid",
+                "league": "Liga F",
+                "season": 2024,
+                "age": 24,
+                "market_value_eur": 1_500_000,
+                "contract_end_date": "2026-06-30",
+                "source": "manual_review",
+                "source_url": "https://example.com/ana",
+                "confidence": "high",
+                "notes": "synthetic enrichment row",
+            }
+        ]
+    ).to_csv(path, index=False)
+
+
 def test_load_players_from_sqlite_reads_existing_database_and_table(tmp_path):
     database_path = tmp_path / "players.db"
     _write_sqlite(database_path)
@@ -196,6 +231,132 @@ def test_load_players_data_still_returns_only_dataframe(tmp_path):
 
     assert isinstance(result, pd.DataFrame)
     assert result["player"].tolist() == ["Ana", "Bea"]
+
+
+def test_load_players_data_with_metadata_does_not_load_market_context_without_config(tmp_path, monkeypatch):
+    monkeypatch.delenv("FOOTBALL_SCOUT_MARKET_CONTEXT_CSV", raising=False)
+    csv_path = tmp_path / "players.csv"
+    _players_with_season().to_csv(csv_path, index=False)
+
+    result, metadata = load_players_data_with_metadata(
+        database_path=tmp_path / "missing.db",
+        table_name="players",
+        external_url="",
+        csv_path=csv_path,
+    )
+
+    assert "market_context_age" not in result.columns
+    assert "market_context_enabled" not in metadata
+
+
+def test_load_players_data_with_metadata_uses_market_context_env_var(tmp_path, monkeypatch):
+    players_path = tmp_path / "players.csv"
+    market_context_path = tmp_path / "market_context.csv"
+    _players_with_season().to_csv(players_path, index=False)
+    _write_market_context_csv(market_context_path)
+    monkeypatch.setenv("FOOTBALL_SCOUT_MARKET_CONTEXT_CSV", str(market_context_path))
+
+    result, metadata = load_players_data_with_metadata(
+        database_path=tmp_path / "missing.db",
+        table_name="players",
+        external_url="",
+        csv_path=players_path,
+    )
+
+    assert result.loc[0, "market_context_matched"] is True
+    assert result.loc[1, "market_context_matched"] is False
+    assert result.loc[0, "market_context_age"] == 24
+    assert result.loc[0, "market_context_market_value_eur"] == 1_500_000
+    assert metadata["market_context_enabled"] is True
+    assert metadata["market_context_csv_path"] == str(market_context_path)
+    assert metadata["market_context_validation_error_count"] == 0
+    assert metadata["market_context_duplicate_count"] == 0
+    assert metadata["market_context_matched_count"] == 1
+    assert metadata["market_context_matched_pct"] == 50.0
+    assert metadata["market_context_age_known_pct"] == 50.0
+    assert metadata["market_context_market_value_known_pct"] == 50.0
+    assert metadata["market_context_contract_known_pct"] == 50.0
+
+
+def test_load_players_data_with_metadata_accepts_explicit_market_context_path(tmp_path):
+    players_path = tmp_path / "players.csv"
+    market_context_path = tmp_path / "market_context.csv"
+    _players_with_season().to_csv(players_path, index=False)
+    _write_market_context_csv(market_context_path)
+
+    result, metadata = load_players_data_with_metadata(
+        database_path=tmp_path / "missing.db",
+        table_name="players",
+        external_url="",
+        csv_path=players_path,
+        market_context_csv_path=market_context_path,
+    )
+
+    assert "market_context_source" in result.columns
+    assert metadata["market_context_enabled"] is True
+
+
+def test_load_players_data_with_metadata_handles_missing_market_context_file(tmp_path):
+    players_path = tmp_path / "players.csv"
+    _players_with_season().to_csv(players_path, index=False)
+    missing_market_context_path = tmp_path / "missing_market_context.csv"
+
+    result, metadata = load_players_data_with_metadata(
+        database_path=tmp_path / "missing.db",
+        table_name="players",
+        external_url="",
+        csv_path=players_path,
+        market_context_csv_path=missing_market_context_path,
+    )
+
+    assert result["player"].tolist() == ["Ana", "Bea"]
+    assert "market_context_age" not in result.columns
+    assert metadata["market_context_enabled"] is False
+    assert metadata["market_context_csv_path"] == str(missing_market_context_path)
+    assert "Market context CSV not found" in metadata["market_context_load_error"]
+
+
+def test_market_context_does_not_overwrite_existing_player_values(tmp_path):
+    players_path = tmp_path / "players.csv"
+    market_context_path = tmp_path / "market_context.csv"
+    _players_with_season().to_csv(players_path, index=False)
+    _write_market_context_csv(market_context_path)
+
+    result, _metadata = load_players_data_with_metadata(
+        database_path=tmp_path / "missing.db",
+        table_name="players",
+        external_url="",
+        csv_path=players_path,
+        market_context_csv_path=market_context_path,
+    )
+
+    assert result.loc[0, "age"] == 20
+    assert result.loc[0, "market_value_eur"] == 999
+    assert result.loc[0, "market_context_age"] == 24
+    assert result.loc[0, "market_context_market_value_eur"] == 1_500_000
+
+
+def test_sample_market_context_is_not_loaded_by_default(tmp_path, monkeypatch):
+    monkeypatch.delenv("FOOTBALL_SCOUT_MARKET_CONTEXT_CSV", raising=False)
+    players_path = tmp_path / "players.csv"
+    pd.DataFrame(
+        {
+            "player": ["Jude Bellingham"],
+            "team": ["Real Madrid"],
+            "league": ["LaLiga"],
+            "season": [2024],
+        }
+    ).to_csv(players_path, index=False)
+
+    result, metadata = load_players_data_with_metadata(
+        database_path=tmp_path / "missing.db",
+        table_name="players",
+        external_url="",
+        csv_path=players_path,
+    )
+
+    assert "market_context_matched" not in result.columns
+    assert "market_context_enabled" not in metadata
 
 
 def test_load_players_from_csv_returns_empty_for_missing_file(tmp_path):

@@ -12,10 +12,21 @@ PLAYERS_TABLE = "players"
 EXTERNAL_PROVIDER_URL = os.getenv("EXTERNAL_PROVIDER_URL", "")
 EXTERNAL_PROVIDER_NAME = os.getenv("EXTERNAL_PROVIDER_NAME", "generic")
 DATA_SOURCE_PRIORITY = ("sqlite", "external", "csv")
+MARKET_CONTEXT_ENV_VAR = "FOOTBALL_SCOUT_MARKET_CONTEXT_CSV"
 API_FOOTBALL_KEY = os.getenv("API_FOOTBALL_KEY", "")
 API_FOOTBALL_BASE_URL = os.getenv("API_FOOTBALL_BASE_URL", "https://v3.football.api-sports.io")
 API_FOOTBALL_TIMEOUT_SECONDS = int(os.getenv("API_FOOTBALL_TIMEOUT_SECONDS", "15"))
 REPORT_TEMPLATE_PATH = TEMPLATES_DIR / "scouting_report.html"
+
+
+def get_market_context_csv_path(value: str | Path | None = None) -> Path | None:
+    raw_value = os.getenv(MARKET_CONTEXT_ENV_VAR, "") if value is None else str(value)
+    if not raw_value or not str(raw_value).strip():
+        return None
+    path = Path(str(raw_value).strip())
+    if path.is_absolute():
+        return path
+    return PROJECT_ROOT / path
 
 RADAR_METRICS = [
     "goals_per90",
