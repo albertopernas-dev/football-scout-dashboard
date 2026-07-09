@@ -49,6 +49,13 @@ DISPLAY_COLUMN_LABELS = {
     "scoring_scope": "Ámbito scoring",
     "is_general_ranking_comparable": "Comparable ranking general",
     "goalkeeper_score": "Score portero",
+    "market_context_matched": "Contexto mercado match",
+    "market_context_age": "Edad contexto mercado",
+    "market_context_market_value_eur": "Valor contexto mercado",
+    "market_context_contract_end_date": "Contrato contexto mercado",
+    "market_context_confidence": "Confianza contexto mercado",
+    "market_context_source": "Fuente contexto mercado",
+    "market_context_duplicate_key": "Clave duplicada contexto",
     "similarity": "Similitud",
     "goals_per90": "Goles p90",
     "assists_per90": "Asistencias p90",
@@ -187,7 +194,7 @@ def minutes_sample_warning_message(df: pd.DataFrame) -> str | None:
     qualified = df["is_minutes_qualified"].fillna(False).astype(bool)
     if qualified.all():
         return None
-    return "Algunos jugadores tienen pocos minutos; interpreta su ranking como señal exploratoria."
+    return "Algunos jugadores tienen pocos minutos; interpreta su ranking como se\u00f1al exploratoria."
 
 
 def goalkeeper_comparability_warning_message(df: pd.DataFrame) -> str | None:
@@ -213,6 +220,13 @@ def format_number(value: object, decimals: int = 2) -> str:
     return f"{number:.{decimals}f}"
 
 
+def format_integer_or_blank(value: object) -> str:
+    number = pd.to_numeric(pd.Series([value]), errors="coerce").iloc[0]
+    if pd.isna(number):
+        return ""
+    return str(int(number))
+
+
 def dataframe_to_csv_bytes(df: pd.DataFrame) -> bytes:
     return df.to_csv(index=False).encode("utf-8-sig")
 
@@ -222,6 +236,7 @@ def format_display_columns(
     currency_columns: list[str] | None = None,
     age_columns: list[str] | None = None,
     one_decimal_columns: list[str] | None = None,
+    integer_columns: list[str] | None = None,
     two_decimal_columns: list[str] | None = None,
     three_decimal_columns: list[str] | None = None,
 ) -> pd.DataFrame:
@@ -238,13 +253,22 @@ def format_display_columns(
                 display_df[column] = display_df[column].apply(format_euros)
     for column in age_columns or []:
         if column in display_df.columns:
-            if "age_known" in display_df.columns:
+            known_column = f"{column}_known"
+            if known_column in display_df.columns:
+                display_df[column] = display_df.apply(
+                    lambda row: format_age(row[column], row[known_column]),
+                    axis=1,
+                )
+            elif column == "age" and "age_known" in display_df.columns:
                 display_df[column] = display_df.apply(
                     lambda row: format_age(row[column], row["age_known"]),
                     axis=1,
                 )
             else:
                 display_df[column] = display_df[column].apply(format_age)
+    for column in integer_columns or []:
+        if column in display_df.columns:
+            display_df[column] = display_df[column].apply(format_integer_or_blank)
     for column in one_decimal_columns or []:
         if column in display_df.columns:
             display_df[column] = display_df[column].apply(lambda value: format_score(value, 1))
@@ -262,7 +286,7 @@ def format_display_columns(
 
 def format_boolean_value(value: object) -> str:
     if is_true_flag(value):
-        return "Sí"
+        return "S\u00ed"
     if is_false_flag(value):
         return "No"
     return ""
@@ -280,11 +304,54 @@ def apply_display_column_labels(df: pd.DataFrame) -> pd.DataFrame:
     return df.rename(columns=DISPLAY_COLUMN_LABELS)
 
 
+def player_table_display_columns(df: pd.DataFrame) -> list[str]:
+    display_columns = [
+        "player",
+        "age",
+        "age_known",
+        "position",
+        "scoring_scope",
+        "is_general_ranking_comparable",
+        "team",
+        "league",
+        "minutes",
+        "minutes_reliability_score",
+        "minutes_sample_label",
+        "is_minutes_qualified",
+        "market_context_matched",
+        "market_context_age",
+        "market_context_market_value_eur",
+        "market_context_contract_end_date",
+        "market_context_confidence",
+        "market_context_source",
+        "market_context_duplicate_key",
+        "market_value",
+        "market_value_known",
+        "contract_end",
+        "overall_score",
+        "sample_adjusted_overall_score",
+        "market_opportunity_score",
+        "sample_adjusted_market_opportunity_score",
+        "goalkeeper_score",
+        "attacking_impact_score",
+        "chance_creation_score",
+        "ball_progression_score",
+        "defensive_impact_score",
+        "dribbling_threat_score",
+        "goals_per90",
+        "assists_per90",
+        "xg_per90",
+        "xa_per90",
+    ]
+    return [column for column in display_columns if column in df.columns]
+
+
 def prepare_table_display(
     df: pd.DataFrame,
     currency_columns: list[str] | None = None,
     age_columns: list[str] | None = None,
     one_decimal_columns: list[str] | None = None,
+    integer_columns: list[str] | None = None,
     two_decimal_columns: list[str] | None = None,
     three_decimal_columns: list[str] | None = None,
     boolean_columns: list[str] | None = None,
@@ -294,6 +361,7 @@ def prepare_table_display(
         currency_columns=currency_columns,
         age_columns=age_columns,
         one_decimal_columns=one_decimal_columns,
+        integer_columns=integer_columns,
         two_decimal_columns=two_decimal_columns,
         three_decimal_columns=three_decimal_columns,
     )
@@ -417,38 +485,7 @@ def filter_data(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def player_table(df: pd.DataFrame) -> None:
-    display_columns = [
-        "player",
-        "age",
-        "age_known",
-        "position",
-        "scoring_scope",
-        "is_general_ranking_comparable",
-        "team",
-        "league",
-        "minutes",
-        "minutes_reliability_score",
-        "minutes_sample_label",
-        "is_minutes_qualified",
-        "market_value",
-        "market_value_known",
-        "contract_end",
-        "overall_score",
-        "sample_adjusted_overall_score",
-        "market_opportunity_score",
-        "sample_adjusted_market_opportunity_score",
-        "goalkeeper_score",
-        "attacking_impact_score",
-        "chance_creation_score",
-        "ball_progression_score",
-        "defensive_impact_score",
-        "dribbling_threat_score",
-        "goals_per90",
-        "assists_per90",
-        "xg_per90",
-        "xa_per90",
-    ]
-    visible_columns = [column for column in display_columns if column in df.columns]
+    visible_columns = player_table_display_columns(df)
     controls_a, controls_b = st.columns(2)
     ranking_scope = controls_a.selectbox(
         "Ámbito ranking",
@@ -463,8 +500,9 @@ def player_table(df: pd.DataFrame) -> None:
     sorted_df = sort_players_for_display(table_df)
     display_df = prepare_table_display(
         sorted_df,
-        currency_columns=["market_value"],
+        currency_columns=["market_value", "market_context_market_value_eur"],
         age_columns=["age"],
+        integer_columns=["market_context_age"],
         one_decimal_columns=[
             "overall_score",
             "sample_adjusted_overall_score",
@@ -479,7 +517,12 @@ def player_table(df: pd.DataFrame) -> None:
             "dribbling_threat_score",
         ],
         two_decimal_columns=["goals_per90", "assists_per90", "xg_per90", "xa_per90"],
-        boolean_columns=["is_minutes_qualified", "is_general_ranking_comparable"],
+        boolean_columns=[
+            "is_minutes_qualified",
+            "is_general_ranking_comparable",
+            "market_context_matched",
+            "market_context_duplicate_key",
+        ],
     )
     st.caption(
         "El orden recomendado usa el score ajustado por fiabilidad de minutos. "

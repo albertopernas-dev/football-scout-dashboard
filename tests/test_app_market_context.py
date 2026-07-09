@@ -100,7 +100,7 @@ def test_minutes_sample_warning_message_returns_warning_with_unqualified_players
     df = pd.DataFrame({"is_minutes_qualified": [True, False]})
 
     assert minutes_sample_warning_message(df) == (
-        "Algunos jugadores tienen pocos minutos; interpreta su ranking como señal exploratoria."
+        "Algunos jugadores tienen pocos minutos; interpreta su ranking como se\u00f1al exploratoria."
     )
 
 

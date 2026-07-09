@@ -48,6 +48,8 @@ Columnas clave:
 - Ambito scoring: indica si el jugador usa scoring general o tratamiento de portero.
 - Comparable ranking general: indica si el jugador es comparable con el ranking general de jugadores de campo.
 
+Si `FOOTBALL_SCOUT_MARKET_CONTEXT_CSV` esta activo, la tabla puede mostrar columnas de contexto de mercado: match, edad, valor, contrato, fuente, confianza y claves duplicadas. Estos campos son informativos en esta fase y no cambian todavia el ranking recomendado.
+
 Filtros especificos de la tabla:
 
 - Ambito ranking:
