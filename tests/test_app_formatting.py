@@ -160,6 +160,10 @@ def test_player_table_display_columns_includes_market_context_but_not_matching_k
             "market_context_confidence": ["high"],
             "market_context_source": ["manual_review"],
             "market_context_duplicate_key": [False],
+            "effective_age": [24],
+            "effective_market_value_eur": [1_500_000],
+            "effective_contract_end_date": ["2027-06-30"],
+            "effective_market_context_source": ["market_context"],
             "player_match_key": ["a"],
             "team_match_key": ["team"],
             "league_match_key": ["league"],
@@ -175,6 +179,10 @@ def test_player_table_display_columns_includes_market_context_but_not_matching_k
     assert "market_context_confidence" in columns
     assert "market_context_source" in columns
     assert "market_context_duplicate_key" in columns
+    assert "effective_age" not in columns
+    assert "effective_market_value_eur" not in columns
+    assert "effective_contract_end_date" not in columns
+    assert "effective_market_context_source" not in columns
     assert "player_match_key" not in columns
     assert "team_match_key" not in columns
     assert "league_match_key" not in columns
@@ -200,6 +208,10 @@ def test_opportunity_display_columns_includes_market_context_but_not_matching_ke
             "market_context_confidence": ["high"],
             "market_context_source": ["manual_review"],
             "market_context_duplicate_key": [False],
+            "effective_age": [24],
+            "effective_market_value_eur": [1_500_000],
+            "effective_contract_end_date": ["2027-06-30"],
+            "effective_market_context_source": ["market_context"],
             "player_match_key": ["a"],
             "team_match_key": ["team"],
             "league_match_key": ["league"],
@@ -215,6 +227,10 @@ def test_opportunity_display_columns_includes_market_context_but_not_matching_ke
     assert "market_context_confidence" in columns
     assert "market_context_source" in columns
     assert "market_context_duplicate_key" in columns
+    assert "effective_age" in columns
+    assert "effective_market_value_eur" in columns
+    assert "effective_contract_end_date" in columns
+    assert "effective_market_context_source" in columns
     assert "player_match_key" not in columns
     assert "team_match_key" not in columns
     assert "league_match_key" not in columns
@@ -249,6 +265,28 @@ def test_opportunity_display_market_context_columns_are_export_ready():
     assert display["Edad contexto mercado"].tolist() == ["24"]
     assert display["Valor contexto mercado"].tolist() == [format_euros(1_500_000)]
     assert display["Clave duplicada contexto"].tolist() == ["No"]
+
+
+def test_opportunity_display_effective_market_context_columns_are_export_ready():
+    df = pd.DataFrame(
+        {
+            "player": ["A"],
+            "effective_age": [24.0],
+            "effective_market_value_eur": [1_500_000],
+            "effective_contract_end_date": ["2027-06-30"],
+            "effective_market_context_source": ["market_context"],
+        }
+    )
+    display = prepare_table_display(
+        df[opportunity_display_columns(df)],
+        currency_columns=["effective_market_value_eur"],
+        integer_columns=["effective_age"],
+    )
+
+    assert display["Edad efectiva"].tolist() == ["24"]
+    assert display["Valor efectivo"].tolist() == [format_euros(1_500_000)]
+    assert display["Contrato efectivo"].tolist() == ["2027-06-30"]
+    assert display["Fuente mercado efectiva"].tolist() == ["market_context"]
 
 
 def test_sort_players_for_display_uses_internal_columns_before_visual_labels():

@@ -56,6 +56,10 @@ DISPLAY_COLUMN_LABELS = {
     "market_context_confidence": "Confianza contexto mercado",
     "market_context_source": "Fuente contexto mercado",
     "market_context_duplicate_key": "Clave duplicada contexto",
+    "effective_age": "Edad efectiva",
+    "effective_market_value_eur": "Valor efectivo",
+    "effective_contract_end_date": "Contrato efectivo",
+    "effective_market_context_source": "Fuente mercado efectiva",
     "similarity": "Similitud",
     "goals_per90": "Goles p90",
     "assists_per90": "Asistencias p90",
@@ -80,6 +84,13 @@ MARKET_CONTEXT_DISPLAY_COLUMNS = [
     "market_context_confidence",
     "market_context_source",
     "market_context_duplicate_key",
+]
+
+EFFECTIVE_MARKET_CONTEXT_DISPLAY_COLUMNS = [
+    "effective_age",
+    "effective_market_value_eur",
+    "effective_contract_end_date",
+    "effective_market_context_source",
 ]
 
 
@@ -367,6 +378,7 @@ def opportunity_display_columns(df: pd.DataFrame) -> list[str]:
         "minutes_sample_label",
         "is_minutes_qualified",
         *MARKET_CONTEXT_DISPLAY_COLUMNS,
+        *EFFECTIVE_MARKET_CONTEXT_DISPLAY_COLUMNS,
         "market_value",
         "market_value_known",
         "contract_end",
@@ -724,9 +736,9 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
     ranking_columns = opportunity_display_columns(opportunities)
     opportunity_display = prepare_table_display(
         opportunities[ranking_columns],
-        currency_columns=["market_value", "market_context_market_value_eur"],
+        currency_columns=["market_value", "market_context_market_value_eur", "effective_market_value_eur"],
         age_columns=["age"],
-        integer_columns=["market_context_age"],
+        integer_columns=["market_context_age", "effective_age"],
         one_decimal_columns=[
             "overall_score",
             "sample_adjusted_overall_score",

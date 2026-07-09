@@ -55,6 +55,22 @@ def test_find_market_opportunities_filters_by_max_age():
     assert result["player"].tolist() == ["C", "A"]
 
 
+def test_find_market_opportunities_uses_effective_age_before_original_age():
+    df = _players()
+    df["age"] = [30, 30, 30, 30]
+    df["effective_age"] = [20, pd.NA, 24, 25]
+
+    result = find_market_opportunities(df, max_age=21, min_minutes=0)
+
+    assert result["player"].tolist() == ["A", "B"]
+
+
+def test_find_market_opportunities_falls_back_to_age_when_effective_age_is_missing():
+    result = find_market_opportunities(_players(), max_age=21, min_minutes=0)
+
+    assert result["player"].tolist() == ["C", "A"]
+
+
 def test_find_market_opportunities_filters_by_min_minutes():
     result = find_market_opportunities(_players(), min_minutes=1000)
 
@@ -68,9 +84,77 @@ def test_find_market_opportunities_filters_max_market_value_without_treating_zer
     assert "B" not in result["player"].tolist()
 
 
+def test_find_market_opportunities_uses_effective_market_value_before_original_value():
+    df = _players()
+    df["market_value"] = [12_000_000, 12_000_000, 12_000_000, 12_000_000]
+    df["effective_market_value_eur"] = [3_000_000, pd.NA, 2_000_000, 12_000_000]
+
+    result = find_market_opportunities(df, min_minutes=0, max_market_value=3_500_000)
+
+    assert result["player"].tolist() == ["C", "A"]
+
+
+def test_find_market_opportunities_falls_back_to_market_value_eur_when_effective_value_is_missing():
+    df = _players().drop(columns=["market_value"])
+    df["market_value_eur"] = [3_000_000, 0, 2_000_000, 12_000_000]
+
+    result = find_market_opportunities(df, min_minutes=0, max_market_value=3_500_000)
+
+    assert result["player"].tolist() == ["C", "A"]
+
+
+def test_find_market_opportunities_falls_back_when_effective_market_value_is_invalid():
+    df = _players().drop(columns=["market_value"])
+    df["effective_market_value_eur"] = [0, -1, "unknown", pd.NA]
+    df["market_value_eur"] = [3_000_000, 1_000_000, 2_000_000, 12_000_000]
+
+    result = find_market_opportunities(df, min_minutes=0, max_market_value=3_500_000)
+
+    assert result["player"].tolist() == ["C", "A", "B"]
+
+
+def test_find_market_opportunities_does_not_treat_missing_effective_market_value_as_cheap():
+    df = _players()
+    df["market_value"] = [pd.NA, pd.NA, pd.NA, pd.NA]
+    df["effective_market_value_eur"] = [pd.NA, pd.NA, pd.NA, pd.NA]
+
+    result = find_market_opportunities(df, min_minutes=0, max_market_value=3_500_000)
+
+    assert result.empty
+
+
 def test_find_market_opportunities_filters_contract_within_months_with_fixed_date():
     result = find_market_opportunities(
         _players(),
+        min_minutes=0,
+        contract_within_months=12,
+        as_of_date="2026-06-30",
+    )
+
+    assert result["player"].tolist() == ["C", "A"]
+
+
+def test_find_market_opportunities_uses_effective_contract_before_original_contract():
+    df = _players()
+    df["contract_end"] = ["2029-06-30", "2029-06-30", "2029-06-30", "2029-06-30"]
+    df["effective_contract_end_date"] = ["2026-12-31", pd.NA, "2027-06-30", "2029-06-30"]
+
+    result = find_market_opportunities(
+        df,
+        min_minutes=0,
+        contract_within_months=12,
+        as_of_date="2026-06-30",
+    )
+
+    assert result["player"].tolist() == ["C", "A"]
+
+
+def test_find_market_opportunities_falls_back_to_contract_end_date_when_effective_contract_is_missing():
+    df = _players().drop(columns=["contract_end"])
+    df["contract_end_date"] = ["2027-06-30", "2029-06-30", "2026-12-31", "2028-06-30"]
+
+    result = find_market_opportunities(
+        df,
         min_minutes=0,
         contract_within_months=12,
         as_of_date="2026-06-30",
@@ -126,3 +210,15 @@ def test_find_market_opportunities_requires_market_opportunity_score():
 
     with pytest.raises(ValueError, match="market_opportunity_score"):
         find_market_opportunities(df)
+
+
+def test_find_market_opportunities_does_not_change_existing_scores_when_using_effective_context():
+    df = _players()
+    df["effective_age"] = [20, 24, 20, 22]
+    df["effective_market_value_eur"] = [3_000_000, 1_000_000, 2_000_000, 12_000_000]
+    original_scores = df["market_opportunity_score"].copy()
+
+    result = find_market_opportunities(df, min_minutes=0, max_market_value=3_500_000)
+
+    assert df["market_opportunity_score"].equals(original_scores)
+    assert result["market_opportunity_score"].tolist() == [90.0, 88.0, 71.0]
