@@ -5,6 +5,7 @@ import pytest
 
 from src.market_context import (
     add_effective_market_context_fields,
+    calculate_effective_market_context_coverage,
     calculate_market_context_enrichment_coverage,
     find_duplicate_market_context_keys,
     load_market_context_csv,
@@ -442,6 +443,65 @@ def test_calculate_market_context_enrichment_coverage_handles_missing_context_co
     assert coverage["market_value_known_count"] == 0
     assert coverage["contract_known_count"] == 0
     assert coverage["high_confidence_count"] == 0
+
+
+def test_calculate_effective_market_context_coverage_counts_effective_fields_and_sources():
+    df = pd.DataFrame(
+        {
+            "effective_age": [24, 30, pd.NA],
+            "effective_market_value_eur": [1_500_000, 2_000_000, pd.NA],
+            "effective_contract_end_date": ["2026-06-30", "2027-06-30", pd.NA],
+            "effective_market_context_source": ["market_context", "original", "unknown"],
+        }
+    )
+
+    coverage = calculate_effective_market_context_coverage(df)
+
+    assert coverage["row_count"] == 3
+    assert coverage["effective_age_known_count"] == 2
+    assert coverage["effective_age_known_pct"] == 66.7
+    assert coverage["effective_market_value_known_count"] == 2
+    assert coverage["effective_market_value_known_pct"] == 66.7
+    assert coverage["effective_contract_known_count"] == 2
+    assert coverage["effective_contract_known_pct"] == 66.7
+    assert coverage["effective_source_market_context_count"] == 1
+    assert coverage["effective_source_market_context_pct"] == 33.3
+    assert coverage["effective_source_original_count"] == 1
+    assert coverage["effective_source_original_pct"] == 33.3
+    assert coverage["effective_source_unknown_count"] == 1
+    assert coverage["effective_source_unknown_pct"] == 33.3
+
+
+def test_calculate_effective_market_context_coverage_handles_missing_columns():
+    coverage = calculate_effective_market_context_coverage(pd.DataFrame({"player": ["A", "B"]}))
+
+    assert coverage["row_count"] == 2
+    assert coverage["effective_age_known_count"] == 0
+    assert coverage["effective_market_value_known_count"] == 0
+    assert coverage["effective_contract_known_count"] == 0
+    assert coverage["effective_source_market_context_count"] == 0
+    assert coverage["effective_source_original_count"] == 0
+    assert coverage["effective_source_unknown_count"] == 0
+
+
+def test_calculate_effective_market_context_coverage_handles_empty_dataframe():
+    coverage = calculate_effective_market_context_coverage(pd.DataFrame())
+
+    assert coverage == {
+        "row_count": 0,
+        "effective_age_known_count": 0,
+        "effective_age_known_pct": 0.0,
+        "effective_market_value_known_count": 0,
+        "effective_market_value_known_pct": 0.0,
+        "effective_contract_known_count": 0,
+        "effective_contract_known_pct": 0.0,
+        "effective_source_market_context_count": 0,
+        "effective_source_market_context_pct": 0.0,
+        "effective_source_original_count": 0,
+        "effective_source_original_pct": 0.0,
+        "effective_source_unknown_count": 0,
+        "effective_source_unknown_pct": 0.0,
+    }
 
 
 def test_add_effective_market_context_fields_prefers_valid_market_context_values():

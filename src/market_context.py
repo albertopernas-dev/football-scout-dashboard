@@ -197,6 +197,47 @@ def calculate_market_context_enrichment_coverage(df: pd.DataFrame) -> dict[str, 
     }
 
 
+def calculate_effective_market_context_coverage(df: pd.DataFrame) -> dict[str, float | int]:
+    row_count = int(len(df))
+    if row_count == 0:
+        return _effective_market_context_zero_coverage(0)
+
+    effective_age_known_count = _count_valid_effective_age(df)
+    effective_market_value_known_count = _count_positive_numeric(df, "effective_market_value_eur")
+    effective_contract_known_count = _count_non_empty(df, "effective_contract_end_date")
+    effective_source_market_context_count = _count_matching_text(
+        df,
+        "effective_market_context_source",
+        "market_context",
+    )
+    effective_source_original_count = _count_matching_text(
+        df,
+        "effective_market_context_source",
+        "original",
+    )
+    effective_source_unknown_count = _count_matching_text(
+        df,
+        "effective_market_context_source",
+        "unknown",
+    )
+
+    return {
+        "row_count": row_count,
+        "effective_age_known_count": effective_age_known_count,
+        "effective_age_known_pct": _pct(effective_age_known_count, row_count),
+        "effective_market_value_known_count": effective_market_value_known_count,
+        "effective_market_value_known_pct": _pct(effective_market_value_known_count, row_count),
+        "effective_contract_known_count": effective_contract_known_count,
+        "effective_contract_known_pct": _pct(effective_contract_known_count, row_count),
+        "effective_source_market_context_count": effective_source_market_context_count,
+        "effective_source_market_context_pct": _pct(effective_source_market_context_count, row_count),
+        "effective_source_original_count": effective_source_original_count,
+        "effective_source_original_pct": _pct(effective_source_original_count, row_count),
+        "effective_source_unknown_count": effective_source_unknown_count,
+        "effective_source_unknown_pct": _pct(effective_source_unknown_count, row_count),
+    }
+
+
 def add_effective_market_context_fields(df: pd.DataFrame) -> pd.DataFrame:
     result = df.copy()
     effective_rows = [
@@ -225,8 +266,10 @@ def summarize_market_context_diagnostics(
     example_limit: int = 5,
 ) -> dict[str, object]:
     merged = merge_market_context(players_df, market_context_df)
+    merged = add_effective_market_context_fields(merged)
     duplicates = find_duplicate_market_context_keys(market_context_df)
     coverage = calculate_market_context_enrichment_coverage(merged)
+    effective_coverage = calculate_effective_market_context_coverage(merged)
     matched_examples = _market_context_example_rows(
         merged[merged["market_context_matched"].fillna(False).astype(bool)],
         limit=example_limit,
@@ -239,6 +282,7 @@ def summarize_market_context_diagnostics(
     return {
         "validation_errors": list(validation_errors or []),
         "coverage": coverage,
+        "effective_coverage": effective_coverage,
         "duplicate_count": int(len(duplicates)),
         "duplicate_rows": duplicates,
         "matched_examples": matched_examples,
@@ -414,6 +458,24 @@ def _market_context_zero_coverage(row_count: int) -> dict[str, float | int]:
     }
 
 
+def _effective_market_context_zero_coverage(row_count: int) -> dict[str, float | int]:
+    return {
+        "row_count": row_count,
+        "effective_age_known_count": 0,
+        "effective_age_known_pct": 0.0,
+        "effective_market_value_known_count": 0,
+        "effective_market_value_known_pct": 0.0,
+        "effective_contract_known_count": 0,
+        "effective_contract_known_pct": 0.0,
+        "effective_source_market_context_count": 0,
+        "effective_source_market_context_pct": 0.0,
+        "effective_source_original_count": 0,
+        "effective_source_original_pct": 0.0,
+        "effective_source_unknown_count": 0,
+        "effective_source_unknown_pct": 0.0,
+    }
+
+
 def _count_truthy(df: pd.DataFrame, column: str) -> int:
     if column not in df.columns:
         return 0
@@ -431,6 +493,13 @@ def _count_positive_numeric(df: pd.DataFrame, column: str) -> int:
         return 0
     values = pd.to_numeric(df[column], errors="coerce")
     return int(values.gt(0).fillna(False).sum())
+
+
+def _count_valid_effective_age(df: pd.DataFrame) -> int:
+    if "effective_age" not in df.columns:
+        return 0
+    values = pd.to_numeric(df["effective_age"], errors="coerce")
+    return int(values.between(15, 45).fillna(False).sum())
 
 
 def _count_parseable_dates(df: pd.DataFrame, column: str) -> int:

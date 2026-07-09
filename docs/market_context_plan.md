@@ -31,6 +31,7 @@ Adding a Market Context Layer would let Opportunity Finder evolve from a perform
 - Market context table display complete.
 - Opportunity Finder display complete.
 - Effective market context fields complete.
+- Effective market context diagnostics complete.
 - Opportunity Finder analytical integration complete.
 - Real enrichment data pending.
 - App analytical integration pending.
@@ -44,7 +45,7 @@ Validate and diagnose a market context CSV against the active local player datas
 .venv\Scripts\python.exe scripts/diagnose_market_context.py --market-context-csv data/enrichment/player_market_context_sample.csv
 ```
 
-The command reads the active dataset and the provided CSV, reports validation errors, duplicate keys, merge coverage and examples. It does not modify SQLite or the app.
+The command reads the active dataset and the provided CSV, reports validation errors, duplicate keys, merge coverage, effective market context coverage and examples. It does not modify SQLite or the app.
 
 CSV templates and identity-only sample rows live in `data/enrichment/`.
 
@@ -60,7 +61,7 @@ $env:FOOTBALL_SCOUT_MARKET_CONTEXT_CSV="data/enrichment/player_market_context_sa
 
 For production-like usage, point this variable to a manually reviewed CSV with real `age`, `market_value_eur`, `contract_end_date`, `source`, `confidence` and `notes`.
 
-The data layer now prepares `effective_*` market context fields. These fields prefer valid enrichment values and fall back to original values when available, but current scoring, rankings and Opportunity Finder calculations remain unchanged.
+The data layer now prepares `effective_*` market context fields. These fields prefer valid enrichment values and fall back to original values when available. Diagnostics report both enrichment coverage and effective coverage so it is clear whether usable market context comes from enrichment, original data or remains unknown.
 
 ## Recommended Approach
 

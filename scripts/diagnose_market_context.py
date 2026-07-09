@@ -65,7 +65,9 @@ def main() -> None:
         validation_errors=validation_errors,
     )
     coverage = diagnostics["coverage"]
+    effective_coverage = diagnostics["effective_coverage"]
     _print_coverage(coverage)
+    _print_effective_coverage(effective_coverage)
     _print_examples("Matched player examples", diagnostics["matched_examples"])
     _print_examples("Unmatched enrichment examples", diagnostics["unmatched_enrichment_examples"])
     _print_market_context_warning(coverage)
@@ -101,6 +103,41 @@ def _print_coverage(coverage: dict[str, float | int]) -> None:
     print("--------")
     for key, value in coverage.items():
         print(f"{key}: {value}")
+    print()
+
+
+def _print_effective_coverage(coverage: dict[str, float | int]) -> None:
+    print("=== Effective Market Context Coverage ===")
+    print(
+        "effective age known: "
+        f"{coverage.get('effective_age_known_count', 0)} "
+        f"({coverage.get('effective_age_known_pct', 0.0)}%)"
+    )
+    print(
+        "effective market value known: "
+        f"{coverage.get('effective_market_value_known_count', 0)} "
+        f"({coverage.get('effective_market_value_known_pct', 0.0)}%)"
+    )
+    print(
+        "effective contract known: "
+        f"{coverage.get('effective_contract_known_count', 0)} "
+        f"({coverage.get('effective_contract_known_pct', 0.0)}%)"
+    )
+    print(
+        "source market_context: "
+        f"{coverage.get('effective_source_market_context_count', 0)} "
+        f"({coverage.get('effective_source_market_context_pct', 0.0)}%)"
+    )
+    print(
+        "source original: "
+        f"{coverage.get('effective_source_original_count', 0)} "
+        f"({coverage.get('effective_source_original_pct', 0.0)}%)"
+    )
+    print(
+        "source unknown: "
+        f"{coverage.get('effective_source_unknown_count', 0)} "
+        f"({coverage.get('effective_source_unknown_pct', 0.0)}%)"
+    )
     print()
 
 

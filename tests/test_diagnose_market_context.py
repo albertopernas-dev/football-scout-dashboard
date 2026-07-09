@@ -1,5 +1,6 @@
 import pandas as pd
 
+from scripts.diagnose_market_context import _print_effective_coverage
 from src.market_context import summarize_market_context_diagnostics
 
 
@@ -67,6 +68,44 @@ def test_summarize_market_context_diagnostics_calculates_coverage():
     assert coverage["market_value_known_count"] == 1
     assert coverage["contract_known_count"] == 1
     assert coverage["high_confidence_count"] == 1
+
+
+def test_summarize_market_context_diagnostics_includes_effective_coverage():
+    diagnostics = summarize_market_context_diagnostics(players_df(), market_context_df())
+
+    coverage = diagnostics["effective_coverage"]
+
+    assert coverage["row_count"] == 2
+    assert coverage["effective_age_known_count"] == 1
+    assert coverage["effective_market_value_known_count"] == 1
+    assert coverage["effective_contract_known_count"] == 1
+    assert coverage["effective_source_market_context_count"] == 1
+    assert coverage["effective_source_unknown_count"] == 1
+
+
+def test_print_effective_coverage_outputs_section(capsys):
+    _print_effective_coverage(
+        {
+            "effective_age_known_count": 1,
+            "effective_age_known_pct": 50.0,
+            "effective_market_value_known_count": 1,
+            "effective_market_value_known_pct": 50.0,
+            "effective_contract_known_count": 1,
+            "effective_contract_known_pct": 50.0,
+            "effective_source_market_context_count": 1,
+            "effective_source_market_context_pct": 50.0,
+            "effective_source_original_count": 0,
+            "effective_source_original_pct": 0.0,
+            "effective_source_unknown_count": 1,
+            "effective_source_unknown_pct": 50.0,
+        }
+    )
+
+    output = capsys.readouterr().out
+
+    assert "=== Effective Market Context Coverage ===" in output
+    assert "effective age known: 1 (50.0%)" in output
+    assert "source market_context: 1 (50.0%)" in output
 
 
 def test_summarize_market_context_diagnostics_preserves_validation_errors():
