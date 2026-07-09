@@ -26,3 +26,39 @@ It does not modify SQLite and does not change the Streamlit app.
 For real enrichment, fill `age`, `market_value_eur`, `contract_end_date`, `source`, `confidence` and `notes` after manual review.
 
 Keep unknown values empty. Do not use `0` for unknown age, market value or contract date.
+
+Review source quality before adding values. Use the checklist in [`docs/enrichment_source_quality_checklist.md`](../../docs/enrichment_source_quality_checklist.md).
+
+## Real CSV policy
+
+The versioned files in this folder are:
+
+- `player_market_context_template.csv`
+- `player_market_context_sample.csv`
+
+Real reviewed enrichment CSVs should stay local by default unless there is clear permission to redistribute the data and sources.
+
+Suggested local naming:
+
+```text
+player_market_context_laliga_2024_reviewed.local.csv
+```
+
+Activate a local reviewed CSV explicitly:
+
+```powershell
+$env:FOOTBALL_SCOUT_MARKET_CONTEXT_CSV="data/enrichment/player_market_context_laliga_2024_reviewed.local.csv"
+```
+
+Run diagnostics before opening the app with a real reviewed file:
+
+```powershell
+.venv\Scripts\python.exe scripts/diagnose_market_context.py --market-context-csv data/enrichment/player_market_context_laliga_2024_reviewed.local.csv
+```
+
+The diagnostic command should be clean before the CSV is used for scouting review:
+
+- validation errors = 0;
+- duplicate keys = 0;
+- matched coverage reviewed;
+- effective coverage reviewed.

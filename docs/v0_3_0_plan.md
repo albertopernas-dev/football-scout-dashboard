@@ -49,40 +49,42 @@ Rules:
 - `source_url` is optional but recommended.
 - Duplicate player/team/league/season keys must be reviewed before use.
 - Real values should come from manually reviewed, traceable sources.
+- Review [`docs/enrichment_source_quality_checklist.md`](enrichment_source_quality_checklist.md) before filling real values.
 
 ## Proposed Workflow
 
 1. Copy the template:
 
    ```powershell
-   Copy-Item data/enrichment/player_market_context_template.csv data/enrichment/player_market_context_laliga_2024_reviewed.csv
+   Copy-Item data/enrichment/player_market_context_template.csv data/enrichment/player_market_context_laliga_2024_reviewed.local.csv
    ```
 
-2. Start with a small first batch, for example the top 25 players from Opportunity Finder.
-3. Fill only values that have been manually reviewed.
-4. Keep unknown values empty.
-5. Add `source`, optional `source_url`, `confidence` and `notes`.
-6. Run diagnostics:
+2. Review the source quality checklist.
+3. Start with a small first batch, for example the top 25 players from Opportunity Finder.
+4. Fill only values that have been manually reviewed.
+5. Keep unknown values empty.
+6. Add `source`, optional `source_url`, `confidence` and `notes`.
+7. Run diagnostics:
 
    ```powershell
-   .venv\Scripts\python.exe scripts/diagnose_market_context.py --market-context-csv data/enrichment/player_market_context_laliga_2024_reviewed.csv
+   .venv\Scripts\python.exe scripts/diagnose_market_context.py --market-context-csv data/enrichment/player_market_context_laliga_2024_reviewed.local.csv
    ```
 
-7. Review validation errors.
-8. Review duplicate keys.
-9. Review matched and unmatched examples.
-10. Review effective age, value and contract coverage.
-11. Enable the CSV explicitly:
+8. Review validation errors.
+9. Review duplicate keys.
+10. Review matched and unmatched examples.
+11. Review effective age, value and contract coverage.
+12. Enable the CSV explicitly:
 
     ```powershell
-    $env:FOOTBALL_SCOUT_MARKET_CONTEXT_CSV="data/enrichment/player_market_context_laliga_2024_reviewed.csv"
+    $env:FOOTBALL_SCOUT_MARKET_CONTEXT_CSV="data/enrichment/player_market_context_laliga_2024_reviewed.local.csv"
     ```
 
-12. Open the app and check `Fuente de datos`.
-13. Confirm market context coverage and effective coverage.
-14. Review Opportunity Finder with effective context columns visible.
-15. Export a shortlist CSV.
-16. Document coverage and known gaps.
+13. Open the app and check `Fuente de datos`.
+14. Confirm market context coverage and effective coverage.
+15. Review Opportunity Finder with effective context columns visible.
+16. Export a shortlist CSV.
+17. Document coverage and known gaps.
 
 ## Quality Gates
 

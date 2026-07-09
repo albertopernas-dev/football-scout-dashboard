@@ -7,6 +7,8 @@ __pycache__/
 reports/generated/*.html
 data/football_scout.db
 data/raw/
+data/enrichment/*.local.csv
+data/enrichment/*_reviewed.csv
 *.log
 .DS_Store
 Thumbs.db
