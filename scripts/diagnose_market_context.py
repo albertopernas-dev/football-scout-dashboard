@@ -36,7 +36,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main() -> None:
     args = build_parser().parse_args()
-    players_df, metadata = load_players_data_with_metadata()
+    players_df, metadata = load_base_players_data()
     market_context_df, validation_errors = load_market_context_csv(args.market_context_csv)
 
     print("Market Context Diagnostics")
@@ -71,6 +71,10 @@ def main() -> None:
     _print_examples("Matched player examples", diagnostics["matched_examples"])
     _print_examples("Unmatched enrichment examples", diagnostics["unmatched_enrichment_examples"])
     _print_market_context_warning(coverage)
+
+
+def load_base_players_data() -> tuple[pd.DataFrame, dict]:
+    return load_players_data_with_metadata(market_context_csv_path=None)
 
 
 def _print_validation_errors(validation_errors: list[str]) -> None:

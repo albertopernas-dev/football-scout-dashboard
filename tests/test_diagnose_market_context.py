@@ -1,6 +1,7 @@
 import pandas as pd
 
-from scripts.diagnose_market_context import _print_effective_coverage
+import scripts.diagnose_market_context as diagnose_market_context
+from scripts.diagnose_market_context import _print_effective_coverage, load_base_players_data
 from src.market_context import summarize_market_context_diagnostics
 
 
@@ -106,6 +107,23 @@ def test_print_effective_coverage_outputs_section(capsys):
     assert "=== Effective Market Context Coverage ===" in output
     assert "effective age known: 1 (50.0%)" in output
     assert "source market_context: 1 (50.0%)" in output
+
+
+def test_load_base_players_data_disables_env_market_context(monkeypatch):
+    calls = []
+
+    def fake_loader(**kwargs):
+        calls.append(kwargs)
+        return pd.DataFrame({"player": ["Base Player"]}), {"source": "sqlite", "row_count": 1}
+
+    monkeypatch.setenv("FOOTBALL_SCOUT_MARKET_CONTEXT_CSV", "data/enrichment/context.local.csv")
+    monkeypatch.setattr(diagnose_market_context, "load_players_data_with_metadata", fake_loader)
+
+    players, metadata = load_base_players_data()
+
+    assert players["player"].tolist() == ["Base Player"]
+    assert metadata["source"] == "sqlite"
+    assert calls == [{"market_context_csv_path": None}]
 
 
 def test_summarize_market_context_diagnostics_preserves_validation_errors():
