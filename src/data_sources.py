@@ -17,6 +17,7 @@ from src.config import (
     get_market_context_csv_path,
 )
 from src.market_context import (
+    add_effective_market_context_fields,
     calculate_market_context_enrichment_coverage,
     find_duplicate_market_context_keys,
     load_market_context_csv,
@@ -157,11 +158,15 @@ def _apply_optional_market_context(
         resolved_path = get_market_context_csv_path(market_context_csv_path)
 
     if resolved_path is None:
-        return data, metadata
+        return add_effective_market_context_fields(data), {
+            **metadata,
+            "effective_market_context_fields": True,
+        }
 
     if not resolved_path.exists():
-        return data, {
+        return add_effective_market_context_fields(data), {
             **metadata,
+            "effective_market_context_fields": True,
             "market_context_enabled": False,
             "market_context_csv_path": str(resolved_path),
             "market_context_load_error": f"Market context CSV not found: {resolved_path}",
@@ -170,10 +175,12 @@ def _apply_optional_market_context(
     try:
         market_context, validation_errors = load_market_context_csv(resolved_path)
         enriched = merge_market_context(data, market_context)
+        enriched = add_effective_market_context_fields(enriched)
         coverage = calculate_market_context_enrichment_coverage(enriched)
         duplicate_count = int(len(find_duplicate_market_context_keys(market_context)))
         enriched_metadata = {
             **metadata,
+            "effective_market_context_fields": True,
             "market_context_enabled": True,
             "market_context_csv_path": str(resolved_path),
             "market_context_validation_error_count": len(validation_errors),
@@ -188,8 +195,9 @@ def _apply_optional_market_context(
             enriched_metadata["market_context_validation_errors"] = validation_errors
         return enriched, enriched_metadata
     except Exception as exc:
-        return data, {
+        return add_effective_market_context_fields(data), {
             **metadata,
+            "effective_market_context_fields": True,
             "market_context_enabled": False,
             "market_context_csv_path": str(resolved_path),
             "market_context_load_error": str(exc),

@@ -197,6 +197,27 @@ def calculate_market_context_enrichment_coverage(df: pd.DataFrame) -> dict[str, 
     }
 
 
+def add_effective_market_context_fields(df: pd.DataFrame) -> pd.DataFrame:
+    result = df.copy()
+    effective_rows = [
+        _resolve_effective_market_context_row(row)
+        for _, row in result.iterrows()
+    ]
+    effective = pd.DataFrame(
+        effective_rows,
+        columns=[
+            "effective_age",
+            "effective_market_value_eur",
+            "effective_contract_end_date",
+            "effective_market_context_source",
+        ],
+        index=result.index,
+    )
+    for column in effective.columns:
+        result[column] = effective[column]
+    return result
+
+
 def summarize_market_context_diagnostics(
     players_df: pd.DataFrame,
     market_context_df: pd.DataFrame,
@@ -224,6 +245,111 @@ def summarize_market_context_diagnostics(
         "unmatched_enrichment_examples": unmatched_examples,
         "merged": merged,
     }
+
+
+def _resolve_effective_market_context_row(row: pd.Series) -> dict[str, object]:
+    used_market_context = False
+    used_original = False
+
+    market_context_age = _valid_age_or_none(row.get("market_context_age"))
+    if market_context_age is not None:
+        effective_age = market_context_age
+        used_market_context = True
+    else:
+        effective_age = _original_age_or_none(row)
+        used_original = used_original or effective_age is not None
+
+    market_context_value = _positive_number_or_none(row.get("market_context_market_value_eur"))
+    if market_context_value is not None:
+        effective_market_value = market_context_value
+        used_market_context = True
+    else:
+        effective_market_value = _first_positive_number_or_none(
+            row,
+            ["market_value_eur", "market_value"],
+        )
+        used_original = used_original or effective_market_value is not None
+
+    market_context_contract = _non_empty_or_none(row.get("market_context_contract_end_date"))
+    if market_context_contract is not None:
+        effective_contract = market_context_contract
+        used_market_context = True
+    else:
+        effective_contract = _first_non_empty_or_none(
+            row,
+            ["contract_end_date", "contract_end"],
+        )
+        used_original = used_original or effective_contract is not None
+
+    if used_market_context:
+        source = "market_context"
+    elif used_original:
+        source = "original"
+    else:
+        source = "unknown"
+
+    return {
+        "effective_age": effective_age if effective_age is not None else pd.NA,
+        "effective_market_value_eur": effective_market_value if effective_market_value is not None else pd.NA,
+        "effective_contract_end_date": effective_contract if effective_contract is not None else pd.NA,
+        "effective_market_context_source": source,
+    }
+
+
+def _valid_age_or_none(value: object) -> int | None:
+    numeric_value = _to_number(value)
+    if numeric_value is None or numeric_value < 15 or numeric_value > 45:
+        return None
+    return int(numeric_value)
+
+
+def _original_age_or_none(row: pd.Series) -> int | None:
+    if "age" not in row.index:
+        return None
+    if _is_false_flag(row.get("age_known")):
+        return None
+    return _valid_age_or_none(row.get("age"))
+
+
+def _positive_number_or_none(value: object) -> float | None:
+    numeric_value = _to_number(value)
+    if numeric_value is None or numeric_value <= 0:
+        return None
+    return numeric_value
+
+
+def _first_positive_number_or_none(row: pd.Series, columns: list[str]) -> float | None:
+    for column in columns:
+        if column not in row.index:
+            continue
+        numeric_value = _positive_number_or_none(row.get(column))
+        if numeric_value is not None:
+            return numeric_value
+    return None
+
+
+def _non_empty_or_none(value: object) -> object | None:
+    if _is_empty(value):
+        return None
+    return value
+
+
+def _first_non_empty_or_none(row: pd.Series, columns: list[str]) -> object | None:
+    for column in columns:
+        if column not in row.index:
+            continue
+        value = _non_empty_or_none(row.get(column))
+        if value is not None:
+            return value
+    return None
+
+
+def _is_false_flag(value: object) -> bool:
+    if _is_empty(value):
+        return False
+    if isinstance(value, str):
+        return value.strip().lower() == "false"
+    return bool(value) is False
 
 
 def _is_empty(value: object) -> bool:

@@ -178,7 +178,9 @@ def test_load_players_data_with_metadata_returns_sqlite_source(tmp_path):
         "path": str(database_path),
         "table": "players",
         "row_count": 2,
+        "effective_market_context_fields": True,
     }
+    assert "effective_age" in result.columns
 
 
 def test_load_players_data_with_metadata_returns_external_source(tmp_path):
@@ -196,7 +198,9 @@ def test_load_players_data_with_metadata_returns_external_source(tmp_path):
         "source": "external",
         "url": "https://example.test/players",
         "row_count": 1,
+        "effective_market_context_fields": True,
     }
+    assert "effective_age" in result.columns
 
 
 def test_load_players_data_with_metadata_returns_csv_source(tmp_path):
@@ -215,7 +219,9 @@ def test_load_players_data_with_metadata_returns_csv_source(tmp_path):
         "source": "csv",
         "path": str(csv_path),
         "row_count": 2,
+        "effective_market_context_fields": True,
     }
+    assert "effective_age" in result.columns
 
 
 def test_load_players_data_still_returns_only_dataframe(tmp_path):
@@ -246,6 +252,9 @@ def test_load_players_data_with_metadata_does_not_load_market_context_without_co
     )
 
     assert "market_context_age" not in result.columns
+    assert result.loc[0, "effective_age"] == 20
+    assert result.loc[0, "effective_market_value_eur"] == 999
+    assert metadata["effective_market_context_fields"] is True
     assert "market_context_enabled" not in metadata
 
 
@@ -267,6 +276,11 @@ def test_load_players_data_with_metadata_uses_market_context_env_var(tmp_path, m
     assert result.loc[1, "market_context_matched"] is False
     assert result.loc[0, "market_context_age"] == 24
     assert result.loc[0, "market_context_market_value_eur"] == 1_500_000
+    assert result.loc[0, "effective_age"] == 24
+    assert result.loc[0, "effective_market_value_eur"] == 1_500_000
+    assert result.loc[0, "effective_contract_end_date"] == "2026-06-30"
+    assert result.loc[0, "effective_market_context_source"] == "market_context"
+    assert metadata["effective_market_context_fields"] is True
     assert metadata["market_context_enabled"] is True
     assert metadata["market_context_csv_path"] == str(market_context_path)
     assert metadata["market_context_validation_error_count"] == 0
@@ -311,6 +325,8 @@ def test_load_players_data_with_metadata_handles_missing_market_context_file(tmp
 
     assert result["player"].tolist() == ["Ana", "Bea"]
     assert "market_context_age" not in result.columns
+    assert "effective_age" in result.columns
+    assert metadata["effective_market_context_fields"] is True
     assert metadata["market_context_enabled"] is False
     assert metadata["market_context_csv_path"] == str(missing_market_context_path)
     assert "Market context CSV not found" in metadata["market_context_load_error"]
@@ -334,6 +350,8 @@ def test_market_context_does_not_overwrite_existing_player_values(tmp_path):
     assert result.loc[0, "market_value_eur"] == 999
     assert result.loc[0, "market_context_age"] == 24
     assert result.loc[0, "market_context_market_value_eur"] == 1_500_000
+    assert result.loc[0, "effective_age"] == 24
+    assert result.loc[0, "effective_market_value_eur"] == 1_500_000
 
 
 def test_sample_market_context_is_not_loaded_by_default(tmp_path, monkeypatch):
@@ -356,6 +374,8 @@ def test_sample_market_context_is_not_loaded_by_default(tmp_path, monkeypatch):
     )
 
     assert "market_context_matched" not in result.columns
+    assert "effective_age" in result.columns
+    assert metadata["effective_market_context_fields"] is True
     assert "market_context_enabled" not in metadata
 
 

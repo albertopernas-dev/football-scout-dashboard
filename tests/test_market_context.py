@@ -4,6 +4,7 @@ import pandas as pd
 import pytest
 
 from src.market_context import (
+    add_effective_market_context_fields,
     calculate_market_context_enrichment_coverage,
     find_duplicate_market_context_keys,
     load_market_context_csv,
@@ -441,3 +442,131 @@ def test_calculate_market_context_enrichment_coverage_handles_missing_context_co
     assert coverage["market_value_known_count"] == 0
     assert coverage["contract_known_count"] == 0
     assert coverage["high_confidence_count"] == 0
+
+
+def test_add_effective_market_context_fields_prefers_valid_market_context_values():
+    df = pd.DataFrame(
+        {
+            "age": [30],
+            "age_known": [True],
+            "market_value": [1_000_000],
+            "contract_end": ["2025-06-30"],
+            "market_context_age": [24],
+            "market_context_market_value_eur": [2_000_000],
+            "market_context_contract_end_date": ["2027-06-30"],
+        }
+    )
+
+    result = add_effective_market_context_fields(df)
+
+    assert result.loc[0, "effective_age"] == 24
+    assert result.loc[0, "effective_market_value_eur"] == 2_000_000
+    assert result.loc[0, "effective_contract_end_date"] == "2027-06-30"
+    assert result.loc[0, "effective_market_context_source"] == "market_context"
+
+
+def test_add_effective_market_context_fields_ignores_invalid_context_age_and_uses_known_original_age():
+    df = pd.DataFrame({"age": [29], "age_known": [True], "market_context_age": [14]})
+
+    result = add_effective_market_context_fields(df)
+
+    assert result.loc[0, "effective_age"] == 29
+    assert result.loc[0, "effective_market_context_source"] == "original"
+
+
+def test_add_effective_market_context_fields_respects_unknown_original_age():
+    df = pd.DataFrame({"age": [25], "age_known": [False], "market_context_age": ["bad"]})
+
+    result = add_effective_market_context_fields(df)
+
+    assert pd.isna(result.loc[0, "effective_age"])
+    assert result.loc[0, "effective_market_context_source"] == "unknown"
+
+
+@pytest.mark.parametrize("invalid_value", [0, -1, "expensive"])
+def test_add_effective_market_context_fields_ignores_invalid_market_context_value(invalid_value):
+    df = pd.DataFrame(
+        {
+            "market_context_market_value_eur": [invalid_value],
+            "market_value_eur": [2_500_000],
+        }
+    )
+
+    result = add_effective_market_context_fields(df)
+
+    assert result.loc[0, "effective_market_value_eur"] == 2_500_000
+    assert result.loc[0, "effective_market_context_source"] == "original"
+
+
+def test_add_effective_market_context_fields_uses_original_market_value_fallback():
+    df = pd.DataFrame({"market_value": [3_000_000]})
+
+    result = add_effective_market_context_fields(df)
+
+    assert result.loc[0, "effective_market_value_eur"] == 3_000_000
+    assert result.loc[0, "effective_market_context_source"] == "original"
+
+
+def test_add_effective_market_context_fields_uses_market_value_eur_before_market_value():
+    df = pd.DataFrame({"market_value_eur": [4_000_000], "market_value": [3_000_000]})
+
+    result = add_effective_market_context_fields(df)
+
+    assert result.loc[0, "effective_market_value_eur"] == 4_000_000
+    assert result.loc[0, "effective_market_context_source"] == "original"
+
+
+def test_add_effective_market_context_fields_uses_market_context_contract_before_original():
+    df = pd.DataFrame(
+        {
+            "contract_end": ["2025-06-30"],
+            "market_context_contract_end_date": ["2027-06-30"],
+        }
+    )
+
+    result = add_effective_market_context_fields(df)
+
+    assert result.loc[0, "effective_contract_end_date"] == "2027-06-30"
+    assert result.loc[0, "effective_market_context_source"] == "market_context"
+
+
+def test_add_effective_market_context_fields_falls_back_to_original_contract_columns():
+    df = pd.DataFrame(
+        {
+            "contract_end_date": ["2026-06-30"],
+            "contract_end": ["2025-06-30"],
+        }
+    )
+
+    result = add_effective_market_context_fields(df)
+
+    assert result.loc[0, "effective_contract_end_date"] == "2026-06-30"
+    assert result.loc[0, "effective_market_context_source"] == "original"
+
+
+def test_add_effective_market_context_fields_marks_unknown_when_no_values_exist():
+    result = add_effective_market_context_fields(pd.DataFrame([{"player": "A"}]))
+
+    assert pd.isna(result.loc[0, "effective_age"])
+    assert pd.isna(result.loc[0, "effective_market_value_eur"])
+    assert pd.isna(result.loc[0, "effective_contract_end_date"])
+    assert result.loc[0, "effective_market_context_source"] == "unknown"
+
+
+def test_add_effective_market_context_fields_does_not_mutate_original_dataframe():
+    df = pd.DataFrame({"market_context_age": [24]})
+
+    result = add_effective_market_context_fields(df)
+
+    assert "effective_age" not in df.columns
+    assert result.loc[0, "effective_age"] == 24
+
+
+def test_add_effective_market_context_fields_handles_empty_dataframe():
+    result = add_effective_market_context_fields(pd.DataFrame())
+
+    assert result.empty
+    assert "effective_age" in result.columns
+    assert "effective_market_value_eur" in result.columns
+    assert "effective_contract_end_date" in result.columns
+    assert "effective_market_context_source" in result.columns
