@@ -35,6 +35,35 @@ Start at the top of the app and review:
 
 For the current LaLiga 2024 dataset, age, market value and contract coverage are limited. The app surfaces that context so the rankings are not presented as complete market intelligence.
 
+## v0.2.0 Market Context Demo
+
+First, run the app without market context enrichment. `Fuente de datos` should show the active SQLite source and limited market context.
+
+Then run the diagnostic command against the identity-only sample:
+
+```powershell
+.venv\Scripts\python.exe scripts/diagnose_market_context.py --market-context-csv data/enrichment/player_market_context_sample.csv
+```
+
+The sample validates matching and UI behavior, but intentionally does not include real age, market value or contract values.
+
+Enable the sample explicitly:
+
+```powershell
+$env:FOOTBALL_SCOUT_MARKET_CONTEXT_CSV="data/enrichment/player_market_context_sample.csv"
+.venv\Scripts\streamlit.exe run app.py
+```
+
+Open `Fuente de datos` again and show:
+
+- market context status;
+- matched rows;
+- validation and duplicate counts;
+- effective market context coverage;
+- source breakdown: enrichment, original and unknown.
+
+With the identity-only sample, effective age, market value and contract coverage should remain 0%. That is expected and useful for explaining that the layer is ready, but real market enrichment data is still pending.
+
 ## Review recommended ranking
 
 Open the main player table and focus on `Score recomendado`. This is the recommended score because it adjusts the raw score by minutes reliability.
@@ -60,6 +89,8 @@ Open Opportunity Finder and apply the same mindset:
 - read the market-context warning before interpreting the ranking.
 
 In the current dataset, Opportunity Finder is closer to a performance-and-reliability shortlist than a full market opportunity model, because age, market value and contract fields are not available.
+
+In v0.2.0, Opportunity Finder uses `effective_age`, `effective_market_value_eur` and `effective_contract_end_date` when real values exist. With the bundled sample, these remain unknown because the sample is identity-only.
 
 ## Export CSV
 

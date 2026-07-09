@@ -35,8 +35,7 @@ Adding a Market Context Layer would let Opportunity Finder evolve from a perform
 - App effective coverage display complete.
 - Opportunity Finder analytical integration complete.
 - Real enrichment data pending.
-- App analytical integration pending.
-- Scoring integration pending; rankings are unchanged.
+- Scoring integration intentionally pending; general rankings are unchanged.
 
 ## Diagnostic Command
 
@@ -149,13 +148,14 @@ The first version should prefer explicit review and confidence labels over aggre
 
 ## App Impact
 
-Once the layer is implemented:
+The implemented layer means:
 
-- age would stop showing as `Desconocida` for enriched players;
-- market value would stop showing as `Desconocido` for enriched players;
-- Opportunity Finder could use real age, value and contract context;
-- the dataset summary and data quality panel would show real market-context coverage;
-- warnings would remain visible when coverage is partial or missing.
+- age can stop showing as `Desconocida` for players with valid enrichment;
+- market value can stop showing as `Desconocido` for players with valid enrichment;
+- Opportunity Finder uses effective age, value and contract context when present;
+- the app shows market-context coverage and effective coverage;
+- warnings remain visible when coverage is partial or missing;
+- general performance scoring remains unchanged.
 
 ## Risks
 
@@ -172,5 +172,5 @@ Once the layer is implemented:
 - A loader validates and merges enrichment data.
 - Tests cover schema validation, matching and unknown-value behavior.
 - Market context coverage is visible in the app.
-- Opportunity Finder uses real market context when it exists.
+- Opportunity Finder uses effective market context when it exists.
 - Warnings remain clear when age, market value or contract data are missing.

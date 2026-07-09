@@ -47,10 +47,23 @@ A practical 5-10 minute demo script is available in [`docs/demo_walkthrough.md`]
 
 ## Release
 
-Current milestone: `v0.1.0`.
+Current milestone: `v0.2.0`.
 
 - Release notes: [`docs/release_notes_v0_1_0.md`](docs/release_notes_v0_1_0.md)
+- v0.2.0 release notes: [`docs/release_notes_v0_2_0.md`](docs/release_notes_v0_2_0.md)
 - Demo assets checklist: [`docs/demo_assets_checklist.md`](docs/demo_assets_checklist.md)
+
+## v0.2.0 Market Context Layer
+
+v0.2.0 adds an opt-in Market Context Layer for manually reviewed enrichment CSVs. It validates schema, merges context by player/team/league/season, shows enrichment and effective coverage in the app, and lets Opportunity Finder use effective age, market value and contract date when valid values exist.
+
+Enable a CSV explicitly with:
+
+```powershell
+$env:FOOTBALL_SCOUT_MARKET_CONTEXT_CSV="data/enrichment/player_market_context_sample.csv"
+```
+
+The bundled sample is identity-only and does not contain real market values, ages or contract dates. Details are documented in [`docs/market_context_plan.md`](docs/market_context_plan.md).
 
 ## Funcionalidades
 

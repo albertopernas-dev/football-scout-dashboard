@@ -13,6 +13,9 @@ Use this checklist to prepare screenshots, GIFs or a short video for GitHub, por
 - [x] Similar players view.
 - [ ] HTML scouting report example.
 - [ ] Documentation links in README.
+- [ ] Fuente de datos with market context status.
+- [ ] Effective market context coverage.
+- [ ] Opportunity Finder with market/effective context columns.
 
 ## Captured Assets
 
@@ -34,15 +37,17 @@ Target duration: 60-90 seconds.
 3. Show dataset summary.
 4. Filter reliable/comparable players.
 5. Open Opportunity Finder.
-6. Export a CSV shortlist.
-7. Generate a scouting report.
-8. End with limitations and next steps.
+6. Show Market Context status and effective coverage.
+7. Export a CSV shortlist.
+8. Generate a scouting report.
+9. End with limitations and next steps.
 
 ## Suggested Captions
 
 - "SQLite-first football scouting dashboard"
 - "Sample-adjusted rankings based on minutes reliability"
 - "Opportunity Finder with reliability and comparability filters"
+- "Opt-in Market Context Layer with effective coverage"
 - "Built with Python, Streamlit, pandas, scikit-learn and Plotly"
 
 ## Do Not Claim

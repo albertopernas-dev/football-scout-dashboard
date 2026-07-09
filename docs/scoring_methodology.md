@@ -107,7 +107,7 @@ La app muestra un aviso cuando falta contexto de mercado para recordar que:
 - Valor de mercado desconocido no significa jugador barato.
 - Contrato desconocido no significa contrato proximo.
 
-Cuando se incorpore una fuente fiable para edad, valor y contrato, `market_opportunity_score` y `sample_adjusted_market_opportunity_score` tendran mas valor como ranking de oportunidad real.
+Con v0.2.0, Opportunity Finder puede usar `effective_age`, `effective_market_value_eur` y `effective_contract_end_date` cuando existe enrichment valido. El scoring general de rendimiento no cambia; la utilidad real de oportunidad depende de la cobertura y calidad de esos campos efectivos.
 
 ## Porteros
 
@@ -147,4 +147,3 @@ Un jugador con score bruto alto y muestra baja puede ser interesante, pero no de
 - El modelo de porteros es conservador y limitado por falta de metricas GK fuertes.
 - La definicion de cada metrica depende de la fuente original y debe validarse antes de comparar con otros proveedores.
 - El scoring ayuda a priorizar revision, pero no sustituye scouting humano, video, contexto tactico, rol del jugador ni validacion medica/contractual.
-
