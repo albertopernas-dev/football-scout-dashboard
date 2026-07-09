@@ -29,6 +29,29 @@ Keep unknown values empty. Do not use `0` for unknown age, market value or contr
 
 Review source quality before adding values. Use the checklist in [`docs/enrichment_source_quality_checklist.md`](../../docs/enrichment_source_quality_checklist.md).
 
+## Generate a local seed CSV
+
+Create a local reviewed-file seed from the current Opportunity Finder ranking:
+
+```powershell
+.venv\Scripts\python.exe scripts/export_enrichment_seed.py --top-n 25 --force
+```
+
+By default this writes:
+
+```text
+data/enrichment/player_market_context_laliga_2024_reviewed.local.csv
+```
+
+The generated CSV only fills `player`, `team`, `league` and `season`. It intentionally leaves `age`, `market_value_eur`, `contract_end_date`, `source`, `source_url`, `confidence` and `notes` empty for manual review.
+
+After generating the seed:
+
+1. Review the source quality checklist.
+2. Fill only manually reviewed values.
+3. Keep unknown values empty.
+4. Run diagnostics before activating the CSV.
+
 ## Real CSV policy
 
 The versioned files in this folder are:

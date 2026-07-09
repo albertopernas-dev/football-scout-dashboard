@@ -53,14 +53,21 @@ Rules:
 
 ## Proposed Workflow
 
-1. Copy the template:
+1. Generate a local seed CSV from the current Opportunity Finder ranking:
+
+   ```powershell
+   .venv\Scripts\python.exe scripts/export_enrichment_seed.py --top-n 25 --force
+   ```
+
+   This creates `data/enrichment/player_market_context_laliga_2024_reviewed.local.csv` with player identity fields only.
+
+2. If needed, copy the template manually instead:
 
    ```powershell
    Copy-Item data/enrichment/player_market_context_template.csv data/enrichment/player_market_context_laliga_2024_reviewed.local.csv
    ```
 
-2. Review the source quality checklist.
-3. Start with a small first batch, for example the top 25 players from Opportunity Finder.
+3. Review the source quality checklist.
 4. Fill only values that have been manually reviewed.
 5. Keep unknown values empty.
 6. Add `source`, optional `source_url`, `confidence` and `notes`.
