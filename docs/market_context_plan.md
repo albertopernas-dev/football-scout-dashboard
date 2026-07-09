@@ -174,3 +174,7 @@ The implemented layer means:
 - Market context coverage is visible in the app.
 - Opportunity Finder uses effective market context when it exists.
 - Warnings remain clear when age, market value or contract data are missing.
+
+## Next Step
+
+v0.3.0 should focus on the real manual enrichment workflow described in [`docs/v0_3_0_plan.md`](v0_3_0_plan.md): building a small reviewed CSV, validating it, diagnosing coverage and using it explicitly through `FOOTBALL_SCOUT_MARKET_CONTEXT_CSV`.
