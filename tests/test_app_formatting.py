@@ -8,6 +8,7 @@ from app import (
     format_display_columns,
     format_euros,
     format_integer_or_blank,
+    opportunity_display_columns,
     prepare_table_display,
     player_table_display_columns,
     sort_players_for_display,
@@ -185,6 +186,69 @@ def test_player_table_display_columns_ignores_missing_market_context_columns():
     columns = player_table_display_columns(df)
 
     assert columns == ["player", "overall_score"]
+
+
+def test_opportunity_display_columns_includes_market_context_but_not_matching_keys():
+    df = pd.DataFrame(
+        {
+            "player": ["A"],
+            "sample_adjusted_market_opportunity_score": [80.0],
+            "market_context_matched": [True],
+            "market_context_age": [24],
+            "market_context_market_value_eur": [1_500_000],
+            "market_context_contract_end_date": ["2027-06-30"],
+            "market_context_confidence": ["high"],
+            "market_context_source": ["manual_review"],
+            "market_context_duplicate_key": [False],
+            "player_match_key": ["a"],
+            "team_match_key": ["team"],
+            "league_match_key": ["league"],
+        }
+    )
+
+    columns = opportunity_display_columns(df)
+
+    assert "market_context_matched" in columns
+    assert "market_context_age" in columns
+    assert "market_context_market_value_eur" in columns
+    assert "market_context_contract_end_date" in columns
+    assert "market_context_confidence" in columns
+    assert "market_context_source" in columns
+    assert "market_context_duplicate_key" in columns
+    assert "player_match_key" not in columns
+    assert "team_match_key" not in columns
+    assert "league_match_key" not in columns
+
+
+def test_opportunity_display_columns_ignores_missing_market_context_columns():
+    df = pd.DataFrame({"player": ["A"], "market_opportunity_score": [60.0]})
+
+    columns = opportunity_display_columns(df)
+
+    assert columns == ["player", "market_opportunity_score"]
+
+
+def test_opportunity_display_market_context_columns_are_export_ready():
+    df = pd.DataFrame(
+        {
+            "player": ["A"],
+            "market_context_matched": [True],
+            "market_context_age": [24.0],
+            "market_context_market_value_eur": [1_500_000],
+            "market_context_duplicate_key": [False],
+        }
+    )
+    display = prepare_table_display(
+        df[opportunity_display_columns(df)],
+        currency_columns=["market_context_market_value_eur"],
+        integer_columns=["market_context_age"],
+        boolean_columns=["market_context_matched", "market_context_duplicate_key"],
+    )
+
+    assert display["Contexto mercado match"].tolist() == ["S\u00ed"]
+    assert display["Edad contexto mercado"].tolist() == ["24"]
+    assert display["Valor contexto mercado"].tolist() == [format_euros(1_500_000)]
+    assert display["Clave duplicada contexto"].tolist() == ["No"]
 
 
 def test_sort_players_for_display_uses_internal_columns_before_visual_labels():

@@ -29,10 +29,11 @@ Adding a Market Context Layer would let Opportunity Finder evolve from a perform
 - Optional config-based enrichment loading complete.
 - App status display complete.
 - Market context table display complete.
+- Opportunity Finder display complete.
 - Real enrichment data pending.
 - App analytical integration pending.
 - Scoring integration pending; rankings are unchanged.
-- Opportunity Finder integration pending.
+- Opportunity Finder analytical integration pending.
 
 ## Diagnostic Command
 

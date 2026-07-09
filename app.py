@@ -72,6 +72,17 @@ DISPLAY_COLUMN_LABELS = {
 }
 
 
+MARKET_CONTEXT_DISPLAY_COLUMNS = [
+    "market_context_matched",
+    "market_context_age",
+    "market_context_market_value_eur",
+    "market_context_contract_end_date",
+    "market_context_confidence",
+    "market_context_source",
+    "market_context_duplicate_key",
+]
+
+
 @st.cache_data(show_spinner=False)
 def load_default_data_with_metadata(sqlite_version: tuple[float, int] | None = None) -> tuple[pd.DataFrame, dict]:
     return load_players_data_with_metadata()
@@ -318,13 +329,7 @@ def player_table_display_columns(df: pd.DataFrame) -> list[str]:
         "minutes_reliability_score",
         "minutes_sample_label",
         "is_minutes_qualified",
-        "market_context_matched",
-        "market_context_age",
-        "market_context_market_value_eur",
-        "market_context_contract_end_date",
-        "market_context_confidence",
-        "market_context_source",
-        "market_context_duplicate_key",
+        *MARKET_CONTEXT_DISPLAY_COLUMNS,
         "market_value",
         "market_value_known",
         "contract_end",
@@ -342,6 +347,39 @@ def player_table_display_columns(df: pd.DataFrame) -> list[str]:
         "assists_per90",
         "xg_per90",
         "xa_per90",
+    ]
+    return [column for column in display_columns if column in df.columns]
+
+
+def opportunity_display_columns(df: pd.DataFrame) -> list[str]:
+    display_columns = [
+        "player",
+        "age",
+        "age_known",
+        "position",
+        "scoring_scope",
+        "is_general_ranking_comparable",
+        "team",
+        "league",
+        "season",
+        "minutes",
+        "minutes_reliability_score",
+        "minutes_sample_label",
+        "is_minutes_qualified",
+        *MARKET_CONTEXT_DISPLAY_COLUMNS,
+        "market_value",
+        "market_value_known",
+        "contract_end",
+        "overall_score",
+        "sample_adjusted_overall_score",
+        "goalkeeper_score",
+        "attacking_impact_score",
+        "chance_creation_score",
+        "ball_progression_score",
+        "defensive_impact_score",
+        "dribbling_threat_score",
+        "market_opportunity_score",
+        "sample_adjusted_market_opportunity_score",
     ]
     return [column for column in display_columns if column in df.columns]
 
@@ -683,38 +721,12 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
         "El orden recomendado usa el score ajustado por fiabilidad de minutos. "
         "Score recomendado = score bruto ajustado por fiabilidad de minutos."
     )
-    ranking_columns = [
-        "player",
-        "age",
-        "age_known",
-        "position",
-        "scoring_scope",
-        "is_general_ranking_comparable",
-        "team",
-        "league",
-        "season",
-        "minutes",
-        "minutes_reliability_score",
-        "minutes_sample_label",
-        "is_minutes_qualified",
-        "market_value",
-        "market_value_known",
-        "contract_end",
-        "overall_score",
-        "sample_adjusted_overall_score",
-        "goalkeeper_score",
-        "attacking_impact_score",
-        "chance_creation_score",
-        "ball_progression_score",
-        "defensive_impact_score",
-        "dribbling_threat_score",
-        "market_opportunity_score",
-        "sample_adjusted_market_opportunity_score",
-    ]
+    ranking_columns = opportunity_display_columns(opportunities)
     opportunity_display = prepare_table_display(
-        opportunities[[column for column in ranking_columns if column in opportunities.columns]],
-        currency_columns=["market_value"],
+        opportunities[ranking_columns],
+        currency_columns=["market_value", "market_context_market_value_eur"],
         age_columns=["age"],
+        integer_columns=["market_context_age"],
         one_decimal_columns=[
             "overall_score",
             "sample_adjusted_overall_score",
@@ -728,7 +740,12 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
             "sample_adjusted_market_opportunity_score",
             "minutes_reliability_score",
         ],
-        boolean_columns=["is_minutes_qualified", "is_general_ranking_comparable"],
+        boolean_columns=[
+            "is_minutes_qualified",
+            "is_general_ranking_comparable",
+            "market_context_matched",
+            "market_context_duplicate_key",
+        ],
     )
     minutes_warning = minutes_sample_warning_message(opportunities)
     if minutes_warning:
