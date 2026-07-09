@@ -33,7 +33,7 @@ Los campos principales son:
 
 Con el dataset local actual de LaLiga 2024, el contexto de mercado aparece como limitado porque no hay edad real, valor de mercado ni contrato.
 
-Si se configura `FOOTBALL_SCOUT_MARKET_CONTEXT_CSV`, la app muestra en `Fuente de datos` la cobertura del enrichment: filas emparejadas, edad, valor de mercado, contrato, errores de validacion y claves duplicadas. Si no se configura, el dashboard mantiene el contexto de mercado limitado actual.
+Si se configura `FOOTBALL_SCOUT_MARKET_CONTEXT_CSV`, la app muestra en `Fuente de datos` la cobertura del enrichment: filas emparejadas, edad, valor de mercado, contrato, errores de validacion y claves duplicadas. Tambien muestra la cobertura efectiva, que indica cuanta edad, valor y contrato son realmente utilizables y si vienen del CSV de enrichment, de datos originales o siguen desconocidos. Si no se configura, el dashboard mantiene el contexto de mercado limitado actual.
 
 ## Player Table
 
@@ -93,7 +93,7 @@ Controles de ranking:
 
 Estos filtros se aplican antes de calcular los resultados visibles, por lo que el `top_n` sale del universo filtrado.
 
-Si `FOOTBALL_SCOUT_MARKET_CONTEXT_CSV` esta activo, Opportunity Finder usa los campos efectivos de edad, valor y contrato para sus filtros de mercado. La tabla de oportunidades puede mostrar match, edad, valor, contrato, fuente, confianza y claves duplicadas. El scoring general de rendimiento no cambia.
+Si `FOOTBALL_SCOUT_MARKET_CONTEXT_CSV` esta activo, Opportunity Finder usa los campos efectivos de edad, valor y contrato para sus filtros de mercado. La cobertura efectiva visible en `Fuente de datos` permite auditar cuanto contexto real esta alimentando esos filtros. La tabla de oportunidades puede mostrar match, edad, valor, contrato, fuente, confianza y claves duplicadas. El scoring general de rendimiento no cambia.
 
 Opportunity Finder mantiene avisos cuando:
 

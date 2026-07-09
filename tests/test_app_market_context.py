@@ -1,10 +1,12 @@
 import pandas as pd
 
 from app import (
+    effective_market_context_status_from_coverage,
     goalkeeper_comparability_warning_message,
     market_context_status_from_metadata,
     market_context_warning_message,
     minutes_sample_warning_message,
+    should_show_effective_market_context_status,
     should_show_market_context_status,
 )
 
@@ -94,6 +96,54 @@ def test_market_context_status_from_metadata_warns_about_duplicate_keys():
     )
 
     assert "Duplicate keys: 2" in status["warnings"]
+
+
+def test_effective_market_context_status_from_coverage_returns_values():
+    status = effective_market_context_status_from_coverage(
+        {
+            "effective_age_known_count": 2,
+            "effective_age_known_pct": 20.0,
+            "effective_market_value_known_count": 1,
+            "effective_market_value_known_pct": 10.0,
+            "effective_contract_known_count": 0,
+            "effective_contract_known_pct": 0.0,
+            "effective_source_market_context_count": 1,
+            "effective_source_market_context_pct": 10.0,
+            "effective_source_original_count": 2,
+            "effective_source_original_pct": 20.0,
+            "effective_source_unknown_count": 7,
+            "effective_source_unknown_pct": 70.0,
+        }
+    )
+
+    assert status["effective_age"] == "2 (20.0%)"
+    assert status["effective_market_value"] == "1 (10.0%)"
+    assert status["effective_contract"] == "0 (0.0%)"
+    assert status["source_market_context"] == "1 (10.0%)"
+    assert status["source_original"] == "2 (20.0%)"
+    assert status["source_unknown"] == "7 (70.0%)"
+
+
+def test_effective_market_context_status_from_coverage_handles_missing_keys():
+    status = effective_market_context_status_from_coverage({})
+
+    assert status["effective_age"] == "0 (0.0%)"
+    assert status["effective_market_value"] == "0 (0.0%)"
+    assert status["effective_contract"] == "0 (0.0%)"
+    assert status["source_market_context"] == "0 (0.0%)"
+    assert status["source_original"] == "0 (0.0%)"
+    assert status["source_unknown"] == "0 (0.0%)"
+
+
+def test_should_show_effective_market_context_status_uses_metadata_or_columns():
+    df = pd.DataFrame({"effective_age": [pd.NA]})
+
+    assert should_show_effective_market_context_status(df, {}) is True
+    assert should_show_effective_market_context_status(
+        pd.DataFrame({"player": ["A"]}),
+        {"effective_market_context_fields": True},
+    ) is True
+    assert should_show_effective_market_context_status(pd.DataFrame({"player": ["A"]}), {}) is False
 
 
 def test_minutes_sample_warning_message_returns_warning_with_unqualified_players():

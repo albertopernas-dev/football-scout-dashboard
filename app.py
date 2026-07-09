@@ -14,6 +14,7 @@ from src.data_quality import (
 )
 from src.data_sources import load_players_data_with_metadata
 from src.features import add_per90_metrics, add_position_percentiles
+from src.market_context import calculate_effective_market_context_coverage
 from src.opportunity import find_market_opportunities
 from src.reports import render_scouting_report, save_scouting_report
 from src.scoring import add_profile_scores
@@ -208,6 +209,62 @@ def market_context_status_from_metadata(metadata: dict[str, object]) -> dict[str
         "duplicate_count": duplicate_count,
         "warnings": warnings,
     }
+
+
+def should_show_effective_market_context_status(
+    df: pd.DataFrame,
+    metadata: dict[str, object],
+) -> bool:
+    if metadata.get("effective_market_context_fields"):
+        return True
+    return any(column in df.columns for column in EFFECTIVE_MARKET_CONTEXT_DISPLAY_COLUMNS)
+
+
+def effective_market_context_status_from_coverage(
+    coverage: dict[str, float | int],
+) -> dict[str, str]:
+    return {
+        "effective_age": _count_pct_label(
+            coverage,
+            "effective_age_known_count",
+            "effective_age_known_pct",
+        ),
+        "effective_market_value": _count_pct_label(
+            coverage,
+            "effective_market_value_known_count",
+            "effective_market_value_known_pct",
+        ),
+        "effective_contract": _count_pct_label(
+            coverage,
+            "effective_contract_known_count",
+            "effective_contract_known_pct",
+        ),
+        "source_market_context": _count_pct_label(
+            coverage,
+            "effective_source_market_context_count",
+            "effective_source_market_context_pct",
+        ),
+        "source_original": _count_pct_label(
+            coverage,
+            "effective_source_original_count",
+            "effective_source_original_pct",
+        ),
+        "source_unknown": _count_pct_label(
+            coverage,
+            "effective_source_unknown_count",
+            "effective_source_unknown_pct",
+        ),
+    }
+
+
+def _count_pct_label(
+    coverage: dict[str, float | int],
+    count_key: str,
+    pct_key: str,
+) -> str:
+    count = int(coverage.get(count_key, 0) or 0)
+    pct = float(coverage.get(pct_key, 0.0) or 0.0)
+    return f"{count} ({pct}%)"
 
 
 def minutes_sample_warning_message(df: pd.DataFrame) -> str | None:
@@ -825,7 +882,7 @@ def render_intro() -> None:
         )
 
 
-def render_data_source(metadata: dict) -> None:
+def render_data_source(metadata: dict, df: pd.DataFrame | None = None) -> None:
     source_labels = {
         "sqlite": "SQLite",
         "external": "Proveedor externo",
@@ -846,6 +903,8 @@ def render_data_source(metadata: dict) -> None:
         elif source == "upload":
             st.markdown(f"**Archivo:** `{metadata.get('path', '')}`")
         render_market_context_status(metadata)
+        if df is not None:
+            render_effective_market_context_status(df, metadata)
 
 
 def render_market_context_status(metadata: dict[str, object]) -> None:
@@ -874,6 +933,28 @@ def render_market_context_status(metadata: dict[str, object]) -> None:
     st.markdown(f"**Duplicate keys:** {status['duplicate_count']}")
     for warning in status["warnings"]:
         st.warning(warning)
+
+
+def render_effective_market_context_status(
+    df: pd.DataFrame,
+    metadata: dict[str, object],
+) -> None:
+    if not should_show_effective_market_context_status(df, metadata):
+        return
+
+    coverage = calculate_effective_market_context_coverage(df)
+    status = effective_market_context_status_from_coverage(coverage)
+
+    st.divider()
+    st.markdown("**Effective market context:**")
+    coverage_cols = st.columns(3)
+    coverage_cols[0].metric("Edad efectiva", status["effective_age"])
+    coverage_cols[1].metric("Valor efectivo", status["effective_market_value"])
+    coverage_cols[2].metric("Contrato efectivo", status["effective_contract"])
+    source_cols = st.columns(3)
+    source_cols[0].metric("Fuente enrichment", status["source_market_context"])
+    source_cols[1].metric("Fuente original", status["source_original"])
+    source_cols[2].metric("Fuente desconocida", status["source_unknown"])
 
 
 def render_data_quality(metrics: dict[str, object]) -> None:
@@ -930,7 +1011,7 @@ def main() -> None:
         st.error(str(exc))
         st.stop()
 
-    render_data_source(data_source_metadata)
+    render_data_source(data_source_metadata, df)
     render_data_quality(calculate_data_quality_metrics(df))
     render_dataset_summary(calculate_dataset_summary(df, data_source_metadata))
 
