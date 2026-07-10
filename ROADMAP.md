@@ -11,7 +11,7 @@
 
 ## Recommended Next Steps
 
-1. Evaluar proveedores oficiales/licenciados para contexto de mercado.
+1. Ejecutar v0.4.0 Provider Evaluation / Licensed Data Integration.
 2. Ampliar datos reales revisados para edad, valor de mercado y contrato.
 3. Ajustar pesos de Opportunity Finder solo cuando exista cobertura real suficiente.
 4. Mejorar metricas especificas de porteros, como paradas, goles encajados y porterias a cero si la fuente lo permite.
@@ -48,9 +48,21 @@
 - Release notes: [`docs/release_notes_v0_3_0.md`](docs/release_notes_v0_3_0.md).
 - Plan detallado: [`docs/v0_3_0_plan.md`](docs/v0_3_0_plan.md).
 
-## Potential v0.4.x Milestones
+## v0.4.0 Provider Evaluation / Licensed Data Integration
 
-- v0.4.0: Provider Evaluation / Licensed Data Integration.
+Next milestone.
+
+- Evaluar proveedores oficiales, licenciados o APIs con terminos explicitos.
+- Revisar cobertura para edad, valor de mercado, contrato y trazabilidad.
+- Documentar licencia, coste, limites, derechos de uso y redistribucion.
+- Mantener scraping fuera de alcance.
+- Mantener el flujo app -> datos locales validados, sin llamadas directas app -> proveedor.
+- Integrar cualquier prototipo como input opt-in para Market Context Layer.
+- Mantener modo sin market context.
+- Plan detallado: [`docs/v0_4_0_provider_evaluation_plan.md`](docs/v0_4_0_provider_evaluation_plan.md).
+
+## Potential v0.4.x Follow-ups
+
 - v0.4.x: Better goalkeeper model.
 - v0.4.x: UI polish and saved shortlists.
 - v0.4.x: Richer reports and shortlist exports.
@@ -63,6 +75,9 @@
 - [FEATURE] Add app filter for effective market context source.
 - [FEATURE] Add coverage threshold warning for Opportunity Finder.
 - [RESEARCH] Evaluate market data providers.
+- [DATA] Define provider decision record.
+- [DATA] Prototype provider-to-market-context canonical transform.
+- [DATA] Add provider cache policy.
 - [FEATURE] Add saved shortlists.
 - [DATA] Add more leagues and seasons.
 - [FEATURE] Improve goalkeeper-specific scoring.

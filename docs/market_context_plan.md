@@ -178,3 +178,5 @@ The implemented layer means:
 ## Next Step
 
 v0.3.0 should focus on the real manual enrichment workflow described in [`docs/v0_3_0_plan.md`](v0_3_0_plan.md): building a small reviewed CSV, validating it, diagnosing coverage and using it explicitly through `FOOTBALL_SCOUT_MARKET_CONTEXT_CSV`.
+
+After v0.3.0, v0.4.0 should evaluate official, licensed or explicitly permitted provider options for market context without adding scraping or bypassing the validation workflow. See [`docs/v0_4_0_provider_evaluation_plan.md`](v0_4_0_provider_evaluation_plan.md).
