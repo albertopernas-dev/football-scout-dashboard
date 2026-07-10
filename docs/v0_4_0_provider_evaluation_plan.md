@@ -140,6 +140,8 @@ These fields are proposals only. They should not be implemented until a provider
 
 ## Decision Record Template
 
+Decision records live in [`docs/provider_decisions/`](provider_decisions/). Use [`docs/provider_decisions/provider_decision_template.md`](provider_decisions/provider_decision_template.md) for each evaluated provider or source type.
+
 ```text
 Provider:
 Date evaluated:

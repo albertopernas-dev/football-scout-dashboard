@@ -6,7 +6,7 @@ Este documento define qué proveedor conviene usar para el primer conector real 
 
 El producto busca scouting/análisis futbolístico para filtrar jugadores, comparar perfiles, encontrar similares, detectar oportunidades de mercado y generar informes HTML. Por tanto, la fuente elegida debe aportar datos de jugador suficientemente estables para una demo útil, aunque las métricas avanzadas lleguen por fases.
 
-Nota v0.4.0: la decision de proveedor se reabre especificamente para contexto de mercado, edad real y contrato. El plan de evaluacion esta documentado en [`docs/v0_4_0_provider_evaluation_plan.md`](v0_4_0_provider_evaluation_plan.md). API-Football sigue siendo util para rendimiento deportivo desde `fixtures/players`, pero no debe asumirse como fuente suficiente para market context.
+Nota v0.4.0: la decision de proveedor se reabre especificamente para contexto de mercado, edad real y contrato. El plan de evaluacion esta documentado en [`docs/v0_4_0_provider_evaluation_plan.md`](v0_4_0_provider_evaluation_plan.md), y los decision records viven en [`docs/provider_decisions/`](provider_decisions/). API-Football sigue siendo util para rendimiento deportivo desde `fixtures/players`, pero no debe asumirse como fuente suficiente para market context.
 
 Fuentes de referencia:
 
