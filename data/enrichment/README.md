@@ -45,6 +45,16 @@ data/enrichment/player_market_context_laliga_2024_reviewed.local.csv
 
 The generated CSV only fills `player`, `team`, `league` and `season`. It intentionally leaves `age`, `market_value_eur`, `contract_end_date`, `source`, `source_url`, `confidence` and `notes` empty for manual review.
 
+Use `--force` only to regenerate an empty seed. If the existing CSV contains reviewed enrichment values, the script refuses to overwrite it.
+
+The dangerous escape hatch is:
+
+```powershell
+.venv\Scripts\python.exe scripts/export_enrichment_seed.py --top-n 25 --force-dangerously-overwrite-reviewed-data
+```
+
+This deletes reviewed values and normally should not be used. Make a backup first if you ever need it.
+
 After generating the seed:
 
 1. Review the source quality checklist.

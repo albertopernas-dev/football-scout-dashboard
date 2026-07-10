@@ -33,6 +33,15 @@ ENRICHMENT_SEED_COLUMNS = [
     "notes",
 ]
 IDENTITY_COLUMNS = ["player", "team", "league", "season"]
+REVIEWED_ENRICHMENT_COLUMNS = [
+    "age",
+    "market_value_eur",
+    "contract_end_date",
+    "source",
+    "source_url",
+    "confidence",
+    "notes",
+]
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -46,7 +55,19 @@ def build_parser() -> argparse.ArgumentParser:
         default=DEFAULT_OUTPUT_PATH,
         help="Output CSV path. Defaults to a gitignored .local.csv in data/enrichment/.",
     )
-    parser.add_argument("--force", action="store_true", help="Overwrite output if it already exists.")
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Overwrite output only when the existing file has no reviewed enrichment values.",
+    )
+    parser.add_argument(
+        "--force-dangerously-overwrite-reviewed-data",
+        action="store_true",
+        help=(
+            "Dangerous: overwrite even if the existing output contains reviewed enrichment values. "
+            "This can delete manual review work."
+        ),
+    )
     parser.add_argument(
         "--positions",
         nargs="*",
@@ -101,13 +122,44 @@ def write_enrichment_seed_csv(
     df: pd.DataFrame,
     output_path: str | Path,
     force: bool = False,
+    force_dangerously_overwrite_reviewed_data: bool = False,
 ) -> int:
     path = Path(output_path)
-    if path.exists() and not force:
+    if path.exists() and not (force or force_dangerously_overwrite_reviewed_data):
         raise FileExistsError(f"Output file already exists: {path}. Use --force to overwrite.")
+    if (
+        path.exists()
+        and force
+        and not force_dangerously_overwrite_reviewed_data
+        and existing_csv_has_reviewed_enrichment(path)
+    ):
+        raise FileExistsError(
+            "Existing output contains reviewed enrichment data. Refusing to overwrite. "
+            "Use --force-dangerously-overwrite-reviewed-data if you really want to delete reviewed values."
+        )
     path.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(path, index=False, encoding="utf-8")
     return int(len(df))
+
+
+def existing_csv_has_reviewed_enrichment(path: str | Path) -> bool:
+    csv_path = Path(path)
+    if not csv_path.exists():
+        return False
+    try:
+        df = pd.read_csv(csv_path, keep_default_na=False)
+    except Exception:
+        return True
+
+    reviewed_columns = [column for column in REVIEWED_ENRICHMENT_COLUMNS if column in df.columns]
+    if not reviewed_columns:
+        return False
+
+    for column in reviewed_columns:
+        values = df[column].astype(str).str.strip()
+        if values.ne("").any():
+            return True
+    return False
 
 
 def main() -> None:
@@ -123,7 +175,12 @@ def main() -> None:
         top_n=args.top_n,
     )
     seed = build_enrichment_seed_df(opportunities, top_n=args.top_n)
-    rows_written = write_enrichment_seed_csv(seed, args.output, force=args.force)
+    rows_written = write_enrichment_seed_csv(
+        seed,
+        args.output,
+        force=args.force,
+        force_dangerously_overwrite_reviewed_data=args.force_dangerously_overwrite_reviewed_data,
+    )
 
     print("Enrichment seed export")
     print("----------------------")

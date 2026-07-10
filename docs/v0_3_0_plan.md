@@ -60,6 +60,7 @@ Rules:
    ```
 
    This creates `data/enrichment/player_market_context_laliga_2024_reviewed.local.csv` with player identity fields only.
+   Use `--force` only to regenerate an empty seed. If the CSV already contains reviewed enrichment values, the script blocks overwriting it. Make a backup before regenerating any reviewed file.
 
 2. If needed, copy the template manually instead:
 
