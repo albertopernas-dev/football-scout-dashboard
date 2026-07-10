@@ -30,6 +30,8 @@ Included:
 
 ## Provider Evaluation Criteria
 
+Use the shared [Provider Evaluation Matrix](provider_decisions/provider_evaluation_matrix.md) to compare candidate sources at a high level. The matrix does not replace provider decision records; each accepted, rejected or deferred source still needs its own record in [`docs/provider_decisions/`](provider_decisions/).
+
 | Criterion | Why it matters | How to evaluate | Minimum acceptable standard |
 |---|---|---|---|
 | Coverage | Opportunity Finder needs enough players to avoid biased shortlists. | Measure covered players by league, team and season against the local SQLite dataset. | Coverage is explicit, measurable and adequate for the target shortlist. |
@@ -171,6 +173,7 @@ Next action:
 
 - [DATA] Evaluate licensed market data providers.
 - [DATA] Define provider decision record.
+- [DATA] Maintain provider evaluation matrix.
 - [DATA] Prototype provider-to-market-context canonical transform.
 - [DATA] Add provider cache policy.
 - [APP] Show provider provenance in market context UI.

@@ -76,6 +76,7 @@ Next milestone.
 - [FEATURE] Add coverage threshold warning for Opportunity Finder.
 - [RESEARCH] Evaluate market data providers.
 - [DATA] Define provider decision record.
+- [DATA] Maintain provider evaluation matrix.
 - [DATA] Prototype provider-to-market-context canonical transform.
 - [DATA] Add provider cache policy.
 - [FEATURE] Add saved shortlists.
