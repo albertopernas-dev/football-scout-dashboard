@@ -13,6 +13,7 @@ MVP de scouting futbolístico construido con Python, Streamlit, pandas, scikit-l
 - CSV exports and HTML scouting reports.
 - Market context enrichment template available in `data/enrichment/`.
 - Optional market context CSV can be enabled through `FOOTBALL_SCOUT_MARKET_CONTEXT_CSV`.
+- Real enrichment workflow supports local seed export, diagnostics and strict CSV validation.
 - Tests cover scoring, ingestion, app helpers, diagnostics and data-source behavior.
 
 ## Demo workflow
@@ -47,10 +48,11 @@ A practical 5-10 minute demo script is available in [`docs/demo_walkthrough.md`]
 
 ## Release
 
-Current milestone: `v0.2.0`.
+Current milestone: `v0.3.0`.
 
 - Release notes: [`docs/release_notes_v0_1_0.md`](docs/release_notes_v0_1_0.md)
 - v0.2.0 release notes: [`docs/release_notes_v0_2_0.md`](docs/release_notes_v0_2_0.md)
+- v0.3.0 release notes: [`docs/release_notes_v0_3_0.md`](docs/release_notes_v0_3_0.md)
 - Demo assets checklist: [`docs/demo_assets_checklist.md`](docs/demo_assets_checklist.md)
 
 ## v0.2.0 Market Context Layer
@@ -64,6 +66,30 @@ $env:FOOTBALL_SCOUT_MARKET_CONTEXT_CSV="data/enrichment/player_market_context_sa
 ```
 
 The bundled sample is identity-only and does not contain real market values, ages or contract dates. Details are documented in [`docs/market_context_plan.md`](docs/market_context_plan.md).
+
+## v0.3.0 Real Enrichment Workflow
+
+v0.3.0 adds a local workflow for manually reviewed market context enrichment. It can export a seed CSV from Opportunity Finder, validate reviewed values, diagnose coverage, and display effective market context in Opportunity Finder.
+
+Generate a local seed:
+
+```powershell
+.venv\Scripts\python.exe scripts\export_enrichment_seed.py --top-n 25
+```
+
+Diagnose a reviewed local CSV:
+
+```powershell
+.venv\Scripts\python.exe scripts\diagnose_market_context.py --market-context-csv data\enrichment\player_market_context_laliga_2024_reviewed.local.csv
+```
+
+Activate it explicitly:
+
+```powershell
+$env:FOOTBALL_SCOUT_MARKET_CONTEXT_CSV="data/enrichment/player_market_context_laliga_2024_reviewed.local.csv"
+```
+
+Reviewed CSVs should stay local by default and are ignored by git when named as `.local.csv` or `*_reviewed.csv`. See [`docs/release_notes_v0_3_0.md`](docs/release_notes_v0_3_0.md) and [`docs/v0_3_0_plan.md`](docs/v0_3_0_plan.md).
 
 ## Funcionalidades
 

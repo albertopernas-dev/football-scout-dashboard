@@ -6,12 +6,13 @@
 - LaLiga 2024 esta cargada desde payloads locales de API-Football `fixtures/players`.
 - La app incluye ranking recomendado, filtros de comparabilidad y muestra, Opportunity Finder, descargas CSV, informes HTML y documentacion de scoring.
 - v0.2.0 incluye una capa opt-in de Market Context para CSV manual, validacion, diagnostico, cobertura efectiva y uso de `effective_*` en Opportunity Finder.
-- El contexto de mercado real sigue limitado hasta conectar o completar datos reales de edad, valor de mercado y contrato.
+- v0.3.0 completa el workflow local de enrichment real revisado: seed export, checklist de fuentes, safeguards, validacion estricta y display efectivo en Opportunity Finder.
+- El contexto de mercado real depende de CSVs revisados localmente; no hay scraping ni proveedor automatico conectado.
 
 ## Recommended Next Steps
 
-1. Ejecutar v0.3.0 Real Enrichment Workflow con una primera tanda manual revisada.
-2. Incorporar datos reales revisados para edad, valor de mercado y contrato.
+1. Evaluar proveedores oficiales/licenciados para contexto de mercado.
+2. Ampliar datos reales revisados para edad, valor de mercado y contrato.
 3. Ajustar pesos de Opportunity Finder solo cuando exista cobertura real suficiente.
 4. Mejorar metricas especificas de porteros, como paradas, goles encajados y porterias a cero si la fuente lo permite.
 5. Ampliar a mas ligas y temporadas manteniendo el pipeline local reproducible.
@@ -30,16 +31,29 @@
 
 ## v0.3.0 Real Enrichment Workflow
 
-Next milestone.
-
-- Crear el primer CSV real revisado manualmente para una tanda pequena de jugadores.
+- Implementado para workflow local/manual.
+- Permite crear un seed CSV desde Opportunity Finder.
+- Incluye checklist de calidad de fuentes.
+- Protege CSVs revisados frente a sobrescritura accidental.
+- Endurece validacion de `age`, `market_value_eur`, `contract_end_date`, `source` y `confidence`.
+- Corrige diagnostico para evitar doble merge por env var.
+- Opportunity Finder muestra valores efectivos de mercado como principales cuando existen.
+- CSVs reales revisados permanecen locales e ignorados por git.
 - Mantener trazabilidad con `source`, `source_url`, `confidence` y `notes`.
 - Ejecutar diagnostico obligatorio antes de activar el CSV en la app.
 - Revisar validation errors, duplicate keys, matched_pct y effective coverage.
 - Activar enrichment solo mediante `FOOTBALL_SCOUT_MARKET_CONTEXT_CSV`.
 - Mantener scraping y proveedor automatico fuera de alcance.
 - Mantener scoring general sin cambios.
+- Release notes: [`docs/release_notes_v0_3_0.md`](docs/release_notes_v0_3_0.md).
 - Plan detallado: [`docs/v0_3_0_plan.md`](docs/v0_3_0_plan.md).
+
+## Potential v0.4.x Milestones
+
+- v0.4.0: Provider Evaluation / Licensed Data Integration.
+- v0.4.x: Better goalkeeper model.
+- v0.4.x: UI polish and saved shortlists.
+- v0.4.x: Richer reports and shortlist exports.
 
 ## Potential GitHub Issues
 

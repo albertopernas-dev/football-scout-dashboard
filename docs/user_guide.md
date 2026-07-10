@@ -35,6 +35,8 @@ Con el dataset local actual de LaLiga 2024, el contexto de mercado aparece como 
 
 Si se configura `FOOTBALL_SCOUT_MARKET_CONTEXT_CSV`, la app muestra en `Fuente de datos` la cobertura del enrichment: filas emparejadas, edad, valor de mercado, contrato, errores de validacion y claves duplicadas. Tambien muestra la cobertura efectiva, que indica cuanta edad, valor y contrato son realmente utilizables y si vienen del CSV de enrichment, de datos originales o siguen desconocidos. Si no se configura, el dashboard mantiene el contexto de mercado limitado actual.
 
+Para el workflow v0.3.0 de enrichment real revisado, consulta [`docs/release_notes_v0_3_0.md`](release_notes_v0_3_0.md). Los CSV reales revisados deben activarse explicitamente con `FOOTBALL_SCOUT_MARKET_CONTEXT_CSV` y no se cargan por defecto.
+
 ## Player Table
 
 La tabla principal muestra el ranking recomendado de jugadores.

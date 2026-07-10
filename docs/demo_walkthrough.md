@@ -64,6 +64,29 @@ Open `Fuente de datos` again and show:
 
 With the identity-only sample, effective age, market value and contract coverage should remain 0%. That is expected and useful for explaining that the layer is ready, but real market enrichment data is still pending.
 
+## v0.3.0 Real Enrichment Demo
+
+For a reviewed local CSV, first generate a seed from Opportunity Finder candidates:
+
+```powershell
+.venv\Scripts\python.exe scripts\export_enrichment_seed.py --top-n 25
+```
+
+After manual review, validate the local file:
+
+```powershell
+.venv\Scripts\python.exe scripts\diagnose_market_context.py --market-context-csv data/enrichment/player_market_context_laliga_2024_reviewed.local.csv
+```
+
+Then activate it explicitly and reopen the app:
+
+```powershell
+$env:FOOTBALL_SCOUT_MARKET_CONTEXT_CSV="data/enrichment/player_market_context_laliga_2024_reviewed.local.csv"
+.venv\Scripts\streamlit.exe run app.py
+```
+
+Opportunity Finder should show effective age, market value and contract as the primary market fields when reviewed values exist.
+
 ## Review recommended ranking
 
 Open the main player table and focus on `Score recomendado`. This is the recommended score because it adjusts the raw score by minutes reliability.
