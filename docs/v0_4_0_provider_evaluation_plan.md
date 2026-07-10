@@ -79,6 +79,8 @@ The current API-Football pipeline works for sporting performance using `fixtures
 
 Best use: continue using API-Football for performance data while evaluating separate market-context sources.
 
+Decision record: [`docs/provider_decisions/api_football_market_context_review.md`](provider_decisions/api_football_market_context_review.md).
+
 ## Integration Architecture
 
 Future provider integration should follow a local, auditable path:
