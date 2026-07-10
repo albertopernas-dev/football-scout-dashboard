@@ -90,7 +90,7 @@ Open Opportunity Finder and apply the same mindset:
 
 In the current dataset, Opportunity Finder is closer to a performance-and-reliability shortlist than a full market opportunity model, because age, market value and contract fields are not available.
 
-In v0.2.0, Opportunity Finder uses `effective_age`, `effective_market_value_eur` and `effective_contract_end_date` when real values exist. With the bundled sample, these remain unknown because the sample is identity-only.
+Opportunity Finder uses `effective_age`, `effective_market_value_eur` and `effective_contract_end_date` when real values exist. In the table and player detail, those effective values are shown as the primary market context, with original values kept as reference. With the bundled sample, they remain unknown because the sample is identity-only.
 
 ## Export CSV
 

@@ -159,6 +159,51 @@ def format_age(value: object, age_known: object | None = None) -> str:
     return str(int(age))
 
 
+def _has_display_value(value: object) -> bool:
+    if value is None:
+        return False
+    try:
+        if pd.isna(value):
+            return False
+    except (TypeError, ValueError):
+        pass
+    return str(value).strip() != ""
+
+
+def get_display_age(row: pd.Series) -> str:
+    effective_age = format_age(row.get("effective_age", pd.NA))
+    if effective_age != "Desconocida":
+        return effective_age
+    return format_age(row.get("age", ""), row.get("age_known", None))
+
+
+def get_display_market_value(row: pd.Series) -> str:
+    effective_value = format_euros(row.get("effective_market_value_eur", pd.NA))
+    if effective_value != "Desconocido":
+        return effective_value
+    return format_euros(row.get("market_value", 0), row.get("market_value_known", None))
+
+
+def get_display_contract_end(row: pd.Series) -> str:
+    effective_contract = row.get("effective_contract_end_date", pd.NA)
+    if _has_display_value(effective_contract):
+        return str(effective_contract).strip()
+    original_contract = row.get("contract_end", "")
+    if _has_display_value(original_contract):
+        return str(original_contract).strip()
+    return "Desconocido"
+
+
+def get_display_market_source(row: pd.Series) -> str:
+    source = row.get("effective_market_context_source", "")
+    confidence = row.get("market_context_confidence", "")
+    if not _has_display_value(source):
+        return "unknown"
+    if _has_display_value(confidence):
+        return f"{str(source).strip()} · {str(confidence).strip()}"
+    return str(source).strip()
+
+
 def market_context_warning_message(market_context: dict[str, object]) -> str | None:
     if market_context.get("has_market_context"):
         return None
@@ -383,6 +428,28 @@ def apply_display_column_labels(df: pd.DataFrame) -> pd.DataFrame:
     return df.rename(columns=DISPLAY_COLUMN_LABELS)
 
 
+def clarify_opportunity_original_market_labels(
+    display_df: pd.DataFrame,
+    raw_columns: list[str],
+) -> pd.DataFrame:
+    rename_map = {}
+    if "effective_age" in raw_columns and "age" in raw_columns and "Edad" in display_df.columns:
+        rename_map["Edad"] = "Edad original"
+    if (
+        "effective_market_value_eur" in raw_columns
+        and "market_value" in raw_columns
+        and "Valor de mercado" in display_df.columns
+    ):
+        rename_map["Valor de mercado"] = "Valor original mercado"
+    if (
+        "effective_contract_end_date" in raw_columns
+        and "contract_end" in raw_columns
+        and "Fin de contrato" in display_df.columns
+    ):
+        rename_map["Fin de contrato"] = "Contrato original"
+    return display_df.rename(columns=rename_map)
+
+
 def player_table_display_columns(df: pd.DataFrame) -> list[str]:
     display_columns = [
         "player",
@@ -422,20 +489,21 @@ def player_table_display_columns(df: pd.DataFrame) -> list[str]:
 def opportunity_display_columns(df: pd.DataFrame) -> list[str]:
     display_columns = [
         "player",
-        "age",
-        "age_known",
         "position",
         "scoring_scope",
         "is_general_ranking_comparable",
         "team",
         "league",
         "season",
+        *EFFECTIVE_MARKET_CONTEXT_DISPLAY_COLUMNS,
+        "market_context_confidence",
         "minutes",
         "minutes_reliability_score",
         "minutes_sample_label",
         "is_minutes_qualified",
         *MARKET_CONTEXT_DISPLAY_COLUMNS,
-        *EFFECTIVE_MARKET_CONTEXT_DISPLAY_COLUMNS,
+        "age",
+        "age_known",
         "market_value",
         "market_value_known",
         "contract_end",
@@ -450,7 +518,11 @@ def opportunity_display_columns(df: pd.DataFrame) -> list[str]:
         "market_opportunity_score",
         "sample_adjusted_market_opportunity_score",
     ]
-    return [column for column in display_columns if column in df.columns]
+    available_columns = []
+    for column in display_columns:
+        if column in df.columns and column not in available_columns:
+            available_columns.append(column)
+    return available_columns
 
 
 def prepare_table_display(
@@ -816,6 +888,7 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
             "market_context_duplicate_key",
         ],
     )
+    opportunity_display = clarify_opportunity_original_market_labels(opportunity_display, ranking_columns)
     minutes_warning = minutes_sample_warning_message(opportunities)
     if minutes_warning:
         st.info(minutes_warning)
@@ -845,21 +918,19 @@ def opportunity_finder_view(df: pd.DataFrame) -> None:
     card_a, card_b, card_c, card_d = st.columns(4)
     card_a.metric("Overall", selected_row.get("overall_score", 0))
     card_b.metric("Opportunity", selected_row.get("market_opportunity_score", 0))
-    card_c.metric("Edad", format_age(selected_row.get("age", ""), selected_row.get("age_known", None)))
-    card_d.metric(
-        "Valor de mercado",
-        format_euros(selected_row.get("market_value", 0), selected_row.get("market_value_known", None)),
-    )
+    card_c.metric("Edad efectiva", get_display_age(selected_row))
+    card_d.metric("Valor efectivo", get_display_market_value(selected_row))
 
     detail_a, detail_b, detail_c = st.columns(3)
     detail_a.markdown(f"**Posición:** {selected_row.get('position', '')}")
     detail_a.markdown(f"**Equipo:** {selected_row.get('team', '')}")
     detail_b.markdown(f"**Liga:** {selected_row.get('league', '')}")
     detail_b.markdown(f"**Temporada:** {selected_row.get('season', '')}")
-    detail_c.markdown(f"**Fin de contrato:** {selected_row.get('contract_end', '')}")
+    detail_c.markdown(f"**Contrato efectivo:** {get_display_contract_end(selected_row)}")
+    detail_c.markdown(f"**Fuente mercado:** {get_display_market_source(selected_row)}")
     detail_c.markdown(f"**Muestra:** {selected_row.get('minutes_sample_label', '')}")
     detail_c.markdown(
-        f"**Valor de mercado:** "
+        f"**Valor original:** "
         f"{format_euros(selected_row.get('market_value', 0), selected_row.get('market_value_known', None))}"
     )
 

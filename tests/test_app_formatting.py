@@ -3,11 +3,16 @@ import pandas as pd
 from app import (
     apply_display_column_labels,
     dataframe_to_csv_bytes,
+    clarify_opportunity_original_market_labels,
     format_age,
     format_boolean_columns,
     format_display_columns,
     format_euros,
     format_integer_or_blank,
+    get_display_age,
+    get_display_contract_end,
+    get_display_market_source,
+    get_display_market_value,
     opportunity_display_columns,
     prepare_table_display,
     player_table_display_columns,
@@ -236,6 +241,32 @@ def test_opportunity_display_columns_includes_market_context_but_not_matching_ke
     assert "league_match_key" not in columns
 
 
+def test_opportunity_display_columns_prioritizes_effective_market_fields_before_originals():
+    df = pd.DataFrame(
+        {
+            "player": ["A"],
+            "age": [25],
+            "effective_age": [23],
+            "position": ["Defender"],
+            "team": ["Team"],
+            "league": ["League"],
+            "market_value": [0],
+            "effective_market_value_eur": [8_000_000],
+            "contract_end": [""],
+            "effective_contract_end_date": ["2029-06-30"],
+            "effective_market_context_source": ["market_context"],
+            "market_context_confidence": ["medium"],
+        }
+    )
+
+    columns = opportunity_display_columns(df)
+
+    assert columns.index("effective_age") < columns.index("age")
+    assert columns.index("effective_market_value_eur") < columns.index("market_value")
+    assert columns.index("effective_contract_end_date") < columns.index("contract_end")
+    assert columns.index("effective_market_context_source") < columns.index("market_context_confidence")
+
+
 def test_opportunity_display_columns_ignores_missing_market_context_columns():
     df = pd.DataFrame({"player": ["A"], "market_opportunity_score": [60.0]})
 
@@ -287,6 +318,82 @@ def test_opportunity_display_effective_market_context_columns_are_export_ready()
     assert display["Valor efectivo"].tolist() == [format_euros(1_500_000)]
     assert display["Contrato efectivo"].tolist() == ["2027-06-30"]
     assert display["Fuente mercado efectiva"].tolist() == ["market_context"]
+
+
+def test_get_display_age_prefers_effective_age():
+    row = pd.Series({"age": 25, "age_known": False, "effective_age": 23})
+
+    assert get_display_age(row) == "23"
+
+
+def test_get_display_age_falls_back_to_original_age():
+    row = pd.Series({"age": 22, "age_known": True})
+
+    assert get_display_age(row) == "22"
+
+
+def test_get_display_age_returns_unknown_without_effective_or_known_original():
+    row = pd.Series({"age": 25, "age_known": False, "effective_age": pd.NA})
+
+    assert get_display_age(row) == "Desconocida"
+
+
+def test_get_display_market_value_prefers_effective_value():
+    row = pd.Series(
+        {
+            "market_value": 0,
+            "market_value_known": False,
+            "effective_market_value_eur": 8_000_000,
+        }
+    )
+
+    assert get_display_market_value(row) == "8.000.000 \u20ac"
+
+
+def test_get_display_contract_end_prefers_effective_contract():
+    row = pd.Series({"contract_end": "", "effective_contract_end_date": "2029-06-30"})
+
+    assert get_display_contract_end(row) == "2029-06-30"
+
+
+def test_get_display_market_source_includes_source_and_confidence():
+    row = pd.Series(
+        {
+            "effective_market_context_source": "market_context",
+            "market_context_confidence": "medium",
+        }
+    )
+
+    assert get_display_market_source(row) == "market_context · medium"
+
+
+def test_clarify_opportunity_original_market_labels_only_when_effective_columns_exist():
+    display = pd.DataFrame(
+        {
+            "Edad efectiva": ["23"],
+            "Edad": ["Desconocida"],
+            "Valor efectivo": ["8.000.000 \u20ac"],
+            "Valor de mercado": ["Desconocido"],
+            "Contrato efectivo": ["2029-06-30"],
+            "Fin de contrato": [""],
+        }
+    )
+
+    clarified = clarify_opportunity_original_market_labels(
+        display,
+        [
+            "effective_age",
+            "age",
+            "effective_market_value_eur",
+            "market_value",
+            "effective_contract_end_date",
+            "contract_end",
+        ],
+    )
+
+    assert "Edad original" in clarified.columns
+    assert "Valor original mercado" in clarified.columns
+    assert "Contrato original" in clarified.columns
 
 
 def test_sort_players_for_display_uses_internal_columns_before_visual_labels():

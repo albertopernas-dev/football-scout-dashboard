@@ -93,7 +93,7 @@ Controles de ranking:
 
 Estos filtros se aplican antes de calcular los resultados visibles, por lo que el `top_n` sale del universo filtrado.
 
-Si `FOOTBALL_SCOUT_MARKET_CONTEXT_CSV` esta activo, Opportunity Finder usa los campos efectivos de edad, valor y contrato para sus filtros de mercado. La cobertura efectiva visible en `Fuente de datos` permite auditar cuanto contexto real esta alimentando esos filtros. La tabla de oportunidades puede mostrar match, edad, valor, contrato, fuente, confianza y claves duplicadas. El scoring general de rendimiento no cambia.
+Si `FOOTBALL_SCOUT_MARKET_CONTEXT_CSV` esta activo, Opportunity Finder usa los campos efectivos de edad, valor y contrato para sus filtros de mercado. La cobertura efectiva visible en `Fuente de datos` permite auditar cuanto contexto real esta alimentando esos filtros. La tabla de oportunidades muestra edad, valor, contrato y fuente efectivos cerca del inicio cuando existen, y mantiene los valores originales como referencia separada. Tambien puede mostrar match, fuente, confianza y claves duplicadas del contexto de mercado. El scoring general de rendimiento no cambia.
 
 Opportunity Finder mantiene avisos cuando:
 

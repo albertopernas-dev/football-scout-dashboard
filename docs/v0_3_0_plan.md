@@ -92,7 +92,7 @@ Rules:
 
 13. Open the app and check `Fuente de datos`.
 14. Confirm market context coverage and effective coverage.
-15. Review Opportunity Finder with effective context columns visible.
+15. Review Opportunity Finder with effective context values visible as the primary market fields.
 16. Export a shortlist CSV.
 17. Document coverage and known gaps.
 
