@@ -100,7 +100,7 @@ def test_validate_market_context_values_accepts_valid_age(age):
     assert validate_market_context_values(df) == []
 
 
-@pytest.mark.parametrize("age", [14, 46, "young"])
+@pytest.mark.parametrize("age", [0, 14, 46, "24.5", "young"])
 def test_validate_market_context_values_rejects_invalid_age(age):
     df = base_market_context_df(age=age)
 
@@ -125,24 +125,38 @@ def test_validate_market_context_values_rejects_invalid_market_value(market_valu
     assert any("market_value_eur" in error for error in errors)
 
 
-@pytest.mark.parametrize("contract_end_date", ["", None, pd.NA, "2026-06-30", "30/06/2026"])
+@pytest.mark.parametrize("contract_end_date", ["", None, pd.NA, "2026-06-30"])
 def test_validate_market_context_values_accepts_valid_contract_date(contract_end_date):
     df = base_market_context_df(contract_end_date=contract_end_date)
 
     assert validate_market_context_values(df) == []
 
 
-def test_validate_market_context_values_rejects_invalid_contract_date():
-    df = base_market_context_df(contract_end_date="not a date")
+@pytest.mark.parametrize("contract_end_date", ["not a date", "30/06/2026", "2026/06/30"])
+def test_validate_market_context_values_rejects_invalid_contract_date(contract_end_date):
+    df = base_market_context_df(contract_end_date=contract_end_date)
 
     errors = validate_market_context_values(df)
 
     assert any("contract_end_date" in error for error in errors)
 
 
-@pytest.mark.parametrize("confidence", ["", None, pd.NA, "low", "medium", "high", " HIGH "])
-def test_validate_market_context_values_accepts_valid_confidence(confidence):
+@pytest.mark.parametrize("confidence", ["low", "medium", "high", " HIGH "])
+def test_validate_market_context_values_accepts_valid_confidence_when_enriched(confidence):
     df = base_market_context_df(confidence=confidence)
+
+    assert validate_market_context_values(df) == []
+
+
+@pytest.mark.parametrize("confidence", ["", None, pd.NA])
+def test_validate_market_context_values_accepts_empty_confidence_for_identity_only_row(confidence):
+    df = base_market_context_df(
+        age="",
+        market_value_eur="",
+        contract_end_date="",
+        source="",
+        confidence=confidence,
+    )
 
     assert validate_market_context_values(df) == []
 
@@ -153,6 +167,26 @@ def test_validate_market_context_values_rejects_invalid_confidence():
     errors = validate_market_context_values(df)
 
     assert any("confidence" in error for error in errors)
+
+
+def test_validate_market_context_values_allows_identity_only_row():
+    df = base_market_context_df(
+        age="",
+        market_value_eur="",
+        contract_end_date="",
+        source="",
+        source_url="",
+        confidence="",
+        notes="",
+    )
+
+    assert validate_market_context_values(df) == []
+
+
+def test_validate_market_context_values_accepts_age_with_source_and_confidence():
+    df = base_market_context_df(age=24, source="manual_review", confidence="medium")
+
+    assert validate_market_context_values(df) == []
 
 
 @pytest.mark.parametrize(
@@ -171,6 +205,42 @@ def test_validate_market_context_values_requires_source_when_enriched(enrichment
     errors = validate_market_context_values(df)
 
     assert any("source" in error for error in errors)
+
+
+@pytest.mark.parametrize(
+    "enrichment_column",
+    ["age", "market_value_eur", "contract_end_date"],
+)
+def test_validate_market_context_values_requires_confidence_when_enriched(enrichment_column):
+    values = {"age": "", "market_value_eur": "", "contract_end_date": "", "confidence": ""}
+    values[enrichment_column] = {
+        "age": 24,
+        "market_value_eur": 1_500_000,
+        "contract_end_date": "2026-06-30",
+    }[enrichment_column]
+    df = base_market_context_df(**values)
+
+    errors = validate_market_context_values(df)
+
+    assert any("confidence" in error for error in errors)
+
+
+def test_validate_market_context_values_reports_multiple_legible_errors():
+    df = base_market_context_df(
+        age=0,
+        market_value_eur=0,
+        contract_end_date="30/06/2026",
+        source="",
+        confidence="",
+    )
+
+    errors = validate_market_context_values(df)
+
+    assert any("Row 2" in error and "age" in error for error in errors)
+    assert any("Row 2" in error and "market_value_eur" in error for error in errors)
+    assert any("Row 2" in error and "contract_end_date" in error for error in errors)
+    assert any("Row 2" in error and "source" in error for error in errors)
+    assert any("Row 2" in error and "confidence" in error for error in errors)
 
 
 @pytest.mark.parametrize("required_key", ["player", "team", "league", "season"])

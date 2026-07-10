@@ -27,6 +27,12 @@ For real enrichment, fill `age`, `market_value_eur`, `contract_end_date`, `sourc
 
 Keep unknown values empty. Do not use `0` for unknown age, market value or contract date.
 
+If `age`, `market_value_eur` or `contract_end_date` is filled, `source` and `confidence` are required. Use `low`, `medium` or `high` for confidence.
+
+Use strict ISO format for contract dates: `YYYY-MM-DD`. Formats such as `DD/MM/YYYY` are rejected.
+
+`notes` is recommended, especially when `source_url` is empty or the value needs context, but it is not mandatory yet.
+
 Review source quality before adding values. Use the checklist in [`docs/enrichment_source_quality_checklist.md`](../../docs/enrichment_source_quality_checklist.md).
 
 ## Generate a local seed CSV

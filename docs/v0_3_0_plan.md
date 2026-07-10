@@ -44,8 +44,10 @@ Rules:
 - Do not use `0` for unknown values.
 - Leave unknown fields empty.
 - `source` is required when any enrichment value is filled.
-- `confidence` must be `low`, `medium` or `high`.
-- `notes` should include brief context for the row, especially ambiguity or manual assumptions.
+- `confidence` is required when any enrichment value is filled and must be `low`, `medium` or `high`.
+- `age` must be an integer between 15 and 45.
+- `contract_end_date` must use strict ISO format: `YYYY-MM-DD`.
+- `notes` should include brief context for the row, especially ambiguity, missing `source_url` or manual assumptions.
 - `source_url` is optional but recommended.
 - Duplicate player/team/league/season keys must be reviewed before use.
 - Real values should come from manually reviewed, traceable sources.

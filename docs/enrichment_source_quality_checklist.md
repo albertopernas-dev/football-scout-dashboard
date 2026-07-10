@@ -60,7 +60,8 @@ Examples:
 ## Age Rules
 
 - Age must have a traceable source.
-- Age must validate in the 15-45 range.
+- Age must be an integer in the 15-45 range.
+- Do not use `0` for unknown age.
 - If the player identity is ambiguous, leave age empty.
 - If sources disagree and the correct value cannot be resolved, leave age empty or use `low` confidence with clear notes.
 
@@ -75,7 +76,8 @@ Examples:
 
 ## Contract End Date Rules
 
-- Use ISO format: `YYYY-MM-DD`.
+- Use strict ISO format: `YYYY-MM-DD`.
+- Do not use formats such as `DD/MM/YYYY`.
 - Do not infer contract end dates without a source.
 - If only year or month is known, document that in `notes` or leave the field empty.
 - If extension clauses or options create ambiguity, document them in `notes`.
@@ -86,6 +88,7 @@ Examples:
 - `high`: official, licensed, reviewed or strongly traceable value.
 - `medium`: reputable but not fully official, or cross-checked from secondary sources.
 - `low`: partial, estimated, ambiguous or exploratory value.
+- `source` and `confidence` are required when `age`, `market_value_eur` or `contract_end_date` is filled.
 - Empty confidence is allowed only when no enrichment values are filled.
 
 ## Notes Rules
@@ -96,6 +99,7 @@ Good notes include:
 
 - source date;
 - reason for confidence level;
+- source description when `source_url` is empty;
 - differences between sources;
 - identity or team-name ambiguity;
 - assumptions made during manual review.

@@ -586,8 +586,13 @@ def _validate_age(value: object, row_number: int, errors: list[str]) -> None:
     if _is_empty(value):
         return
     numeric_value = _to_number(value)
-    if numeric_value is None or numeric_value < 15 or numeric_value > 45:
-        errors.append(f"Row {row_number}: age must be empty or a number between 15 and 45.")
+    if (
+        numeric_value is None
+        or numeric_value < 15
+        or numeric_value > 45
+        or not float(numeric_value).is_integer()
+    ):
+        errors.append(f"Row {row_number}: age must be empty or an integer between 15 and 45.")
 
 
 def _validate_market_value(value: object, row_number: int, errors: list[str]) -> None:
@@ -601,11 +606,8 @@ def _validate_market_value(value: object, row_number: int, errors: list[str]) ->
 def _validate_contract_end_date(value: object, row_number: int, errors: list[str]) -> None:
     if _is_empty(value):
         return
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore", UserWarning)
-        parsed = pd.to_datetime(value, errors="coerce", dayfirst=True)
-    if pd.isna(parsed):
-        errors.append(f"Row {row_number}: contract_end_date must be empty or parseable as a date.")
+    if not _is_iso_date(value):
+        errors.append(f"Row {row_number}: contract_end_date must be empty or ISO YYYY-MM-DD.")
 
 
 def _validate_confidence(value: object, row_number: int, errors: list[str]) -> None:
@@ -623,6 +625,16 @@ def _validate_source_for_enrichment(row: pd.Series, row_number: int, errors: lis
     )
     if has_enrichment and _is_empty(row.get("source")):
         errors.append(f"Row {row_number}: source is required when enrichment values are present.")
+    if has_enrichment and _is_empty(row.get("confidence")):
+        errors.append(f"Row {row_number}: confidence is required when enrichment values are present.")
+
+
+def _is_iso_date(value: object) -> bool:
+    text = str(value).strip()
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", text):
+        return False
+    parsed = pd.to_datetime(text, format="%Y-%m-%d", errors="coerce")
+    return not pd.isna(parsed)
 
 
 def _to_number(value: Any) -> float | None:
