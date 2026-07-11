@@ -8,17 +8,19 @@
 - v0.2.0 incluye una capa opt-in de Market Context para CSV manual, validacion, diagnostico, cobertura efectiva y uso de `effective_*` en Opportunity Finder.
 - v0.3.0 completa el workflow local de enrichment real revisado: seed export, checklist de fuentes, safeguards, validacion estricta y display efectivo en Opportunity Finder.
 - v0.4.0 completa el workflow de evaluacion de proveedores: decision records, matriz, politica de cache, contrato de transformacion, preview CLI, builder canonico y ejemplos sinteticos.
+- v0.5.0 inicia Provider Fixture Prototype con un contrato de identity mapping antes de implementar codigo.
 - El contexto de mercado real depende de CSVs revisados localmente; no hay scraping ni proveedor automatico conectado.
 
 ## Recommended Next Steps
 
 1. Ejecutar v0.5.0 Provider Fixture Prototype con payloads licenciados o sinteticos.
-2. Ampliar datos reales revisados para edad, valor de mercado y contrato.
-3. Ajustar pesos de Opportunity Finder solo cuando exista cobertura real suficiente.
-4. Mejorar metricas especificas de porteros, como paradas, goles encajados y porterias a cero si la fuente lo permite.
-5. Ampliar a mas ligas y temporadas manteniendo el pipeline local reproducible.
-6. Mejorar visualizaciones de comparacion y shortlists.
-7. Explorar exportacion batch de reportes para shortlists.
+2. Definir y validar el contrato de identity mapping de proveedor a entidades locales.
+3. Ampliar datos reales revisados para edad, valor de mercado y contrato.
+4. Ajustar pesos de Opportunity Finder solo cuando exista cobertura real suficiente.
+5. Mejorar metricas especificas de porteros, como paradas, goles encajados y porterias a cero si la fuente lo permite.
+6. Ampliar a mas ligas y temporadas manteniendo el pipeline local reproducible.
+7. Mejorar visualizaciones de comparacion y shortlists.
+8. Explorar exportacion batch de reportes para shortlists.
 
 ## v0.2.0 Market Context Layer
 
@@ -65,13 +67,15 @@ Implemented as provider evaluation workflow.
 
 ## v0.5.0 Provider Fixture Prototype
 
-Suggested next milestone.
+Current milestone.
 
 - Prototipar transformaciones con payloads licenciados, muestras permitidas o fixtures sinteticos.
-- Definir estrategia de mapping de IDs de proveedor a jugador/equipo/liga/temporada local.
+- Primer foco: documentar estrategia de mapping de IDs de proveedor a jugador/equipo/liga/temporada local.
 - Continuar evaluacion de terminos, licencia, cache y redistribucion antes de cualquier dato real.
 - Explorar mejoras opcionales de UI para mostrar procedencia y fechas de valor.
 - Mantener scraping y llamadas live desde la app fuera de alcance.
+- Plan detallado: [`docs/v0_5_0_provider_fixture_prototype_plan.md`](docs/v0_5_0_provider_fixture_prototype_plan.md).
+- Identity mapping: [`docs/provider_identity_mapping_plan.md`](docs/provider_identity_mapping_plan.md).
 
 ## Potential v0.4.x Follow-ups
 

@@ -1,0 +1,6 @@
+provider_name,provider_player_id,provider_team_id,provider_league_id,provider_season,local_player,local_team,local_league,local_season,match_status,confidence,reviewed_by,reviewed_at,notes
+Synthetic Provider,synthetic-player-alpha,synthetic-team-red,synthetic-league,2024,Player Alpha,Team Red,Synthetic League,2024,matched,high,synthetic-reviewer,2026-01-01,Synthetic reviewed mapping.
+Synthetic Provider,synthetic-player-beta,synthetic-team-blue,synthetic-league,2024,Player Beta,Team Blue,Synthetic League,2024,matched,medium,synthetic-reviewer,2026-01-01,Synthetic reviewed mapping.
+Synthetic Provider,synthetic-player-delta,synthetic-team-yellow,synthetic-league,2024,,,,2024,unmatched,low,synthetic-reviewer,2026-01-01,Synthetic unmatched provider record.
+Synthetic Provider,synthetic-player-echo,synthetic-team-red,synthetic-league,2024,Player Echo,Team Red,Synthetic League,2024,ambiguous,low,synthetic-reviewer,2026-01-01,Synthetic ambiguous name collision.
+Synthetic Provider,synthetic-player-zeta,synthetic-team-black,synthetic-league,2024,,,,2024,rejected,low,synthetic-reviewer,2026-01-01,Synthetic rejected mapping.

@@ -48,7 +48,7 @@ A practical 5-10 minute demo script is available in [`docs/demo_walkthrough.md`]
 
 ## Release
 
-Current milestone: `v0.4.0`.
+Current milestone: `v0.5.0`.
 
 - Release notes: [`docs/release_notes_v0_1_0.md`](docs/release_notes_v0_1_0.md)
 - v0.2.0 release notes: [`docs/release_notes_v0_2_0.md`](docs/release_notes_v0_2_0.md)
@@ -97,6 +97,10 @@ Reviewed CSVs should stay local by default and are ignored by git when named as 
 Provider evaluation and canonical Market Context output review are documented in [`docs/provider_workflow_quickstart.md`](docs/provider_workflow_quickstart.md). The workflow keeps provider data local, avoids scraping and requires preview, validation and diagnostics before app activation.
 
 Release notes: [`docs/release_notes_v0_4_0.md`](docs/release_notes_v0_4_0.md).
+
+## v0.5.0 Provider Fixture Prototype
+
+v0.5.0 starts with a provider identity mapping contract before any provider fixture code. See [`docs/v0_5_0_provider_fixture_prototype_plan.md`](docs/v0_5_0_provider_fixture_prototype_plan.md) and [`docs/provider_identity_mapping_plan.md`](docs/provider_identity_mapping_plan.md).
 
 ## Funcionalidades
 
