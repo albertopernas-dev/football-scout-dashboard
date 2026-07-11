@@ -24,6 +24,8 @@ player,team,league,season,age,market_value_eur,contract_end_date,source,source_u
 
 This schema feeds the existing Market Context Layer.
 
+`src/provider_market_context.py` defines generic helpers to build canonical rows from already-normalized provider records. It does not implement any real provider. Future adapters should use synthetic test data, call these helpers, then pass output through validation and diagnostics before activation.
+
 ## Future Optional Fields
 
 Future provider-specific fields may be added only if a decision record justifies them:
