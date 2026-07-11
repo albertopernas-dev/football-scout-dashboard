@@ -52,6 +52,8 @@ Preview it locally with:
 .venv\Scripts\python.exe scripts\preview_provider_market_context.py --input docs\examples\provider_market_context_canonical_sample.csv --show-columns
 ```
 
+`scripts/build_provider_market_context_canonical.py` can build a canonical CSV from already-normalized local records. It does not implement real providers, fetch data or call network services.
+
 ## Transform Stages
 
 1. Load raw/cache.

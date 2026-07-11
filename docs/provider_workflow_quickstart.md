@@ -56,6 +56,20 @@ Use the synthetic example at [`docs/examples/provider_market_context_canonical_s
 
 ## Step 5 - Preview Provider Canonical Output
 
+Build a canonical CSV from already-normalized local records:
+
+```powershell
+.venv\Scripts\python.exe scripts\build_provider_market_context_canonical.py --input docs\examples\provider_market_context_normalized_records_sample.csv --output data\enrichment\provider_market_context_canonical.generated.local.csv --include-optional-fields --force
+```
+
+The generated `.local.csv` output should stay local and ignored. It is a review artifact, not a provider integration.
+
+Then preview the generated output:
+
+```powershell
+.venv\Scripts\python.exe scripts\preview_provider_market_context.py --input data\enrichment\provider_market_context_canonical.generated.local.csv --show-columns
+```
+
 Preview a candidate canonical CSV before diagnostics or app activation:
 
 ```powershell
@@ -122,6 +136,12 @@ Preview candidate canonical CSV:
 
 ```powershell
 .venv\Scripts\python.exe scripts\preview_provider_market_context.py --input path\to\canonical_market_context.csv --show-columns --fail-on-validation-errors
+```
+
+Build canonical CSV from normalized records:
+
+```powershell
+.venv\Scripts\python.exe scripts\build_provider_market_context_canonical.py --input docs\examples\provider_market_context_normalized_records_sample.csv --output data\enrichment\provider_market_context_canonical.generated.local.csv --include-optional-fields --force
 ```
 
 Diagnose candidate CSV:

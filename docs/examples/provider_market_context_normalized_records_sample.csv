@@ -1,0 +1,4 @@
+player,team,league,season,age,market_value_eur,contract_end_date,source,source_url,confidence,notes,provider_player_id,provider_team_id,provider_name,fetched_at,value_date,contract_option_notes,license_scope,raw_provider_status,raw_provider_value_text
+Player Alpha,Team Red,Synthetic League,2024,,,,,,,,,,,,,,,reviewed,synthetic-only
+Player Beta,Team Blue,Synthetic League,2024,24,1500000,2027-06-30,synthetic_provider,https://example.test/player-beta,medium,Synthetic reviewed example row. Not real data.,synthetic-player-beta,synthetic-team-blue,Synthetic Provider,2026-01-01T00:00:00Z,2026-01-01,Synthetic option note.,synthetic_example_only,reviewed,synthetic-only
+Player Gamma,Team Green,Synthetic League,2024,29,,2025-06-30,synthetic_provider,https://example.test/player-gamma,low,Synthetic partial context example. Not real data.,synthetic-player-gamma,synthetic-team-green,Synthetic Provider,2026-01-01T00:00:00Z,2026-01-01,,synthetic_example_only,partial,synthetic-only
