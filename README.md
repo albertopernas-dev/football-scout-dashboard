@@ -48,11 +48,12 @@ A practical 5-10 minute demo script is available in [`docs/demo_walkthrough.md`]
 
 ## Release
 
-Current milestone: `v0.3.0`.
+Current milestone: `v0.4.0`.
 
 - Release notes: [`docs/release_notes_v0_1_0.md`](docs/release_notes_v0_1_0.md)
 - v0.2.0 release notes: [`docs/release_notes_v0_2_0.md`](docs/release_notes_v0_2_0.md)
 - v0.3.0 release notes: [`docs/release_notes_v0_3_0.md`](docs/release_notes_v0_3_0.md)
+- v0.4.0 release notes: [`docs/release_notes_v0_4_0.md`](docs/release_notes_v0_4_0.md)
 - Demo assets checklist: [`docs/demo_assets_checklist.md`](docs/demo_assets_checklist.md)
 
 ## v0.2.0 Market Context Layer
@@ -94,6 +95,8 @@ Reviewed CSVs should stay local by default and are ignored by git when named as 
 ## v0.4.0 Provider Workflow
 
 Provider evaluation and canonical Market Context output review are documented in [`docs/provider_workflow_quickstart.md`](docs/provider_workflow_quickstart.md). The workflow keeps provider data local, avoids scraping and requires preview, validation and diagnostics before app activation.
+
+Release notes: [`docs/release_notes_v0_4_0.md`](docs/release_notes_v0_4_0.md).
 
 ## Funcionalidades
 

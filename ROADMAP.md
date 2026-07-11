@@ -7,11 +7,12 @@
 - La app incluye ranking recomendado, filtros de comparabilidad y muestra, Opportunity Finder, descargas CSV, informes HTML y documentacion de scoring.
 - v0.2.0 incluye una capa opt-in de Market Context para CSV manual, validacion, diagnostico, cobertura efectiva y uso de `effective_*` en Opportunity Finder.
 - v0.3.0 completa el workflow local de enrichment real revisado: seed export, checklist de fuentes, safeguards, validacion estricta y display efectivo en Opportunity Finder.
+- v0.4.0 completa el workflow de evaluacion de proveedores: decision records, matriz, politica de cache, contrato de transformacion, preview CLI, builder canonico y ejemplos sinteticos.
 - El contexto de mercado real depende de CSVs revisados localmente; no hay scraping ni proveedor automatico conectado.
 
 ## Recommended Next Steps
 
-1. Ejecutar v0.4.0 Provider Evaluation / Licensed Data Integration.
+1. Ejecutar v0.5.0 Provider Fixture Prototype con payloads licenciados o sinteticos.
 2. Ampliar datos reales revisados para edad, valor de mercado y contrato.
 3. Ajustar pesos de Opportunity Finder solo cuando exista cobertura real suficiente.
 4. Mejorar metricas especificas de porteros, como paradas, goles encajados y porterias a cero si la fuente lo permite.
@@ -50,16 +51,27 @@
 
 ## v0.4.0 Provider Evaluation / Licensed Data Integration
 
-Next milestone.
+Implemented as provider evaluation workflow.
 
-- Evaluar proveedores oficiales, licenciados o APIs con terminos explicitos.
-- Revisar cobertura para edad, valor de mercado, contrato y trazabilidad.
-- Documentar licencia, coste, limites, derechos de uso y redistribucion.
-- Mantener scraping fuera de alcance.
-- Mantener el flujo app -> datos locales validados, sin llamadas directas app -> proveedor.
-- Integrar cualquier prototipo como input opt-in para Market Context Layer.
-- Mantener modo sin market context.
+- Incluye plan de evaluacion de proveedores.
+- Incluye decision records, matriz de evaluacion y reviews iniciales.
+- Define politica de cache local y contrato provider -> Market Context.
+- Incluye helper canonico, preview CLI, builder CLI y ejemplos sinteticos.
+- Mantiene scraping fuera de alcance.
+- Mantiene el flujo app -> datos locales validados, sin llamadas directas app -> proveedor.
+- No integra un proveedor real todavia.
+- Release notes: [`docs/release_notes_v0_4_0.md`](docs/release_notes_v0_4_0.md).
 - Plan detallado: [`docs/v0_4_0_provider_evaluation_plan.md`](docs/v0_4_0_provider_evaluation_plan.md).
+
+## v0.5.0 Provider Fixture Prototype
+
+Suggested next milestone.
+
+- Prototipar transformaciones con payloads licenciados, muestras permitidas o fixtures sinteticos.
+- Definir estrategia de mapping de IDs de proveedor a jugador/equipo/liga/temporada local.
+- Continuar evaluacion de terminos, licencia, cache y redistribucion antes de cualquier dato real.
+- Explorar mejoras opcionales de UI para mostrar procedencia y fechas de valor.
+- Mantener scraping y llamadas live desde la app fuera de alcance.
 
 ## Potential v0.4.x Follow-ups
 
