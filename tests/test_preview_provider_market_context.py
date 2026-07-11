@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import pandas as pd
 
 from scripts.preview_provider_market_context import (
@@ -186,3 +188,19 @@ def test_valid_csv_main_returns_exit_code_zero(tmp_path):
     _write_csv(csv_path, [_valid_identity_row()], columns=CANONICAL_MARKET_CONTEXT_COLUMNS)
 
     assert main(["--input", str(csv_path)]) == 0
+
+
+def test_versioned_synthetic_canonical_sample_is_valid():
+    sample_path = (
+        Path(__file__).resolve().parents[1]
+        / "docs"
+        / "examples"
+        / "provider_market_context_canonical_sample.csv"
+    )
+
+    result = preview_provider_market_context(sample_path)
+
+    assert result["row_count"] == 3
+    assert result["validation_errors"] == []
+    assert result["extra_columns"] == []
+    assert result["missing_columns"] == []

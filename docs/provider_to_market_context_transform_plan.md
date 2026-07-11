@@ -42,6 +42,16 @@ license_scope
 
 These fields are optional proposals and should not be required for the current app workflow.
 
+## Synthetic Canonical Example
+
+A fully synthetic canonical example is available at [`docs/examples/provider_market_context_canonical_sample.csv`](examples/provider_market_context_canonical_sample.csv). It demonstrates the expected column order, identity-only rows, enriched rows and optional provider fields without using real players, teams, providers or data.
+
+Preview it locally with:
+
+```powershell
+.venv\Scripts\python.exe scripts\preview_provider_market_context.py --input docs\examples\provider_market_context_canonical_sample.csv --show-columns
+```
+
 ## Transform Stages
 
 1. Load raw/cache.
