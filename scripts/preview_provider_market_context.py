@@ -13,6 +13,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from src.provider_market_context import (  # noqa: E402
     CANONICAL_MARKET_CONTEXT_COLUMNS,
+    OPTIONAL_PROVIDER_CONTEXT_COLUMNS,
     validate_canonical_market_context_df,
 )
 
@@ -41,9 +42,8 @@ def preview_provider_market_context(
     missing_columns = [
         column for column in CANONICAL_MARKET_CONTEXT_COLUMNS if column not in df.columns
     ]
-    extra_columns = [
-        column for column in df.columns if column not in CANONICAL_MARKET_CONTEXT_COLUMNS
-    ]
+    known_columns = {*CANONICAL_MARKET_CONTEXT_COLUMNS, *OPTIONAL_PROVIDER_CONTEXT_COLUMNS}
+    extra_columns = [column for column in df.columns if column not in known_columns]
     validation_errors = validate_canonical_market_context_df(df)
     preview_columns = [column for column in PREVIEW_COLUMNS if column in df.columns]
 

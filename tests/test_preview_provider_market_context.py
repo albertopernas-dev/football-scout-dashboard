@@ -6,7 +6,10 @@ from scripts.preview_provider_market_context import (
     main,
     preview_provider_market_context,
 )
-from src.provider_market_context import CANONICAL_MARKET_CONTEXT_COLUMNS
+from src.provider_market_context import (
+    CANONICAL_MARKET_CONTEXT_COLUMNS,
+    OPTIONAL_PROVIDER_CONTEXT_COLUMNS,
+)
 
 
 def _write_csv(path, rows, columns=None):
@@ -92,6 +95,30 @@ def test_preview_reports_extra_columns(tmp_path):
     result = preview_provider_market_context(csv_path)
 
     assert result["extra_columns"] == ["provider_extra"]
+
+
+def test_preview_does_not_report_optional_provider_columns_as_extra(tmp_path):
+    csv_path = tmp_path / "canonical.csv"
+    row = _valid_identity_row()
+    for column in OPTIONAL_PROVIDER_CONTEXT_COLUMNS:
+        row[column] = f"synthetic-{column}"
+    _write_csv(csv_path, [row])
+
+    result = preview_provider_market_context(csv_path)
+
+    assert result["extra_columns"] == []
+
+
+def test_preview_still_reports_unknown_provider_specific_column_as_extra(tmp_path):
+    csv_path = tmp_path / "canonical.csv"
+    row = _valid_identity_row()
+    row["provider_player_id"] = "known-provider-id"
+    row["provider_rating_model"] = "unknown-column"
+    _write_csv(csv_path, [row])
+
+    result = preview_provider_market_context(csv_path)
+
+    assert result["extra_columns"] == ["provider_rating_model"]
 
 
 def test_main_missing_file_returns_exit_code_one(tmp_path, capsys):
