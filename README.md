@@ -91,6 +91,10 @@ $env:FOOTBALL_SCOUT_MARKET_CONTEXT_CSV="data/enrichment/player_market_context_la
 
 Reviewed CSVs should stay local by default and are ignored by git when named as `.local.csv` or `*_reviewed.csv`. See [`docs/release_notes_v0_3_0.md`](docs/release_notes_v0_3_0.md) and [`docs/v0_3_0_plan.md`](docs/v0_3_0_plan.md).
 
+## v0.4.0 Provider Workflow
+
+Provider evaluation and canonical Market Context output review are documented in [`docs/provider_workflow_quickstart.md`](docs/provider_workflow_quickstart.md). The workflow keeps provider data local, avoids scraping and requires preview, validation and diagnostics before app activation.
+
 ## Funcionalidades
 
 - Carga de CSV y uso de `data/sample_players.csv` por defecto.

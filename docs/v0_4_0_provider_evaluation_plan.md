@@ -108,6 +108,7 @@ Design principles:
 
 Supporting documents:
 
+- [Provider Workflow Quickstart](provider_workflow_quickstart.md)
 - [Provider Cache Policy](provider_cache_policy.md)
 - [Provider To Market Context Transform Plan](provider_to_market_context_transform_plan.md)
 
