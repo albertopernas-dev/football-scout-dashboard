@@ -100,6 +100,8 @@ Diagnostics should report:
 
 Diagnostics are required before any provider-derived file is activated in the app.
 
+`scripts/preview_provider_market_context.py` can validate and preview local canonical CSV outputs before deeper diagnostics or app activation.
+
 ## Failure Handling
 
 - Missing license confirmation blocks prototype work.
