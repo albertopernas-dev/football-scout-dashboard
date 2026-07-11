@@ -77,8 +77,9 @@ Next milestone.
 - [RESEARCH] Evaluate market data providers.
 - [DATA] Define provider decision record.
 - [DATA] Maintain provider evaluation matrix.
+- [DATA] Define provider cache policy.
+- [DATA] Define provider-to-market-context transform contract.
 - [DATA] Prototype provider-to-market-context canonical transform.
-- [DATA] Add provider cache policy.
 - [FEATURE] Add saved shortlists.
 - [DATA] Add more leagues and seasons.
 - [FEATURE] Improve goalkeeper-specific scoring.

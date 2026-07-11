@@ -106,6 +106,11 @@ Design principles:
 - keep fallback mode without market context;
 - keep validation and diagnostics mandatory before activation.
 
+Supporting documents:
+
+- [Provider Cache Policy](provider_cache_policy.md)
+- [Provider To Market Context Transform Plan](provider_to_market_context_transform_plan.md)
+
 ## Proposed Canonical Schema
 
 Current schema:
@@ -174,7 +179,8 @@ Next action:
 - [DATA] Evaluate licensed market data providers.
 - [DATA] Define provider decision record.
 - [DATA] Maintain provider evaluation matrix.
+- [DATA] Define provider cache policy.
+- [DATA] Define provider-to-market-context transform contract.
 - [DATA] Prototype provider-to-market-context canonical transform.
-- [DATA] Add provider cache policy.
 - [APP] Show provider provenance in market context UI.
 - [QA] Add fixture tests for provider canonical transform.
