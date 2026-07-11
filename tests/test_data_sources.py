@@ -170,6 +170,7 @@ def test_load_players_data_with_metadata_returns_sqlite_source(tmp_path):
         table_name="players",
         external_url="",
         csv_path=tmp_path / "missing.csv",
+        market_context_csv_path=None,
     )
 
     assert result["player"].tolist() == ["Ana", "Bea"]
@@ -191,6 +192,7 @@ def test_load_players_data_with_metadata_returns_external_source(tmp_path):
         csv_path=tmp_path / "missing.csv",
         fetcher=lambda url: [{"player": "External", "age": 20}],
         priority=("external", "csv"),
+        market_context_csv_path=None,
     )
 
     assert result["player"].tolist() == ["External"]
@@ -212,6 +214,7 @@ def test_load_players_data_with_metadata_returns_csv_source(tmp_path):
         table_name="players",
         external_url="",
         csv_path=csv_path,
+        market_context_csv_path=None,
     )
 
     assert result["player"].tolist() == ["Ana", "Bea"]
