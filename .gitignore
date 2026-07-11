@@ -7,6 +7,7 @@ __pycache__/
 reports/generated/*.html
 data/football_scout.db
 data/raw/
+data/provider_cache/
 data/enrichment/*.local.csv
 data/enrichment/*_reviewed.csv
 *.log
