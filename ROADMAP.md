@@ -8,19 +8,19 @@
 - v0.2.0 incluye una capa opt-in de Market Context para CSV manual, validacion, diagnostico, cobertura efectiva y uso de `effective_*` en Opportunity Finder.
 - v0.3.0 completa el workflow local de enrichment real revisado: seed export, checklist de fuentes, safeguards, validacion estricta y display efectivo en Opportunity Finder.
 - v0.4.0 completa el workflow de evaluacion de proveedores: decision records, matriz, politica de cache, contrato de transformacion, preview CLI, builder canonico y ejemplos sinteticos.
-- v0.5.0 inicia Provider Fixture Prototype con un contrato de identity mapping antes de implementar codigo.
+- v0.5.0 completa Provider Fixture Prototype como demo sintetico offline: validacion y aplicacion de identity mapping, CLI de records mapeados, builder canonico y preview.
 - El contexto de mercado real depende de CSVs revisados localmente; no hay scraping ni proveedor automatico conectado.
 
 ## Recommended Next Steps
 
-1. Ejecutar v0.5.0 Provider Fixture Prototype con payloads licenciados o sinteticos.
-2. Definir y validar el contrato de identity mapping de proveedor a entidades locales.
-3. Ampliar datos reales revisados para edad, valor de mercado y contrato.
-4. Ajustar pesos de Opportunity Finder solo cuando exista cobertura real suficiente.
-5. Mejorar metricas especificas de porteros, como paradas, goles encajados y porterias a cero si la fuente lo permite.
-6. Ampliar a mas ligas y temporadas manteniendo el pipeline local reproducible.
-7. Mejorar visualizaciones de comparacion y shortlists.
-8. Explorar exportacion batch de reportes para shortlists.
+1. Ejecutar v0.6.0 Licensed Provider Payload Evaluation con payloads permitidos/licenciados o fixtures sinteticos avanzados.
+2. Definir un mapping real local e ignorado para un proveedor candidato, sin versionar datos reales.
+3. Probar la transformacion de un proveedor candidato sin llamadas live desde la app.
+4. Ampliar datos reales revisados para edad, valor de mercado y contrato.
+5. Ajustar pesos de Opportunity Finder solo cuando exista cobertura real suficiente.
+6. Mejorar metricas especificas de porteros, como paradas, goles encajados y porterias a cero si la fuente lo permite.
+7. Ampliar a mas ligas y temporadas manteniendo el pipeline local reproducible.
+8. Mejorar visualizaciones de comparacion, shortlists y procedencia de datos.
 
 ## v0.2.0 Market Context Layer
 
@@ -67,15 +67,28 @@ Implemented as provider evaluation workflow.
 
 ## v0.5.0 Provider Fixture Prototype
 
-Current milestone.
+Implemented as an offline synthetic demo.
 
-- Prototipar transformaciones con payloads licenciados, muestras permitidas o fixtures sinteticos.
-- Primer foco: documentar estrategia de mapping de IDs de proveedor a jugador/equipo/liga/temporada local.
-- Continuar evaluacion de terminos, licencia, cache y redistribucion antes de cualquier dato real.
-- Explorar mejoras opcionales de UI para mostrar procedencia y fechas de valor.
-- Mantener scraping y llamadas live desde la app fuera de alcance.
+- Incluye contrato, validacion y aplicacion exacta de identity mapping revisado.
+- Incluye samples sinteticos de mapping y provider fixture records.
+- Incluye CLI offline para records mapeados y demo end-to-end hacia Market Context canonico.
+- Excluye mappings `unmatched`, `ambiguous` y `rejected` sin fuzzy matching.
+- Mantiene separadas identity mapping confidence y Market Context confidence.
+- No integra un proveedor real, no hace scraping y no realiza llamadas de red.
 - Plan detallado: [`docs/v0_5_0_provider_fixture_prototype_plan.md`](docs/v0_5_0_provider_fixture_prototype_plan.md).
 - Identity mapping: [`docs/provider_identity_mapping_plan.md`](docs/provider_identity_mapping_plan.md).
+- Release notes: [`docs/release_notes_v0_5_0.md`](docs/release_notes_v0_5_0.md).
+
+## v0.6.0 Licensed Provider Payload Evaluation
+
+Suggested next milestone.
+
+- Evaluar payloads permitidos/licenciados o fixtures sinteticos avanzados.
+- Crear un mapping real local e ignorado si un proveedor candidato supera la revision de licencia y terminos.
+- Probar su transformacion al contrato canonico sin versionar datos reales.
+- Mantener scraping, fetch automatico y llamadas live desde la app fuera de alcance.
+- Considerar UI de procedencia solo despues de validar el flujo y la cobertura.
+- No hay ningun proveedor real conectado todavia.
 
 ## Potential v0.4.x Follow-ups
 

@@ -1,5 +1,9 @@
 # v0.5.0 - Provider Fixture Prototype Plan
 
+## Implementation Status
+
+Implemented as an offline synthetic demo. The milestone includes reviewed identity mapping validation and application, local mapped-record and end-to-end demo CLIs, canonical Market Context generation and preview validation. No real provider, real provider payload or network integration is included.
+
 ## Objective
 
 v0.5.0 aims to prototype an offline provider integration flow with synthetic fixtures or licensed/permitted payload samples. The milestone keeps the no-scraping rule, avoids live provider calls from the app and continues routing provider-derived data through local validation, preview and diagnostics.

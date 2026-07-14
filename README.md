@@ -54,6 +54,7 @@ Current milestone: `v0.5.0`.
 - v0.2.0 release notes: [`docs/release_notes_v0_2_0.md`](docs/release_notes_v0_2_0.md)
 - v0.3.0 release notes: [`docs/release_notes_v0_3_0.md`](docs/release_notes_v0_3_0.md)
 - v0.4.0 release notes: [`docs/release_notes_v0_4_0.md`](docs/release_notes_v0_4_0.md)
+- v0.5.0 release notes: [`docs/release_notes_v0_5_0.md`](docs/release_notes_v0_5_0.md)
 - Demo assets checklist: [`docs/demo_assets_checklist.md`](docs/demo_assets_checklist.md)
 
 ## v0.2.0 Market Context Layer
@@ -100,7 +101,7 @@ Release notes: [`docs/release_notes_v0_4_0.md`](docs/release_notes_v0_4_0.md).
 
 ## v0.5.0 Provider Fixture Prototype
 
-v0.5.0 starts with a provider identity mapping contract before any provider fixture code. See [`docs/v0_5_0_provider_fixture_prototype_plan.md`](docs/v0_5_0_provider_fixture_prototype_plan.md) and [`docs/provider_identity_mapping_plan.md`](docs/provider_identity_mapping_plan.md).
+v0.5.0 adds an offline synthetic fixture prototype that applies reviewed provider identity mappings, builds canonical Market Context and validates the generated output without network calls or real provider data. See [`docs/v0_5_0_provider_fixture_prototype_plan.md`](docs/v0_5_0_provider_fixture_prototype_plan.md), [`docs/provider_identity_mapping_plan.md`](docs/provider_identity_mapping_plan.md) and the [`v0.5.0 release notes`](docs/release_notes_v0_5_0.md).
 
 ## Funcionalidades
 
