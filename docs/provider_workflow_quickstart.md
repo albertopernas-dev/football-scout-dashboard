@@ -94,6 +94,23 @@ Expected checks:
 - `Validation error count: 0`
 - `Extra columns` only lists non-recognized columns.
 
+## Synthetic End-to-End Demo
+
+Run the complete offline prototype with the versioned synthetic records and reviewed mapping:
+
+```powershell
+.venv\Scripts\python.exe scripts\run_provider_fixture_prototype_demo.py --records docs\examples\provider_fixture_records_sample.csv --mapping docs\examples\provider_identity_mapping_sample.csv --mapped-output data\enrichment\provider_fixture_records_mapped.generated.local.csv --canonical-output data\enrichment\provider_market_context_from_fixture_demo.generated.local.csv --include-optional-fields --force
+```
+
+Preview the generated canonical output separately:
+
+```powershell
+.venv\Scripts\python.exe scripts\preview_provider_market_context.py --input data\enrichment\provider_market_context_from_fixture_demo.generated.local.csv --show-columns
+```
+
+Both `.local.csv` outputs are local, ignored artifacts. The demo performs no network calls and does
+not activate the app.
+
 ## Step 7 - Diagnostics Against Active Dataset
 
 Run Market Context diagnostics against the active dataset:

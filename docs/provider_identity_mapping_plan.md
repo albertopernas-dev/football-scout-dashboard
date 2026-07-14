@@ -102,3 +102,6 @@ records only; no real provider integration exists yet.
 The generated `.local.csv` is an intermediate local artifact and should remain ignored by Git. This
 step does not build canonical Market Context; the mapped output must still pass through the canonical
 builder, validation and diagnostics.
+
+For the combined synthetic mapping and canonical build flow, use
+`scripts/run_provider_fixture_prototype_demo.py` as documented in the provider workflow quickstart.

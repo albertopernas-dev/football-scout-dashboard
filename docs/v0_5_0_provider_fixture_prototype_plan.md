@@ -43,6 +43,8 @@ provider decision record
 - Reviewed `matched` mappings can be applied to normalized synthetic provider records.
 - Synthetic provider fixture records sample versioned.
 - Offline mapped records CLI added.
+- Synthetic end-to-end demo script added.
+- The demo orchestrates reviewed mapping and canonical build using local synthetic samples.
 - No real data.
 - No real provider integrated.
 - No functional app changes.
