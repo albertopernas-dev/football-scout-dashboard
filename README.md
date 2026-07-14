@@ -48,7 +48,7 @@ A practical 5-10 minute demo script is available in [`docs/demo_walkthrough.md`]
 
 ## Release
 
-Current milestone: `v0.5.0`.
+Current milestone: `v0.6.0`.
 
 - Release notes: [`docs/release_notes_v0_1_0.md`](docs/release_notes_v0_1_0.md)
 - v0.2.0 release notes: [`docs/release_notes_v0_2_0.md`](docs/release_notes_v0_2_0.md)
@@ -102,6 +102,10 @@ Release notes: [`docs/release_notes_v0_4_0.md`](docs/release_notes_v0_4_0.md).
 ## v0.5.0 Provider Fixture Prototype
 
 v0.5.0 adds an offline synthetic fixture prototype that applies reviewed provider identity mappings, builds canonical Market Context and validates the generated output without network calls or real provider data. See [`docs/v0_5_0_provider_fixture_prototype_plan.md`](docs/v0_5_0_provider_fixture_prototype_plan.md), [`docs/provider_identity_mapping_plan.md`](docs/provider_identity_mapping_plan.md) and the [`v0.5.0 release notes`](docs/release_notes_v0_5_0.md).
+
+## v0.6.0 Licensed Provider Payload Evaluation
+
+v0.6.0 evaluates whether permitted or licensed payloads, or advanced synthetic fixtures, fit the existing provider-to-Market Context contract before any integration code is added. No real provider is connected. See the [v0.6.0 plan](docs/v0_6_0_licensed_provider_payload_evaluation_plan.md) and [provider payload evaluation checklist](docs/provider_payload_evaluation_checklist.md).
 
 ## Funcionalidades
 

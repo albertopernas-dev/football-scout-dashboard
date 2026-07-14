@@ -13,14 +13,10 @@
 
 ## Recommended Next Steps
 
-1. Ejecutar v0.6.0 Licensed Provider Payload Evaluation con payloads permitidos/licenciados o fixtures sinteticos avanzados.
-2. Definir un mapping real local e ignorado para un proveedor candidato, sin versionar datos reales.
-3. Probar la transformacion de un proveedor candidato sin llamadas live desde la app.
-4. Ampliar datos reales revisados para edad, valor de mercado y contrato.
-5. Ajustar pesos de Opportunity Finder solo cuando exista cobertura real suficiente.
-6. Mejorar metricas especificas de porteros, como paradas, goles encajados y porterias a cero si la fuente lo permite.
-7. Ampliar a mas ligas y temporadas manteniendo el pipeline local reproducible.
-8. Mejorar visualizaciones de comparacion, shortlists y procedencia de datos.
+1. Completar el checklist para un provider candidate o sample sintetico avanzado.
+2. Crear o actualizar el decision record del provider candidate.
+3. Evaluar el payload shape y su encaje con identity mapping y Market Context canonico.
+4. Solo despues considerar helpers o fixtures de transformacion.
 
 ## v0.2.0 Market Context Layer
 
@@ -81,14 +77,18 @@ Implemented as an offline synthetic demo.
 
 ## v0.6.0 Licensed Provider Payload Evaluation
 
-Suggested next milestone.
+Current milestone.
 
 - Evaluar payloads permitidos/licenciados o fixtures sinteticos avanzados.
+- Completar el checklist de licencia, procedencia, campos, cache y diagnostico.
+- Actualizar el decision record antes de cualquier experimento de transformacion.
 - Crear un mapping real local e ignorado si un proveedor candidato supera la revision de licencia y terminos.
 - Probar su transformacion al contrato canonico sin versionar datos reales.
 - Mantener scraping, fetch automatico y llamadas live desde la app fuera de alcance.
 - Considerar UI de procedencia solo despues de validar el flujo y la cobertura.
 - No hay ningun proveedor real conectado todavia.
+- Plan: [`docs/v0_6_0_licensed_provider_payload_evaluation_plan.md`](docs/v0_6_0_licensed_provider_payload_evaluation_plan.md).
+- Checklist: [`docs/provider_payload_evaluation_checklist.md`](docs/provider_payload_evaluation_checklist.md).
 
 ## Potential v0.4.x Follow-ups
 
