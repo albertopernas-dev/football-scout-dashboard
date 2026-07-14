@@ -39,10 +39,11 @@ provider decision record
 
 - Mapping contract documented.
 - Synthetic mapping sample versioned.
+- Provider identity mapping validator added.
 - No real data.
 - No real provider integrated.
 - No functional app changes.
-- Next block can implement a mapping helper or validator.
+- Mapping is not applied to provider fixtures yet.
 
 ## Risks
 

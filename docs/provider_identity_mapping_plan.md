@@ -60,13 +60,24 @@ Suggested `confidence` values:
 
 See [`docs/examples/provider_identity_mapping_sample.csv`](examples/provider_identity_mapping_sample.csv).
 
+## Implementation
+
+`src/provider_identity_mapping.py` validates the mapping contract but does not apply mappings to provider fixtures yet.
+
+Main functions:
+
+- `required_provider_identity_mapping_columns()`
+- `validate_provider_identity_mapping_schema(df)`
+- `validate_provider_identity_mapping_values(df)`
+- `validate_provider_identity_mapping_df(df)`
+- `split_provider_identity_mapping_by_status(df)`
+- `find_duplicate_provider_identity_mappings(df)`
+- `load_provider_identity_mapping_csv(path)`
+
 ## Future Implementation Notes
 
 Future helper ideas:
 
-- validate mapping schema;
-- detect duplicate mappings;
-- split `matched`, `unmatched`, `ambiguous` and `rejected` rows;
 - apply reviewed mapping to normalized provider fixtures.
 
 Future tests should use synthetic fixtures only.
