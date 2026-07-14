@@ -33,6 +33,15 @@ PROVIDER_IDENTITY_COLUMNS = [
     "provider_league_id",
     "provider_season",
 ]
+PROVIDER_RECORD_IDENTITY_COLUMNS = list(PROVIDER_IDENTITY_COLUMNS)
+CANONICAL_IDENTITY_COLUMNS = ["player", "team", "league", "season"]
+IDENTITY_MAPPING_METADATA_RENAMES = {
+    "confidence": "identity_mapping_confidence",
+    "reviewed_by": "identity_mapping_reviewed_by",
+    "reviewed_at": "identity_mapping_reviewed_at",
+    "notes": "identity_mapping_notes",
+}
+
 LOCAL_MATCH_COLUMNS = ["local_player", "local_team", "local_league", "local_season"]
 
 
@@ -122,6 +131,62 @@ def find_duplicate_provider_identity_mappings(df: pd.DataFrame) -> pd.DataFrame:
 
 def load_provider_identity_mapping_csv(path: str | Path) -> pd.DataFrame:
     return pd.read_csv(Path(path), keep_default_na=False)
+
+
+def apply_provider_identity_mapping_to_records(
+    records_df: pd.DataFrame,
+    mapping_df: pd.DataFrame,
+) -> pd.DataFrame:
+    mapping_errors = validate_provider_identity_mapping_df(mapping_df)
+    if mapping_errors:
+        formatted_errors = "\n".join(f"- {error}" for error in mapping_errors)
+        raise ValueError(f"Invalid provider identity mapping:\n{formatted_errors}")
+
+    duplicates = find_duplicate_provider_identity_mappings(mapping_df)
+    if not duplicates.empty:
+        raise ValueError(
+            "Provider identity mapping contains duplicate matched provider identities."
+        )
+
+    missing_record_columns = [
+        column
+        for column in PROVIDER_RECORD_IDENTITY_COLUMNS
+        if column not in records_df.columns
+    ]
+    if missing_record_columns:
+        raise ValueError(
+            "Provider records are missing required identity columns: "
+            + ", ".join(missing_record_columns)
+        )
+
+    existing_canonical_columns = [
+        column for column in CANONICAL_IDENTITY_COLUMNS if column in records_df.columns
+    ]
+    if existing_canonical_columns:
+        raise ValueError(
+            "Provider records already contain canonical identity columns: "
+            + ", ".join(existing_canonical_columns)
+        )
+
+    matched_mapping = mapping_df.loc[
+        mapping_df["match_status"].apply(_normalized_text) == "matched",
+        [
+            *PROVIDER_RECORD_IDENTITY_COLUMNS,
+            *LOCAL_MATCH_COLUMNS,
+            *IDENTITY_MAPPING_METADATA_RENAMES,
+        ],
+    ].copy()
+    matched_mapping = matched_mapping.rename(columns=IDENTITY_MAPPING_METADATA_RENAMES)
+
+    result = records_df.merge(
+        matched_mapping,
+        how="inner",
+        on=PROVIDER_RECORD_IDENTITY_COLUMNS,
+        sort=False,
+        validate="many_to_one",
+    )
+    result = result.rename(columns=dict(zip(LOCAL_MATCH_COLUMNS, CANONICAL_IDENTITY_COLUMNS)))
+    return result.reset_index(drop=True)
 
 
 def _validate_required_provider_fields(

@@ -40,10 +40,12 @@ provider decision record
 - Mapping contract documented.
 - Synthetic mapping sample versioned.
 - Provider identity mapping validator added.
+- Reviewed `matched` mappings can be applied to normalized synthetic provider records.
+- Synthetic provider fixture records sample versioned.
 - No real data.
 - No real provider integrated.
 - No functional app changes.
-- Mapping is not applied to provider fixtures yet.
+- No CLI, real provider fixtures or provider integration added yet.
 
 ## Risks
 

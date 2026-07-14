@@ -3,9 +3,12 @@ from __future__ import annotations
 from pathlib import Path
 
 import pandas as pd
+import pytest
 
 from src.provider_identity_mapping import (
     PROVIDER_IDENTITY_MAPPING_COLUMNS,
+    PROVIDER_RECORD_IDENTITY_COLUMNS,
+    apply_provider_identity_mapping_to_records,
     find_duplicate_provider_identity_mappings,
     load_provider_identity_mapping_csv,
     required_provider_identity_mapping_columns,
@@ -13,6 +16,10 @@ from src.provider_identity_mapping import (
     validate_provider_identity_mapping_df,
     validate_provider_identity_mapping_schema,
     validate_provider_identity_mapping_values,
+)
+from src.provider_market_context import (
+    build_canonical_market_context_df,
+    validate_canonical_market_context_df,
 )
 
 
@@ -39,6 +46,27 @@ def _row(**overrides: object) -> dict[str, object]:
 
 def _df(rows: list[dict[str, object]]) -> pd.DataFrame:
     return pd.DataFrame(rows, columns=PROVIDER_IDENTITY_MAPPING_COLUMNS)
+
+
+def _provider_record(**overrides: object) -> dict[str, object]:
+    record = {
+        "provider_name": "Synthetic Provider",
+        "provider_player_id": "synthetic-player-alpha",
+        "provider_team_id": "synthetic-team-red",
+        "provider_league_id": "synthetic-league",
+        "provider_season": 2024,
+        "provider_player_name": "Provider Alpha",
+        "provider_team_name": "Provider Red",
+        "age": "",
+        "market_value_eur": "",
+        "contract_end_date": "",
+        "source": "",
+        "source_url": "",
+        "confidence": "",
+        "notes": "",
+    }
+    record.update(overrides)
+    return record
 
 
 def test_required_provider_identity_mapping_columns_returns_expected_list():
@@ -233,3 +261,192 @@ def test_versioned_synthetic_sample_is_valid():
     assert len(groups["ambiguous"]) == 1
     assert len(groups["rejected"]) == 1
     assert find_duplicate_provider_identity_mappings(sample).empty
+
+
+def test_apply_provider_identity_mapping_maps_matched_records_only():
+    records = pd.DataFrame(
+        [
+            _provider_record(),
+            _provider_record(
+                provider_player_id="synthetic-player-beta",
+                provider_team_id="synthetic-team-blue",
+            ),
+            _provider_record(
+                provider_player_id="synthetic-player-delta",
+                provider_team_id="synthetic-team-yellow",
+            ),
+        ]
+    )
+    mapping = _df(
+        [
+            _row(),
+            _row(
+                provider_player_id="synthetic-player-beta",
+                provider_team_id="synthetic-team-blue",
+                local_player="Player Beta",
+                local_team="Team Blue",
+            ),
+            _row(
+                provider_player_id="synthetic-player-delta",
+                provider_team_id="synthetic-team-yellow",
+                local_player="",
+                local_team="",
+                local_league="",
+                local_season="",
+                match_status="unmatched",
+                confidence="low",
+            ),
+        ]
+    )
+
+    result = apply_provider_identity_mapping_to_records(records, mapping)
+
+    assert result[["player", "team", "league", "season"]].to_dict("records") == [
+        {
+            "player": "Player Alpha",
+            "team": "Team Red",
+            "league": "Synthetic League",
+            "season": 2024,
+        },
+        {
+            "player": "Player Beta",
+            "team": "Team Blue",
+            "league": "Synthetic League",
+            "season": 2024,
+        },
+    ]
+
+
+def test_apply_provider_identity_mapping_preserves_records_and_adds_review_metadata():
+    records = pd.DataFrame(
+        [
+            _provider_record(
+                age=24,
+                market_value_eur=1_500_000,
+                contract_end_date="2027-06-30",
+                source="synthetic_provider",
+                source_url="https://example.test/player-alpha",
+                confidence="medium",
+                notes="Synthetic market context.",
+            )
+        ]
+    )
+
+    result = apply_provider_identity_mapping_to_records(records, _df([_row()]))
+
+    for column in [
+        *PROVIDER_RECORD_IDENTITY_COLUMNS,
+        "age",
+        "market_value_eur",
+        "contract_end_date",
+        "source",
+        "source_url",
+        "confidence",
+        "notes",
+    ]:
+        assert result.loc[0, column] == records.loc[0, column]
+    assert result.loc[0, "identity_mapping_confidence"] == "high"
+    assert result.loc[0, "identity_mapping_reviewed_by"] == "synthetic-reviewer"
+    assert result.loc[0, "identity_mapping_reviewed_at"] == "2026-01-01"
+    assert result.loc[0, "identity_mapping_notes"] == "Synthetic reviewed mapping."
+
+
+def test_apply_provider_identity_mapping_does_not_leak_internal_mapping_columns():
+    result = apply_provider_identity_mapping_to_records(
+        pd.DataFrame([_provider_record()]),
+        _df([_row()]),
+    )
+
+    assert not {
+        "local_player",
+        "local_team",
+        "local_league",
+        "local_season",
+        "match_status",
+    }.intersection(result.columns)
+
+
+def test_apply_provider_identity_mapping_rejects_missing_record_identity_columns():
+    records = pd.DataFrame([_provider_record()]).drop(columns=["provider_player_id"])
+
+    with pytest.raises(ValueError, match="provider_player_id"):
+        apply_provider_identity_mapping_to_records(records, _df([_row()]))
+
+
+def test_apply_provider_identity_mapping_rejects_existing_canonical_identity_columns():
+    records = pd.DataFrame([{**_provider_record(), "player": "Existing Player"}])
+
+    with pytest.raises(ValueError, match="canonical identity columns"):
+        apply_provider_identity_mapping_to_records(records, _df([_row()]))
+
+
+def test_apply_provider_identity_mapping_rejects_invalid_mapping():
+    mapping = _df([_row(match_status="maybe")])
+
+    with pytest.raises(ValueError, match="match_status must be one of"):
+        apply_provider_identity_mapping_to_records(pd.DataFrame([_provider_record()]), mapping)
+
+
+def test_apply_provider_identity_mapping_rejects_duplicate_matched_mapping():
+    duplicate = _row()
+    mapping = _df([duplicate, {**duplicate, "local_player": "Other Player"}])
+
+    with pytest.raises(ValueError, match="duplicate matched provider identities"):
+        apply_provider_identity_mapping_to_records(pd.DataFrame([_provider_record()]), mapping)
+
+
+def test_apply_provider_identity_mapping_returns_empty_output_with_expected_columns():
+    records = pd.DataFrame(
+        [_provider_record(provider_player_id="not-reviewed", provider_team_id="unknown-team")]
+    )
+
+    result = apply_provider_identity_mapping_to_records(records, _df([_row()]))
+
+    assert result.empty
+    assert result.columns.tolist() == [
+        *records.columns,
+        "player",
+        "team",
+        "league",
+        "season",
+        "identity_mapping_confidence",
+        "identity_mapping_reviewed_by",
+        "identity_mapping_reviewed_at",
+        "identity_mapping_notes",
+    ]
+
+
+def test_versioned_fixture_records_sample_applies_reviewed_mapping():
+    examples_path = Path(__file__).resolve().parents[1] / "docs" / "examples"
+    records = pd.read_csv(
+        examples_path / "provider_fixture_records_sample.csv",
+        keep_default_na=False,
+    )
+    mapping = pd.read_csv(
+        examples_path / "provider_identity_mapping_sample.csv",
+        keep_default_na=False,
+    )
+
+    result = apply_provider_identity_mapping_to_records(records, mapping)
+
+    assert len(result) == 2
+    assert result["player"].tolist() == ["Player Alpha", "Player Beta"]
+    assert result["team"].tolist() == ["Team Red", "Team Blue"]
+    assert result["league"].tolist() == ["Synthetic League", "Synthetic League"]
+    assert result["season"].tolist() == [2024, 2024]
+    provider_player_ids = result["provider_player_id"].tolist()
+    assert "synthetic-player-delta" not in provider_player_ids
+    assert "synthetic-player-echo" not in provider_player_ids
+    assert "synthetic-player-zeta" not in provider_player_ids
+
+    alpha = result.loc[result["player"] == "Player Alpha"].iloc[0]
+    beta = result.loc[result["player"] == "Player Beta"].iloc[0]
+    assert alpha["confidence"] == ""
+    assert beta["confidence"] == "medium"
+    assert beta["identity_mapping_confidence"] == "medium"
+
+    canonical = build_canonical_market_context_df(
+        result.to_dict("records"),
+        include_optional_fields=True,
+    )
+    assert validate_canonical_market_context_df(canonical) == []

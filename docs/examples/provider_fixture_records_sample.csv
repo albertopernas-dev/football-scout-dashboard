@@ -1,0 +1,6 @@
+provider_name,provider_player_id,provider_team_id,provider_league_id,provider_season,provider_player_name,provider_team_name,age,market_value_eur,contract_end_date,source,source_url,confidence,notes
+Synthetic Provider,synthetic-player-alpha,synthetic-team-red,synthetic-league,2024,Provider Alpha,Provider Red,,,,,,,
+Synthetic Provider,synthetic-player-beta,synthetic-team-blue,synthetic-league,2024,Provider Beta,Provider Blue,24,1500000,2027-06-30,synthetic_provider,https://example.test/player-beta,medium,Synthetic reviewed example row. Not real data.
+Synthetic Provider,synthetic-player-delta,synthetic-team-yellow,synthetic-league,2024,Provider Delta,Provider Yellow,26,,,synthetic_provider,https://example.test/player-delta,low,Synthetic partial unmatched row. Not real data.
+Synthetic Provider,synthetic-player-echo,synthetic-team-red,synthetic-league,2024,Provider Echo,Provider Red,,,,,,,
+Synthetic Provider,synthetic-player-zeta,synthetic-team-black,synthetic-league,2024,Provider Zeta,Provider Black,,,,,,,

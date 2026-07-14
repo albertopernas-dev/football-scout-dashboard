@@ -58,11 +58,12 @@ Suggested `confidence` values:
 
 ## Synthetic Example
 
-See [`docs/examples/provider_identity_mapping_sample.csv`](examples/provider_identity_mapping_sample.csv).
+See [`docs/examples/provider_identity_mapping_sample.csv`](examples/provider_identity_mapping_sample.csv) and
+[`docs/examples/provider_fixture_records_sample.csv`](examples/provider_fixture_records_sample.csv).
 
 ## Implementation
 
-`src/provider_identity_mapping.py` validates the mapping contract but does not apply mappings to provider fixtures yet.
+`src/provider_identity_mapping.py` validates the mapping contract and applies reviewed mappings to normalized provider records.
 
 Main functions:
 
@@ -73,11 +74,19 @@ Main functions:
 - `split_provider_identity_mapping_by_status(df)`
 - `find_duplicate_provider_identity_mappings(df)`
 - `load_provider_identity_mapping_csv(path)`
+- `apply_provider_identity_mapping_to_records(records_df, mapping_df)`
 
-## Future Implementation Notes
+## Applying Reviewed Mapping
 
-Future helper ideas:
+`apply_provider_identity_mapping_to_records(...)` performs an exact inner join on provider name,
+player ID, team ID, league ID and season.
 
-- apply reviewed mapping to normalized provider fixtures.
+- Only `matched` mapping rows are eligible.
+- `unmatched`, `ambiguous` and `rejected` rows are excluded.
+- No fuzzy or name-only matching is performed.
+- Local `player`, `team`, `league` and `season` values are added for the canonical builder.
+- Mapping review metadata uses the `identity_mapping_*` prefix.
+- Identity mapping confidence remains separate from Market Context `confidence`.
 
-Future tests should use synthetic fixtures only.
+The current implementation is fixture-free and provider-agnostic. Tests and examples use synthetic
+records only; no CLI or real provider integration exists yet.
