@@ -89,4 +89,16 @@ player ID, team ID, league ID and season.
 - Identity mapping confidence remains separate from Market Context `confidence`.
 
 The current implementation is fixture-free and provider-agnostic. Tests and examples use synthetic
-records only; no CLI or real provider integration exists yet.
+records only; no real provider integration exists yet.
+
+## Mapped Records CLI
+
+`scripts/apply_provider_identity_mapping.py` applies a reviewed mapping to normalized local records:
+
+```powershell
+.venv\Scripts\python.exe scripts\apply_provider_identity_mapping.py --records docs\examples\provider_fixture_records_sample.csv --mapping docs\examples\provider_identity_mapping_sample.csv --output data\enrichment\provider_fixture_records_mapped.generated.local.csv --force
+```
+
+The generated `.local.csv` is an intermediate local artifact and should remain ignored by Git. This
+step does not build canonical Market Context; the mapped output must still pass through the canonical
+builder, validation and diagnostics.

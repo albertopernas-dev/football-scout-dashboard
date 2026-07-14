@@ -42,10 +42,11 @@ provider decision record
 - Provider identity mapping validator added.
 - Reviewed `matched` mappings can be applied to normalized synthetic provider records.
 - Synthetic provider fixture records sample versioned.
+- Offline mapped records CLI added.
 - No real data.
 - No real provider integrated.
 - No functional app changes.
-- No CLI, real provider fixtures or provider integration added yet.
+- Still no real provider fixtures, network access or app integration.
 
 ## Risks
 
