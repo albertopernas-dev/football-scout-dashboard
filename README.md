@@ -115,7 +115,7 @@ See the [release notes](docs/release_notes_v0_6_0.md), [payload shape notes](doc
 
 v0.7.0 begins the review process for a specifically permitted provider candidate, using the checklist and payload decision template established in v0.6.0. This milestone does not imply a real integration or an approved real payload.
 
-Plan: [`docs/v0_7_0_permitted_provider_candidate_review_plan.md`](docs/v0_7_0_permitted_provider_candidate_review_plan.md).
+See the [`v0.7.0 plan`](docs/v0_7_0_permitted_provider_candidate_review_plan.md) and the operational [`candidate review workflow`](docs/v0_7_0_candidate_review_workflow.md).
 
 ## Funcionalidades
 

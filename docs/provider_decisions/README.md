@@ -33,5 +33,6 @@ Related documents:
 - [Data Provider Decision](../data_provider_decision.md)
 - [Provider Payload Evaluation Checklist](../provider_payload_evaluation_checklist.md)
 - [v0.7.0 Permitted Provider Candidate Review Plan](../v0_7_0_permitted_provider_candidate_review_plan.md)
+- [v0.7.0 Candidate Review Workflow](../v0_7_0_candidate_review_workflow.md)
 - [Provider Payload Evaluation Template](provider_payload_evaluation_template.md)
 - [Synthetic Payload Evaluation Example](example_synthetic_payload_evaluation.md) - synthetic documentation example only; not approval of a real provider.

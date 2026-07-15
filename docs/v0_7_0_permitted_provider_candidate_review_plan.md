@@ -15,6 +15,7 @@ This milestone builds on the safeguards and synthetic workflow completed in v0.6
 - [Provider Payload Evaluation Template](provider_decisions/provider_payload_evaluation_template.md)
 - [Advanced Synthetic Payload Shape Notes](provider_payload_shape_notes.md)
 - Advanced synthetic flattening and end-to-end demo
+- [v0.7.0 Candidate Review Workflow](v0_7_0_candidate_review_workflow.md)
 
 Synthetic success demonstrates the workflow only. It does not establish that any real payload is licensed, compatible or approved.
 
@@ -81,6 +82,7 @@ Synthetic success demonstrates the workflow only. It does not establish that any
 
 - README and ROADMAP identify v0.7.0 as the current milestone.
 - This v0.7.0 plan exists.
+- The operational candidate review workflow exists.
 - No real provider is chosen in this initial block.
 - No real payload is evaluated in this initial block.
 - No code is added.
@@ -98,6 +100,8 @@ Synthetic success demonstrates the workflow only. It does not establish that any
 - Treating synthetic success as real-provider readiness.
 
 ## Next Steps
+
+Follow the [v0.7.0 Candidate Review Workflow](v0_7_0_candidate_review_workflow.md) when a candidate is explicitly chosen.
 
 1. Choose a candidate explicitly.
 2. Complete the payload evaluation checklist.
