@@ -1,0 +1,102 @@
+{
+  "provider": {
+    "name": "Synthetic Advanced Provider",
+    "payload_type": "player_market_context_snapshot",
+    "terms_scope": "synthetic_example_only",
+    "generated_at": "2026-01-01T00:00:00Z"
+  },
+  "competition": {
+    "provider_league_id": "synthetic-league",
+    "provider_league_name": "Synthetic League",
+    "season": 2024
+  },
+  "teams": [
+    {
+      "provider_team_id": "synthetic-team-red",
+      "provider_team_name": "Provider Red",
+      "players": [
+        {
+          "provider_player_id": "synthetic-player-alpha",
+          "provider_player_name": "Provider Alpha",
+          "identity": {
+            "birthdate": null,
+            "age": null,
+            "nationality": "Synthetic Country"
+          },
+          "market": {
+            "market_value": null,
+            "market_value_currency": "EUR",
+            "market_value_date": null
+          },
+          "contract": {
+            "contract_end_date": null,
+            "loan_status": null,
+            "option_notes": null
+          },
+          "provenance": {
+            "source": "",
+            "source_url": "",
+            "confidence": "",
+            "notes": "Synthetic identity-only player."
+          }
+        },
+        {
+          "provider_player_id": "synthetic-player-beta",
+          "provider_player_name": "Provider Beta",
+          "identity": {
+            "birthdate": "2002-02-02",
+            "age": 24,
+            "nationality": "Synthetic Country"
+          },
+          "market": {
+            "market_value": 1500000,
+            "market_value_currency": "EUR",
+            "market_value_date": "2026-01-01"
+          },
+          "contract": {
+            "contract_end_date": "2027-06-30",
+            "loan_status": "not_on_loan",
+            "option_notes": "Synthetic option note."
+          },
+          "provenance": {
+            "source": "synthetic_advanced_provider",
+            "source_url": "https://example.test/player-beta",
+            "confidence": "medium",
+            "notes": "Synthetic enriched player. Not real data."
+          }
+        }
+      ]
+    },
+    {
+      "provider_team_id": "synthetic-team-blue",
+      "provider_team_name": "Provider Blue",
+      "players": [
+        {
+          "provider_player_id": "synthetic-player-gamma",
+          "provider_player_name": "Provider Gamma",
+          "identity": {
+            "birthdate": null,
+            "age": 29,
+            "nationality": "Synthetic Country"
+          },
+          "market": {
+            "market_value": null,
+            "market_value_currency": "EUR",
+            "market_value_date": null
+          },
+          "contract": {
+            "contract_end_date": "2025-06-30",
+            "loan_status": "unknown",
+            "option_notes": ""
+          },
+          "provenance": {
+            "source": "synthetic_advanced_provider",
+            "source_url": "https://example.test/player-gamma",
+            "confidence": "low",
+            "notes": "Synthetic partial player. Not real data."
+          }
+        }
+      ]
+    }
+  ]
+}

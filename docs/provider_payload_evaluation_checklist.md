@@ -90,3 +90,5 @@ Use this checklist to decide whether a candidate payload can safely enter the lo
 For a full payload decision record, use [`docs/provider_decisions/provider_payload_evaluation_template.md`](provider_decisions/provider_payload_evaluation_template.md).
 
 For a synthetic completed example, see [`docs/provider_decisions/example_synthetic_payload_evaluation.md`](provider_decisions/example_synthetic_payload_evaluation.md). It is not approval for any real provider or payload.
+
+Advanced synthetic shape references: [payload sample](examples/provider_payload_advanced_sample.json) and [shape notes](provider_payload_shape_notes.md). They do not represent a real provider.

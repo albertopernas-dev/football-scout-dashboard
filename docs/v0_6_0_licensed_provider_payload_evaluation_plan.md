@@ -52,6 +52,8 @@ provider candidate
 - A provider payload evaluation checklist exists.
 - A payload-specific decision record template exists.
 - A completed synthetic payload evaluation example exists.
+- An advanced synthetic payload shape example exists.
+- No parser for the advanced synthetic shape is implemented yet.
 - ROADMAP identifies v0.6.0 as the current milestone.
 - No new product code is added.
 - No real data is versioned.

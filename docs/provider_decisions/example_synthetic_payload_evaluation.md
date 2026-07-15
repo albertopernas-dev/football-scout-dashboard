@@ -137,6 +137,7 @@ Remove-Item data\enrichment\provider_market_context_from_fixture_demo.generated.
 - Rationale: accepted only as a synthetic contract and demo example
 - Blocking issues: not usable for real provider evaluation
 - Follow-up actions: review terms and license before any real provider payload review; keep real payloads local and ignored; complete the checklist before a transform experiment
+- Advanced synthetic shape notes: [`docs/provider_payload_shape_notes.md`](../provider_payload_shape_notes.md)
 - Re-review trigger: introduction of a real provider candidate or permitted payload
 
 ## Safety Notes
