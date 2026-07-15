@@ -4,7 +4,7 @@
 
 This document analyses an advanced synthetic payload and describes how its shape could fit the provider fixture -> identity mapping -> canonical Market Context contract.
 
-The sample is entirely synthetic. It does not represent a real provider, contain real data or authorize use of any real payload. No parser for this shape has been implemented.
+The sample is entirely synthetic. It does not represent a real provider, contain real data or authorize use of any real payload. A synthetic-only helper supports this documented shape, but no real provider parser has been implemented.
 
 ## Synthetic Sample
 
@@ -45,6 +45,16 @@ Expected normalized fields:
 - `fetched_at` <- `provider.generated_at`
 - `contract_option_notes` <- `teams[].players[].contract.option_notes`
 - `license_scope` <- `provider.terms_scope`
+
+## Synthetic Flattening Helper
+
+`src/provider_payload_shapes.py` contains a pure helper for this advanced synthetic shape.
+
+- It only flattens the versioned synthetic example.
+- It does not integrate or parse a real provider payload.
+- It does not apply identity mapping.
+- It does not activate data in the app.
+- It performs no network calls.
 
 ## Field Fit Table
 

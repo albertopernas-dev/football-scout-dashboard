@@ -53,9 +53,10 @@ provider candidate
 - A payload-specific decision record template exists.
 - A completed synthetic payload evaluation example exists.
 - An advanced synthetic payload shape example exists.
-- No parser for the advanced synthetic shape is implemented yet.
+- A synthetic-only flattening helper can flatten the advanced synthetic payload shape.
+- This helper does not constitute real provider integration or a real provider parser.
 - ROADMAP identifies v0.6.0 as the current milestone.
-- No new product code is added.
+- Only synthetic-only helper code is added; no app activation, real provider integration code or network workflow is added.
 - No real data is versioned.
 - No real provider is integrated.
 - No real payload has been evaluated; the synthetic example does not approve or evaluate any real provider payload.
