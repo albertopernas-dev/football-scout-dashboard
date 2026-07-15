@@ -50,11 +50,12 @@ provider candidate
 
 - The v0.6.0 plan is documented.
 - A provider payload evaluation checklist exists.
+- A payload-specific decision record template exists.
 - ROADMAP identifies v0.6.0 as the current milestone.
 - No new product code is added.
 - No real data is versioned.
 - No real provider is integrated.
-- The next block can add a payload-specific decision record template or an advanced synthetic example.
+- No real payload has been evaluated yet; a later block can add an advanced synthetic example or a permitted payload review.
 
 ## Risks
 

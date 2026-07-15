@@ -21,12 +21,13 @@ Decision records can evaluate:
 - manually reviewed public references;
 - existing provider limitations.
 
-Each evaluated provider or source type should have its own file. Use [`provider_decision_template.md`](provider_decision_template.md) as the starting point.
+Each evaluated provider or source type should have its own file. Use [`provider_decision_template.md`](provider_decision_template.md) for a general provider evaluation. Use [`provider_payload_evaluation_template.md`](provider_payload_evaluation_template.md) when evaluating a specific payload.
 
-When a decision record evaluates a provider payload, it should link to or complete the [Provider Payload Evaluation Checklist](../provider_payload_evaluation_checklist.md) before any integration work begins.
+Every real payload evaluation must complete or link to the [Provider Payload Evaluation Checklist](../provider_payload_evaluation_checklist.md) before any integration work begins.
 
 Related documents:
 
 - [v0.4.0 Provider Evaluation / Licensed Data Integration Plan](../v0_4_0_provider_evaluation_plan.md)
 - [Data Provider Decision](../data_provider_decision.md)
 - [Provider Payload Evaluation Checklist](../provider_payload_evaluation_checklist.md)
+- [Provider Payload Evaluation Template](provider_payload_evaluation_template.md)

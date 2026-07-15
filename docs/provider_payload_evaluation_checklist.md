@@ -86,3 +86,5 @@ Use this checklist to decide whether a candidate payload can safely enter the lo
 - Decision: accept / defer / reject
 - Rationale:
 - Follow-up actions:
+
+For a full payload decision record, use [`docs/provider_decisions/provider_payload_evaluation_template.md`](provider_decisions/provider_payload_evaluation_template.md).
