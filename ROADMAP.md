@@ -9,14 +9,15 @@
 - v0.3.0 completa el workflow local de enrichment real revisado: seed export, checklist de fuentes, safeguards, validacion estricta y display efectivo en Opportunity Finder.
 - v0.4.0 completa el workflow de evaluacion de proveedores: decision records, matriz, politica de cache, contrato de transformacion, preview CLI, builder canonico y ejemplos sinteticos.
 - v0.5.0 completa Provider Fixture Prototype como demo sintetico offline: validacion y aplicacion de identity mapping, CLI de records mapeados, builder canonico y preview.
+- v0.6.0 esta release-ready con governance de evaluacion, payload avanzado sintetico, flattening local y demo end-to-end sintetica hacia Market Context canonico.
 - El contexto de mercado real depende de CSVs revisados localmente; no hay scraping ni proveedor automatico conectado.
 
 ## Recommended Next Steps
 
-1. Completar el checklist para un provider candidate o sample sintetico avanzado.
-2. Crear o actualizar el decision record del provider candidate.
-3. Evaluar el payload shape y su encaje con identity mapping y Market Context canonico.
-4. Solo despues considerar helpers o fixtures de transformacion.
+1. Ejecutar la verificacion final antes del tag.
+2. Crear el tag y publicar v0.6.0.
+3. Evaluar un proveedor permitido usando checklist y decision record.
+4. Solo tras aprobar licencia y terminos, ejecutar un experimento local e ignorado con su payload.
 
 ## v0.2.0 Market Context Layer
 
@@ -77,18 +78,24 @@ Implemented as an offline synthetic demo.
 
 ## v0.6.0 Licensed Provider Payload Evaluation
 
-Current milestone.
+Release-ready.
 
-- Evaluar payloads permitidos/licenciados o fixtures sinteticos avanzados.
-- Completar el checklist de licencia, procedencia, campos, cache y diagnostico.
-- Actualizar el decision record antes de cualquier experimento de transformacion.
-- Crear un mapping real local e ignorado si un proveedor candidato supera la revision de licencia y terminos.
-- Probar su transformacion al contrato canonico sin versionar datos reales.
+- Incluye checklist de licencia, procedencia, campos, cache y diagnostico.
+- Incluye template de decision record y ejemplo de evaluacion sintetica.
+- Incluye payload avanzado y mapping revisado completamente sinteticos.
+- Incluye helper y CLI de flattening local, mas demo end-to-end hacia Market Context canonico.
 - Mantener scraping, fetch automatico y llamadas live desde la app fuera de alcance.
-- Considerar UI de procedencia solo despues de validar el flujo y la cobertura.
-- No hay ningun proveedor real conectado todavia.
+- No se ha evaluado ningun payload real ni integrado ningun proveedor real.
 - Plan: [`docs/v0_6_0_licensed_provider_payload_evaluation_plan.md`](docs/v0_6_0_licensed_provider_payload_evaluation_plan.md).
+- Release notes: [`docs/release_notes_v0_6_0.md`](docs/release_notes_v0_6_0.md).
 - Checklist: [`docs/provider_payload_evaluation_checklist.md`](docs/provider_payload_evaluation_checklist.md).
+
+## Potential v0.7.0 - Permitted Provider Candidate Review
+
+- Evaluar un candidato real solo si su licencia permite el experimento previsto.
+- Mantener payloads y outputs reales en rutas locales ignoradas.
+- Documentar cobertura, matching, procedencia y restricciones antes de implementar transforms especificos.
+- No compromete una integracion real: la decision puede ser aceptar, aplazar o rechazar.
 
 ## Potential v0.4.x Follow-ups
 

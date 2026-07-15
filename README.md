@@ -55,6 +55,7 @@ Current milestone: `v0.6.0`.
 - v0.3.0 release notes: [`docs/release_notes_v0_3_0.md`](docs/release_notes_v0_3_0.md)
 - v0.4.0 release notes: [`docs/release_notes_v0_4_0.md`](docs/release_notes_v0_4_0.md)
 - v0.5.0 release notes: [`docs/release_notes_v0_5_0.md`](docs/release_notes_v0_5_0.md)
+- v0.6.0 release notes: [`docs/release_notes_v0_6_0.md`](docs/release_notes_v0_6_0.md)
 - Demo assets checklist: [`docs/demo_assets_checklist.md`](docs/demo_assets_checklist.md)
 
 ## v0.2.0 Market Context Layer
@@ -105,7 +106,9 @@ v0.5.0 adds an offline synthetic fixture prototype that applies reviewed provide
 
 ## v0.6.0 Licensed Provider Payload Evaluation
 
-v0.6.0 evaluates whether permitted or licensed payloads, or advanced synthetic fixtures, fit the existing provider-to-Market Context contract before any integration code is added. No real provider is connected. See the [v0.6.0 plan](docs/v0_6_0_licensed_provider_payload_evaluation_plan.md) and [provider payload evaluation checklist](docs/provider_payload_evaluation_checklist.md).
+v0.6.0 adds payload evaluation governance, an advanced synthetic payload shape, a pure flattening helper, a local-only CLI and an end-to-end synthetic demo toward canonical Market Context. It does not add a real provider or activate provider data in the app.
+
+See the [release notes](docs/release_notes_v0_6_0.md), [payload shape notes](docs/provider_payload_shape_notes.md) and [provider payload evaluation checklist](docs/provider_payload_evaluation_checklist.md).
 
 ## Funcionalidades
 
