@@ -56,6 +56,19 @@ Expected normalized fields:
 - It does not activate data in the app.
 - It performs no network calls.
 
+## Local Synthetic Flattening CLI
+
+`scripts/flatten_provider_payload_advanced_sample.py` writes the advanced synthetic JSON
+payload as normalized provider records in a local CSV:
+
+```powershell
+.venv\Scripts\python.exe scripts\flatten_provider_payload_advanced_sample.py --input docs\examples\provider_payload_advanced_sample.json --output data\enrichment\provider_payload_advanced_flattened.generated.local.csv --force
+```
+
+The output must be a `.local.csv` file inside `data/enrichment/`; generated local files
+remain ignored by git. This command performs no identity mapping, canonical Market Context
+build, app activation, real provider integration or network access.
+
 ## Field Fit Table
 
 | Canonical / Optional Field | Payload Path | Fit | Notes |

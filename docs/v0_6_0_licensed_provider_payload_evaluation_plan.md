@@ -55,8 +55,10 @@ provider candidate
 - An advanced synthetic payload shape example exists.
 - A synthetic-only flattening helper can flatten the advanced synthetic payload shape.
 - This helper does not constitute real provider integration or a real provider parser.
+- A local synthetic-only CLI can write flattened normalized provider records to an ignored `.local.csv` file.
+- The CLI does not integrate a real provider, activate app data or run network calls.
 - ROADMAP identifies v0.6.0 as the current milestone.
-- Only synthetic-only helper code is added; no app activation, real provider integration code or network workflow is added.
+- Only synthetic-only helper and CLI code is added; no app activation, real provider integration code or network workflow is added.
 - No real data is versioned.
 - No real provider is integrated.
 - No real payload has been evaluated; the synthetic example does not approve or evaluate any real provider payload.
