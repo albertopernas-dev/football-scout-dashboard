@@ -31,3 +31,4 @@ Related documents:
 - [Data Provider Decision](../data_provider_decision.md)
 - [Provider Payload Evaluation Checklist](../provider_payload_evaluation_checklist.md)
 - [Provider Payload Evaluation Template](provider_payload_evaluation_template.md)
+- [Synthetic Payload Evaluation Example](example_synthetic_payload_evaluation.md) - synthetic documentation example only; not approval of a real provider.
