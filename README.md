@@ -48,7 +48,7 @@ A practical 5-10 minute demo script is available in [`docs/demo_walkthrough.md`]
 
 ## Release
 
-Current milestone: `v0.6.0`.
+Current milestone: `v0.7.0`.
 
 - Release notes: [`docs/release_notes_v0_1_0.md`](docs/release_notes_v0_1_0.md)
 - v0.2.0 release notes: [`docs/release_notes_v0_2_0.md`](docs/release_notes_v0_2_0.md)
@@ -56,6 +56,7 @@ Current milestone: `v0.6.0`.
 - v0.4.0 release notes: [`docs/release_notes_v0_4_0.md`](docs/release_notes_v0_4_0.md)
 - v0.5.0 release notes: [`docs/release_notes_v0_5_0.md`](docs/release_notes_v0_5_0.md)
 - v0.6.0 release notes: [`docs/release_notes_v0_6_0.md`](docs/release_notes_v0_6_0.md)
+- v0.7.0 plan: [`docs/v0_7_0_permitted_provider_candidate_review_plan.md`](docs/v0_7_0_permitted_provider_candidate_review_plan.md)
 - Demo assets checklist: [`docs/demo_assets_checklist.md`](docs/demo_assets_checklist.md)
 
 ## v0.2.0 Market Context Layer
@@ -109,6 +110,12 @@ v0.5.0 adds an offline synthetic fixture prototype that applies reviewed provide
 v0.6.0 adds payload evaluation governance, an advanced synthetic payload shape, a pure flattening helper, a local-only CLI and an end-to-end synthetic demo toward canonical Market Context. It does not add a real provider or activate provider data in the app.
 
 See the [release notes](docs/release_notes_v0_6_0.md), [payload shape notes](docs/provider_payload_shape_notes.md) and [provider payload evaluation checklist](docs/provider_payload_evaluation_checklist.md).
+
+## v0.7.0 Permitted Provider Candidate Review
+
+v0.7.0 begins the review process for a specifically permitted provider candidate, using the checklist and payload decision template established in v0.6.0. This milestone does not imply a real integration or an approved real payload.
+
+Plan: [`docs/v0_7_0_permitted_provider_candidate_review_plan.md`](docs/v0_7_0_permitted_provider_candidate_review_plan.md).
 
 ## Funcionalidades
 

@@ -9,15 +9,16 @@
 - v0.3.0 completa el workflow local de enrichment real revisado: seed export, checklist de fuentes, safeguards, validacion estricta y display efectivo en Opportunity Finder.
 - v0.4.0 completa el workflow de evaluacion de proveedores: decision records, matriz, politica de cache, contrato de transformacion, preview CLI, builder canonico y ejemplos sinteticos.
 - v0.5.0 completa Provider Fixture Prototype como demo sintetico offline: validacion y aplicacion de identity mapping, CLI de records mapeados, builder canonico y preview.
-- v0.6.0 esta release-ready con governance de evaluacion, payload avanzado sintetico, flattening local y demo end-to-end sintetica hacia Market Context canonico.
+- v0.6.0 publicada con governance de evaluacion, payload avanzado sintetico, flattening local y demo end-to-end sintetica hacia Market Context canonico.
+- v0.7.0 es el milestone actual para revisar un candidato permitido sin prometer integracion.
 - El contexto de mercado real depende de CSVs revisados localmente; no hay scraping ni proveedor automatico conectado.
 
 ## Recommended Next Steps
 
-1. Ejecutar la verificacion final antes del tag.
-2. Crear el tag y publicar v0.6.0.
-3. Evaluar un proveedor permitido usando checklist y decision record.
-4. Solo tras aprobar licencia y terminos, ejecutar un experimento local e ignorado con su payload.
+1. Elegir un proveedor o fuente candidata especifica.
+2. Revisar licencia y terminos antes de inspeccionar payloads.
+3. Completar checklist y decision record.
+4. Si esta permitido, ejecutar un trial local e ignorado del payload.
 
 ## v0.2.0 Market Context Layer
 
@@ -78,7 +79,7 @@ Implemented as an offline synthetic demo.
 
 ## v0.6.0 Licensed Provider Payload Evaluation
 
-Release-ready.
+Completed and published.
 
 - Incluye checklist de licencia, procedencia, campos, cache y diagnostico.
 - Incluye template de decision record y ejemplo de evaluacion sintetica.
@@ -90,12 +91,14 @@ Release-ready.
 - Release notes: [`docs/release_notes_v0_6_0.md`](docs/release_notes_v0_6_0.md).
 - Checklist: [`docs/provider_payload_evaluation_checklist.md`](docs/provider_payload_evaluation_checklist.md).
 
-## Potential v0.7.0 - Permitted Provider Candidate Review
+## v0.7.0 Permitted Provider Candidate Review
 
-- Evaluar un candidato real solo si su licencia permite el experimento previsto.
-- Mantener payloads y outputs reales en rutas locales ignoradas.
-- Documentar cobertura, matching, procedencia y restricciones antes de implementar transforms especificos.
-- No compromete una integracion real: la decision puede ser aceptar, aplazar o rechazar.
+- Current milestone.
+- No promete una integracion real ni selecciona candidato en este bloque inicial.
+- Mantiene payloads y outputs reales fuera de git.
+- No activa datos de proveedor en la app.
+- Plan: [`docs/v0_7_0_permitted_provider_candidate_review_plan.md`](docs/v0_7_0_permitted_provider_candidate_review_plan.md).
+- La decision final puede ser accept, defer o reject.
 
 ## Potential v0.4.x Follow-ups
 
