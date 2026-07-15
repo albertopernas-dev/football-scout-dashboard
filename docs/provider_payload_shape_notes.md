@@ -69,6 +69,25 @@ The output must be a `.local.csv` file inside `data/enrichment/`; generated loca
 remain ignored by git. This command performs no identity mapping, canonical Market Context
 build, app activation, real provider integration or network access.
 
+## Local Advanced Synthetic End-to-End Demo
+
+`scripts/run_advanced_provider_payload_demo.py` runs the advanced synthetic payload through
+flattening, reviewed identity mapping and canonical Market Context validation:
+
+```powershell
+.venv\Scripts\python.exe scripts\run_advanced_provider_payload_demo.py --input docs\examples\provider_payload_advanced_sample.json --mapping docs\examples\provider_advanced_identity_mapping_sample.csv --flattened-output data\enrichment\provider_payload_advanced_flattened.generated.local.csv --mapped-output data\enrichment\provider_payload_advanced_mapped.generated.local.csv --canonical-output data\enrichment\provider_market_context_from_advanced_payload.generated.local.csv --include-optional-fields --force
+```
+
+The demo writes only ignored `.local.csv` files under `data/enrichment/`:
+
+- `provider_payload_advanced_flattened.generated.local.csv`
+- `provider_payload_advanced_mapped.generated.local.csv`
+- `provider_market_context_from_advanced_payload.generated.local.csv`
+
+It performs no app activation, real provider integration or network access. Passing this
+synthetic demo does not evaluate or approve any real provider or payload.
+
+
 ## Field Fit Table
 
 | Canonical / Optional Field | Payload Path | Fit | Notes |

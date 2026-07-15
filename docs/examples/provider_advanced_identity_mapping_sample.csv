@@ -1,0 +1,4 @@
+provider_name,provider_player_id,provider_team_id,provider_league_id,provider_season,local_player,local_team,local_league,local_season,match_status,confidence,reviewed_by,reviewed_at,notes
+Synthetic Advanced Provider,synthetic-player-alpha,synthetic-team-red,synthetic-league,2024,Player Alpha,Team Red,Synthetic League,2024,matched,high,synthetic-reviewer,2026-01-01,Synthetic reviewed advanced mapping.
+Synthetic Advanced Provider,synthetic-player-beta,synthetic-team-red,synthetic-league,2024,Player Beta,Team Red,Synthetic League,2024,matched,medium,synthetic-reviewer,2026-01-01,Synthetic reviewed advanced mapping.
+Synthetic Advanced Provider,synthetic-player-gamma,synthetic-team-blue,synthetic-league,2024,,,,2024,unmatched,low,synthetic-reviewer,2026-01-01,Synthetic unmatched advanced provider record.
