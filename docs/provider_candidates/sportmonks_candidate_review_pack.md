@@ -4,8 +4,8 @@
 
 - Candidate: Sportmonks
 - Review stage: Stage 0 - Candidate Intake
-- License gate status: not started
-- Payload inspection status: not started
+- License gate status: partial public-source review / defer
+- Payload inspection status: not allowed
 - Trial status: not allowed
 - Decision status: no decision
 - Reviewer:
@@ -48,10 +48,10 @@ The next mandatory step is Stage 1 - License And Terms Gate. No payload may be i
 
 ## Stage 1 - License And Terms Gate
 
-Review scaffold: [Sportmonks License And Terms Gate](sportmonks_license_terms_gate.md). It remains `not reviewed` with decision `defer`.
+Review scaffold: [Sportmonks License And Terms Gate](sportmonks_license_terms_gate.md). Public-source notes are recorded in [Sportmonks Public Terms Review Notes](sportmonks_public_terms_review_notes.md). The gate remains `defer`.
 
-- Terms reviewed: no
-- License source: pending
+- Terms reviewed: partial public-source review
+- License source: pending; subscription-specific license not reviewed
 - Local development permitted: unknown
 - Payload inspection permitted: unknown
 - Caching permitted: unknown
@@ -60,7 +60,7 @@ Review scaffold: [Sportmonks License And Terms Gate](sportmonks_license_terms_ga
 - Redistribution permitted: unknown
 - Credential restrictions: unknown
 - Blocking restrictions: unknown
-- Gate decision: stop until reviewed
+- Gate decision: defer; payload inspection not permitted
 - Notes:
   - Do not inspect payloads before this gate is completed.
   - Do not create credentials before terms are reviewed.
@@ -84,7 +84,7 @@ Review scaffold: [Sportmonks License And Terms Gate](sportmonks_license_terms_ga
 - Decision record type: payload-specific, if a concrete permitted payload is reviewed later
 - Evidence references: pending
 - Open blockers:
-  - Terms and license not reviewed.
+  - Public terms review is partial; applicable license or subscription terms are not reviewed.
   - Payload inspection not permitted yet.
   - Cache and derived-output permissions unknown.
   - Payload shape unknown.
@@ -169,7 +169,7 @@ Review scaffold: [Sportmonks License And Terms Gate](sportmonks_license_terms_ga
 ## Final Outcome
 
 - Final decision: pending
-- Rationale: Stage 0 only; Stage 1 not completed
+- Rationale: Stage 0 complete; Stage 1 has a partial public-source review and remains incomplete
 - Accepted scope, if any: none
 - Deferred blockers:
   - License and terms review.
@@ -210,4 +210,4 @@ Review scaffold: [Sportmonks License And Terms Gate](sportmonks_license_terms_ga
 
 ## Next Required Action
 
-The next block must perform only a terms and license review using publicly accessible documentation or user-provided permitted terms. No payload inspection or credential setup is allowed unless the gate explicitly permits it.
+The next block must obtain or review applicable license or subscription terms, or explicit permission. No payload inspection or credential setup is allowed unless the gate explicitly permits it.

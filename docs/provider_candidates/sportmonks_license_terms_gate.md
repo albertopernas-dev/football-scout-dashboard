@@ -5,7 +5,8 @@
 - Candidate: Sportmonks
 - Related intake pack: [Sportmonks Candidate Review Pack](sportmonks_candidate_review_pack.md)
 - Review stage: Stage 1 - License And Terms Gate
-- Gate status: not reviewed
+- Public review notes: [Sportmonks Public Terms Review Notes](sportmonks_public_terms_review_notes.md)
+- Gate status: partial public-source review
 - Gate decision: defer
 - Payload inspection: not allowed
 - Credentials setup: not allowed
@@ -17,9 +18,9 @@
 
 ## Purpose
 
-This document prepares the Stage 1 review for Sportmonks. It contains no current legal review, asserts no permissions and accepts no terms. It does not authorize downloading, caching, transformation, redistribution, screenshots or demos, credential setup or integration.
+This document records a partial public-source review for Sportmonks. It asserts no project-specific permissions and accepts no terms. It does not authorize downloading, caching, transformation, redistribution, screenshots or demos, credential setup or integration.
 
-The default decision is `defer` until current public sources or permitted user-provided terms are reviewed.
+The decision remains `defer` until applicable license or subscription terms, or explicit permission, establish the required project permissions.
 
 ## Review Inputs Required
 
@@ -40,8 +41,8 @@ Do not copy restricted legal text into this repository. Record short references,
 
 | Area | Question | Current Answer | Evidence Reference | Status |
 |---|---|---|---|---|
-| Terms source | What terms govern the intended use? | not reviewed | pending | unknown |
-| License source | What license or subscription applies? | not reviewed | pending | unknown |
+| Terms source | What terms govern the intended use? | partial public-source review | [Public review notes](sportmonks_public_terms_review_notes.md) | partial |
+| License source | What license or subscription applies? | not reviewed | [Public review notes](sportmonks_public_terms_review_notes.md) | unknown |
 | Local development | Is local development or evaluation permitted? | unknown | pending | unknown |
 | Payload inspection | Is payload inspection permitted before integration? | unknown | pending | unknown |
 | Local caching | Is local caching permitted? | unknown | pending | unknown |
@@ -55,8 +56,8 @@ Do not copy restricted legal text into this repository. Record short references,
 
 ## Current Gate Assessment
 
-- Terms reviewed: no
-- License source: pending
+- Terms reviewed: partial public-source review
+- License source: pending; subscription-specific license not reviewed
 - Local development permitted: unknown
 - Payload inspection permitted: unknown
 - Caching permitted: unknown
@@ -65,10 +66,10 @@ Do not copy restricted legal text into this repository. Record short references,
 - Redistribution permitted: unknown
 - Retention limits: unknown
 - Attribution requirements: unknown
-- Credential restrictions: unknown
+- Credential restrictions: partially informed by public authentication documentation; project-specific restrictions unknown
 - Blocking restrictions: unknown
 - Gate decision: defer
-- Reason: current terms and permissions have not been reviewed
+- Reason: public sources were reviewed, but required project permissions remain unknown
 
 ## Allowed Actions Before Gate Completion
 
@@ -90,13 +91,16 @@ Do not copy restricted legal text into this repository. Record short references,
 - Do not commit raw dumps, credentials, restricted terms or provider data.
 - Do not create parser or transform code for real provider payloads.
 
-## Evidence Log Template
+## Evidence Log
 
 | Evidence Item | Source Type | Reference | Review Date | Reviewer | Non-sensitive Summary | Open Questions |
 |---|---|---|---|---|---|---|
-| Terms reference | pending | pending | pending | pending | pending | pending |
-| License/subscription reference | pending | pending | pending | pending | pending | pending |
-| API/data usage reference | pending | pending | pending | pending | pending | pending |
+| Sportmonks Terms of Service | Public terms page | https://www.sportmonks.com/terms-of-service/ | 2026-07-16 | pending | Public terms reference identified; project-specific permissions remain unconfirmed. | Local development, payload inspection, caching, derived outputs, retention and redistribution. |
+| Sportmonks Football API 3.0 docs | Public technical documentation | https://www.sportmonks.com/football-api-3-0-docs/ | 2026-07-16 | pending | Technical documentation reference only; not a permission grant. | Permitted endpoints, field availability, payload inspection and plan scope. |
+| Sportmonks FAQ | Public FAQ | https://www.sportmonks.com/faq/ | 2026-07-16 | pending | Indicates that applicable terms and licensing agreements remain relevant. | Applicable license, project-use compatibility and redistribution. |
+| Sportmonks Caching glossary | Public technical content | https://www.sportmonks.com/glossary/caching/ | 2026-07-16 | pending | Technical caching background only. | Contractual permission for local caching. |
+| Sportmonks caching and optimisation blog | Public technical and blog content | https://www.sportmonks.com/blogs/caching-and-optimisation-strategies-for-high-volume-football-api-usage/ | 2026-07-16 | pending | Technical strategy reference only; does not approve storage. | Retention, allowed storage and derived outputs. |
+| Sportmonks API Authentication and Authorisation | Public technical and authentication content | https://www.sportmonks.com/glossary/api-authentication-and-authorisation/ | 2026-07-16 | pending | Authentication and access background; no credentials created. | Account restrictions, credential storage, plan scope and permitted endpoints. |
 
 ## Gate Decision Options
 
@@ -109,12 +113,12 @@ Do not copy restricted legal text into this repository. Record short references,
 
 - Decision: defer
 - Rationale:
-  - No current terms reviewed.
-  - No current license reviewed.
+  - Public sources were reviewed but are insufficient for project-specific permission.
+  - No applicable license or subscription terms reviewed.
   - Payload inspection permission unknown.
   - Cache permission unknown.
   - Derived-output permission unknown.
-- Next allowed step: perform a terms and license review from public documentation or user-provided permitted terms
+- Next allowed step: obtain and review applicable license or subscription terms, or explicit permission
 - Next forbidden step: payload inspection or credential setup
 
 ## Impact On Sportmonks Candidate Review Pack
@@ -151,4 +155,4 @@ Do not copy restricted legal text into this repository. Record short references,
 
 ## Next Required Action
 
-The next block must review current public documentation or user-provided permitted terms. It must record only non-sensitive summaries and references. It must not inspect payloads or create credentials unless the completed gate explicitly allows it.
+The next block must obtain or review applicable license or subscription terms, or explicit permission. It must record only non-sensitive summaries and references and must not inspect payloads or create credentials unless the completed gate explicitly allows it.
