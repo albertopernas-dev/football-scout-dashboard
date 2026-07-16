@@ -13,6 +13,7 @@
 - Ignored local trial scope plan: [Sportmonks Ignored Local Trial Scope Plan](sportmonks_ignored_local_trial_scope_plan.md)
 - ID discovery plan: [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md)
 - Secure credential setup: [Sportmonks Secure Credential Setup](sportmonks_secure_credential_setup.md)
+- Local credential verification: [Sportmonks Local Credential Setup Verification](sportmonks_local_credential_setup_verification.md)
 - Gate status: substantive permission response reviewed
 - Gate decision: `continue`
 - Detailed permission response: received
@@ -29,7 +30,7 @@
 
 This document records the Stage 1 review for Sportmonks using public references and a non-sensitive summary of the substantive permission response. The response supports moving the gate from `defer` to `continue` under explicit conditions.
 
-The gate decision allows preparation of the provider payload checklist, payload-specific decision record and an ignored local trial plan. No payload has been inspected, no credentials have been created and no local trial has been performed.
+The gate decision allows preparation of the provider payload checklist, payload-specific decision record and an ignored local trial plan. No payload has been inspected, local credential setup has been verified outside Git and no local trial has been performed.
 
 ## Reviewed Evidence
 
@@ -97,7 +98,7 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 ## Still Forbidden
 
 - Do not inspect payloads before the checklist and decision record are prepared.
-- Do not create credentials before the checklist and decision record are prepared.
+- Do not expose or commit credentials.
 - Do not commit raw payloads, provider cache or dumps.
 - Do not commit API keys or credentials.
 - Do not commit `.local.csv` provider outputs.
@@ -115,7 +116,7 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 | Sportmonks Football API 3.0 docs | Public technical documentation | https://www.sportmonks.com/football-api-3-0-docs/ | 2026-07-16 | Technical reference only; plan and field availability remain subscription-dependent. |
 | Sportmonks FAQ | Public FAQ | https://www.sportmonks.com/faq/ | 2026-07-16 | Public reference that points usage back to applicable terms and licensing. |
 | Sportmonks caching references | Public technical content | [Public review notes](sportmonks_public_terms_review_notes.md) | 2026-07-16 | Technical background; permission conditions are recorded from the substantive response. |
-| Sportmonks authentication reference | Public technical content | https://www.sportmonks.com/glossary/api-authentication-and-authorisation/ | 2026-07-16 | Technical background for secure credentials; no credentials have been created. |
+| Sportmonks authentication reference | Public technical content | https://www.sportmonks.com/glossary/api-authentication-and-authorisation/ | 2026-07-16 | Technical background for secure credentials; local setup is verified outside Git. |
 | Sportmonks substantive permission response | Provider support response summarized outside raw correspondence | [Response summary](sportmonks_permission_response_summary.md) | 2026-07-16 | Explicit permissions and conditions recorded without ticket identifiers or confidential text. |
 
 ## Gate Decision Options
@@ -135,8 +136,8 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
   - Local caching is permitted under an active subscription and Terms of Service compliance.
   - Internal normalized/canonical derived outputs are permitted.
   - Internal derived-output documentation and demos are permitted if raw data is not exposed or redistributed.
-- Next allowed step: prepare secure local credential setup in a separate explicit block; minimal ID discovery remains a later separate block
-- Next forbidden step: any payload inspection, credential creation or local trial before those details are documented and reviewed
+- Next allowed step: minimal ID discovery in a separate explicit block
+- Next forbidden step: broad payload inspection, local trial or app integration before those details are documented and reviewed
 
 ## Impact On Sportmonks Candidate Review Pack
 
@@ -173,6 +174,6 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 
 ## Next Required Action
 
-Review the [Sportmonks Secure Credential Setup](sportmonks_secure_credential_setup.md) and verify its Git ignore and safety checks. After review, the user may manually create the local ignored `.env`.
+Local credential setup has been [verified outside Git](sportmonks_local_credential_setup_verification.md). Minimal ID discovery may proceed only in a separate explicit block under the [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md).
 
-Only after credential setup is verified may a later separate block perform the minimal ID discovery defined in the [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md). Do not inspect payloads, create credentials, perform the trial or call APIs in this docs-only block.
+Do not inspect broad payloads, perform the trial or integrate provider data into the app. No API calls occur in this docs-only block.

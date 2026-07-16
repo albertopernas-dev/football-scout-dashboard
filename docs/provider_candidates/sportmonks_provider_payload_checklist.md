@@ -9,11 +9,13 @@
 - Related trial scope plan: [Sportmonks Ignored Local Trial Scope Plan](sportmonks_ignored_local_trial_scope_plan.md)
 - Related ID discovery plan: [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md)
 - Related credential setup: [Sportmonks Secure Credential Setup](sportmonks_secure_credential_setup.md)
+- Related credential verification: [Sportmonks Local Credential Setup Verification](sportmonks_local_credential_setup_verification.md)
 - Checklist status: draft/pre-trial
 - Gate decision: `continue`
 - Provider approval: no
 - Payload inspection performed: no
-- Credentials created: no
+- Credentials created locally: yes, outside Git
+- Credentials stored in Git: no
 - API calls performed: no
 - Provider cache created: no
 - Local trial performed: no
@@ -22,7 +24,7 @@
 
 ## Purpose
 
-This checklist defines the minimum conditions before any Sportmonks payload inspection, credential creation or ignored local trial. It applies the permission response safely while keeping raw payloads, credentials, cache, `.local.csv` outputs and confidential correspondence outside Git.
+This checklist defines the minimum conditions before any Sportmonks payload inspection or ignored local trial. It applies the permission response safely while keeping raw payloads, credentials, cache, `.local.csv` outputs and confidential correspondence outside Git.
 
 It does not activate Sportmonks data in the app or write provider data to SQLite.
 
@@ -50,7 +52,7 @@ It does not activate Sportmonks data in the app or write provider data to SQLite
 | Payload minimization | One FC Copenhagen squad, one Denmark Superliga season, minimal payload. | proposed | Avoid broad pulls; season and team IDs remain unconfirmed. |
 | Raw data handling | Confirm raw payloads stay outside Git. | proposed | Ignored path documented in the [trial scope plan](sportmonks_ignored_local_trial_scope_plan.md); not created. |
 | Cache handling | Confirm cache path, retention and cleanup. | proposed | Ignored path documented in the [trial scope plan](sportmonks_ignored_local_trial_scope_plan.md); not created. |
-| Credential handling | Store API token only in local ignored `.env` or equivalent configuration. | planned/local-only | [Secure credential setup](sportmonks_secure_credential_setup.md) exists; no credentials created in the repository. |
+| Credential handling | Store API token only in local ignored `.env` or equivalent configuration. | local setup verified/outside Git | [Verification record](sportmonks_local_credential_setup_verification.md) exists; no API calls have occurred. |
 | Derived output handling | Confirm derived outputs do not expose raw data. | pending | Internal review only. |
 | Documentation handling | Confirm documentation uses non-sensitive summaries only. | pending | No raw payload excerpts. |
 | Demo handling | Confirm demos use derived, non-raw content only. | pending | No raw redistribution. |
@@ -59,7 +61,9 @@ It does not activate Sportmonks data in the app or write provider data to SQLite
 | Decision record | Prepare a payload-specific decision record before the trial. | draft/pre-trial | [Record created](../provider_decisions/sportmonks_payload_decision_record.md); concrete trial scope remains pending. |
 | Cleanup | Define cleanup procedure for local payload/cache. | pending | Required before trial. |
 
-## Required Before Credentials
+## Credential Setup Verification
+
+The requirements below are recorded as passed in the [local credential setup verification](sportmonks_local_credential_setup_verification.md).
 
 - Selected plan is documented.
 - Competition scope is documented.
@@ -109,7 +113,7 @@ It does not activate Sportmonks data in the app or write provider data to SQLite
 
 ## Still Forbidden In This Block
 
-- Do not create credentials.
+- Do not expose or commit credentials.
 - Do not inspect payloads.
 - Do not call Sportmonks APIs.
 - Do not create provider cache.
@@ -124,7 +128,7 @@ It does not activate Sportmonks data in the app or write provider data to SQLite
 
 The [payload-specific decision record](../provider_decisions/sportmonks_payload_decision_record.md) now exists as a draft/pre-trial artifact.
 
-The next step is to complete the checklist and decision record with the selected plan, competition scope, endpoint and field scope, ignored local paths, retention and cleanup. No trial has been performed, and credentials or payload inspection remain blocked until those details are documented and reviewed.
+The next step is minimal ID discovery in a separate explicit block. No trial has been performed, and broad payload inspection remains blocked until the concrete endpoint scope, field scope, ignored local paths, retention and cleanup are documented and reviewed.
 
 ## Acceptance Criteria
 

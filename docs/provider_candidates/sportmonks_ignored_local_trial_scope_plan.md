@@ -3,15 +3,17 @@
 ## Status
 
 - Candidate: Sportmonks
-- Trial scope status: draft/pre-credential
+- Trial scope status: draft/pre-trial
 - Related gate: [Sportmonks License And Terms Gate](sportmonks_license_terms_gate.md)
 - Related checklist: [Sportmonks Provider Payload Checklist](sportmonks_provider_payload_checklist.md)
 - Related decision record: [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md)
 - Related ID discovery plan: [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md)
 - Related credential setup: [Sportmonks Secure Credential Setup](sportmonks_secure_credential_setup.md)
+- Related credential verification: [Sportmonks Local Credential Setup Verification](sportmonks_local_credential_setup_verification.md)
 - Provider approval: no
 - Production approval: no
-- Credentials created: no
+- Credentials created locally: yes, outside Git
+- Credentials stored in Git: no
 - Payload inspection performed: no
 - API calls performed: no
 - Provider cache created: no
@@ -22,7 +24,7 @@
 
 ## Purpose
 
-This plan defines the intended boundaries for a future ignored local Sportmonks trial. It prepares the local handling model before any trial, but it does not create credentials, inspect payloads or approve Sportmonks.
+This plan defines the intended boundaries for a future ignored local Sportmonks trial. It prepares the local handling model before any trial, but it does not expose credentials, inspect payloads or approve Sportmonks.
 
 All provider data, credentials, cache and outputs must remain outside Git.
 
@@ -137,7 +139,7 @@ These non-sensitive references confirm the plan limits and four league IDs shown
 
 ## Still Forbidden In This Block
 
-- Do not create credentials.
+- Do not expose or commit credentials.
 - Do not inspect payloads.
 - Do not call APIs.
 - Do not create provider cache.
@@ -149,8 +151,6 @@ These non-sensitive references confirm the plan limits and four league IDs shown
 
 ## Next Required Action
 
-Review the [Sportmonks Secure Credential Setup](sportmonks_secure_credential_setup.md). After review, the user may manually create the local ignored `.env` and verify the documented safety checks.
+Local credential setup has been [verified outside Git](sportmonks_local_credential_setup_verification.md). A separate explicit block may now perform the minimal ID discovery defined in the [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md).
 
-Only after credential setup is verified may a later separate block perform the minimal ID discovery defined in the [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md).
-
-No credentials are created and no API calls or payload inspection occur in this docs-only block.
+No API calls or payload inspection occur in this docs-only block. Broad payload inspection, the local trial and app integration remain blocked.

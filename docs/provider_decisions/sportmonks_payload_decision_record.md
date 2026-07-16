@@ -10,11 +10,13 @@
 - Related trial scope plan: [Sportmonks Ignored Local Trial Scope Plan](../provider_candidates/sportmonks_ignored_local_trial_scope_plan.md)
 - Related ID discovery plan: [Sportmonks ID Discovery Plan](../provider_candidates/sportmonks_id_discovery_plan.md)
 - Related credential setup: [Sportmonks Secure Credential Setup](../provider_candidates/sportmonks_secure_credential_setup.md)
+- Related credential verification: [Sportmonks Local Credential Setup Verification](../provider_candidates/sportmonks_local_credential_setup_verification.md)
 - Stage 1 gate decision: `continue`
 - Provider approval: no
 - Production approval: no
 - Payload inspection performed: no
-- Credentials created: no
+- Credentials created locally: yes, outside Git
+- Credentials stored in Git: no
 - API calls performed: no
 - Provider cache created: no
 - Local trial performed: no
@@ -27,7 +29,7 @@
 
 This decision record defines the required scope and constraints before any Sportmonks payload inspection or local trial. It converts the Stage 1 `continue` gate into a controlled pre-trial decision framework.
 
-It does not inspect payloads, select a final provider, create credentials or start integration. All raw provider data and credentials must remain outside Git.
+It does not inspect payloads, select a final provider, expose credentials or start integration. All raw provider data and credentials must remain outside Git.
 
 ## Evidence Basis
 
@@ -107,9 +109,10 @@ It does not inspect payloads, select a final provider, create credentials or sta
 - Trial must stop if the selected plan or competition scope does not clearly support the intended fields.
 - Trial must stop if Terms of Service or subscription conditions conflict with the intended handling.
 
-## Required Before Credentials
+## Credential Setup Verification
 
-- Review the [Sportmonks Secure Credential Setup](../provider_candidates/sportmonks_secure_credential_setup.md).
+- [x] Review the [Sportmonks Secure Credential Setup](../provider_candidates/sportmonks_secure_credential_setup.md).
+- [x] Local credential setup verified outside Git in the [verification record](../provider_candidates/sportmonks_local_credential_setup_verification.md).
 
 - Selected plan documented.
 - Competition scope documented.
@@ -148,15 +151,16 @@ It does not inspect payloads, select a final provider, create credentials or sta
 - Meaning:
   - the checklist exists;
   - this decision record exists;
-  - a local trial may be planned; and
-  - credentials and payload inspection have not been performed.
+  - a local trial may be planned;
+  - local credential setup is verified outside Git; and
+  - payload inspection has not been performed.
 - Next allowed step:
-  - prepare secure local credential storage in a separate explicit block; and
-  - only after that setup is reviewed, perform minimal ID discovery in a later separate explicit block.
+  - minimal ID discovery in a separate explicit block.
+
 - Still forbidden:
-  - credentials;
-  - payload inspection;
-  - API calls;
+  - credential exposure or commitment;
+  - broad payload inspection;
+  - API calls outside the separate minimal ID discovery block;
   - SQLite writes;
   - Streamlit activation; and
   - parser or transform code.
@@ -186,6 +190,6 @@ It does not inspect payloads, select a final provider, create credentials or sta
 
 ## Next Required Action
 
-Prepare secure local credential setup first in a separate explicit block. Only after that setup is reviewed may a later separate block perform the minimal discovery steps in the [Sportmonks ID Discovery Plan](../provider_candidates/sportmonks_id_discovery_plan.md).
+Local credential setup has been verified outside Git. A separate explicit block may perform the minimal discovery steps in the [Sportmonks ID Discovery Plan](../provider_candidates/sportmonks_id_discovery_plan.md).
 
-Do not invent `season_id`, `team_id` or endpoint access. Do not create credentials, call APIs or inspect payloads in this block.
+Do not invent `season_id`, `team_id` or endpoint access. Do not call APIs or inspect payloads in this docs-only block.

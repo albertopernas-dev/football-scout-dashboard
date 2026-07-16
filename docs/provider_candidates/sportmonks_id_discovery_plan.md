@@ -3,13 +3,15 @@
 ## Status
 
 - Candidate: Sportmonks
-- ID discovery status: draft/pre-credential
+- ID discovery status: ready for separate minimal discovery
 - Related trial scope plan: [Sportmonks Ignored Local Trial Scope Plan](sportmonks_ignored_local_trial_scope_plan.md)
 - Related checklist: [Sportmonks Provider Payload Checklist](sportmonks_provider_payload_checklist.md)
 - Related decision record: [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md)
 - Related credential setup: [Sportmonks Secure Credential Setup](sportmonks_secure_credential_setup.md)
+- Related credential verification: [Sportmonks Local Credential Setup Verification](sportmonks_local_credential_setup_verification.md)
 - Provider approval: no
-- Credentials created: no
+- Credentials created locally: yes, outside Git
+- Credentials stored in Git: no
 - API calls performed: no
 - Payload inspection performed: no
 - Provider cache created: no
@@ -22,7 +24,7 @@
 
 The user could not find the Denmark Superliga `season_id` or FC Copenhagen `team_id` in the Sportmonks UI. This plan defines a minimal future ID discovery path without inventing IDs or endpoint access.
 
-It does not create credentials, call APIs or inspect payloads. All raw API responses and credentials must remain outside Git.
+It does not expose credentials, call APIs or inspect payloads. All raw API responses and credentials must remain outside Git.
 
 ## Manual UI Lookup Result
 
@@ -58,6 +60,7 @@ Do not record complete URLs containing a real `api_token`. Do not include creden
 ## Required Before ID Discovery
 
 - Secure credential setup document exists and has been reviewed.
+- Local credential setup verification passed.
 - `.env` ignore coverage verified.
 - Token stored locally only.
 
@@ -89,7 +92,7 @@ Do not record complete URLs containing a real `api_token`. Do not include creden
 
 ## Still Forbidden In This Block
 
-- Do not create credentials.
+- Do not expose or commit credentials.
 - Do not call APIs.
 - Do not inspect payloads.
 - Do not create provider cache.
@@ -101,6 +104,4 @@ Do not record complete URLs containing a real `api_token`. Do not include creden
 
 ## Next Required Action
 
-Prepare secure local credential setup in a separate explicit block. That block must only configure ignored credential storage and safety checks.
-
-ID discovery API calls must remain a later, separate explicit block after credential setup is reviewed.
+Minimal ID discovery may be prepared in a separate explicit block. It must remain limited to the documented `season_id`, `team_id` and endpoint-access checks and use minimal requests.

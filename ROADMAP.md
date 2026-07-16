@@ -16,10 +16,10 @@
 
 ## Recommended Next Steps
 
-1. Preparar el provider payload checklist.
-2. Preparar el payload-specific decision record.
-3. Definir un ignored local trial plan sin inspeccionar payloads todavia.
-4. Mantener payloads, credenciales, cache y correspondencia confidencial fuera de Git.
+1. Ejecutar minimal ID discovery solo en un bloque explicito separado.
+2. Confirmar `season_id`, `team_id` y acceso al endpoint candidato con solicitudes minimas.
+3. Mantener respuestas raw, credenciales, cache y correspondencia confidencial fuera de Git.
+4. No iniciar payload inspection amplia, SQLite, Streamlit, parser code ni aprobacion del proveedor.
 
 ## v0.2.0 Market Context Layer
 
@@ -121,21 +121,23 @@ Completed and published.
 - A non-sensitive Sportmonks substantive response summary exists.
 - The Stage 1 gate is `continue` for the next governance step only.
 - Sportmonks is not approved as a provider.
-- No payload inspection, credential creation or local trial has been performed.
+- No payload inspection or local trial has been performed; local credential setup is verified outside Git.
 - Sportmonks provider payload checklist created as draft/pre-trial.
 - Sportmonks payload-specific decision record created as draft/pre-trial.
-- Sportmonks ignored local trial scope plan created as draft/pre-credential.
+- Sportmonks ignored local trial scope plan remains draft/pre-trial.
 - Football Free Plan confirmed by user screenshot; 4 leagues and 3000 API calls shown.
 - Free Plan league list confirmed.
 - Denmark Superliga league_id 271 selected for the first trial.
 - FC Copenhagen selected pending `team_id`; latest Denmark Superliga season pending `season_id`.
 - Manual UI lookup did not expose `season_id` or `team_id`.
-- Sportmonks ID discovery plan created as draft/pre-credential.
-- Sportmonks secure credential setup document created as draft/local-only.
+- Sportmonks ID discovery plan is ready for a separate minimal discovery block.
+- Sportmonks secure credential setup verified as local-only.
+- Local `.env` credential setup verified outside Git; the token remains untracked and undocumented.
 - Trial scope remains one team, one season and a minimal payload, with Team Squad by Team and Season ID as the primary candidate endpoint.
-- Next: user creates a local ignored `.env` only after reviewing and verifying the documented safety checks.
-- Minimal ID discovery follows in a separate explicit block after credential setup is verified.
-- Still no API calls, payload inspection, provider cache or local trial.
+- Next: minimal ID discovery in a separate explicit block.
+
+- Still no API calls, broad payload inspection, provider cache or local trial.
+- Still no SQLite writes, Streamlit activation, parser code or provider approval.
 - Raw correspondence, ticket identifiers, payloads, credentials and provider cache remain outside Git.
 - Plan: [`docs/v0_8_0_provider_permission_response_handling_plan.md`](docs/v0_8_0_provider_permission_response_handling_plan.md).
 

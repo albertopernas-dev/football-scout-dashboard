@@ -3,12 +3,14 @@
 ## Status
 
 - Candidate: Sportmonks
-- Credential setup status: draft/local-only
+- Credential setup status: verified/local-only
+- Local credential setup verification: [passed](sportmonks_local_credential_setup_verification.md)
 - Related ID discovery plan: [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md)
 - Related trial scope plan: [Sportmonks Ignored Local Trial Scope Plan](sportmonks_ignored_local_trial_scope_plan.md)
 - Related decision record: [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md)
 - Provider approval: no
-- Credentials created in this block: no
+- Credentials created locally: yes, outside Git
+- Credentials stored in Git: no
 - API calls performed: no
 - Payload inspection performed: no
 - Provider cache created: no
@@ -21,14 +23,14 @@
 
 This document defines how a Sportmonks API token may be stored locally before future minimal ID discovery. It does not create or record a real token and does not call the API.
 
-It keeps credentials outside Git and prepares safety checks before the user manually creates a local `.env` or equivalent ignored configuration.
+It keeps credentials outside Git and records the safety checks used to verify the manually created local `.env`.
 
 ## Credential Storage Decision
 
 | Item | Decision | Status |
 |---|---|---|
-| Credential name | `SPORTMONKS_API_TOKEN` | proposed |
-| Storage file | Local `.env` or equivalent ignored local configuration | proposed |
+| Credential name | `SPORTMONKS_API_TOKEN` | configured locally |
+| Storage file | Local `.env` or equivalent ignored local configuration | verified/local-only |
 | Committed example value | none | fixed |
 | Real token in Git | forbidden | fixed |
 | Token in docs | forbidden | fixed |
@@ -44,15 +46,15 @@ The local `.env` file must be ignored. Local environment or configuration varian
 - [ ] `.env.*` or equivalent local environment variants ignored if introduced, while allowing safe example files already in use.
 - [x] `data/provider_cache/` ignored.
 - [x] `data/enrichment/*.local.csv` ignored.
-- [ ] No credential appears in tracked files.
-- [ ] No credential appears in `git diff`.
-- [ ] `git status --short` does not show local credential files.
+- [x] No credential appears in tracked files.
+- [x] No credential appears in `git diff`.
+- [x] `git status --short` does not show local credential files.
 
 The current `.gitignore` already covers `.env`, provider cache and local enrichment CSV outputs, so no ignore change is required in this block. Any future alternative credential filename must be checked before use.
 
 ## Local Setup Instructions
 
-The user may later create or update the ignored local `.env` file manually. Do not perform this step in the current docs-only block.
+The user created the ignored local `.env` file manually. The placeholder below remains only as a safe reference and does not contain the real token.
 
 ```text
 # Create or update local ignored .env file only.
@@ -122,6 +124,4 @@ The local `.env` file must not appear in `git status --short`, and `git diff -- 
 
 ## Next Required Action
 
-The user may create a local ignored `.env` manually only after reviewing this setup.
-
-After local credential setup is verified, the next separate explicit block may run minimal ID discovery. That later block must only discover `season_id`, `team_id` and endpoint access using minimal requests.
+Local credential setup has been verified outside Git. The next separate explicit block may run minimal ID discovery and must only discover `season_id`, `team_id` and endpoint access using minimal requests.
