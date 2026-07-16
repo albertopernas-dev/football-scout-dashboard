@@ -10,3 +10,5 @@ No document here approves a provider, authorizes payload inspection, permits scr
 - a provider payload [decision record](../provider_decisions/provider_payload_evaluation_template.md).
 
 Do not store real payloads, credentials, provider dumps or `.local.csv` files in this folder.
+
+Current Stage 0 intake: [Sportmonks Candidate Review Pack](sportmonks_candidate_review_pack.md). This pack does not approve Sportmonks or authorize payload inspection.

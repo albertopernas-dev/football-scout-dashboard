@@ -6,6 +6,8 @@ This is a preliminary shortlist for deciding which candidate might enter Candida
 
 Treat every license and permission field as `unknown` or `requires review` until the formal workflow confirms it.
 
+Sportmonks has been selected for Candidate Intake only. Its label remains `investigate`; this is not approval, does not complete legal review and does not authorize payload inspection.
+
 ## Safety Position
 
 - No payload inspected.

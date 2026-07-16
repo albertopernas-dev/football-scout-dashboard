@@ -26,6 +26,8 @@ Before Stage 0, the [provider candidate shortlist matrix](v0_7_0_provider_candid
 
 ### Stage 0 - Candidate Intake
 
+Current intake example: the [Sportmonks Candidate Review Pack](provider_candidates/sportmonks_candidate_review_pack.md) is at Stage 0 only. Stage 1 is not complete and no payload inspection is authorized.
+
 Record:
 
 - Candidate name.
