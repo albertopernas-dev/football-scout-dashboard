@@ -25,7 +25,7 @@ In scope:
 - Record explicit permissions and explicit restrictions.
 - Update the Sportmonks gate decision only if evidence supports it.
 - Prepare a checklist only if the gate moves to `continue`.
-- Prepare a payload-specific decision record only if a concrete permitted payload exists.
+- Prepare and review a payload-specific decision record before any concrete permitted payload is inspected.
 - Keep confidential terms and raw responses out of Git.
 
 Out of scope:
@@ -51,7 +51,7 @@ Out of scope:
 6. Recommend a gate decision: `continue`, `defer` or `reject`.
 7. Update the Sportmonks license gate only if evidence is clear.
 8. If the gate moves to `continue`, prepare the checklist.
-9. If a concrete permitted payload exists, prepare a payload-specific decision record.
+9. Prepare and review a payload-specific decision record before any concrete permitted payload is inspected.
 10. Keep all raw or confidential materials outside Git.
 
 ## Response Summary Document
@@ -107,10 +107,9 @@ The summary contains no confidential text, ticket identifiers, payloads or crede
 
 ## Next Steps
 
-1. Review and complete the [Sportmonks Provider Payload Checklist](provider_candidates/sportmonks_provider_payload_checklist.md) as the first governance artifact.
-2. Prepare a payload-specific decision record.
-3. Define an ignored local trial plan.
-4. Do not inspect a payload until the checklist and decision record are prepared and reviewed.
-5. Create credentials securely only after those governance artifacts are ready and the applicable plan is selected.
-6. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
-7. Continue to treat Sportmonks as unapproved until a later explicit decision.
+1. The [Sportmonks Provider Payload Checklist](provider_candidates/sportmonks_provider_payload_checklist.md) exists as draft/pre-trial.
+2. The [Sportmonks Payload Decision Record](provider_decisions/sportmonks_payload_decision_record.md) exists as draft/pre-trial.
+3. Complete both artifacts with the selected plan, competition scope, endpoint and field scope, ignored local paths and cleanup before any credentials or payload inspection.
+4. Define an ignored local trial plan only after those details are documented and reviewed.
+5. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
+6. Continue to treat Sportmonks as unapproved until a later explicit decision.

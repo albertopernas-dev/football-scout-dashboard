@@ -81,7 +81,7 @@
 ## Next Allowed Actions
 
 - Review and complete the [Sportmonks Provider Payload Checklist](sportmonks_provider_payload_checklist.md) as the next governance artifact.
-- Prepare a payload-specific decision record.
+- Review and complete the [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md), which exists as draft/pre-trial.
 - Define an ignored local trial plan.
 - Only after the checklist and decision record, create credentials securely if required and permitted.
 - Only after the checklist and decision record, inspect a minimal permitted payload if needed.

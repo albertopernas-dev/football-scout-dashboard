@@ -5,6 +5,7 @@
 - Candidate: Sportmonks
 - Related gate: [Sportmonks License And Terms Gate](sportmonks_license_terms_gate.md)
 - Related response summary: [Sportmonks Permission Response Summary](sportmonks_permission_response_summary.md)
+- Related decision record: [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md)
 - Checklist status: draft/pre-trial
 - Gate decision: `continue`
 - Provider approval: no
@@ -13,8 +14,8 @@
 - API calls performed: no
 - Provider cache created: no
 - Local trial performed: no
-- Decision record created: no
-- Notes: This checklist prepares the next governance step only. It does not approve Sportmonks, authorize production use or replace a payload-specific decision record.
+- Decision record created: yes, draft/pre-trial
+- Notes: This checklist and the draft decision record prepare the next governance step only. They do not approve Sportmonks or authorize production use.
 
 ## Purpose
 
@@ -50,7 +51,7 @@ It does not activate Sportmonks data in the app or write provider data to SQLite
 | Demo handling | Confirm demos use derived, non-raw content only. | pending | No raw redistribution. |
 | SQLite handling | Confirm no provider data writes to SQLite in the trial. | pending | Keep trial isolated. |
 | App handling | Confirm no Streamlit activation in the trial. | pending | No app integration. |
-| Decision record | Prepare a payload-specific decision record before the trial. | pending | Required before payload inspection. |
+| Decision record | Prepare a payload-specific decision record before the trial. | draft/pre-trial | [Record created](../provider_decisions/sportmonks_payload_decision_record.md); concrete trial scope remains pending. |
 | Cleanup | Define cleanup procedure for local payload/cache. | pending | Required before trial. |
 
 ## Required Before Credentials
@@ -116,23 +117,9 @@ It does not activate Sportmonks data in the app or write provider data to SQLite
 
 ## Next Governance Artifact
 
-The next required artifact is a payload-specific decision record.
+The [payload-specific decision record](../provider_decisions/sportmonks_payload_decision_record.md) now exists as a draft/pre-trial artifact.
 
-Suggested path:
-
-`docs/provider_decisions/sportmonks_payload_decision_record.md`
-
-That record should define:
-
-- selected plan;
-- competition scope;
-- endpoint scope;
-- expected fields;
-- local ignored paths;
-- trial boundaries;
-- allowed outputs;
-- stop conditions; and
-- final decision options.
+The next step is to complete the checklist and decision record with the selected plan, competition scope, endpoint and field scope, ignored local paths, retention and cleanup. No trial has been performed, and credentials or payload inspection remain blocked until those details are documented and reviewed.
 
 ## Acceptance Criteria
 

@@ -29,6 +29,7 @@ For v0.7.0, a concrete candidate payload must use the payload evaluation templat
 
 Related documents:
 
+- [Sportmonks Payload Decision Record](sportmonks_payload_decision_record.md) - draft/pre-trial governance record; it does not approve Sportmonks.
 - [v0.4.0 Provider Evaluation / Licensed Data Integration Plan](../v0_4_0_provider_evaluation_plan.md)
 - [Data Provider Decision](../data_provider_decision.md)
 - [Provider Payload Evaluation Checklist](../provider_payload_evaluation_checklist.md)
