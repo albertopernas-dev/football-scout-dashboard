@@ -18,3 +18,5 @@ Current Stage 1 gate: [Sportmonks License And Terms Gate](sportmonks_license_ter
 [Sportmonks Public Terms Review Notes](sportmonks_public_terms_review_notes.md) record only non-sensitive references and summaries.
 
 The [Sportmonks Permission Request Draft](sportmonks_permission_request_draft.md) was sent outside the repository. The [sent log](sportmonks_permission_request_sent_log.md) and [acknowledgement log](sportmonks_ticket_acknowledgement_log.md) record the timeline without ticket identifiers. The [non-sensitive response summary](sportmonks_permission_response_summary.md) records the conditions supporting `continue`; no payloads or credentials are committed.
+
+The [Sportmonks Provider Payload Checklist](sportmonks_provider_payload_checklist.md) exists as a draft/pre-trial artifact. No payload inspection has occurred, and a payload-specific decision record is still required.

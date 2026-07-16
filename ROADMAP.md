@@ -122,7 +122,9 @@ Completed and published.
 - The Stage 1 gate is `continue` for the next governance step only.
 - Sportmonks is not approved as a provider.
 - No payload inspection, credential creation or local trial has been performed.
-- Next: prepare the provider payload checklist and payload-specific decision record.
+- Sportmonks provider payload checklist created as draft/pre-trial.
+- Next required artifact: payload-specific decision record.
+- Still no payload inspection, credentials or local trial.
 - Raw correspondence, ticket identifiers, payloads, credentials and provider cache remain outside Git.
 - Plan: [`docs/v0_8_0_provider_permission_response_handling_plan.md`](docs/v0_8_0_provider_permission_response_handling_plan.md).
 

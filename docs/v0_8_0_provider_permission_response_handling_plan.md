@@ -107,7 +107,7 @@ The summary contains no confidential text, ticket identifiers, payloads or crede
 
 ## Next Steps
 
-1. Prepare the provider payload checklist.
+1. Review and complete the [Sportmonks Provider Payload Checklist](provider_candidates/sportmonks_provider_payload_checklist.md) as the first governance artifact.
 2. Prepare a payload-specific decision record.
 3. Define an ignored local trial plan.
 4. Do not inspect a payload until the checklist and decision record are prepared and reviewed.

@@ -8,6 +8,7 @@
 - Public review notes: [Sportmonks Public Terms Review Notes](sportmonks_public_terms_review_notes.md)
 - Permission request sent log: [Sportmonks Permission Request Sent Log](sportmonks_permission_request_sent_log.md)
 - Permission response summary: [Sportmonks Permission Response Summary](sportmonks_permission_response_summary.md)
+- Provider payload checklist: [Sportmonks Provider Payload Checklist](sportmonks_provider_payload_checklist.md)
 - Gate status: substantive permission response reviewed
 - Gate decision: `continue`
 - Detailed permission response: received
@@ -72,7 +73,7 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 
 ## Allowed Actions After Gate Continue
 
-- Prepare the provider payload checklist.
+- Review and complete the draft provider payload checklist.
 - Prepare a payload-specific decision record.
 - Define an ignored local trial plan.
 - Select the applicable plan and competitions before any trial.
@@ -82,7 +83,7 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 
 ## Required Before Any Trial
 
-- Complete the provider payload checklist.
+- Review and complete the draft provider payload checklist.
 - Create the payload-specific decision record.
 - Record the selected plan, competition scope and applicable conditions.
 - Define ignored local paths and cleanup handling.
@@ -130,14 +131,14 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
   - Local caching is permitted under an active subscription and Terms of Service compliance.
   - Internal normalized/canonical derived outputs are permitted.
   - Internal derived-output documentation and demos are permitted if raw data is not exposed or redistributed.
-- Next allowed step: prepare the provider payload checklist and payload-specific decision record
+- Next allowed step: review the draft provider payload checklist and prepare the payload-specific decision record
 - Next forbidden step: any payload inspection, credential creation or local trial before that governance preparation is complete
 
 ## Impact On Sportmonks Candidate Review Pack
 
 - Sportmonks remains unapproved as a provider.
 - The Stage 1 gate now permits the next governance step only.
-- The provider payload checklist and payload-specific decision record remain not created.
+- The provider payload checklist exists as a draft/pre-trial artifact; the payload-specific decision record remains not created.
 - A local ignored trial may be planned but has not been performed.
 - No final provider outcome is recorded.
 
@@ -153,7 +154,7 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 - [x] No scraping performed.
 - [x] No live provider calls performed.
 - [x] No confidential response or ticket identifier copied into Git.
-- [ ] Provider payload checklist prepared.
+- [x] Provider payload checklist created as draft/pre-trial.
 - [ ] Payload-specific decision record prepared.
 - [ ] Final `git status --short` is clean.
 
@@ -168,4 +169,4 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 
 ## Next Required Action
 
-Prepare the provider payload checklist and payload-specific decision record using only non-sensitive references. Define an ignored local trial plan, but do not inspect payloads, create credentials or perform the trial until those governance artifacts are prepared and reviewed.
+Review the draft [Sportmonks Provider Payload Checklist](sportmonks_provider_payload_checklist.md) and prepare the payload-specific decision record. Define an ignored local trial plan, but do not inspect payloads, create credentials or perform the trial until those governance artifacts are complete and reviewed.
