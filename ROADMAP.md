@@ -98,6 +98,7 @@ Completed and published.
 - Mantiene payloads y outputs reales fuera de git.
 - No activa datos de proveedor en la app.
 - Plan: [`docs/v0_7_0_permitted_provider_candidate_review_plan.md`](docs/v0_7_0_permitted_provider_candidate_review_plan.md).
+- Release readiness: [`docs/v0_7_0_release_readiness.md`](docs/v0_7_0_release_readiness.md); milestone remains current and pending release.
 - Workflow: [`docs/v0_7_0_candidate_review_workflow.md`](docs/v0_7_0_candidate_review_workflow.md).
 - Pack template: [`docs/v0_7_0_candidate_review_pack_template.md`](docs/v0_7_0_candidate_review_pack_template.md).
 - Shortlist matrix: [`docs/v0_7_0_provider_candidate_shortlist_matrix.md`](docs/v0_7_0_provider_candidate_shortlist_matrix.md).

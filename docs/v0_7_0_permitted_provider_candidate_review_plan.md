@@ -21,6 +21,7 @@ This milestone builds on the safeguards and synthetic workflow completed in v0.6
 - [Sportmonks Candidate Review Pack - Stage 0 only](provider_candidates/sportmonks_candidate_review_pack.md)
 - [Sportmonks License And Terms Gate - partial public-source review/defer](provider_candidates/sportmonks_license_terms_gate.md)
 - [Sportmonks Public Terms Review Notes](provider_candidates/sportmonks_public_terms_review_notes.md)
+- [v0.7.0 Release Readiness](v0_7_0_release_readiness.md)
 
 Synthetic success demonstrates the workflow only. It does not establish that any real payload is licensed, compatible or approved.
 
