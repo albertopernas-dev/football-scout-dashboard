@@ -28,12 +28,12 @@ All provider data, credentials, cache and outputs must remain outside Git.
 
 | Area | Planned Scope | Status | Notes |
 |---|---|---|---|
-| Selected plan | Pending user confirmation. | pending | Must be selected before credentials. |
-| Competition scope | Pending user confirmation. | pending | Keep to one minimal competition if possible. |
-| Season scope | Pending user confirmation. | pending | Keep minimal. |
-| Endpoint scope | Pending review of Sportmonks documentation and selected plan. | pending | No endpoint is approved yet. |
+| Selected plan | Free trial or Starter plan, pending user/account confirmation. | proposed/pending confirmation | Must be selected before credentials. |
+| Competition scope | LaLiga, pending account/coverage confirmation. | proposed/pending confirmation | Keep to one minimal competition if possible. |
+| Season scope | One selected season, pending account/docs confirmation. | proposed/pending confirmation | Keep minimal. |
+| Endpoint scope | Primary candidate: Team Squad by Team and Season ID. Auxiliary candidate: Players endpoint only if needed for schema/include validation. | proposed/pending docs/account confirmation | No endpoint is approved yet. |
 | Field scope | Identity, team/squad context, season/date metadata, position, provenance/freshness, and Market Context candidates if available. | draft | Availability must be verified. |
-| Sample size | Minimal sample only. | draft | Avoid broad pulls. |
+| Sample size | One team, one season, minimal payload. | proposed | Avoid broad pulls. |
 | Raw payload path | `data/provider_cache/sportmonks/raw/` or another ignored local path. | proposed | Must remain ignored. |
 | Cache path | `data/provider_cache/sportmonks/cache/` or another ignored local path. | proposed | Must remain ignored. |
 | Derived output path | `data/enrichment/sportmonks_trial.local.csv` only if later explicitly allowed. | proposed | Must remain ignored; do not create now. |
@@ -64,6 +64,15 @@ These paths must be confirmed as ignored before use. `git status --short` must r
 | Contract/date fields | Market Context enrichment if available. | to verify |
 | Market value fields | Market Context enrichment if available. | to verify |
 | Update timestamps | Freshness and provenance. | to verify |
+
+## External Documentation References
+
+- Sportmonks plans and pricing page reviewed.
+- Sportmonks Players endpoint documentation reviewed.
+- Sportmonks team squads documentation reviewed.
+- Sportmonks Team Squad by Team and Season endpoint documentation reviewed.
+
+These are non-sensitive reference summaries only. They do not confirm account coverage, plan availability, endpoint access or field availability.
 
 ## Required Before Credential Creation
 

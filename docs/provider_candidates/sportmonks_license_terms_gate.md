@@ -171,10 +171,10 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 
 ## Next Required Action
 
-Choose or confirm:
+Confirm the proposed scope:
 
-- the selected plan;
-- competition and season scope; and
-- endpoint scope after documentation and plan review.
+- free trial or Starter plan, subject to user and account confirmation;
+- LaLiga coverage and one selected season, subject to account and documentation confirmation; and
+- Team Squad by Team and Season ID as the primary candidate endpoint, with Players only if required for schema/include validation.
 
-Then complete the [Sportmonks Provider Payload Checklist](sportmonks_provider_payload_checklist.md), [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md) and [Sportmonks Ignored Local Trial Scope Plan](sportmonks_ignored_local_trial_scope_plan.md). A separate explicit block may prepare credential setup only after those details are documented and reviewed. Do not inspect payloads, create credentials, perform the trial or call APIs yet.
+Then complete the [Sportmonks Provider Payload Checklist](sportmonks_provider_payload_checklist.md), [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md) and [Sportmonks Ignored Local Trial Scope Plan](sportmonks_ignored_local_trial_scope_plan.md). A separate explicit block may prepare secure credential setup only after those details are documented and reviewed. Do not inspect payloads, create credentials, perform the trial or call APIs yet.

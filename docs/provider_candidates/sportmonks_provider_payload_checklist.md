@@ -39,11 +39,11 @@ It does not activate Sportmonks data in the app or write provider data to SQLite
 
 | Area | Requirement | Status | Notes |
 |---|---|---|---|
-| Selected plan | Identify the Sportmonks plan used for evaluation. | pending user confirmation | No credentials until selected. |
-| Competition scope | Identify selected competition(s) for the trial. | pending user confirmation | Keep minimal. |
-| Endpoint scope | Identify exact endpoint(s) intended for schema review. | pending docs/plan review | No endpoint is approved and no API calls have occurred. |
+| Selected plan | Proposed free trial or Starter plan. | proposed/pending user confirmation | Account and plan remain unconfirmed; no credentials until selected. |
+| Competition scope | Proposed LaLiga scope. | proposed/pending account/coverage confirmation | Account coverage remains unconfirmed. |
+| Endpoint scope | Primary candidate: Team Squad by Team and Season ID; Players endpoint only if needed for schema/include validation. | proposed/pending docs/account confirmation | No endpoint is approved and no API calls have occurred. |
 | Field scope | Identify desired fields/categories for Market Context fit. | pending | Identity, squad/team, dates, metadata and Market Context if available. |
-| Payload minimization | Define the smallest possible sample for evaluation. | pending | Avoid broad pulls. |
+| Payload minimization | One team, one season, minimal payload. | proposed | Avoid broad pulls; no IDs selected. |
 | Raw data handling | Confirm raw payloads stay outside Git. | proposed | Ignored path documented in the [trial scope plan](sportmonks_ignored_local_trial_scope_plan.md); not created. |
 | Cache handling | Confirm cache path, retention and cleanup. | proposed | Ignored path documented in the [trial scope plan](sportmonks_ignored_local_trial_scope_plan.md); not created. |
 | Credential handling | Confirm API key storage only in ignored local environment/configuration. | proposed | Ignored storage model documented in the [trial scope plan](sportmonks_ignored_local_trial_scope_plan.md); no credentials created. |

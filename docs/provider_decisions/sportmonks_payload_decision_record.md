@@ -58,11 +58,12 @@ It does not inspect payloads, select a final provider, create credentials or sta
 
 | Area | Required Decision | Current Status |
 |---|---|---|
-| Selected Sportmonks plan | Must be selected before credentials or trial. | pending |
-| Selected competition(s) | Must be minimal and documented. | pending |
-| Endpoint(s) | Must be named before payload inspection. | pending |
+| Selected Sportmonks plan | Proposed free trial or Starter plan. | proposed/pending user and account confirmation |
+| Selected competition(s) | Proposed LaLiga. | proposed/pending account and coverage confirmation |
+| Selected season | One selected season. | proposed/pending account and documentation confirmation |
+| Endpoint(s) | Proposed Team Squad by Team and Season ID; Players endpoint only if needed for schema/include validation. | proposed/pending documentation and account confirmation |
 | Field categories | Must be mapped to Market Context needs. | pending |
-| Sample size | Must be minimal. | pending |
+| Sample size | One team, one season, minimal payload. | proposed; not executed |
 | Raw payload path | Must be an ignored local path. | proposed in trial scope plan; not created |
 | Cache path | Must be an ignored local path. | proposed in trial scope plan; not created |
 | Retention/cleanup | Must be documented before trial. | pending |
