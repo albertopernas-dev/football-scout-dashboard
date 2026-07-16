@@ -12,6 +12,7 @@
 - Payload decision record: [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md)
 - Ignored local trial scope plan: [Sportmonks Ignored Local Trial Scope Plan](sportmonks_ignored_local_trial_scope_plan.md)
 - ID discovery plan: [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md)
+- Secure credential setup: [Sportmonks Secure Credential Setup](sportmonks_secure_credential_setup.md)
 - Gate status: substantive permission response reviewed
 - Gate decision: `continue`
 - Detailed permission response: received
@@ -172,6 +173,6 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 
 ## Next Required Action
 
-Prepare secure local credential setup in a separate explicit block. That block must keep credentials outside Git and perform only credential-storage and safety checks.
+Review the [Sportmonks Secure Credential Setup](sportmonks_secure_credential_setup.md) and verify its Git ignore and safety checks. After review, the user may manually create the local ignored `.env`.
 
-After that setup is reviewed, a later separate block may perform the minimal ID discovery defined in the [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md). Do not inspect payloads, create credentials, perform the trial or call APIs in this block.
+Only after credential setup is verified may a later separate block perform the minimal ID discovery defined in the [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md). Do not inspect payloads, create credentials, perform the trial or call APIs in this docs-only block.

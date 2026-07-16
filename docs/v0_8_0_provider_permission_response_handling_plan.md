@@ -114,8 +114,9 @@ The summary contains no confidential text, ticket identifiers, payloads or crede
 5. The Free Plan league list is confirmed, and Denmark Superliga `league_id 271` is selected for the minimal trial scope.
 6. Manual UI lookup did not expose the Denmark Superliga `season_id` or FC Copenhagen `team_id`.
 7. The [Sportmonks ID Discovery Plan](provider_candidates/sportmonks_id_discovery_plan.md) exists as draft/pre-credential.
-8. The next step is secure local credential setup in a separate explicit block.
-9. Minimal ID discovery remains a later separate block after credential setup is reviewed.
-10. Do not create credentials, inspect payloads, perform the trial or call APIs in this block.
-11. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
-12. Continue to treat Sportmonks as unapproved until a later explicit decision.
+8. The [Sportmonks Secure Credential Setup](provider_candidates/sportmonks_secure_credential_setup.md) exists as draft/local-only.
+9. The next manual action is to create the local ignored `.env` only after reviewing the setup and verifying safety checks.
+10. Minimal ID discovery remains a later separate block after credential setup is verified.
+11. Do not create credentials, inspect payloads, perform the trial or call APIs in this docs-only block.
+12. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
+13. Continue to treat Sportmonks as unapproved until a later explicit decision.

@@ -9,6 +9,7 @@
 - Related checklist: [Sportmonks Provider Payload Checklist](../provider_candidates/sportmonks_provider_payload_checklist.md)
 - Related trial scope plan: [Sportmonks Ignored Local Trial Scope Plan](../provider_candidates/sportmonks_ignored_local_trial_scope_plan.md)
 - Related ID discovery plan: [Sportmonks ID Discovery Plan](../provider_candidates/sportmonks_id_discovery_plan.md)
+- Related credential setup: [Sportmonks Secure Credential Setup](../provider_candidates/sportmonks_secure_credential_setup.md)
 - Stage 1 gate decision: `continue`
 - Provider approval: no
 - Production approval: no
@@ -108,6 +109,8 @@ It does not inspect payloads, select a final provider, create credentials or sta
 
 ## Required Before Credentials
 
+- Review the [Sportmonks Secure Credential Setup](../provider_candidates/sportmonks_secure_credential_setup.md).
+
 - Selected plan documented.
 - Competition scope documented.
 - Credential storage path defined and ignored.
@@ -115,6 +118,7 @@ It does not inspect payloads, select a final provider, create credentials or sta
 - User explicitly confirms credential creation outside Git.
 - `git status --short` clean before credential creation.
 - No credentials appear in `git diff`, tracked files or docs.
+- No API calls until a later separate ID discovery block.
 
 ## Required Before Payload Inspection
 

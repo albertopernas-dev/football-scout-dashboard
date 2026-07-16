@@ -7,6 +7,7 @@
 - Related trial scope plan: [Sportmonks Ignored Local Trial Scope Plan](sportmonks_ignored_local_trial_scope_plan.md)
 - Related checklist: [Sportmonks Provider Payload Checklist](sportmonks_provider_payload_checklist.md)
 - Related decision record: [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md)
+- Related credential setup: [Sportmonks Secure Credential Setup](sportmonks_secure_credential_setup.md)
 - Provider approval: no
 - Credentials created: no
 - API calls performed: no
@@ -56,6 +57,10 @@ Do not record complete URLs containing a real `api_token`. Do not include creden
 
 ## Required Before ID Discovery
 
+- Secure credential setup document exists and has been reviewed.
+- `.env` ignore coverage verified.
+- Token stored locally only.
+
 - Football Free Plan confirmed.
 - Denmark Superliga `league_id 271` selected.
 - Credential storage path confirmed ignored.
@@ -66,6 +71,7 @@ Do not record complete URLs containing a real `api_token`. Do not include creden
 - Raw response path confirmed ignored.
 - Cache path confirmed ignored.
 - Stop conditions reviewed.
+- No API calls performed yet.
 
 ## Allowed Outputs After Future ID Discovery
 

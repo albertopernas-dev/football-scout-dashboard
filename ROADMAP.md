@@ -131,9 +131,11 @@ Completed and published.
 - FC Copenhagen selected pending `team_id`; latest Denmark Superliga season pending `season_id`.
 - Manual UI lookup did not expose `season_id` or `team_id`.
 - Sportmonks ID discovery plan created as draft/pre-credential.
+- Sportmonks secure credential setup document created as draft/local-only.
 - Trial scope remains one team, one season and a minimal payload, with Team Squad by Team and Season ID as the primary candidate endpoint.
-- Next: prepare secure local credential setup in a separate explicit block; minimal ID discovery follows only after review.
-- Still no credentials, API calls, payload inspection or local trial.
+- Next: user creates a local ignored `.env` only after reviewing and verifying the documented safety checks.
+- Minimal ID discovery follows in a separate explicit block after credential setup is verified.
+- Still no API calls, payload inspection, provider cache or local trial.
 - Raw correspondence, ticket identifiers, payloads, credentials and provider cache remain outside Git.
 - Plan: [`docs/v0_8_0_provider_permission_response_handling_plan.md`](docs/v0_8_0_provider_permission_response_handling_plan.md).
 

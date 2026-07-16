@@ -8,6 +8,7 @@
 - Related decision record: [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md)
 - Related trial scope plan: [Sportmonks Ignored Local Trial Scope Plan](sportmonks_ignored_local_trial_scope_plan.md)
 - Related ID discovery plan: [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md)
+- Related credential setup: [Sportmonks Secure Credential Setup](sportmonks_secure_credential_setup.md)
 - Checklist status: draft/pre-trial
 - Gate decision: `continue`
 - Provider approval: no
@@ -49,7 +50,7 @@ It does not activate Sportmonks data in the app or write provider data to SQLite
 | Payload minimization | One FC Copenhagen squad, one Denmark Superliga season, minimal payload. | proposed | Avoid broad pulls; season and team IDs remain unconfirmed. |
 | Raw data handling | Confirm raw payloads stay outside Git. | proposed | Ignored path documented in the [trial scope plan](sportmonks_ignored_local_trial_scope_plan.md); not created. |
 | Cache handling | Confirm cache path, retention and cleanup. | proposed | Ignored path documented in the [trial scope plan](sportmonks_ignored_local_trial_scope_plan.md); not created. |
-| Credential handling | Confirm API key storage only in ignored local environment/configuration. | proposed | Ignored storage model documented in the [trial scope plan](sportmonks_ignored_local_trial_scope_plan.md); no credentials created. |
+| Credential handling | Store API token only in local ignored `.env` or equivalent configuration. | planned/local-only | [Secure credential setup](sportmonks_secure_credential_setup.md) exists; no credentials created in the repository. |
 | Derived output handling | Confirm derived outputs do not expose raw data. | pending | Internal review only. |
 | Documentation handling | Confirm documentation uses non-sensitive summaries only. | pending | No raw payload excerpts. |
 | Demo handling | Confirm demos use derived, non-raw content only. | pending | No raw redistribution. |

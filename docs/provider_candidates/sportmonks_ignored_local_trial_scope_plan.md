@@ -8,6 +8,7 @@
 - Related checklist: [Sportmonks Provider Payload Checklist](sportmonks_provider_payload_checklist.md)
 - Related decision record: [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md)
 - Related ID discovery plan: [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md)
+- Related credential setup: [Sportmonks Secure Credential Setup](sportmonks_secure_credential_setup.md)
 - Provider approval: no
 - Production approval: no
 - Credentials created: no
@@ -148,8 +149,8 @@ These non-sensitive references confirm the plan limits and four league IDs shown
 
 ## Next Required Action
 
-The manual Sportmonks UI lookup did not expose the Denmark Superliga `season_id` or FC Copenhagen `team_id`.
+Review the [Sportmonks Secure Credential Setup](sportmonks_secure_credential_setup.md). After review, the user may manually create the local ignored `.env` and verify the documented safety checks.
 
-The next step is secure local credential setup in a separate explicit block. After that setup is reviewed, a later separate block may perform the minimal ID discovery defined in the [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md).
+Only after credential setup is verified may a later separate block perform the minimal ID discovery defined in the [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md).
 
-No credentials, API calls or payload inspection occur in this block.
+No credentials are created and no API calls or payload inspection occur in this docs-only block.
