@@ -12,3 +12,5 @@ No document here approves a provider, authorizes payload inspection, permits scr
 Do not store real payloads, credentials, provider dumps or `.local.csv` files in this folder.
 
 Current Stage 0 intake: [Sportmonks Candidate Review Pack](sportmonks_candidate_review_pack.md). This pack does not approve Sportmonks or authorize payload inspection.
+
+Current Stage 1 gate: [Sportmonks License And Terms Gate](sportmonks_license_terms_gate.md). It is `not reviewed/defer` and authorizes no payload inspection.

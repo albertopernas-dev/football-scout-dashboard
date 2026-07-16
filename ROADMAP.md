@@ -103,6 +103,7 @@ Completed and published.
 - Shortlist matrix: [`docs/v0_7_0_provider_candidate_shortlist_matrix.md`](docs/v0_7_0_provider_candidate_shortlist_matrix.md).
 - Initial shortlist: [`docs/provider_candidates/v0_7_0_initial_shortlist.md`](docs/provider_candidates/v0_7_0_initial_shortlist.md).
 - Current intake candidate: [Sportmonks Stage 0 only](docs/provider_candidates/sportmonks_candidate_review_pack.md); no approval and no payload inspection.
+- Sportmonks Stage 1 gate scaffold: [`not reviewed/defer`](docs/provider_candidates/sportmonks_license_terms_gate.md); no approval and no payload inspection.
 - La decision final puede ser accept, defer o reject.
 
 ## Potential v0.4.x Follow-ups

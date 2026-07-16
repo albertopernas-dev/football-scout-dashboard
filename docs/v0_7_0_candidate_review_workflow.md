@@ -40,6 +40,8 @@ Record:
 
 ### Stage 1 - License And Terms Gate
 
+Current Stage 1 scaffold: [Sportmonks License And Terms Gate](provider_candidates/sportmonks_license_terms_gate.md). It is not reviewed, remains deferred and does not authorize payload inspection.
+
 - Review terms before downloading or inspecting a payload.
 - Confirm whether local development is permitted.
 - Confirm whether caching is permitted.

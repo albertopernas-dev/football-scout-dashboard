@@ -19,6 +19,7 @@ This milestone builds on the safeguards and synthetic workflow completed in v0.6
 - [v0.7.0 Provider Candidate Shortlist Matrix](v0_7_0_provider_candidate_shortlist_matrix.md)
 - [v0.7.0 Initial Provider Candidate Shortlist](provider_candidates/v0_7_0_initial_shortlist.md)
 - [Sportmonks Candidate Review Pack - Stage 0 only](provider_candidates/sportmonks_candidate_review_pack.md)
+- [Sportmonks License And Terms Gate - not reviewed/defer](provider_candidates/sportmonks_license_terms_gate.md)
 
 Synthetic success demonstrates the workflow only. It does not establish that any real payload is licensed, compatible or approved.
 
@@ -110,6 +111,8 @@ Synthetic success demonstrates the workflow only. It does not establish that any
 Follow the [v0.7.0 Candidate Review Workflow](v0_7_0_candidate_review_workflow.md) when a candidate is explicitly chosen.
 
 Sportmonks now has a Stage 0 intake pack. No real payload has been evaluated, the license gate is not complete and no provider is approved.
+
+The Sportmonks Stage 1 gate scaffold exists but is not completed. No real payload has been evaluated, no license gate has passed and no provider is approved.
 
 1. Choose a candidate explicitly.
 2. Complete the payload evaluation checklist.

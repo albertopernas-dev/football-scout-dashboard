@@ -48,6 +48,8 @@ The next mandatory step is Stage 1 - License And Terms Gate. No payload may be i
 
 ## Stage 1 - License And Terms Gate
 
+Review scaffold: [Sportmonks License And Terms Gate](sportmonks_license_terms_gate.md). It remains `not reviewed` with decision `defer`.
+
 - Terms reviewed: no
 - License source: pending
 - Local development permitted: unknown
