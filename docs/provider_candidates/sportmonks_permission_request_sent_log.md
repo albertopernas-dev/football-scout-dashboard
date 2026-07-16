@@ -5,9 +5,10 @@
 - Candidate: Sportmonks
 - Related draft: [Sportmonks Permission Request Draft](sportmonks_permission_request_draft.md)
 - Related gate: [Sportmonks License And Terms Gate](sportmonks_license_terms_gate.md)
+- Related acknowledgement: [Sportmonks Ticket Acknowledgement Log](sportmonks_ticket_acknowledgement_log.md)
 - Sent status: sent
 - Sent date: 2026-07-16
-- Response status: not received
+- Response status: acknowledgement received; substantive permission response not received
 - Gate impact: none
 - Gate decision: `defer`
 - Payload inspection: not allowed
@@ -22,7 +23,7 @@ A permission clarification message based on the [Sportmonks Permission Request D
 
 The request asked about applicable license or subscription terms, local evaluation, sample payload inspection, caching, derived outputs, redistribution and demo limits, attribution, endpoint or field restrictions, and credential handling.
 
-The exact outbound email content does not need to be duplicated here unless it is non-sensitive and intentionally shareable. No provider response has been received or reviewed yet.
+The exact outbound email content does not need to be duplicated here unless it is non-sensitive and intentionally shareable. No substantive permission response has been received or reviewed yet.
 
 ## Current Gate Impact
 
@@ -36,7 +37,7 @@ The exact outbound email content does not need to be duplicated here unless it i
 
 ## Awaiting Response
 
-- Response received: no
+- Response received: acknowledgement only; substantive permission response not received
 - Expected next evidence:
   - applicable license or subscription terms;
   - explicit permission or restriction;
@@ -45,7 +46,7 @@ The exact outbound email content does not need to be duplicated here unless it i
   - clarification of derived outputs;
   - clarification of redistribution, demo and attribution; and
   - clarification of credential or API key handling.
-- Next action: wait for a response or follow up outside the repository if needed.
+- Next action: wait for a substantive response or follow up outside the repository if needed.
 
 ## Response Handling Reminder
 
