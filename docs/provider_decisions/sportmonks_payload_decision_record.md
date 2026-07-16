@@ -59,18 +59,26 @@ It does not inspect payloads, select a final provider, create credentials or sta
 | Area | Required Decision | Current Status |
 |---|---|---|
 | Selected Sportmonks plan | Football Free Plan confirmed by user screenshot. | confirmed |
-| Selected competition(s) | One league included in the Free Plan; Danish Superliga preferred if available. | pending exact league confirmation |
-| Selected season | Latest available season for the selected free-plan league. | pending confirmation |
-| Selected team | One team from the selected free-plan league; FC Copenhagen preferred only if Danish Superliga is available. | proposed/pending confirmation |
-| Endpoint(s) | Proposed Team Squad by Team and Season ID; Players endpoint only if needed for schema/include validation. | proposed/pending documentation and account confirmation |
+| Selected competition(s) | Denmark Superliga, league_id 271. | confirmed |
+| Selected season | Latest available Denmark Superliga season. | pending season_id confirmation |
+| Selected team | FC Copenhagen. | pending team_id confirmation |
+| Endpoint(s) | Team Squad by Team and Season ID primary; Players auxiliary only if needed for schema/include validation. | proposed/pending endpoint access confirmation |
 | Field categories | Must be mapped to Market Context needs. | pending |
-| Sample size | One team, one season, minimal payload. | proposed; not executed |
+| Sample size | One FC Copenhagen squad, one Denmark Superliga season, minimal payload. | proposed; not executed |
 | Raw payload path | Must be an ignored local path. | proposed in trial scope plan; not created |
 | Cache path | Must be an ignored local path. | proposed in trial scope plan; not created |
 | Retention/cleanup | Must be documented before trial. | pending |
 | Credential storage | Must use ignored local environment or configuration. | proposed in trial scope plan; not created |
 | Expected derived output | Must avoid raw data exposure. | pending |
 | Stop conditions | Must be reviewed before trial. | pending |
+
+## Free Plan League Selection Rationale
+
+- Denmark Superliga is included in the confirmed Free Plan league list.
+- It is a regular league rather than a play-off competition.
+- The trial needs only one stable league, one team and one season.
+- Scotland Premiership remains a fallback if the Denmark scope cannot be resolved.
+- No Sportmonks provider approval is implied.
 
 ## Candidate Field Fit
 
@@ -138,10 +146,8 @@ It does not inspect payloads, select a final provider, create credentials or sta
   - a local trial may be planned; and
   - credentials and payload inspection have not been performed.
 - Next allowed step:
-  - confirm the exact Free Plan league list;
-  - confirm the selected league;
-  - confirm the selected season;
-  - confirm the selected team; and
+  - confirm the latest available Denmark Superliga `season_id`;
+  - confirm the FC Copenhagen `team_id`; and
   - confirm endpoint availability.
 - Still forbidden:
   - credentials;
@@ -176,6 +182,6 @@ It does not inspect payloads, select a final provider, create credentials or sta
 
 ## Next Required Action
 
-Review the [ignored local trial scope plan](../provider_candidates/sportmonks_ignored_local_trial_scope_plan.md), then complete the checklist and this decision record after the user confirms the exact Free Plan league list, selected league, latest available season, selected team and endpoint access.
+Review the [ignored local trial scope plan](../provider_candidates/sportmonks_ignored_local_trial_scope_plan.md), then complete the checklist and this decision record after the user confirms the latest available Denmark Superliga `season_id`, FC Copenhagen `team_id` and endpoint access.
 
 Do not create credentials, call APIs or inspect payloads until those details are documented and reviewed. After that review, a separate explicit block may prepare the ignored local trial setup.

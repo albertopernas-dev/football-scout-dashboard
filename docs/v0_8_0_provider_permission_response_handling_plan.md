@@ -111,8 +111,9 @@ The summary contains no confidential text, ticket identifiers, payloads or crede
 2. The [Sportmonks Payload Decision Record](provider_decisions/sportmonks_payload_decision_record.md) exists as draft/pre-trial.
 3. The [Sportmonks Ignored Local Trial Scope Plan](provider_candidates/sportmonks_ignored_local_trial_scope_plan.md) exists as draft/pre-credential.
 4. The Football Free Plan is confirmed by user screenshot, which shows 4 leagues and 3000 API calls.
-5. Confirm the exact included league, selected season, selected team and endpoint access.
-6. After those details are documented and reviewed, a separate explicit block may prepare secure local credential setup.
-7. Do not create credentials, inspect payloads, perform the trial or call APIs in this block.
-8. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
-9. Continue to treat Sportmonks as unapproved until a later explicit decision.
+5. The Free Plan league list is confirmed, and Denmark Superliga `league_id 271` is selected for the minimal trial scope.
+6. Confirm the latest available Denmark Superliga `season_id`, FC Copenhagen `team_id` and endpoint access.
+7. After those details are documented and reviewed, a separate explicit block may prepare secure local credential setup.
+8. Do not create credentials, inspect payloads, perform the trial or call APIs in this block.
+9. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
+10. Continue to treat Sportmonks as unapproved until a later explicit decision.

@@ -133,7 +133,7 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
   - Local caching is permitted under an active subscription and Terms of Service compliance.
   - Internal normalized/canonical derived outputs are permitted.
   - Internal derived-output documentation and demos are permitted if raw data is not exposed or redistributed.
-- Next allowed step: complete the checklist and draft decision record with the selected plan, competition, endpoint and field scope, ignored local paths and cleanup
+- Next allowed step: confirm the Denmark Superliga `season_id`, FC Copenhagen `team_id` and endpoint access, then complete the checklist, decision record and trial scope plan
 - Next forbidden step: any payload inspection, credential creation or local trial before those details are documented and reviewed
 
 ## Impact On Sportmonks Candidate Review Pack
@@ -171,11 +171,10 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 
 ## Next Required Action
 
-Confirm the remaining Free Plan scope:
+Confirm the remaining trial identifiers and access:
 
-- the exact leagues included in the Football Free Plan;
-- one selected free-plan league, with Danish Superliga preferred only if confirmed available;
-- the latest available season and one team for that league, with FC Copenhagen preferred only if Danish Superliga is confirmed; and
+- the latest available Denmark Superliga `season_id`;
+- the FC Copenhagen `team_id`; and
 - Team Squad by Team and Season ID access for that scope, with Players only if required for schema/include validation.
 
 Then complete the [Sportmonks Provider Payload Checklist](sportmonks_provider_payload_checklist.md), [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md) and [Sportmonks Ignored Local Trial Scope Plan](sportmonks_ignored_local_trial_scope_plan.md). A separate explicit block may prepare secure credential setup only after those details are documented and reviewed. Do not inspect payloads, create credentials, perform the trial or call APIs yet.

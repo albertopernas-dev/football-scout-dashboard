@@ -126,9 +126,11 @@ Completed and published.
 - Sportmonks payload-specific decision record created as draft/pre-trial.
 - Sportmonks ignored local trial scope plan created as draft/pre-credential.
 - Football Free Plan confirmed by user screenshot; 4 leagues and 3000 API calls shown.
-- LaLiga is no longer assumed under the Free Plan.
-- Trial scope remains one included league, one season, one team and a minimal payload, with Team Squad by Team and Season ID as the primary candidate endpoint.
-- Next: confirm the exact Free Plan league list and select one league, season and team.
+- Free Plan league list confirmed.
+- Denmark Superliga league_id 271 selected for the first trial.
+- FC Copenhagen selected pending `team_id`; latest Denmark Superliga season pending `season_id`.
+- Trial scope remains one team, one season and a minimal payload, with Team Squad by Team and Season ID as the primary candidate endpoint.
+- Next: confirm `season_id`, `team_id` and endpoint access.
 - Still no payload inspection, credentials or local trial.
 - Raw correspondence, ticket identifiers, payloads, credentials and provider cache remain outside Git.
 - Plan: [`docs/v0_8_0_provider_permission_response_handling_plan.md`](docs/v0_8_0_provider_permission_response_handling_plan.md).

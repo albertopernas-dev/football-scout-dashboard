@@ -40,11 +40,12 @@ It does not activate Sportmonks data in the app or write provider data to SQLite
 | Area | Requirement | Status | Notes |
 |---|---|---|---|
 | Selected plan | Football Free Plan confirmed by user screenshot. | confirmed | 4 leagues and 3000 API calls shown; no paid plan selected. |
-| Competition scope | One Free Plan league; preferred Danish Superliga if available. | pending exact league confirmation | LaLiga is not assumed under the Free Plan. |
-| Team scope | One team from the selected free-plan league; FC Copenhagen only if Danish Superliga is available. | proposed/pending confirmation | No team ID selected. |
-| Endpoint scope | Primary candidate: Team Squad by Team and Season ID; Players endpoint only if needed for schema/include validation. | proposed/pending docs/account confirmation | No endpoint is approved and no API calls have occurred. |
+| Competition scope | Denmark Superliga, league_id 271. | confirmed | Confirmed included in the Free Plan by user screenshot. |
+| Season scope | Latest available Denmark Superliga season. | pending season_id confirmation | No season ID confirmed. |
+| Team scope | FC Copenhagen. | pending team_id confirmation | No team ID confirmed. |
+| Endpoint scope | Primary candidate: Team Squad by Team and Season ID; Players endpoint only if needed for schema/include validation. | proposed/pending endpoint access confirmation | Endpoint access has not been tested and no API calls have occurred. |
 | Field scope | Identify desired fields/categories for Market Context fit. | pending | Identity, squad/team, dates, metadata and Market Context if available. |
-| Payload minimization | One team, one season, minimal payload. | proposed | Avoid broad pulls; no IDs selected. |
+| Payload minimization | One FC Copenhagen squad, one Denmark Superliga season, minimal payload. | proposed | Avoid broad pulls; season and team IDs remain unconfirmed. |
 | Raw data handling | Confirm raw payloads stay outside Git. | proposed | Ignored path documented in the [trial scope plan](sportmonks_ignored_local_trial_scope_plan.md); not created. |
 | Cache handling | Confirm cache path, retention and cleanup. | proposed | Ignored path documented in the [trial scope plan](sportmonks_ignored_local_trial_scope_plan.md); not created. |
 | Credential handling | Confirm API key storage only in ignored local environment/configuration. | proposed | Ignored storage model documented in the [trial scope plan](sportmonks_ignored_local_trial_scope_plan.md); no credentials created. |

@@ -28,18 +28,31 @@ All provider data, credentials, cache and outputs must remain outside Git.
 
 | Area | Planned Scope | Status | Notes |
 |---|---|---|---|
-| Selected plan | Football Free Plan confirmed by user screenshot. | confirmed | Screenshot shows 4 leagues and 3000 API calls; exact included leagues still need confirmation before trial. |
-| Competition scope | One league included in the Free Plan; preferred option is Danish Superliga if available. | pending exact league confirmation | Do not assume LaLiga coverage under the Free Plan. |
-| Season scope | Latest available season for the selected free-plan league. | pending confirmation | No season ID selected yet. |
-| Team scope | One team from the selected free-plan league; FC Copenhagen preferred only if Danish Superliga is available. | proposed/pending confirmation | No team ID selected yet. |
-| Endpoint scope | Primary candidate: Team Squad by Team and Season ID. Auxiliary candidate: Players endpoint only if needed for schema/include validation. | proposed/pending docs/account confirmation | No endpoint is approved yet. |
+| Selected plan | Football Free Plan confirmed by user screenshot. | confirmed | Screenshot shows 4 leagues and 3000 API calls; included leagues are listed below. Season ID, team ID and endpoint access still need confirmation before trial. |
+| Competition scope | Denmark Superliga, league_id 271. | confirmed | Confirmed in user screenshot as included in Football Free Plan. Regular league selected over play-off competitions. |
+| Season scope | Latest available Denmark Superliga season. | pending season_id confirmation | No season ID selected yet. |
+| Team scope | FC Copenhagen. | pending team_id confirmation | Team selected for minimal trial; no team ID confirmed yet. |
+| Endpoint scope | Primary candidate: Team Squad by Team and Season ID. Auxiliary candidate: Players endpoint only if needed for schema/include validation. | proposed/pending endpoint access confirmation | Endpoint access has not been tested. |
 | Field scope | Identity, team/squad context, season/date metadata, position, provenance/freshness, and Market Context candidates if available. | draft | Availability must be verified. |
-| Sample size | One team, one season, minimal payload. | proposed | Avoid broad pulls. |
+| Sample size | One FC Copenhagen squad, one Denmark Superliga season, minimal payload. | proposed | Avoid broad pulls. |
 | Raw payload path | `data/provider_cache/sportmonks/raw/` or another ignored local path. | proposed | Must remain ignored. |
 | Cache path | `data/provider_cache/sportmonks/cache/` or another ignored local path. | proposed | Must remain ignored. |
 | Derived output path | `data/enrichment/sportmonks_trial.local.csv` only if later explicitly allowed. | proposed | Must remain ignored; do not create now. |
 | Credential path | Local `.env` or ignored local configuration only. | proposed | Never commit. |
 | Cleanup | Remove local raw, cache and output artifacts after review if not needed. | draft | Must be documented before trial. |
+
+## Confirmed Free Plan League List
+
+| Country | League | League ID | Use In Trial |
+|---|---|---:|---|
+| Denmark | Superliga | 271 | selected |
+| Denmark | Superliga Play-offs | 1659 | excluded for first trial |
+| Scotland | Premiership | 501 | fallback only |
+| Scotland | Premiership Play-Offs | 513 | excluded for first trial |
+
+- Play-off competitions are excluded from the first trial to keep the sample stable and simple.
+- Scotland Premiership is kept as fallback only.
+- No season ID, team ID or endpoint response has been confirmed yet.
 
 ## Proposed Local Paths
 
@@ -74,7 +87,7 @@ These paths must be confirmed as ignored before use. `git status --short` must r
 - Sportmonks Players endpoint documentation reviewed.
 - Sportmonks pricing and plans page reviewed only as context for paid alternatives.
 
-These are non-sensitive reference summaries only. They do not confirm the exact Free Plan league list, IDs, endpoint access or field availability.
+These non-sensitive references confirm the plan limits and four league IDs shown in the user screenshot. They do not confirm season IDs, team IDs, endpoint access or field availability.
 
 ## Required Before Credential Creation
 
@@ -134,12 +147,10 @@ These are non-sensitive reference summaries only. They do not confirm the exact 
 
 ## Next Required Action
 
-The Football Free Plan is confirmed. The user must next confirm:
+The user must next:
 
-- the exact leagues included in the Free Plan;
-- one selected league, with Danish Superliga preferred only if available;
-- the latest available season for that league;
-- one team, with FC Copenhagen preferred only if Danish Superliga is available; and
-- endpoint access for the selected scope.
+- confirm the latest available `season_id` for Denmark Superliga;
+- confirm the FC Copenhagen `team_id`; and
+- confirm Team Squad by Team and Season ID endpoint access for the `league_id 271` scope.
 
 Only after that confirmation may a separate explicit block prepare secure local credential setup. No credentials, API calls or payload inspection occur in this block.
