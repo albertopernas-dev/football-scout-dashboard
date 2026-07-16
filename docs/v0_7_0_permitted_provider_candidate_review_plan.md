@@ -83,6 +83,7 @@ Synthetic success demonstrates the workflow only. It does not establish that any
 - README and ROADMAP identify v0.7.0 as the current milestone.
 - This v0.7.0 plan exists.
 - The operational candidate review workflow exists.
+- A copyable candidate review pack template exists without naming a candidate.
 - No real provider is chosen in this initial block.
 - No real payload is evaluated in this initial block.
 - No code is added.

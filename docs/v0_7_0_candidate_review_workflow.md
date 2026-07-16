@@ -101,6 +101,7 @@ Record the final decision: accept, defer or reject.
 
 ## Required Files For A Candidate
 
+- Candidate review pack copied from the [v0.7.0 template](v0_7_0_candidate_review_pack_template.md); this does not replace the decision record.
 - Completed or copied payload evaluation checklist.
 - Provider payload decision record.
 - License and terms notes.

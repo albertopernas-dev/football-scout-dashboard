@@ -99,6 +99,7 @@ Completed and published.
 - No activa datos de proveedor en la app.
 - Plan: [`docs/v0_7_0_permitted_provider_candidate_review_plan.md`](docs/v0_7_0_permitted_provider_candidate_review_plan.md).
 - Workflow: [`docs/v0_7_0_candidate_review_workflow.md`](docs/v0_7_0_candidate_review_workflow.md).
+- Pack template: [`docs/v0_7_0_candidate_review_pack_template.md`](docs/v0_7_0_candidate_review_pack_template.md).
 - La decision final puede ser accept, defer o reject.
 
 ## Potential v0.4.x Follow-ups

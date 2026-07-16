@@ -25,7 +25,7 @@ Each evaluated provider or source type should have its own file. Use [`provider_
 
 Every real payload evaluation must complete or link to the [Provider Payload Evaluation Checklist](../provider_payload_evaluation_checklist.md) before any integration work begins.
 
-For v0.7.0, a concrete candidate payload must use the payload evaluation template and complete the checklist before any local experiment begins.
+For v0.7.0, a concrete candidate payload must use the payload evaluation template and complete the checklist before any local experiment begins. The candidate review pack organizes the review but does not replace the payload decision record.
 
 Related documents:
 
@@ -34,5 +34,6 @@ Related documents:
 - [Provider Payload Evaluation Checklist](../provider_payload_evaluation_checklist.md)
 - [v0.7.0 Permitted Provider Candidate Review Plan](../v0_7_0_permitted_provider_candidate_review_plan.md)
 - [v0.7.0 Candidate Review Workflow](../v0_7_0_candidate_review_workflow.md)
+- [v0.7.0 Candidate Review Pack Template](../v0_7_0_candidate_review_pack_template.md)
 - [Provider Payload Evaluation Template](provider_payload_evaluation_template.md)
 - [Synthetic Payload Evaluation Example](example_synthetic_payload_evaluation.md) - synthetic documentation example only; not approval of a real provider.
