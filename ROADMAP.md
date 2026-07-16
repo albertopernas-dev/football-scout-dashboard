@@ -125,8 +125,10 @@ Completed and published.
 - Sportmonks provider payload checklist created as draft/pre-trial.
 - Sportmonks payload-specific decision record created as draft/pre-trial.
 - Sportmonks ignored local trial scope plan created as draft/pre-credential.
-- Trial scope proposal documented: free trial or Starter plan pending confirmation; LaLiga pending account/coverage confirmation; Team Squad by Team and Season ID as the primary candidate endpoint; one team, one season and a minimal payload.
-- Next: user confirms the proposed plan, LaLiga coverage, selected season and endpoint scope.
+- Football Free Plan confirmed by user screenshot; 4 leagues and 3000 API calls shown.
+- LaLiga is no longer assumed under the Free Plan.
+- Trial scope remains one included league, one season, one team and a minimal payload, with Team Squad by Team and Season ID as the primary candidate endpoint.
+- Next: confirm the exact Free Plan league list and select one league, season and team.
 - Still no payload inspection, credentials or local trial.
 - Raw correspondence, ticket identifiers, payloads, credentials and provider cache remain outside Git.
 - Plan: [`docs/v0_8_0_provider_permission_response_handling_plan.md`](docs/v0_8_0_provider_permission_response_handling_plan.md).

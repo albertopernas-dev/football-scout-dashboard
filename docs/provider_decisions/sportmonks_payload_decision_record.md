@@ -58,9 +58,10 @@ It does not inspect payloads, select a final provider, create credentials or sta
 
 | Area | Required Decision | Current Status |
 |---|---|---|
-| Selected Sportmonks plan | Proposed free trial or Starter plan. | proposed/pending user and account confirmation |
-| Selected competition(s) | Proposed LaLiga. | proposed/pending account and coverage confirmation |
-| Selected season | One selected season. | proposed/pending account and documentation confirmation |
+| Selected Sportmonks plan | Football Free Plan confirmed by user screenshot. | confirmed |
+| Selected competition(s) | One league included in the Free Plan; Danish Superliga preferred if available. | pending exact league confirmation |
+| Selected season | Latest available season for the selected free-plan league. | pending confirmation |
+| Selected team | One team from the selected free-plan league; FC Copenhagen preferred only if Danish Superliga is available. | proposed/pending confirmation |
 | Endpoint(s) | Proposed Team Squad by Team and Season ID; Players endpoint only if needed for schema/include validation. | proposed/pending documentation and account confirmation |
 | Field categories | Must be mapped to Market Context needs. | pending |
 | Sample size | One team, one season, minimal payload. | proposed; not executed |
@@ -137,13 +138,15 @@ It does not inspect payloads, select a final provider, create credentials or sta
   - a local trial may be planned; and
   - credentials and payload inspection have not been performed.
 - Next allowed step:
-  - user confirms the selected plan;
-  - user confirms competition and season scope; and
-  - user confirms endpoint scope after documentation and plan review.
+  - confirm the exact Free Plan league list;
+  - confirm the selected league;
+  - confirm the selected season;
+  - confirm the selected team; and
+  - confirm endpoint availability.
 - Still forbidden:
-  - credentials before user confirmation and ignored storage;
-  - payload inspection before scope is documented;
-  - API calls before the trial plan is complete;
+  - credentials;
+  - payload inspection;
+  - API calls;
   - SQLite writes;
   - Streamlit activation; and
   - parser or transform code.
@@ -173,6 +176,6 @@ It does not inspect payloads, select a final provider, create credentials or sta
 
 ## Next Required Action
 
-Review the [ignored local trial scope plan](../provider_candidates/sportmonks_ignored_local_trial_scope_plan.md), then complete the checklist and this decision record after the user confirms the selected plan, competition and season scope, and endpoint scope.
+Review the [ignored local trial scope plan](../provider_candidates/sportmonks_ignored_local_trial_scope_plan.md), then complete the checklist and this decision record after the user confirms the exact Free Plan league list, selected league, latest available season, selected team and endpoint access.
 
-Do not create credentials or inspect payloads until those details are documented and reviewed. After that review, a separate explicit block may prepare the ignored local trial setup.
+Do not create credentials, call APIs or inspect payloads until those details are documented and reviewed. After that review, a separate explicit block may prepare the ignored local trial setup.

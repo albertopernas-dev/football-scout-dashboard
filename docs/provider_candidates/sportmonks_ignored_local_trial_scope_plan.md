@@ -28,9 +28,10 @@ All provider data, credentials, cache and outputs must remain outside Git.
 
 | Area | Planned Scope | Status | Notes |
 |---|---|---|---|
-| Selected plan | Free trial or Starter plan, pending user/account confirmation. | proposed/pending confirmation | Must be selected before credentials. |
-| Competition scope | LaLiga, pending account/coverage confirmation. | proposed/pending confirmation | Keep to one minimal competition if possible. |
-| Season scope | One selected season, pending account/docs confirmation. | proposed/pending confirmation | Keep minimal. |
+| Selected plan | Football Free Plan confirmed by user screenshot. | confirmed | Screenshot shows 4 leagues and 3000 API calls; exact included leagues still need confirmation before trial. |
+| Competition scope | One league included in the Free Plan; preferred option is Danish Superliga if available. | pending exact league confirmation | Do not assume LaLiga coverage under the Free Plan. |
+| Season scope | Latest available season for the selected free-plan league. | pending confirmation | No season ID selected yet. |
+| Team scope | One team from the selected free-plan league; FC Copenhagen preferred only if Danish Superliga is available. | proposed/pending confirmation | No team ID selected yet. |
 | Endpoint scope | Primary candidate: Team Squad by Team and Season ID. Auxiliary candidate: Players endpoint only if needed for schema/include validation. | proposed/pending docs/account confirmation | No endpoint is approved yet. |
 | Field scope | Identity, team/squad context, season/date metadata, position, provenance/freshness, and Market Context candidates if available. | draft | Availability must be verified. |
 | Sample size | One team, one season, minimal payload. | proposed | Avoid broad pulls. |
@@ -67,12 +68,13 @@ These paths must be confirmed as ignored before use. `git status --short` must r
 
 ## External Documentation References
 
-- Sportmonks plans and pricing page reviewed.
-- Sportmonks Players endpoint documentation reviewed.
-- Sportmonks team squads documentation reviewed.
+- Sportmonks subscription UI reviewed by user screenshot: Football Free Plan, 4 leagues and 3000 API calls.
+- Sportmonks Team Squads documentation reviewed.
 - Sportmonks Team Squad by Team and Season endpoint documentation reviewed.
+- Sportmonks Players endpoint documentation reviewed.
+- Sportmonks pricing and plans page reviewed only as context for paid alternatives.
 
-These are non-sensitive reference summaries only. They do not confirm account coverage, plan availability, endpoint access or field availability.
+These are non-sensitive reference summaries only. They do not confirm the exact Free Plan league list, IDs, endpoint access or field availability.
 
 ## Required Before Credential Creation
 
@@ -132,10 +134,12 @@ These are non-sensitive reference summaries only. They do not confirm account co
 
 ## Next Required Action
 
-The user must choose or confirm:
+The Football Free Plan is confirmed. The user must next confirm:
 
-- the Sportmonks plan;
-- competition and season scope; and
-- endpoint scope after documentation and plan review.
+- the exact leagues included in the Free Plan;
+- one selected league, with Danish Superliga preferred only if available;
+- the latest available season for that league;
+- one team, with FC Copenhagen preferred only if Danish Superliga is available; and
+- endpoint access for the selected scope.
 
-Only after that confirmation may a separate explicit block prepare secure local credential setup. No credentials or payload inspection occur in this block.
+Only after that confirmation may a separate explicit block prepare secure local credential setup. No credentials, API calls or payload inspection occur in this block.

@@ -171,10 +171,11 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 
 ## Next Required Action
 
-Confirm the proposed scope:
+Confirm the remaining Free Plan scope:
 
-- free trial or Starter plan, subject to user and account confirmation;
-- LaLiga coverage and one selected season, subject to account and documentation confirmation; and
-- Team Squad by Team and Season ID as the primary candidate endpoint, with Players only if required for schema/include validation.
+- the exact leagues included in the Football Free Plan;
+- one selected free-plan league, with Danish Superliga preferred only if confirmed available;
+- the latest available season and one team for that league, with FC Copenhagen preferred only if Danish Superliga is confirmed; and
+- Team Squad by Team and Season ID access for that scope, with Players only if required for schema/include validation.
 
 Then complete the [Sportmonks Provider Payload Checklist](sportmonks_provider_payload_checklist.md), [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md) and [Sportmonks Ignored Local Trial Scope Plan](sportmonks_ignored_local_trial_scope_plan.md). A separate explicit block may prepare secure credential setup only after those details are documented and reviewed. Do not inspect payloads, create credentials, perform the trial or call APIs yet.
