@@ -10,6 +10,7 @@
 - Permission response summary: [Sportmonks Permission Response Summary](sportmonks_permission_response_summary.md)
 - Provider payload checklist: [Sportmonks Provider Payload Checklist](sportmonks_provider_payload_checklist.md)
 - Payload decision record: [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md)
+- Ignored local trial scope plan: [Sportmonks Ignored Local Trial Scope Plan](sportmonks_ignored_local_trial_scope_plan.md)
 - Gate status: substantive permission response reviewed
 - Gate decision: `continue`
 - Detailed permission response: received
@@ -76,7 +77,7 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 
 - Review and complete the draft provider payload checklist.
 - Review and complete the [payload-specific decision record](../provider_decisions/sportmonks_payload_decision_record.md).
-- Define an ignored local trial plan.
+- Review and complete the [ignored local trial scope plan](sportmonks_ignored_local_trial_scope_plan.md).
 - Select the applicable plan and competitions before any trial.
 - After the checklist and decision record are prepared, create credentials securely if required and permitted.
 - After the checklist and decision record are prepared, inspect a minimal permitted payload if needed.
@@ -170,13 +171,10 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 
 ## Next Required Action
 
-Complete the [Sportmonks Provider Payload Checklist](sportmonks_provider_payload_checklist.md) and [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md) with:
+Choose or confirm:
 
 - the selected plan;
-- competition scope;
-- endpoint scope;
-- field scope;
-- ignored local paths; and
-- the retention and cleanup process.
+- competition and season scope; and
+- endpoint scope after documentation and plan review.
 
-Do not inspect payloads, create credentials, perform the trial or call APIs. Continue only after those details are documented and reviewed.
+Then complete the [Sportmonks Provider Payload Checklist](sportmonks_provider_payload_checklist.md), [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md) and [Sportmonks Ignored Local Trial Scope Plan](sportmonks_ignored_local_trial_scope_plan.md). A separate explicit block may prepare credential setup only after those details are documented and reviewed. Do not inspect payloads, create credentials, perform the trial or call APIs yet.

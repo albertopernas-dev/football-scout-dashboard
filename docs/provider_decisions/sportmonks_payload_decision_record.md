@@ -7,6 +7,7 @@
 - Related gate: [Sportmonks License And Terms Gate](../provider_candidates/sportmonks_license_terms_gate.md)
 - Related response summary: [Sportmonks Permission Response Summary](../provider_candidates/sportmonks_permission_response_summary.md)
 - Related checklist: [Sportmonks Provider Payload Checklist](../provider_candidates/sportmonks_provider_payload_checklist.md)
+- Related trial scope plan: [Sportmonks Ignored Local Trial Scope Plan](../provider_candidates/sportmonks_ignored_local_trial_scope_plan.md)
 - Stage 1 gate decision: `continue`
 - Provider approval: no
 - Production approval: no
@@ -62,10 +63,10 @@ It does not inspect payloads, select a final provider, create credentials or sta
 | Endpoint(s) | Must be named before payload inspection. | pending |
 | Field categories | Must be mapped to Market Context needs. | pending |
 | Sample size | Must be minimal. | pending |
-| Raw payload path | Must be an ignored local path. | pending |
-| Cache path | Must be an ignored local path. | pending |
+| Raw payload path | Must be an ignored local path. | proposed in trial scope plan; not created |
+| Cache path | Must be an ignored local path. | proposed in trial scope plan; not created |
 | Retention/cleanup | Must be documented before trial. | pending |
-| Credential storage | Must use ignored local environment or configuration. | pending |
+| Credential storage | Must use ignored local environment or configuration. | proposed in trial scope plan; not created |
 | Expected derived output | Must avoid raw data exposure. | pending |
 | Stop conditions | Must be reviewed before trial. | pending |
 
@@ -135,9 +136,9 @@ It does not inspect payloads, select a final provider, create credentials or sta
   - a local trial may be planned; and
   - credentials and payload inspection have not been performed.
 - Next allowed step:
-  - complete checklist fields;
-  - select plan, competition and endpoint scope; and
-  - define ignored local paths and cleanup.
+  - user confirms the selected plan;
+  - user confirms competition and season scope; and
+  - user confirms endpoint scope after documentation and plan review.
 - Still forbidden:
   - credentials before user confirmation and ignored storage;
   - payload inspection before scope is documented;
@@ -171,6 +172,6 @@ It does not inspect payloads, select a final provider, create credentials or sta
 
 ## Next Required Action
 
-Complete the checklist and this decision record with the selected plan, competition scope, endpoint scope, field scope, ignored local paths and cleanup process.
+Review the [ignored local trial scope plan](../provider_candidates/sportmonks_ignored_local_trial_scope_plan.md), then complete the checklist and this decision record after the user confirms the selected plan, competition and season scope, and endpoint scope.
 
 Do not create credentials or inspect payloads until those details are documented and reviewed. After that review, a separate explicit block may prepare the ignored local trial setup.

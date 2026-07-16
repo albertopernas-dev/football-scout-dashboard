@@ -6,6 +6,7 @@
 - Related gate: [Sportmonks License And Terms Gate](sportmonks_license_terms_gate.md)
 - Related response summary: [Sportmonks Permission Response Summary](sportmonks_permission_response_summary.md)
 - Related decision record: [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md)
+- Related trial scope plan: [Sportmonks Ignored Local Trial Scope Plan](sportmonks_ignored_local_trial_scope_plan.md)
 - Checklist status: draft/pre-trial
 - Gate decision: `continue`
 - Provider approval: no
@@ -38,14 +39,14 @@ It does not activate Sportmonks data in the app or write provider data to SQLite
 
 | Area | Requirement | Status | Notes |
 |---|---|---|---|
-| Selected plan | Identify the Sportmonks plan used for evaluation. | pending | No credentials until selected. |
-| Competition scope | Identify selected competition(s) for the trial. | pending | Keep minimal. |
-| Endpoint scope | Identify exact endpoint(s) intended for schema review. | pending | No API calls yet. |
+| Selected plan | Identify the Sportmonks plan used for evaluation. | pending user confirmation | No credentials until selected. |
+| Competition scope | Identify selected competition(s) for the trial. | pending user confirmation | Keep minimal. |
+| Endpoint scope | Identify exact endpoint(s) intended for schema review. | pending docs/plan review | No endpoint is approved and no API calls have occurred. |
 | Field scope | Identify desired fields/categories for Market Context fit. | pending | Identity, squad/team, dates, metadata and Market Context if available. |
 | Payload minimization | Define the smallest possible sample for evaluation. | pending | Avoid broad pulls. |
-| Raw data handling | Confirm raw payloads stay outside Git. | pending | Use ignored local paths only. |
-| Cache handling | Confirm cache path, retention and cleanup. | pending | Must comply with active subscription and Terms of Service. |
-| Credential handling | Confirm API key storage only in ignored local environment/configuration. | pending | Never commit keys. |
+| Raw data handling | Confirm raw payloads stay outside Git. | proposed | Ignored path documented in the [trial scope plan](sportmonks_ignored_local_trial_scope_plan.md); not created. |
+| Cache handling | Confirm cache path, retention and cleanup. | proposed | Ignored path documented in the [trial scope plan](sportmonks_ignored_local_trial_scope_plan.md); not created. |
+| Credential handling | Confirm API key storage only in ignored local environment/configuration. | proposed | Ignored storage model documented in the [trial scope plan](sportmonks_ignored_local_trial_scope_plan.md); no credentials created. |
 | Derived output handling | Confirm derived outputs do not expose raw data. | pending | Internal review only. |
 | Documentation handling | Confirm documentation uses non-sensitive summaries only. | pending | No raw payload excerpts. |
 | Demo handling | Confirm demos use derived, non-raw content only. | pending | No raw redistribution. |

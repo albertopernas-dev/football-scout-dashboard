@@ -109,7 +109,8 @@ The summary contains no confidential text, ticket identifiers, payloads or crede
 
 1. The [Sportmonks Provider Payload Checklist](provider_candidates/sportmonks_provider_payload_checklist.md) exists as draft/pre-trial.
 2. The [Sportmonks Payload Decision Record](provider_decisions/sportmonks_payload_decision_record.md) exists as draft/pre-trial.
-3. Complete both artifacts with the selected plan, competition scope, endpoint and field scope, ignored local paths and cleanup before any credentials or payload inspection.
-4. Define an ignored local trial plan only after those details are documented and reviewed.
-5. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
-6. Continue to treat Sportmonks as unapproved until a later explicit decision.
+3. The [Sportmonks Ignored Local Trial Scope Plan](provider_candidates/sportmonks_ignored_local_trial_scope_plan.md) exists as draft/pre-credential.
+4. The next step is user confirmation of the selected plan, competition and season scope, and endpoint scope after documentation and plan review.
+5. Do not create credentials or inspect payloads until those details are documented and reviewed in all three artifacts.
+6. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
+7. Continue to treat Sportmonks as unapproved until a later explicit decision.
