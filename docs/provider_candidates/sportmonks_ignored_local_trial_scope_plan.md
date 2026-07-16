@@ -7,6 +7,7 @@
 - Related gate: [Sportmonks License And Terms Gate](sportmonks_license_terms_gate.md)
 - Related checklist: [Sportmonks Provider Payload Checklist](sportmonks_provider_payload_checklist.md)
 - Related decision record: [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md)
+- Related ID discovery plan: [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md)
 - Provider approval: no
 - Production approval: no
 - Credentials created: no
@@ -147,10 +148,8 @@ These non-sensitive references confirm the plan limits and four league IDs shown
 
 ## Next Required Action
 
-The user must next:
+The manual Sportmonks UI lookup did not expose the Denmark Superliga `season_id` or FC Copenhagen `team_id`.
 
-- confirm the latest available `season_id` for Denmark Superliga;
-- confirm the FC Copenhagen `team_id`; and
-- confirm Team Squad by Team and Season ID endpoint access for the `league_id 271` scope.
+The next step is secure local credential setup in a separate explicit block. After that setup is reviewed, a later separate block may perform the minimal ID discovery defined in the [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md).
 
-Only after that confirmation may a separate explicit block prepare secure local credential setup. No credentials, API calls or payload inspection occur in this block.
+No credentials, API calls or payload inspection occur in this block.

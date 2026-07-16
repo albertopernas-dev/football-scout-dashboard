@@ -8,6 +8,7 @@
 - Related response summary: [Sportmonks Permission Response Summary](../provider_candidates/sportmonks_permission_response_summary.md)
 - Related checklist: [Sportmonks Provider Payload Checklist](../provider_candidates/sportmonks_provider_payload_checklist.md)
 - Related trial scope plan: [Sportmonks Ignored Local Trial Scope Plan](../provider_candidates/sportmonks_ignored_local_trial_scope_plan.md)
+- Related ID discovery plan: [Sportmonks ID Discovery Plan](../provider_candidates/sportmonks_id_discovery_plan.md)
 - Stage 1 gate decision: `continue`
 - Provider approval: no
 - Production approval: no
@@ -146,9 +147,8 @@ It does not inspect payloads, select a final provider, create credentials or sta
   - a local trial may be planned; and
   - credentials and payload inspection have not been performed.
 - Next allowed step:
-  - confirm the latest available Denmark Superliga `season_id`;
-  - confirm the FC Copenhagen `team_id`; and
-  - confirm endpoint availability.
+  - prepare secure local credential storage in a separate explicit block; and
+  - only after that setup is reviewed, perform minimal ID discovery in a later separate explicit block.
 - Still forbidden:
   - credentials;
   - payload inspection;
@@ -182,6 +182,6 @@ It does not inspect payloads, select a final provider, create credentials or sta
 
 ## Next Required Action
 
-Review the [ignored local trial scope plan](../provider_candidates/sportmonks_ignored_local_trial_scope_plan.md), then complete the checklist and this decision record after the user confirms the latest available Denmark Superliga `season_id`, FC Copenhagen `team_id` and endpoint access.
+Prepare secure local credential setup first in a separate explicit block. Only after that setup is reviewed may a later separate block perform the minimal discovery steps in the [Sportmonks ID Discovery Plan](../provider_candidates/sportmonks_id_discovery_plan.md).
 
-Do not create credentials, call APIs or inspect payloads until those details are documented and reviewed. After that review, a separate explicit block may prepare the ignored local trial setup.
+Do not invent `season_id`, `team_id` or endpoint access. Do not create credentials, call APIs or inspect payloads in this block.

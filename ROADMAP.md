@@ -129,9 +129,11 @@ Completed and published.
 - Free Plan league list confirmed.
 - Denmark Superliga league_id 271 selected for the first trial.
 - FC Copenhagen selected pending `team_id`; latest Denmark Superliga season pending `season_id`.
+- Manual UI lookup did not expose `season_id` or `team_id`.
+- Sportmonks ID discovery plan created as draft/pre-credential.
 - Trial scope remains one team, one season and a minimal payload, with Team Squad by Team and Season ID as the primary candidate endpoint.
-- Next: confirm `season_id`, `team_id` and endpoint access.
-- Still no payload inspection, credentials or local trial.
+- Next: prepare secure local credential setup in a separate explicit block; minimal ID discovery follows only after review.
+- Still no credentials, API calls, payload inspection or local trial.
 - Raw correspondence, ticket identifiers, payloads, credentials and provider cache remain outside Git.
 - Plan: [`docs/v0_8_0_provider_permission_response_handling_plan.md`](docs/v0_8_0_provider_permission_response_handling_plan.md).
 

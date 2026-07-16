@@ -7,6 +7,7 @@
 - Related response summary: [Sportmonks Permission Response Summary](sportmonks_permission_response_summary.md)
 - Related decision record: [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md)
 - Related trial scope plan: [Sportmonks Ignored Local Trial Scope Plan](sportmonks_ignored_local_trial_scope_plan.md)
+- Related ID discovery plan: [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md)
 - Checklist status: draft/pre-trial
 - Gate decision: `continue`
 - Provider approval: no
@@ -41,9 +42,9 @@ It does not activate Sportmonks data in the app or write provider data to SQLite
 |---|---|---|---|
 | Selected plan | Football Free Plan confirmed by user screenshot. | confirmed | 4 leagues and 3000 API calls shown; no paid plan selected. |
 | Competition scope | Denmark Superliga, league_id 271. | confirmed | Confirmed included in the Free Plan by user screenshot. |
-| Season scope | Latest available Denmark Superliga season. | pending season_id confirmation | No season ID confirmed. |
-| Team scope | FC Copenhagen. | pending team_id confirmation | No team ID confirmed. |
-| Endpoint scope | Primary candidate: Team Squad by Team and Season ID; Players endpoint only if needed for schema/include validation. | proposed/pending endpoint access confirmation | Endpoint access has not been tested and no API calls have occurred. |
+| Season scope | Latest available Denmark Superliga season. | pending season_id confirmation | Not found in UI; [ID discovery plan](sportmonks_id_discovery_plan.md) required. |
+| Team scope | FC Copenhagen. | pending team_id confirmation | Not found in UI; [ID discovery plan](sportmonks_id_discovery_plan.md) required. |
+| Endpoint scope | Primary candidate: Team Squad by Team and Season ID; Players endpoint only if needed for schema/include validation. | proposed/pending endpoint access confirmation | Not tested; ID discovery plan required and no API calls have occurred. |
 | Field scope | Identify desired fields/categories for Market Context fit. | pending | Identity, squad/team, dates, metadata and Market Context if available. |
 | Payload minimization | One FC Copenhagen squad, one Denmark Superliga season, minimal payload. | proposed | Avoid broad pulls; season and team IDs remain unconfirmed. |
 | Raw data handling | Confirm raw payloads stay outside Git. | proposed | Ignored path documented in the [trial scope plan](sportmonks_ignored_local_trial_scope_plan.md); not created. |

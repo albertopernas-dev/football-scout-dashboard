@@ -11,6 +11,7 @@
 - Provider payload checklist: [Sportmonks Provider Payload Checklist](sportmonks_provider_payload_checklist.md)
 - Payload decision record: [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md)
 - Ignored local trial scope plan: [Sportmonks Ignored Local Trial Scope Plan](sportmonks_ignored_local_trial_scope_plan.md)
+- ID discovery plan: [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md)
 - Gate status: substantive permission response reviewed
 - Gate decision: `continue`
 - Detailed permission response: received
@@ -133,7 +134,7 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
   - Local caching is permitted under an active subscription and Terms of Service compliance.
   - Internal normalized/canonical derived outputs are permitted.
   - Internal derived-output documentation and demos are permitted if raw data is not exposed or redistributed.
-- Next allowed step: confirm the Denmark Superliga `season_id`, FC Copenhagen `team_id` and endpoint access, then complete the checklist, decision record and trial scope plan
+- Next allowed step: prepare secure local credential setup in a separate explicit block; minimal ID discovery remains a later separate block
 - Next forbidden step: any payload inspection, credential creation or local trial before those details are documented and reviewed
 
 ## Impact On Sportmonks Candidate Review Pack
@@ -171,10 +172,6 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 
 ## Next Required Action
 
-Confirm the remaining trial identifiers and access:
+Prepare secure local credential setup in a separate explicit block. That block must keep credentials outside Git and perform only credential-storage and safety checks.
 
-- the latest available Denmark Superliga `season_id`;
-- the FC Copenhagen `team_id`; and
-- Team Squad by Team and Season ID access for that scope, with Players only if required for schema/include validation.
-
-Then complete the [Sportmonks Provider Payload Checklist](sportmonks_provider_payload_checklist.md), [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md) and [Sportmonks Ignored Local Trial Scope Plan](sportmonks_ignored_local_trial_scope_plan.md). A separate explicit block may prepare secure credential setup only after those details are documented and reviewed. Do not inspect payloads, create credentials, perform the trial or call APIs yet.
+After that setup is reviewed, a later separate block may perform the minimal ID discovery defined in the [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md). Do not inspect payloads, create credentials, perform the trial or call APIs in this block.
