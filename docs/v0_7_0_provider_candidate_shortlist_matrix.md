@@ -6,6 +6,8 @@ This matrix supports comparison of potential candidates before one is selected f
 
 Its only purpose is to determine whether a candidate merits Candidate Intake.
 
+The [v0.7.0 initial shortlist](provider_candidates/v0_7_0_initial_shortlist.md) is a preliminary application of this matrix. It does not select or approve a candidate.
+
 ## How To Use
 
 1. Add only candidates with an identifiable source.

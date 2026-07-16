@@ -17,6 +17,7 @@ This milestone builds on the safeguards and synthetic workflow completed in v0.6
 - Advanced synthetic flattening and end-to-end demo
 - [v0.7.0 Candidate Review Workflow](v0_7_0_candidate_review_workflow.md)
 - [v0.7.0 Provider Candidate Shortlist Matrix](v0_7_0_provider_candidate_shortlist_matrix.md)
+- [v0.7.0 Initial Provider Candidate Shortlist](provider_candidates/v0_7_0_initial_shortlist.md)
 
 Synthetic success demonstrates the workflow only. It does not establish that any real payload is licensed, compatible or approved.
 
@@ -86,6 +87,7 @@ Synthetic success demonstrates the workflow only. It does not establish that any
 - The operational candidate review workflow exists.
 - A copyable candidate review pack template exists without naming a candidate.
 - A neutral shortlist matrix exists without selecting or evaluating a real candidate.
+- A preliminary shortlist exists without selecting a final candidate.
 - No real provider is chosen in this initial block.
 - No real payload is evaluated in this initial block.
 - No code is added.
