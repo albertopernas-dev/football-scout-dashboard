@@ -107,15 +107,26 @@ Synthetic success demonstrates the workflow only. It does not establish that any
 - Accidental versioning of local data.
 - Treating synthetic success as real-provider readiness.
 
+## Current v0.7.0 State
+
+- Sportmonks has been selected for Candidate Intake only.
+- The Stage 0 intake pack exists.
+- The Stage 1 public-source review notes exist.
+- The gate decision remains `defer`.
+- No real payload has been evaluated.
+- No license gate has passed.
+- No provider is approved.
+- Payload inspection, credentials, local trial, app activation and SQLite writes remain blocked.
+
+The shortlist and candidate-selection phase is complete for this intake path, but the provider remains unapproved.
+
 ## Next Steps
 
-Follow the [v0.7.0 Candidate Review Workflow](v0_7_0_candidate_review_workflow.md) when a candidate is explicitly chosen.
+Follow the [v0.7.0 Candidate Review Workflow](v0_7_0_candidate_review_workflow.md) while keeping the current Stage 1 gate restrictions in force.
 
-Sportmonks now has a Stage 0 intake pack. No real payload has been evaluated, the license gate is not complete and no provider is approved.
-
-An initial Sportmonks public-source review exists, but the Stage 1 gate remains `defer` and incomplete. No real payload has been evaluated, no license gate has passed and no provider is approved.
-
-1. Choose a candidate explicitly.
-2. Complete the payload evaluation checklist.
-3. Create a decision record.
-4. Run an ignored local payload trial only if the license and decision allow it.
+1. Obtain or review applicable Sportmonks license or subscription terms, or explicit written permission.
+2. Record only non-sensitive evidence references and short summaries.
+3. Decide whether the Stage 1 gate remains `defer`, moves to `continue`, or becomes `reject`.
+4. Only if the gate moves to `continue`, prepare the provider payload checklist.
+5. Only if a concrete permitted payload exists, prepare a payload-specific decision record.
+6. Do not inspect payloads, create credentials, cache data, write `.local.csv` files, write to SQLite, or activate provider data in the app until the gate explicitly allows it.
