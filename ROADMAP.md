@@ -10,15 +10,16 @@
 - v0.4.0 completa el workflow de evaluacion de proveedores: decision records, matriz, politica de cache, contrato de transformacion, preview CLI, builder canonico y ejemplos sinteticos.
 - v0.5.0 completa Provider Fixture Prototype como demo sintetico offline: validacion y aplicacion de identity mapping, CLI de records mapeados, builder canonico y preview.
 - v0.6.0 publicada con governance de evaluacion, payload avanzado sintetico, flattening local y demo end-to-end sintetica hacia Market Context canonico.
-- v0.7.0 es el milestone actual para revisar un candidato permitido sin prometer integracion.
+- v0.7.0 completada y publicada como milestone documental/de gobernanza; Sportmonks sigue en `defer` y sin aprobacion.
+- v0.8.0 es el milestone actual para manejar respuestas y permisos de proveedor de forma segura.
 - El contexto de mercado real depende de CSVs revisados localmente; no hay scraping ni proveedor automatico conectado.
 
 ## Recommended Next Steps
 
-1. Elegir un proveedor o fuente candidata especifica.
-2. Revisar licencia y terminos antes de inspeccionar payloads.
-3. Completar checklist y decision record.
-4. Si esta permitido, ejecutar un trial local e ignorado del payload.
+1. Enviar o adaptar fuera del repositorio el borrador de solicitud de permiso.
+2. Registrar solo resumenes no sensibles si llega una respuesta real.
+3. Mantener `defer`, mover a `continue` o pasar a `reject` solo con evidencia explicita.
+4. Preparar checklist y decision record solo si el gate permite avanzar.
 
 ## v0.2.0 Market Context Layer
 
@@ -93,13 +94,14 @@ Completed and published.
 
 ## v0.7.0 Permitted Provider Candidate Review
 
-- Current milestone.
-- No promete una integracion real ni selecciona candidato en este bloque inicial.
+Completed and published.
+- No integra un proveedor real; Sportmonks fue seleccionado solo para Candidate Intake y permanece sin aprobar.
 - Mantiene payloads y outputs reales fuera de git.
 - No activa datos de proveedor en la app.
 - Plan: [`docs/v0_7_0_permitted_provider_candidate_review_plan.md`](docs/v0_7_0_permitted_provider_candidate_review_plan.md).
-- Release readiness: [`docs/v0_7_0_release_readiness.md`](docs/v0_7_0_release_readiness.md); milestone remains current and pending release.
-- Release notes draft: [`docs/release_notes_v0_7_0.md`](docs/release_notes_v0_7_0.md); not tagged or published.
+- Release readiness: [`docs/v0_7_0_release_readiness.md`](docs/v0_7_0_release_readiness.md).
+- Release notes: [`docs/release_notes_v0_7_0.md`](docs/release_notes_v0_7_0.md).
+- Release: https://github.com/albertopernas-dev/football-scout-dashboard/releases/tag/v0.7.0
 - Workflow: [`docs/v0_7_0_candidate_review_workflow.md`](docs/v0_7_0_candidate_review_workflow.md).
 - Pack template: [`docs/v0_7_0_candidate_review_pack_template.md`](docs/v0_7_0_candidate_review_pack_template.md).
 - Shortlist matrix: [`docs/v0_7_0_provider_candidate_shortlist_matrix.md`](docs/v0_7_0_provider_candidate_shortlist_matrix.md).
@@ -109,6 +111,21 @@ Completed and published.
 - Public review notes: [`docs/provider_candidates/sportmonks_public_terms_review_notes.md`](docs/provider_candidates/sportmonks_public_terms_review_notes.md).
 - Permission request draft: [docs/provider_candidates/sportmonks_permission_request_draft.md](docs/provider_candidates/sportmonks_permission_request_draft.md); not sent and no gate change.
 - La decision final puede ser accept, defer o reject.
+
+## v0.8.0 Provider Permission Response Handling
+
+- Current milestone.
+- Focus: handle provider permission responses safely.
+- Current candidate: Sportmonks remains `defer` unless explicit permission changes the gate.
+- No payload inspection until the Stage 1 gate moves to `continue`.
+- No credentials until the gate permits them.
+- No real payloads or confidential terms in Git.
+- Any response must be summarized only in non-sensitive form.
+- Possible outcomes:
+  - `continue`: prepare the checklist and a payload-specific decision record.
+  - `defer`: keep the candidate blocked.
+  - `reject`: close the candidate path if terms block the intended use.
+- Plan: [`docs/v0_8_0_provider_permission_response_handling_plan.md`](docs/v0_8_0_provider_permission_response_handling_plan.md).
 
 ## Potential v0.4.x Follow-ups
 

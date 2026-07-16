@@ -48,7 +48,7 @@ A practical 5-10 minute demo script is available in [`docs/demo_walkthrough.md`]
 
 ## Release
 
-Current milestone: `v0.7.0`.
+Current milestone: `v0.8.0`.
 
 - Release notes: [`docs/release_notes_v0_1_0.md`](docs/release_notes_v0_1_0.md)
 - v0.2.0 release notes: [`docs/release_notes_v0_2_0.md`](docs/release_notes_v0_2_0.md)
@@ -59,6 +59,7 @@ Current milestone: `v0.7.0`.
 - v0.7.0 plan: [`docs/v0_7_0_permitted_provider_candidate_review_plan.md`](docs/v0_7_0_permitted_provider_candidate_review_plan.md)
 - v0.7.0 release readiness: [`docs/v0_7_0_release_readiness.md`](docs/v0_7_0_release_readiness.md)
 - v0.7.0 release notes: [`docs/release_notes_v0_7_0.md`](docs/release_notes_v0_7_0.md)
+- v0.8.0 plan: [docs/v0_8_0_provider_permission_response_handling_plan.md](docs/v0_8_0_provider_permission_response_handling_plan.md)
 - Demo assets checklist: [`docs/demo_assets_checklist.md`](docs/demo_assets_checklist.md)
 
 ## v0.2.0 Market Context Layer
@@ -115,7 +116,7 @@ See the [release notes](docs/release_notes_v0_6_0.md), [payload shape notes](doc
 
 ## v0.7.0 Permitted Provider Candidate Review
 
-v0.7.0 begins the review process for a specifically permitted provider candidate, using the checklist and payload decision template established in v0.6.0. This milestone does not imply a real integration or an approved real payload.
+v0.7.0 was published as a documentation and governance milestone for reviewing a specifically permitted provider candidate. It does not imply a real integration, an approved provider or an approved real payload.
 
 See the [`v0.7.0 plan`](docs/v0_7_0_permitted_provider_candidate_review_plan.md), [`initial shortlist`](docs/provider_candidates/v0_7_0_initial_shortlist.md), [`shortlist matrix`](docs/v0_7_0_provider_candidate_shortlist_matrix.md), operational [`candidate review workflow`](docs/v0_7_0_candidate_review_workflow.md) and [`candidate review pack template`](docs/v0_7_0_candidate_review_pack_template.md).
 

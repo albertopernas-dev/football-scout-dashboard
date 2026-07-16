@@ -2,7 +2,8 @@
 
 ## Status
 
-- Release status: prepared, not tagged yet
+- Release status: published
+- Release URL: https://github.com/albertopernas-dev/football-scout-dashboard/releases/tag/v0.7.0
 - Release type: documentation/governance milestone
 - Provider integration: not started
 - Provider approval: none

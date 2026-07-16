@@ -8,6 +8,9 @@ The expected outcome is a project that stops correctly at the permission boundar
 
 ## Release Position
 
+- Release status: tagged and published
+- Release URL: https://github.com/albertopernas-dev/football-scout-dashboard/releases/tag/v0.7.0
+
 - Candidate selected for intake: Sportmonks
 - Current gate: Stage 1 License And Terms Gate
 - Gate decision: `defer`
