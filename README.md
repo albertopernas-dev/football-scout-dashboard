@@ -58,6 +58,7 @@ Current milestone: `v0.7.0`.
 - v0.6.0 release notes: [`docs/release_notes_v0_6_0.md`](docs/release_notes_v0_6_0.md)
 - v0.7.0 plan: [`docs/v0_7_0_permitted_provider_candidate_review_plan.md`](docs/v0_7_0_permitted_provider_candidate_review_plan.md)
 - v0.7.0 release readiness: [`docs/v0_7_0_release_readiness.md`](docs/v0_7_0_release_readiness.md)
+- v0.7.0 release notes: [`docs/release_notes_v0_7_0.md`](docs/release_notes_v0_7_0.md)
 - Demo assets checklist: [`docs/demo_assets_checklist.md`](docs/demo_assets_checklist.md)
 
 ## v0.2.0 Market Context Layer

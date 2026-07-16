@@ -106,6 +106,8 @@ Any advance toward provider integration remains blocked because:
 
 ## Suggested Release Summary
 
+Draft release notes: [Release Notes - v0.7.0](release_notes_v0_7_0.md).
+
 ```text
 v0.7.0 formalizes the permitted-provider candidate review process. It adds a shortlist matrix, candidate review workflow, reusable review pack, and a Sportmonks Stage 0/Stage 1 intake path. The Sportmonks gate remains deferred pending applicable license/subscription terms or explicit permission. No provider is approved, no payload is inspected, and no integration code is added.
 ```
