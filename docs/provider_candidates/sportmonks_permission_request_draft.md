@@ -5,8 +5,9 @@
 - Candidate: Sportmonks
 - Related gate: [Sportmonks License And Terms Gate](sportmonks_license_terms_gate.md)
 - Related public review notes: [Sportmonks Public Terms Review Notes](sportmonks_public_terms_review_notes.md)
+- Sent log: [Sportmonks Permission Request Sent Log](sportmonks_permission_request_sent_log.md)
 - Purpose: permission clarification draft
-- Draft status: not sent
+- Draft status: sent
 - Gate impact: none until response is reviewed
 - Payload inspection: not allowed
 - Credentials setup: not allowed

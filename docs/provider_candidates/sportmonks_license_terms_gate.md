@@ -6,6 +6,7 @@
 - Related intake pack: [Sportmonks Candidate Review Pack](sportmonks_candidate_review_pack.md)
 - Review stage: Stage 1 - License And Terms Gate
 - Public review notes: [Sportmonks Public Terms Review Notes](sportmonks_public_terms_review_notes.md)
+- Permission request sent log: [Sportmonks Permission Request Sent Log](sportmonks_permission_request_sent_log.md)
 - Gate status: partial public-source review
 - Gate decision: defer
 - Payload inspection: not allowed
@@ -75,7 +76,7 @@ Do not copy restricted legal text into this repository. Record short references,
 
 - Maintain documentation scaffolds.
 - Record non-sensitive references to terms once reviewed.
-- Use the [Sportmonks Permission Request Draft](sportmonks_permission_request_draft.md) as a possible route to request explicit clarification; the draft is not sent and grants no permission.
+- The [Sportmonks Permission Request Sent Log](sportmonks_permission_request_sent_log.md) records that the clarification request was sent; no response has been received and the gate remains `defer`.
 - Keep Sportmonks in Stage 1 pending status.
 - Decide to continue, defer or reject only after review inputs are available.
 
@@ -156,4 +157,4 @@ Do not copy restricted legal text into this repository. Record short references,
 
 ## Next Required Action
 
-The next block must obtain or review applicable license or subscription terms, or explicit permission. The [Sportmonks Permission Request Draft](sportmonks_permission_request_draft.md) is available as a possible clarification route. It must record only non-sensitive summaries and references and must not inspect payloads or create credentials unless the completed gate explicitly allows it.
+The permission request has been sent, but no response has been received. The gate remains `defer`. The next action is to wait for a response or follow up outside the repository if needed, recording only non-sensitive summaries and references. Payload inspection and credential setup remain forbidden unless the completed gate explicitly allows them.

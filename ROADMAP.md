@@ -109,7 +109,7 @@ Completed and published.
 - Current intake candidate: [Sportmonks Stage 0 only](docs/provider_candidates/sportmonks_candidate_review_pack.md); no approval and no payload inspection.
 - Sportmonks Stage 1 gate: [`partial public-source review/defer`](docs/provider_candidates/sportmonks_license_terms_gate.md); no approval and no payload inspection.
 - Public review notes: [`docs/provider_candidates/sportmonks_public_terms_review_notes.md`](docs/provider_candidates/sportmonks_public_terms_review_notes.md).
-- Permission request draft: [docs/provider_candidates/sportmonks_permission_request_draft.md](docs/provider_candidates/sportmonks_permission_request_draft.md); not sent and no gate change.
+- Permission request sent: [docs/provider_candidates/sportmonks_permission_request_sent_log.md](docs/provider_candidates/sportmonks_permission_request_sent_log.md); no response yet and gate remains `defer`.
 - La decision final puede ser accept, defer o reject.
 
 ## v0.8.0 Provider Permission Response Handling

@@ -13,7 +13,7 @@ v0.7.0 was published as a documentation and governance milestone. Sportmonks has
 - a Stage 0 intake pack;
 - a Stage 1 license and terms gate;
 - partial public-source review notes; and
-- a permission request draft that has not been sent.
+- a permission request sent log; no response has been received.
 
 The current gate decision is `defer`. The external dependency is applicable license or subscription terms, or explicit written permission.
 
@@ -109,7 +109,7 @@ Create this file only when a real response or applicable reviewed terms exist. I
 
 ## Next Steps
 
-1. Send or adapt the Sportmonks permission request outside the repository.
+1. Wait for a response or follow up outside the repository if needed.
 2. If a response arrives, create a non-sensitive response summary.
 3. Update the gate decision only from explicit evidence.
 4. If the gate moves to `continue`, prepare the checklist.

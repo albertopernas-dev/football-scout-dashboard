@@ -17,4 +17,4 @@ Current Stage 1 gate: [Sportmonks License And Terms Gate](sportmonks_license_ter
 
 [Sportmonks Public Terms Review Notes](sportmonks_public_terms_review_notes.md) record only non-sensitive references and summaries.
 
-The [Sportmonks Permission Request Draft](sportmonks_permission_request_draft.md) is not sent and does not change the `defer` gate or authorize payload inspection.
+The [Sportmonks Permission Request Draft](sportmonks_permission_request_draft.md) was sent outside the repository. The [sent log](sportmonks_permission_request_sent_log.md) records no response yet and no change to the `defer` gate.
