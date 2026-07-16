@@ -16,3 +16,5 @@ Current Stage 0 intake: [Sportmonks Candidate Review Pack](sportmonks_candidate_
 Current Stage 1 gate: [Sportmonks License And Terms Gate](sportmonks_license_terms_gate.md). Its public-source review remains `defer` and authorizes no payload inspection.
 
 [Sportmonks Public Terms Review Notes](sportmonks_public_terms_review_notes.md) record only non-sensitive references and summaries.
+
+The [Sportmonks Permission Request Draft](sportmonks_permission_request_draft.md) is not sent and does not change the `defer` gate or authorize payload inspection.

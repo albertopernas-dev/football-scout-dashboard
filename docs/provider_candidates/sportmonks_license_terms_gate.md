@@ -75,6 +75,7 @@ Do not copy restricted legal text into this repository. Record short references,
 
 - Maintain documentation scaffolds.
 - Record non-sensitive references to terms once reviewed.
+- Use the [Sportmonks Permission Request Draft](sportmonks_permission_request_draft.md) as a possible route to request explicit clarification; the draft is not sent and grants no permission.
 - Keep Sportmonks in Stage 1 pending status.
 - Decide to continue, defer or reject only after review inputs are available.
 
@@ -155,4 +156,4 @@ Do not copy restricted legal text into this repository. Record short references,
 
 ## Next Required Action
 
-The next block must obtain or review applicable license or subscription terms, or explicit permission. It must record only non-sensitive summaries and references and must not inspect payloads or create credentials unless the completed gate explicitly allows it.
+The next block must obtain or review applicable license or subscription terms, or explicit permission. The [Sportmonks Permission Request Draft](sportmonks_permission_request_draft.md) is available as a possible clarification route. It must record only non-sensitive summaries and references and must not inspect payloads or create credentials unless the completed gate explicitly allows it.

@@ -112,6 +112,7 @@ Synthetic success demonstrates the workflow only. It does not establish that any
 - Sportmonks has been selected for Candidate Intake only.
 - The Stage 0 intake pack exists.
 - The Stage 1 public-source review notes exist.
+- A permission request draft exists but has not been sent and has no gate impact.
 - The gate decision remains `defer`.
 - No real payload has been evaluated.
 - No license gate has passed.
@@ -125,6 +126,7 @@ The shortlist and candidate-selection phase is complete for this intake path, bu
 Follow the [v0.7.0 Candidate Review Workflow](v0_7_0_candidate_review_workflow.md) while keeping the current Stage 1 gate restrictions in force.
 
 1. Obtain or review applicable Sportmonks license or subscription terms, or explicit written permission.
+   The [Sportmonks Permission Request Draft](provider_candidates/sportmonks_permission_request_draft.md) may be used as a clarification starting point.
 2. Record only non-sensitive evidence references and short summaries.
 3. Decide whether the Stage 1 gate remains `defer`, moves to `continue`, or becomes `reject`.
 4. Only if the gate moves to `continue`, prepare the provider payload checklist.
