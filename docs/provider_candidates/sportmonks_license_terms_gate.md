@@ -7,128 +7,139 @@
 - Review stage: Stage 1 - License And Terms Gate
 - Public review notes: [Sportmonks Public Terms Review Notes](sportmonks_public_terms_review_notes.md)
 - Permission request sent log: [Sportmonks Permission Request Sent Log](sportmonks_permission_request_sent_log.md)
-- Gate status: partial public-source review
-- Gate decision: defer
-- Payload inspection: not allowed
-- Credentials setup: not allowed
-- Local trial: not allowed
+- Permission response summary: [Sportmonks Permission Response Summary](sportmonks_permission_response_summary.md)
+- Gate status: substantive permission response reviewed
+- Gate decision: `continue`
+- Detailed permission response: received
+- Payload inspection: permitted for schema/field assessment after checklist and decision-record preparation
+- Credentials setup: permitted only securely and after checklist and decision-record preparation
+- Local trial: permitted to plan; not yet performed
 - Decision record: not created
+- Provider approval: no
+- Review date: 2026-07-16
 - Reviewer:
-- Date:
-- Notes: This gate document is a review scaffold only. It does not approve Sportmonks, authorize payload inspection or replace a payload decision record.
+- Notes: `continue` permits the next governance step only. It does not approve Sportmonks, authorize production integration or replace the payload checklist and decision record.
 
 ## Purpose
 
-This document records a partial public-source review for Sportmonks. It asserts no project-specific permissions and accepts no terms. It does not authorize downloading, caching, transformation, redistribution, screenshots or demos, credential setup or integration.
+This document records the Stage 1 review for Sportmonks using public references and a non-sensitive summary of the substantive permission response. The response supports moving the gate from `defer` to `continue` under explicit conditions.
 
-The decision remains `defer` until applicable license or subscription terms, or explicit permission, establish the required project permissions.
+The gate decision allows preparation of the provider payload checklist, payload-specific decision record and an ignored local trial plan. No payload has been inspected, no credentials have been created and no local trial has been performed.
 
-## Review Inputs Required
+## Reviewed Evidence
 
-- Current public terms or user-provided permitted terms.
-- Current license or subscription terms, if applicable.
-- Current API or data-usage documentation, if applicable.
-- Any explicit permission for local development.
-- Any explicit permission for payload inspection.
-- Any explicit permission for local caching.
-- Any explicit permission for derived outputs.
-- Any restrictions on redistribution, screenshots, demos or sharing.
-- Credential and account restrictions.
-- Source and date of each reviewed item.
+- [Sportmonks Public Terms Review Notes](sportmonks_public_terms_review_notes.md)
+- [Sportmonks Permission Request Draft](sportmonks_permission_request_draft.md)
+- [Sportmonks Permission Request Sent Log](sportmonks_permission_request_sent_log.md)
+- [Sportmonks Ticket Acknowledgement Log](sportmonks_ticket_acknowledgement_log.md)
+- [Sportmonks Permission Response Summary](sportmonks_permission_response_summary.md)
 
-Do not copy restricted legal text into this repository. Record short references, dates and non-sensitive summaries only.
+Do not copy restricted legal text, ticket identifiers or confidential correspondence into this repository. Record short references, dates and non-sensitive summaries only.
 
 ## Gate Questions
 
-| Area | Question | Current Answer | Evidence Reference | Status |
-|---|---|---|---|---|
-| Terms source | What terms govern the intended use? | partial public-source review | [Public review notes](sportmonks_public_terms_review_notes.md) | partial |
-| License source | What license or subscription applies? | not reviewed | [Public review notes](sportmonks_public_terms_review_notes.md) | unknown |
-| Local development | Is local development or evaluation permitted? | unknown | pending | unknown |
-| Payload inspection | Is payload inspection permitted before integration? | unknown | pending | unknown |
-| Local caching | Is local caching permitted? | unknown | pending | unknown |
-| Derived outputs | Are normalized or canonical derived outputs permitted? | unknown | pending | unknown |
-| Redistribution | Can raw or derived data be shared? | unknown | pending | unknown |
-| Screenshots/demo | Are screenshots or demos permitted? | unknown | pending | unknown |
-| Credentials | Are there restrictions on account or API key handling? | unknown | pending | unknown |
-| Retention | Are there limits on data retention? | unknown | pending | unknown |
-| Attribution | Is attribution required? | unknown | pending | unknown |
-| Commercial/internal use | Is the intended project use compatible? | unknown | pending | unknown |
+| Area | Current Answer | Evidence Reference | Status |
+|---|---|---|---|
+| Terms/license scope | Governed by an available plan and Sportmonks Terms of Service; selected plan scope remains plan-dependent. | [Response summary](sportmonks_permission_response_summary.md) | permitted with conditions |
+| Local development | Permitted using an available plan before production integration. | [Response summary](sportmonks_permission_response_summary.md) | permitted |
+| Payload inspection | Permitted for schema, field and suitability assessment after governance preparation. | [Response summary](sportmonks_permission_response_summary.md) | permitted with conditions |
+| Local caching | Permitted for development/debugging while subscription is active and Terms of Service are followed. | [Response summary](sportmonks_permission_response_summary.md) | permitted with conditions |
+| Derived outputs | Internal normalized/canonical datasets and analytical artifacts are permitted. | [Response summary](sportmonks_permission_response_summary.md) | permitted |
+| Redistribution | Raw data must not be exposed or redistributed; internal derived use is permitted. | [Response summary](sportmonks_permission_response_summary.md) | restricted |
+| Screenshots/demo | Internal derived-output documentation and demos are permitted if raw data is not exposed or redistributed. | [Response summary](sportmonks_permission_response_summary.md) | permitted with conditions |
+| Credentials | Secure local environment/configuration storage is permitted; keys must never be public or committed. | [Response summary](sportmonks_permission_response_summary.md) | permitted with conditions |
+| Retention | Local caching is tied to an active subscription and Terms of Service; exact plan/terms details remain applicable. | [Response summary](sportmonks_permission_response_summary.md) | conditional |
+| Attribution | Not mandatory; acknowledgement is appreciated. | [Response summary](sportmonks_permission_response_summary.md) | optional |
+| Endpoint/field scope | Availability depends on the subscription and selected competitions. | [Response summary](sportmonks_permission_response_summary.md) | plan-dependent |
+| Production use | Not assessed or approved by this gate. | [Response summary](sportmonks_permission_response_summary.md) | out of scope |
 
 ## Current Gate Assessment
 
-- Terms reviewed: partial public-source review
-- License source: pending; subscription-specific license not reviewed
-- Local development permitted: unknown
-- Payload inspection permitted: unknown
-- Caching permitted: unknown
-- Derived outputs permitted: unknown
-- Screenshots/demo permitted: unknown
-- Redistribution permitted: unknown
-- Retention limits: unknown
-- Attribution requirements: unknown
-- Credential restrictions: partially informed by public authentication documentation; project-specific restrictions unknown
-- Blocking restrictions: unknown
-- Gate decision: defer
-- Reason: public sources were reviewed, but required project permissions remain unknown
+- Terms reviewed: public-source review plus non-sensitive substantive response summary
+- License source: available plan and Terms of Service; exact selected plan remains pending
+- Local development permitted: yes, plan-dependent
+- Payload inspection permitted: yes, for schema/field/suitability assessment after checklist and decision-record preparation
+- Caching permitted: yes, for development/debugging while subscription is active and Terms of Service are followed
+- Derived outputs permitted: yes, for internal normalized/canonical outputs and analytical artifacts
+- Screenshots/demo permitted: yes, for derived outputs if raw data is not exposed or redistributed
+- Redistribution permitted: raw data no; internal derived use permitted
+- Retention limits: tied to active subscription and Terms of Service; exact plan/terms details remain applicable
+- Attribution requirements: optional and appreciated, not mandatory
+- Credential restrictions: secure local environment/configuration storage allowed; never expose publicly or commit
+- Endpoint/field scope: plan-dependent
+- Gate decision: `continue`
+- Reason: the substantive permission response supports moving to the next governance step under recorded conditions
 
-## Allowed Actions Before Gate Completion
+## Allowed Actions After Gate Continue
 
-- Maintain documentation scaffolds.
-- Record non-sensitive references to terms once reviewed.
-- The [Sportmonks Permission Request Sent Log](sportmonks_permission_request_sent_log.md) records that the clarification request was sent; no response has been received and the gate remains `defer`.
-- Keep Sportmonks in Stage 1 pending status.
-- Decide to continue, defer or reject only after review inputs are available.
+- Prepare the provider payload checklist.
+- Prepare a payload-specific decision record.
+- Define an ignored local trial plan.
+- Select the applicable plan and competitions before any trial.
+- After the checklist and decision record are prepared, create credentials securely if required and permitted.
+- After the checklist and decision record are prepared, inspect a minimal permitted payload if needed.
+- Keep all provider payloads and caches under ignored local paths.
 
-## Forbidden Actions Before Gate Completion
+## Required Before Any Trial
 
-- Do not inspect payloads.
-- Do not create provider credentials.
-- Do not call APIs.
-- Do not scrape.
-- Do not cache provider data.
-- Do not create `.local.csv` outputs from provider data.
-- Do not write to SQLite.
+- Complete the provider payload checklist.
+- Create the payload-specific decision record.
+- Record the selected plan, competition scope and applicable conditions.
+- Define ignored local paths and cleanup handling.
+- Confirm credentials will remain outside Git.
+- Confirm raw payloads will not appear in documentation, demos or source control.
+
+## Still Forbidden
+
+- Do not inspect payloads before the checklist and decision record are prepared.
+- Do not create credentials before the checklist and decision record are prepared.
+- Do not commit raw payloads, provider cache or dumps.
+- Do not commit API keys or credentials.
+- Do not commit `.local.csv` provider outputs.
+- Do not expose or redistribute raw Sportmonks data.
+- Do not write provider data to SQLite.
 - Do not activate provider data in the app.
-- Do not commit raw dumps, credentials, restricted terms or provider data.
-- Do not create parser or transform code for real provider payloads.
+- Do not create parser or transform code until a later explicit block.
+- Do not treat `continue` as provider or production approval.
 
 ## Evidence Log
 
-| Evidence Item | Source Type | Reference | Review Date | Reviewer | Non-sensitive Summary | Open Questions |
-|---|---|---|---|---|---|---|
-| Sportmonks Terms of Service | Public terms page | https://www.sportmonks.com/terms-of-service/ | 2026-07-16 | pending | Public terms reference identified; project-specific permissions remain unconfirmed. | Local development, payload inspection, caching, derived outputs, retention and redistribution. |
-| Sportmonks Football API 3.0 docs | Public technical documentation | https://www.sportmonks.com/football-api-3-0-docs/ | 2026-07-16 | pending | Technical documentation reference only; not a permission grant. | Permitted endpoints, field availability, payload inspection and plan scope. |
-| Sportmonks FAQ | Public FAQ | https://www.sportmonks.com/faq/ | 2026-07-16 | pending | Indicates that applicable terms and licensing agreements remain relevant. | Applicable license, project-use compatibility and redistribution. |
-| Sportmonks Caching glossary | Public technical content | https://www.sportmonks.com/glossary/caching/ | 2026-07-16 | pending | Technical caching background only. | Contractual permission for local caching. |
-| Sportmonks caching and optimisation blog | Public technical and blog content | https://www.sportmonks.com/blogs/caching-and-optimisation-strategies-for-high-volume-football-api-usage/ | 2026-07-16 | pending | Technical strategy reference only; does not approve storage. | Retention, allowed storage and derived outputs. |
-| Sportmonks API Authentication and Authorisation | Public technical and authentication content | https://www.sportmonks.com/glossary/api-authentication-and-authorisation/ | 2026-07-16 | pending | Authentication and access background; no credentials created. | Account restrictions, credential storage, plan scope and permitted endpoints. |
+| Evidence Item | Source Type | Reference | Review Date | Non-sensitive Summary |
+|---|---|---|---|---|
+| Sportmonks Terms of Service | Public terms page | https://www.sportmonks.com/terms-of-service/ | 2026-07-16 | Public terms remain applicable to the permitted activities. |
+| Sportmonks Football API 3.0 docs | Public technical documentation | https://www.sportmonks.com/football-api-3-0-docs/ | 2026-07-16 | Technical reference only; plan and field availability remain subscription-dependent. |
+| Sportmonks FAQ | Public FAQ | https://www.sportmonks.com/faq/ | 2026-07-16 | Public reference that points usage back to applicable terms and licensing. |
+| Sportmonks caching references | Public technical content | [Public review notes](sportmonks_public_terms_review_notes.md) | 2026-07-16 | Technical background; permission conditions are recorded from the substantive response. |
+| Sportmonks authentication reference | Public technical content | https://www.sportmonks.com/glossary/api-authentication-and-authorisation/ | 2026-07-16 | Technical background for secure credentials; no credentials have been created. |
+| Sportmonks substantive permission response | Provider support response summarized outside raw correspondence | [Response summary](sportmonks_permission_response_summary.md) | 2026-07-16 | Explicit permissions and conditions recorded without ticket identifiers or confidential text. |
 
 ## Gate Decision Options
 
-- **continue:** only when required permissions are clear enough to prepare the checklist and decision record.
-- **defer:** when permissions are unclear or information is missing.
-- **reject:** when terms clearly block the intended use.
-- **stop:** when restricted data, credentials or payloads were accessed improperly.
+- **continue:** required permissions are clear enough to prepare the checklist and decision record.
+- **defer:** permissions are unclear or incomplete.
+- **reject:** terms block the intended use.
+- **stop:** restricted data, credentials or payloads were accessed improperly.
 
 ## Current Decision
 
-- Decision: defer
+- Previous decision: `defer`
+- Decision: `continue`
 - Rationale:
-  - Public sources were reviewed but are insufficient for project-specific permission.
-  - No applicable license or subscription terms reviewed.
-  - Payload inspection permission unknown.
-  - Cache permission unknown.
-  - Derived-output permission unknown.
-- Next allowed step: obtain and review applicable license or subscription terms, or explicit permission
-- Next forbidden step: payload inspection or credential setup
+  - Local evaluation is permitted using an available plan.
+  - Payload/schema inspection is permitted for assessment.
+  - Local caching is permitted under an active subscription and Terms of Service compliance.
+  - Internal normalized/canonical derived outputs are permitted.
+  - Internal derived-output documentation and demos are permitted if raw data is not exposed or redistributed.
+- Next allowed step: prepare the provider payload checklist and payload-specific decision record
+- Next forbidden step: any payload inspection, credential creation or local trial before that governance preparation is complete
 
 ## Impact On Sportmonks Candidate Review Pack
 
-- The related Sportmonks candidate review pack remains Stage 0 / Stage 1 pending.
-- Local Trial Plan remains blocked.
-- Checklist and decision record remain not created.
-- No final outcome is recorded.
+- Sportmonks remains unapproved as a provider.
+- The Stage 1 gate now permits the next governance step only.
+- The provider payload checklist and payload-specific decision record remain not created.
+- A local ignored trial may be planned but has not been performed.
+- No final provider outcome is recorded.
 
 ## Safety Checklist
 
@@ -141,20 +152,20 @@ Do not copy restricted legal text into this repository. Record short references,
 - [x] No SQLite writes performed.
 - [x] No scraping performed.
 - [x] No live provider calls performed.
-- [x] No current legal terms copied into git.
+- [x] No confidential response or ticket identifier copied into Git.
+- [ ] Provider payload checklist prepared.
+- [ ] Payload-specific decision record prepared.
 - [ ] Final `git status --short` is clean.
 
 ## Stop Conditions
 
-- Terms cannot be found or verified.
-- Terms are ambiguous for local development.
-- Payload inspection permission is absent or unclear.
-- Caching permission is absent or unclear.
-- Derived-output permission is absent or unclear.
-- Redistribution restrictions conflict with intended documentation or demo needs.
-- Credentials would be required before terms are reviewed.
-- Restricted data appears in git status.
+- The selected plan or competition scope does not cover the intended review.
+- Terms or plan conditions conflict with the intended local handling.
+- Raw data, credentials, confidential correspondence or ticket identifiers appear in Git.
+- Checklist or decision-record preparation identifies unresolved permission risks.
+- Local caching cannot comply with active-subscription or Terms of Service conditions.
+- Raw data would be exposed or redistributed through documentation or demos.
 
 ## Next Required Action
 
-The permission request has been sent, but no response has been received. The gate remains `defer`. The next action is to wait for a response or follow up outside the repository if needed, recording only non-sensitive summaries and references. Payload inspection and credential setup remain forbidden unless the completed gate explicitly allows them.
+Prepare the provider payload checklist and payload-specific decision record using only non-sensitive references. Define an ignored local trial plan, but do not inspect payloads, create credentials or perform the trial until those governance artifacts are prepared and reviewed.

@@ -16,10 +16,10 @@
 
 ## Recommended Next Steps
 
-1. Enviar o adaptar fuera del repositorio el borrador de solicitud de permiso.
-2. Registrar solo resumenes no sensibles si llega una respuesta real.
-3. Mantener `defer`, mover a `continue` o pasar a `reject` solo con evidencia explicita.
-4. Preparar checklist y decision record solo si el gate permite avanzar.
+1. Preparar el provider payload checklist.
+2. Preparar el payload-specific decision record.
+3. Definir un ignored local trial plan sin inspeccionar payloads todavia.
+4. Mantener payloads, credenciales, cache y correspondencia confidencial fuera de Git.
 
 ## v0.2.0 Market Context Layer
 
@@ -107,25 +107,23 @@ Completed and published.
 - Shortlist matrix: [`docs/v0_7_0_provider_candidate_shortlist_matrix.md`](docs/v0_7_0_provider_candidate_shortlist_matrix.md).
 - Initial shortlist: [`docs/provider_candidates/v0_7_0_initial_shortlist.md`](docs/provider_candidates/v0_7_0_initial_shortlist.md).
 - Current intake candidate: [Sportmonks Stage 0 only](docs/provider_candidates/sportmonks_candidate_review_pack.md); no approval and no payload inspection.
-- Sportmonks Stage 1 gate: [`partial public-source review/defer`](docs/provider_candidates/sportmonks_license_terms_gate.md); no approval and no payload inspection.
+- Sportmonks Stage 1 gate: [`continue`](docs/provider_candidates/sportmonks_license_terms_gate.md) for the next governance step only; no provider approval and no payload inspection performed.
 - Public review notes: [`docs/provider_candidates/sportmonks_public_terms_review_notes.md`](docs/provider_candidates/sportmonks_public_terms_review_notes.md).
 - Permission request sent: [docs/provider_candidates/sportmonks_permission_request_sent_log.md](docs/provider_candidates/sportmonks_permission_request_sent_log.md).
-- Ticket acknowledgement: [docs/provider_candidates/sportmonks_ticket_acknowledgement_log.md](docs/provider_candidates/sportmonks_ticket_acknowledgement_log.md); substantive response pending and gate remains `defer`.
+- Ticket acknowledgement: [docs/provider_candidates/sportmonks_ticket_acknowledgement_log.md](docs/provider_candidates/sportmonks_ticket_acknowledgement_log.md); exact ticket reference remains outside Git.
+- Substantive response summary: [docs/provider_candidates/sportmonks_permission_response_summary.md](docs/provider_candidates/sportmonks_permission_response_summary.md); Stage 1 moved to `continue` under recorded conditions.
 - La decision final puede ser accept, defer o reject.
 
 ## v0.8.0 Provider Permission Response Handling
 
 - Current milestone.
 - Focus: handle provider permission responses safely.
-- Current candidate: Sportmonks remains `defer` unless explicit permission changes the gate.
-- No payload inspection until the Stage 1 gate moves to `continue`.
-- No credentials until the gate permits them.
-- No real payloads or confidential terms in Git.
-- Any response must be summarized only in non-sensitive form.
-- Possible outcomes:
-  - `continue`: prepare the checklist and a payload-specific decision record.
-  - `defer`: keep the candidate blocked.
-  - `reject`: close the candidate path if terms block the intended use.
+- A non-sensitive Sportmonks substantive response summary exists.
+- The Stage 1 gate is `continue` for the next governance step only.
+- Sportmonks is not approved as a provider.
+- No payload inspection, credential creation or local trial has been performed.
+- Next: prepare the provider payload checklist and payload-specific decision record.
+- Raw correspondence, ticket identifiers, payloads, credentials and provider cache remain outside Git.
 - Plan: [`docs/v0_8_0_provider_permission_response_handling_plan.md`](docs/v0_8_0_provider_permission_response_handling_plan.md).
 
 ## Potential v0.4.x Follow-ups

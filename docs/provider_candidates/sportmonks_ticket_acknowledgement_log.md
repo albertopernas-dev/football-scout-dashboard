@@ -5,55 +5,38 @@
 - Candidate: Sportmonks
 - Related sent log: [Sportmonks Permission Request Sent Log](sportmonks_permission_request_sent_log.md)
 - Related gate: [Sportmonks License And Terms Gate](sportmonks_license_terms_gate.md)
+- Related response summary: [Sportmonks Permission Response Summary](sportmonks_permission_response_summary.md)
 - Acknowledgement status: received
 - Acknowledgement date: 2026-07-16
 - Ticket reference: received outside repository; exact ticket number not committed
-- Detailed permission response: not received
-- Gate impact: none
-- Gate decision: `defer`
-- Payload inspection: not allowed
-- Credentials setup: not allowed
-- Local trial: not allowed
+- Later substantive response: received and summarized
+- Gate impact at acknowledgement: none
+- Current gate decision: `continue` after substantive response review
+- Provider approval: no
+- Payload inspection performed: no
+- Credentials created: no
+- Local trial performed: no
 - Decision record: not created
-- Notes: This file records only that Sportmonks acknowledged receipt of the permission request. It does not include confidential correspondence, grant permission, approve Sportmonks or authorize payload inspection.
+- Notes: This file records only that Sportmonks acknowledged receipt of the permission request. It does not include confidential correspondence, grant provider approval or authorize skipping the checklist and decision record.
 
 ## What Was Received
 
-Sportmonks acknowledged receipt of the permission clarification request. A support ticket was created by Sportmonks.
+Sportmonks acknowledged receipt of the permission clarification request and created a support ticket. The exact ticket number and full email content remain outside Git.
 
-The acknowledgement says the request is being reviewed and that a detailed response is expected later. The exact ticket number and full email content are intentionally kept outside Git.
+The acknowledgement itself contained no substantive permission decision and did not change the gate. A substantive response was received later and is recorded only in the [Sportmonks Permission Response Summary](sportmonks_permission_response_summary.md).
 
-No substantive permission answer has been received or reviewed yet.
+## Gate Timeline
 
-## Current Gate Impact
-
-- The acknowledgement does not change the gate.
-- The Sportmonks gate remains `defer`.
-- No payload inspection is allowed.
-- No credentials may be created.
-- No provider data may be cached.
-- No derived outputs may be generated.
-- No checklist or payload-specific decision record should be created until a substantive response or applicable terms support moving the gate.
-
-## Awaiting Substantive Response
-
-- Substantive response received: no
-- Expected next evidence:
-  - applicable license or subscription terms;
-  - explicit permission or restriction;
-  - clarification of payload inspection;
-  - clarification of local caching;
-  - clarification of derived outputs;
-  - clarification of redistribution, demo and attribution; and
-  - clarification of credential or API key handling.
-- Next action: wait for a substantive response.
+- The acknowledgement did not change the gate.
+- At acknowledgement time, the gate remained `defer`.
+- The later substantive response supported moving the gate to `continue` for the next governance step.
+- No payload inspection, credential creation, local trial or provider approval has occurred.
 
 ## Response Handling Reminder
 
 - Do not paste confidential provider replies into Git.
-- Do not commit support ticket numbers unless explicitly approved.
+- Do not commit support ticket numbers or ticket URLs.
 - Record only non-sensitive summaries.
 - Keep legal terms, attachments or private correspondence outside the repository if restricted.
-- If the detailed response is unclear, keep the gate as `defer`.
-- If the response blocks the intended use, move toward `reject`.
-- If the response explicitly permits required activities, evaluate whether the gate can move to `continue`.
+- Do not treat `continue` as provider approval.
+- Prepare the checklist and payload-specific decision record before any payload inspection or credential creation.

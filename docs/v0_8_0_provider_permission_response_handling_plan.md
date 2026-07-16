@@ -2,9 +2,9 @@
 
 ## Objective
 
-v0.8.0 defines how to handle a real provider response or applicable license or subscription terms. It does not assume that a response has been received, approve Sportmonks, or authorize payload inspection, credentials, caching, derived outputs or integration.
+v0.8.0 defines how to handle a real provider response or applicable license or subscription terms. A substantive Sportmonks response has now been recorded only as a non-sensitive summary. This does not approve Sportmonks or authorize skipping the checklist and payload-specific decision record.
 
-The milestone prepares a controlled process for moving the gate to `continue`, `defer` or `reject` based only on explicit evidence.
+The recorded evidence supports moving the Stage 1 gate to `continue` for the next governance step only. No payload has been inspected, no credentials have been created and no integration has started.
 
 ## Starting Point
 
@@ -13,9 +13,9 @@ v0.7.0 was published as a documentation and governance milestone. Sportmonks has
 - a Stage 0 intake pack;
 - a Stage 1 license and terms gate;
 - partial public-source review notes; and
-- a permission request sent log; a [ticket acknowledgement log](provider_candidates/sportmonks_ticket_acknowledgement_log.md) exists, but the substantive permission response is still pending.
+- a permission request sent log; a [ticket acknowledgement log](provider_candidates/sportmonks_ticket_acknowledgement_log.md); and a [non-sensitive substantive response summary](provider_candidates/sportmonks_permission_response_summary.md).
 
-The current gate decision is `defer`. The external dependency is applicable license or subscription terms, or explicit written permission.
+The current gate decision is `continue`. This permits preparation of the checklist, payload-specific decision record and ignored local trial plan; it does not approve the provider or permit bypassing those controls.
 
 ## Scope
 
@@ -30,8 +30,8 @@ In scope:
 
 Out of scope:
 
-- Payload inspection before the gate moves to `continue`.
-- Credential creation before the gate moves to `continue`.
+- Payload inspection before the checklist and payload-specific decision record are prepared.
+- Credential creation before the checklist and payload-specific decision record are prepared.
 - API calls.
 - Scraping.
 - Provider caching.
@@ -56,11 +56,9 @@ Out of scope:
 
 ## Response Summary Document
 
-A future response may be summarized in:
+The substantive response is recorded in [Sportmonks Permission Response Summary](provider_candidates/sportmonks_permission_response_summary.md).
 
-`docs/provider_candidates/sportmonks_permission_response_summary.md`
-
-Create this file only when a real response or applicable reviewed terms exist. It must contain only a non-sensitive summary and must not include confidential text, payloads or credentials.
+The summary contains no confidential text, ticket identifiers, payloads or credentials. The raw response remains outside Git.
 
 ## Gate Decision Rules
 
@@ -69,7 +67,7 @@ Create this file only when a real response or applicable reviewed terms exist. I
 - **reject:** when terms block the intended use.
 - **stop:** when restricted data, credentials or payloads were accessed improperly.
 
-## Required Evidence Before Continue
+## Evidence Basis For Continue
 
 - Applicable terms, license or subscription scope identified.
 - Payload inspection permission clear.
@@ -89,8 +87,8 @@ Create this file only when a real response or applicable reviewed terms exist. I
 - Do not commit credentials.
 - Do not commit provider cache.
 - Do not commit `.local.csv` outputs from provider data.
-- Do not inspect payloads until the gate moves to `continue`.
-- Do not create credentials until the gate permits it.
+- Do not inspect payloads until the checklist and payload-specific decision record are prepared.
+- Do not create credentials until the checklist and payload-specific decision record are prepared and secure local handling is confirmed.
 - Do not add parser or transform code until a later explicit decision.
 
 ## Acceptance Criteria
@@ -101,7 +99,7 @@ Create this file only when a real response or applicable reviewed terms exist. I
 - [ ] ROADMAP identifies v0.8.0 as the current milestone.
 - [ ] No provider response is invented.
 - [ ] No provider approval is claimed.
-- [ ] No payload inspection is authorized.
+- [ ] No payload inspection has been performed.
 - [ ] No code is changed.
 - [ ] No data files are generated.
 - [ ] `git diff --check` passes.
@@ -109,10 +107,10 @@ Create this file only when a real response or applicable reviewed terms exist. I
 
 ## Next Steps
 
-1. Wait for the substantive response or follow up outside the repository if needed.
-2. If a substantive response arrives, create a non-sensitive response summary.
-3. Update the gate decision only from explicit evidence.
-4. If the gate moves to `continue`, prepare the checklist.
-5. If the gate remains `defer`, keep the blocker documented.
-6. If the gate moves to `reject`, close the candidate path.
-7. Continue to keep all payloads, credentials and confidential material outside Git.
+1. Prepare the provider payload checklist.
+2. Prepare a payload-specific decision record.
+3. Define an ignored local trial plan.
+4. Do not inspect a payload until the checklist and decision record are prepared and reviewed.
+5. Create credentials securely only after those governance artifacts are ready and the applicable plan is selected.
+6. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
+7. Continue to treat Sportmonks as unapproved until a later explicit decision.
