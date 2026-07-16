@@ -20,6 +20,8 @@ Do not use it for:
 - Real data that cannot be stored locally under the applicable terms.
 - Direct app integration.
 
+Before Stage 0, the [provider candidate shortlist matrix](v0_7_0_provider_candidate_shortlist_matrix.md) may be used to decide whether a candidate merits intake. The matrix does not approve a provider or payload.
+
 ## Review Stages
 
 ### Stage 0 - Candidate Intake
