@@ -37,6 +37,7 @@ In scope:
 - Record the [Sportmonks Implementation Plan](provider_candidates/sportmonks_implementation_plan.md) as documentation only before any first-code-implementation approval decision.
 - Record the [Sportmonks First Code Implementation Approval Decision](provider_decisions/sportmonks_first_code_implementation_approval_decision.md) before any implementation begins.
 - Record the [Sportmonks Implementation Summary](provider_candidates/sportmonks_implementation_summary.md) before any local preview run decision.
+- Record the [Sportmonks Local Preview Run Approval Decision](provider_decisions/sportmonks_local_preview_run_approval_decision.md) before any real cache preview.
 
 Out of scope:
 
@@ -136,6 +137,7 @@ The summary contains no confidential text, ticket identifiers, payloads or crede
 17. The [Sportmonks Implementation Plan](provider_candidates/sportmonks_implementation_plan.md) is created as documentation only.
 18. The [Sportmonks First Code Implementation Approval Decision](provider_decisions/sportmonks_first_code_implementation_approval_decision.md) approved only the listed local-only, default-off, synthetic-test-first and no-network files.
 19. The [Sportmonks Implementation Summary](provider_candidates/sportmonks_implementation_summary.md) records that the first scaffold is created without API calls or real provider payloads.
-20. The next action is a docs-only local preview run approval decision.
-21. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
-22. Continue to treat Sportmonks as unapproved; API calls, integration, local trial and provider approval remain blocked.
+20. The [Sportmonks Local Preview Run Approval Decision](provider_decisions/sportmonks_local_preview_run_approval_decision.md) approves exactly one future aggregate preview against one ignored cache input.
+21. The next action is to run that one approved local preview.
+22. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
+23. Continue to treat Sportmonks as unapproved; API calls, local trial and provider approval remain blocked.

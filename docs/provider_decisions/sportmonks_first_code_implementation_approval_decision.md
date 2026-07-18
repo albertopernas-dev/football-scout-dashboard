@@ -8,6 +8,7 @@
 - Related implementation-plan readiness decision: [Sportmonks Implementation Plan Readiness Decision](sportmonks_implementation_plan_readiness_decision.md)
 - Related payload decision record: [Sportmonks Payload Decision Record](sportmonks_payload_decision_record.md)
 - Related implementation summary: [Sportmonks Implementation Summary](../provider_candidates/sportmonks_implementation_summary.md)
+- Related local preview approval decision: [Sportmonks Local Preview Run Approval Decision](sportmonks_local_preview_run_approval_decision.md)
 - Provider approval: no
 - First code implementation approved: yes, strict local-only scope
 - Code implemented in this block: yes, strict local-only scaffold
@@ -140,6 +141,6 @@ The future implementation is acceptable only if:
 
 ## Next Required Action
 
-A later docs-only block may decide whether the created scaffold is sufficient to approve a local preview run using an ignored local cache path.
+A later preview block may run one approved local preview under the [strict local preview decision](sportmonks_local_preview_run_approval_decision.md).
 
-No local preview run against real provider cache is approved by this decision. API calls, SQLite writes, Streamlit activation, `.local.csv`, local trial and provider approval remain forbidden.
+API calls, `.local.csv`, SQLite writes, Streamlit activation, local trial and provider approval remain forbidden.

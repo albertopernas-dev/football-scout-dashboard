@@ -20,6 +20,7 @@
 - Implementation plan: [created docs-only](sportmonks_implementation_plan.md)
 - First code implementation approval: [approved under strict local-only scope](../provider_decisions/sportmonks_first_code_implementation_approval_decision.md)
 - Implementation summary: [first local-only scaffold created](sportmonks_implementation_summary.md)
+- Local preview run approval: [approved / not executed](../provider_decisions/sportmonks_local_preview_run_approval_decision.md)
 - Checklist status: draft/pre-trial
 - Gate decision: `continue`
 - Provider approval: no
@@ -61,7 +62,8 @@ It does not activate Sportmonks data in the app or write provider data to SQLite
 | Endpoint scope | Team Squad by Team and Season ID only. | access confirmed | The confirmed squad endpoint is the sole endpoint allowed by the minimal field review decision. |
 | Field scope | Review only field names and high-level categories for the confirmed squad endpoint. | reviewed minimal / passed | [Summary](sportmonks_minimal_payload_field_review_summary.md) records identity, team, season, position and jersey categories; dates/freshness/provenance remain unclear. |
 | Transform planning | Create a documentation-only design plan from the reviewed shape. | created docs-only | [Plan](sportmonks_transform_design_plan.md) defines candidates and open decisions; first code scope is governed separately by the approval decision. |
-| Implementation planning | Create a documentation-only implementation plan. | first local-only scaffold created | The [implementation summary](sportmonks_implementation_summary.md) records the synthetic, local-only scaffold; preview approval remains separate. |
+| Implementation planning | Create a documentation-only implementation plan. | first local-only scaffold created | The [implementation summary](sportmonks_implementation_summary.md) records the synthetic, local-only scaffold; preview execution is governed by the separate approval decision. |
+| Local preview | Run one local aggregate preview against one ignored cache input. | approved / not executed | The [preview approval decision](../provider_decisions/sportmonks_local_preview_run_approval_decision.md) defines the strict one-run scope. |
 | Payload minimization | One FC København squad, one Denmark Superliga season, minimal payload. | proposed | Avoid broad pulls; season and team IDs are confirmed. |
 | Raw data handling | Confirm raw payloads stay outside Git. | verified for ID discovery | Raw ID discovery responses remain only under the ignored local provider cache path. |
 | Cache handling | Confirm cache path, retention and cleanup. | partial | ID discovery cache is ignored and uncommitted; future trial retention and cleanup remain pending. |
@@ -141,7 +143,7 @@ The requirements below are recorded as passed in the [local credential setup ver
 
 The [payload-specific decision record](../provider_decisions/sportmonks_payload_decision_record.md) now exists as a draft/pre-trial artifact.
 
-Minimal ID discovery, confirmed ID scope review and minimal field review have passed, and the [first local-only scaffold](sportmonks_implementation_summary.md) is created with synthetic tests only. Cleanup remains pending, the trial has not been performed and provider approval remains no. The next allowed step is a docs-only local preview run approval decision.
+Minimal ID discovery, confirmed ID scope review and minimal field review have passed, and the [first local-only scaffold](sportmonks_implementation_summary.md) is created with synthetic tests only. One local preview run is approved but not executed. Cleanup remains pending, the trial has not been performed and provider approval remains no.
 
 ## Acceptance Criteria
 

@@ -9,6 +9,7 @@
 - Related payload decision record: [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md)
 - Related first-code approval decision: [Sportmonks First Code Implementation Approval Decision](../provider_decisions/sportmonks_first_code_implementation_approval_decision.md)
 - Related implementation summary: [Sportmonks Implementation Summary](sportmonks_implementation_summary.md)
+- Related local preview approval decision: [Sportmonks Local Preview Run Approval Decision](../provider_decisions/sportmonks_local_preview_run_approval_decision.md)
 - Provider approval: no
 - First code implementation approved: yes, strict local-only future block
 - Implementation created: yes, strict local-only scaffold
@@ -244,6 +245,6 @@ Tests must use synthetic fixtures only. No real Sportmonks raw payloads, player 
 
 ## Next Required Action
 
-A later docs-only block may decide whether the [created scaffold](sportmonks_implementation_summary.md) is sufficient to approve a local preview run using an ignored local cache path.
+A later preview block may run one approved local preview under the [strict local preview decision](../provider_decisions/sportmonks_local_preview_run_approval_decision.md).
 
-No local preview run against real provider cache is approved. API calls, `.local.csv`, SQLite writes, Streamlit activation, a local trial and provider approval remain forbidden.
+API calls, `.local.csv`, SQLite writes, Streamlit activation, a local trial and provider approval remain forbidden.

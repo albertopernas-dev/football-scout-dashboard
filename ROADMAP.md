@@ -16,10 +16,10 @@
 
 ## Recommended Next Steps
 
-1. Decidir en un bloque docs-only si el scaffold permite un preview local contra cache ignorada.
-2. Mantener cualquier preview default-off, sin red y separado de trial o app integration.
-3. No hacer llamadas API ni escribir SQLite durante esa decision.
-4. Mantener respuestas raw, credenciales, cache, `.local.csv`, local trial, SQLite, Streamlit app integration y provider approval fuera del flujo tracked.
+1. Ejecutar un unico preview local aprobado contra un archivo explicito de cache ignorada.
+2. Mantener el preview default-off, sin red y limitado al resumen agregado.
+3. No revisar manualmente raw JSON ni hacer llamadas API.
+4. Mantener `.local.csv`, local trial, SQLite, Streamlit app integration y provider approval fuera del flujo.
 
 ## v0.2.0 Market Context Layer
 
@@ -140,13 +140,14 @@ Completed and published.
 - Sportmonks implementation plan created docs-only.
 - First local-only code implementation approval decision created under strict file scope.
 - First local-only Sportmonks transform scaffold created with synthetic tests only; no network or real provider payloads.
+- Local preview run approval decision created for exactly one ignored cache input; preview not executed yet.
 - Sportmonks secure credential setup verified as local-only.
 - Local `.env` credential setup verified outside Git; the token remains untracked and undocumented.
 - Trial scope remains one team, one season and a minimal payload, with Team Squad by Team and Season ID as the primary candidate endpoint.
-- Next: decide docs-only whether to approve a local preview run against ignored cache.
+- Next: run one approved local preview against ignored cache.
 
 - Only 3 minimal ID discovery calls performed; still no broad payload inspection or local trial.
-- Still no API calls, raw JSON review, local trial, SQLite writes, Streamlit app integration or provider approval.
+- Still no API calls, broad payload inspection, `.local.csv`, local trial, SQLite writes, Streamlit app integration or provider approval.
 - Raw correspondence, ticket identifiers, payloads, credentials and provider cache remain outside Git.
 - Plan: [`docs/v0_8_0_provider_permission_response_handling_plan.md`](docs/v0_8_0_provider_permission_response_handling_plan.md).
 
