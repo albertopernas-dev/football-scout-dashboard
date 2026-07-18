@@ -7,6 +7,7 @@
 - Related ID discovery plan: [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md)
 - Related credential verification: [Sportmonks Local Credential Setup Verification](sportmonks_local_credential_setup_verification.md)
 - Confirmed ID scope review: [passed](sportmonks_confirmed_id_scope_review.md)
+- Minimal payload field review decision: [approved for a future minimal review](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md)
 - Provider approval: no
 - API calls performed: yes, minimal ID discovery only
 - Broad payload inspection performed: no
@@ -43,7 +44,7 @@ Three API calls were performed. No URL containing the token was recorded.
 
 Minimal ID discovery confirms the IDs needed for the later scoped trial. This does not approve Sportmonks as a provider and does not authorize broad payload pulls.
 
-The [confirmed ID scope review](sportmonks_confirmed_id_scope_review.md) has passed. A later explicit block may decide whether a minimal payload field review is allowed.
+The [confirmed ID scope review](sportmonks_confirmed_id_scope_review.md) has passed. The completed discovery remains minimal, and a [strict decision](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md) now governs any future minimal payload field review.
 
 ## Local Raw Response Handling
 
@@ -65,4 +66,4 @@ Raw responses were stored only under the ignored local provider cache path `data
 
 The [confirmed ID scope review](sportmonks_confirmed_id_scope_review.md) has passed.
 
-The next later block may prepare the explicit decision for a minimal payload field review; this review grants no additional API calls.
+A later explicit block may execute the minimal payload field review under the [approved decision](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md). This summary grants no additional API calls.

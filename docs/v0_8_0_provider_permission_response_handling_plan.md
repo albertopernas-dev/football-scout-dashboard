@@ -29,14 +29,15 @@ In scope:
 - Keep confidential terms and raw responses out of Git.
 - Record minimal ID discovery results only as non-sensitive summaries.
 - Record a docs-only confirmed ID scope review before any payload field review decision.
+- Record a strict minimal payload field review decision before any field review is executed.
 
 Out of scope:
 
 - Payload inspection before the checklist and payload-specific decision record are prepared.
 - Credential creation before the checklist and payload-specific decision record are prepared.
-- API calls beyond the completed minimal ID discovery.
+- API calls beyond the completed minimal ID discovery, except a later explicit minimal field review under its strict decision.
 - Scraping.
-- Provider caching beyond the ignored local ID discovery responses.
+- Provider caching beyond the existing ignored ID discovery response or the single ignored response allowed by the strict field review decision.
 - `.local.csv` outputs from provider data.
 - SQLite writes.
 - Streamlit activation.
@@ -120,7 +121,8 @@ The summary contains no confidential text, ticket identifiers, payloads or crede
 9. The [Sportmonks Local Credential Setup Verification](provider_candidates/sportmonks_local_credential_setup_verification.md) records that local credential setup passed outside Git.
 10. The [Sportmonks Minimal ID Discovery Summary](provider_candidates/sportmonks_minimal_id_discovery_summary.md) records 3 scoped calls and HTTP 200 squad endpoint access.
 11. The [Sportmonks Confirmed ID Scope Review](provider_candidates/sportmonks_confirmed_id_scope_review.md) has passed.
-12. The next action is a later explicit minimal payload field review decision with exact endpoint, fields, call limit, local handling, summary format and stop conditions.
-13. No additional API calls, payload inspection or trial activity are allowed by this docs-only review.
-14. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
-15. Continue to treat Sportmonks as unapproved until a later explicit decision.
+12. The [Sportmonks Minimal Payload Field Review Decision](provider_decisions/sportmonks_minimal_payload_field_review_decision.md) approves only a future strictly scoped review.
+13. The next action is to execute that minimal field review in a later explicit block under its endpoint, field, call-limit, local-handling, summary and stop-condition constraints.
+14. No API calls, payload inspection or trial activity are performed by this docs-only decision block.
+15. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
+16. Continue to treat Sportmonks as unapproved; integration and trial activity remain blocked.

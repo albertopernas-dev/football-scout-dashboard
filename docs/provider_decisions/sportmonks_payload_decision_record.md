@@ -13,6 +13,7 @@
 - Related credential verification: [Sportmonks Local Credential Setup Verification](../provider_candidates/sportmonks_local_credential_setup_verification.md)
 - Discovery summary: [Sportmonks Minimal ID Discovery Summary](../provider_candidates/sportmonks_minimal_id_discovery_summary.md)
 - Confirmed ID scope review: [passed](../provider_candidates/sportmonks_confirmed_id_scope_review.md)
+- Minimal payload field review decision: [approved under strict scope](sportmonks_minimal_payload_field_review_decision.md)
 - Stage 1 gate decision: `continue`
 - Provider approval: no
 - Production approval: no
@@ -150,22 +151,24 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 
 ## Current Decision
 
-- Current decision: `prepare_trial_only`
+- Current decision: `approved-for-minimal-field-review`
 - Meaning:
   - the checklist exists;
   - this decision record exists;
-  - a local trial may be planned;
   - local credential setup is verified outside Git;
   - minimal ID discovery passed with confirmed season, team and endpoint access;
-  - the confirmed ID scope review passed; and
+  - the confirmed ID scope review passed;
+  - minimal payload field review is approved under a strict scope;
+  - Sportmonks provider approval remains no; and
   - broad payload inspection has not been performed.
 - Next allowed step:
-  - prepare the minimal payload field review decision only in a later explicit block.
+  - execute the minimal payload field review only in a later explicit block under the strict decision.
 
 - Still forbidden:
   - credential exposure or commitment;
   - broad payload inspection;
-  - additional API calls without a later explicit payload field review decision;
+  - local trial;
+  - additional API calls outside a later explicit minimal field review under the strict decision;
   - SQLite writes;
   - Streamlit activation;
   - parser or transform code; and
@@ -197,6 +200,6 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 
 ## Next Required Action
 
-Minimal ID discovery and the [confirmed ID scope review](../provider_candidates/sportmonks_confirmed_id_scope_review.md) have passed.
+Minimal ID discovery and the [confirmed ID scope review](../provider_candidates/sportmonks_confirmed_id_scope_review.md) have passed. The [minimal payload field review decision](sportmonks_minimal_payload_field_review_decision.md) approves only a future strictly scoped field review.
 
-The next later block may prepare the explicit minimal payload field review decision. Broad payload inspection, SQLite, Streamlit, parser/transform code and provider approval remain forbidden.
+A later explicit block may execute that minimal field review. Broad payload inspection, local trial, SQLite, Streamlit, parser/transform code and provider approval remain forbidden.

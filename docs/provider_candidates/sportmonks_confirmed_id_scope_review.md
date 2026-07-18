@@ -7,6 +7,7 @@
 - Related minimal ID discovery summary: [Sportmonks Minimal ID Discovery Summary](sportmonks_minimal_id_discovery_summary.md)
 - Related ID discovery plan: [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md)
 - Related credential verification: [Sportmonks Local Credential Setup Verification](sportmonks_local_credential_setup_verification.md)
+- Minimal payload field review decision: [approved for a future minimal review](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md)
 - Provider approval: no
 - IDs confirmed: yes
 - Broad payload inspection performed: no
@@ -65,6 +66,6 @@
 
 ## Next Required Action
 
-A later explicit block may prepare a minimal payload field review decision. That block must define the exact allowed endpoint, fields or categories to inspect, maximum calls, local raw handling, summary format and stop conditions.
+A later explicit block may execute the minimal payload field review under the [approved decision](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md).
 
-No additional API calls are allowed by this docs-only review.
+No API calls are performed or granted by the current docs-only block.

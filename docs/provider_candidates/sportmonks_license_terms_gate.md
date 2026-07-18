@@ -16,6 +16,7 @@
 - Local credential verification: [Sportmonks Local Credential Setup Verification](sportmonks_local_credential_setup_verification.md)
 - Discovery summary: [Sportmonks Minimal ID Discovery Summary](sportmonks_minimal_id_discovery_summary.md)
 - Confirmed ID scope review: [passed](sportmonks_confirmed_id_scope_review.md)
+- Minimal payload field review decision: [approved under strict scope](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md)
 - Gate status: substantive permission response reviewed
 - Gate decision: `continue`
 - Detailed permission response: received
@@ -140,8 +141,8 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
   - Local caching is permitted under an active subscription and Terms of Service compliance.
   - Internal normalized/canonical derived outputs are permitted.
   - Internal derived-output documentation and demos are permitted if raw data is not exposed or redistributed.
-- Next allowed step: prepare the minimal payload field review decision only in a later explicit block
-- Next forbidden step: broad payload inspection, local trial or app integration before those details are documented and reviewed
+- Next allowed step: execute a future minimal payload field review only under the strict decision
+- Next forbidden step: broad payload inspection, local trial or app integration
 
 ## Impact On Sportmonks Candidate Review Pack
 
@@ -178,6 +179,6 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 
 ## Next Required Action
 
-Minimal ID discovery and the [confirmed ID scope review](sportmonks_confirmed_id_scope_review.md) have passed.
+Minimal ID discovery and the [confirmed ID scope review](sportmonks_confirmed_id_scope_review.md) have passed. The [minimal payload field review decision](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md) defines the only allowed future review scope.
 
-A later explicit block may prepare the minimal payload field review decision. Broad payload inspection, the trial and app integration remain blocked.
+A later explicit block may execute that minimal field review. Broad pulls, the local trial and app integration remain blocked.

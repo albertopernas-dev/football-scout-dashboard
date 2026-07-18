@@ -12,6 +12,7 @@
 - Related credential verification: [Sportmonks Local Credential Setup Verification](sportmonks_local_credential_setup_verification.md)
 - Discovery summary: [Sportmonks Minimal ID Discovery Summary](sportmonks_minimal_id_discovery_summary.md)
 - Confirmed ID scope review: [passed](sportmonks_confirmed_id_scope_review.md)
+- Minimal payload field review decision: [approved for a future minimal review](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md)
 - Checklist status: draft/pre-trial
 - Gate decision: `continue`
 - Provider approval: no
@@ -50,8 +51,8 @@ It does not activate Sportmonks data in the app or write provider data to SQLite
 | Competition scope | Denmark Superliga, league_id 271. | confirmed | Confirmed included in the Free Plan by user screenshot. |
 | Season scope | Denmark Superliga 2026/2027, `season_id 27897`. | confirmed | Confirmed by [minimal ID discovery](sportmonks_minimal_id_discovery_summary.md). |
 | Team scope | FC København, `team_id 85`. | confirmed | Confirmed by [minimal ID discovery](sportmonks_minimal_id_discovery_summary.md). |
-| Endpoint scope | Primary candidate: Team Squad by Team and Season ID; Players endpoint only if needed for schema/include validation. | access confirmed | Primary endpoint returned HTTP 200 with data; no broad field review performed. |
-| Field scope | Identify desired fields/categories for Market Context fit. | pending | Identity, squad/team, dates, metadata and Market Context if available. |
+| Endpoint scope | Team Squad by Team and Season ID only. | access confirmed | The confirmed squad endpoint is the sole endpoint allowed by the minimal field review decision. |
+| Field scope | Review only field names and high-level categories for the confirmed squad endpoint. | approved for minimal review / not executed | Exact future review boundaries are defined in the minimal payload field review decision. |
 | Payload minimization | One FC København squad, one Denmark Superliga season, minimal payload. | proposed | Avoid broad pulls; season and team IDs are confirmed. |
 | Raw data handling | Confirm raw payloads stay outside Git. | verified for ID discovery | Raw ID discovery responses remain only under the ignored local provider cache path. |
 | Cache handling | Confirm cache path, retention and cleanup. | partial | ID discovery cache is ignored and uncommitted; future trial retention and cleanup remain pending. |
@@ -131,7 +132,7 @@ The requirements below are recorded as passed in the [local credential setup ver
 
 The [payload-specific decision record](../provider_decisions/sportmonks_payload_decision_record.md) now exists as a draft/pre-trial artifact.
 
-Minimal ID discovery and the confirmed ID scope review have passed. Field scope and cleanup remain pending, and no trial or broad payload inspection has been performed. A later explicit block may prepare the minimal payload field review decision.
+Minimal ID discovery and the confirmed ID scope review have passed. Minimal field review scope is approved but not executed under the [strict decision](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md). Cleanup remains pending, and no trial or broad payload inspection has been performed.
 
 ## Acceptance Criteria
 
