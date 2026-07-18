@@ -7,6 +7,7 @@
 - Related suitability decision: [Sportmonks Transform Design Suitability Decision](../provider_decisions/sportmonks_transform_design_suitability_decision.md)
 - Related minimal payload field review summary: [Sportmonks Minimal Payload Field Review Summary](sportmonks_minimal_payload_field_review_summary.md)
 - Related payload decision record: [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md)
+- Implementation plan readiness decision: [approved for docs-only planning](../provider_decisions/sportmonks_implementation_plan_readiness_decision.md)
 - Provider approval: no
 - Transform implementation approved: no
 - Transform code created: no
@@ -206,8 +207,8 @@ No label endpoint, include, player-detail call or additional API call is approve
 
 ## Next Required Action
 
-A later docs-only block may decide whether this transform design plan is sufficient to approve an implementation plan.
+The [implementation plan readiness decision](../provider_decisions/sportmonks_implementation_plan_readiness_decision.md) approves creation of a future docs-only implementation plan.
 
-An implementation plan is still not implementation.
+That future implementation plan is still not implementation.
 
-No transform code, API calls, `.local.csv`, SQLite writes, Streamlit activation, local trial or provider approval are allowed by this document.
+No transform code, API calls, raw JSON review, `.local.csv`, SQLite writes, Streamlit activation, local trial or provider approval are allowed by this document.

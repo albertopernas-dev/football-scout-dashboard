@@ -20,6 +20,7 @@
 - Minimal payload field review summary: [passed](sportmonks_minimal_payload_field_review_summary.md)
 - Transform design suitability decision: [approved for docs-only planning](../provider_decisions/sportmonks_transform_design_suitability_decision.md)
 - Transform design plan: [created docs-only](sportmonks_transform_design_plan.md)
+- Implementation plan readiness decision: [approved for docs-only planning](../provider_decisions/sportmonks_implementation_plan_readiness_decision.md)
 - Gate status: substantive permission response reviewed
 - Gate decision: `continue`
 - Detailed permission response: received
@@ -145,8 +146,8 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
   - Local caching is permitted under an active subscription and Terms of Service compliance.
   - Internal normalized/canonical derived outputs are permitted.
   - Internal derived-output documentation and demos are permitted if raw data is not exposed or redistributed.
-- Next allowed step: make a docs-only implementation-plan readiness decision
-- Next forbidden step: implementation, additional API calls, broad payload inspection, local trial, app integration or provider approval
+- Next allowed step: create a docs-only implementation plan
+- Next forbidden step: implementation, API calls, raw JSON review, broad payload inspection, local trial, app integration or provider approval
 
 ## Impact On Sportmonks Candidate Review Pack
 
@@ -185,4 +186,4 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 
 Minimal ID discovery, the [confirmed ID scope review](sportmonks_confirmed_id_scope_review.md) and the [minimal payload field review](sportmonks_minimal_payload_field_review_summary.md) have passed.
 
-The transform design plan is created docs-only. A later docs-only block may decide implementation-plan readiness. Implementation, API calls, broad pulls, local trial, app integration and provider approval remain blocked.
+The transform design plan is created docs-only, and implementation-plan readiness is approved for documentation only. A later docs-only block may create the implementation plan. Implementation, API calls, raw JSON review, broad pulls, local trial, app integration and provider approval remain blocked.
