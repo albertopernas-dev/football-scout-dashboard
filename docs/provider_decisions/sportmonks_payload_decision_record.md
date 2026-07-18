@@ -20,6 +20,7 @@
 - Implementation plan readiness decision: [approved for docs-only planning](sportmonks_implementation_plan_readiness_decision.md)
 - Implementation plan: [created docs-only](../provider_candidates/sportmonks_implementation_plan.md)
 - First code implementation approval: [approved under strict local-only scope](sportmonks_first_code_implementation_approval_decision.md)
+- Implementation summary: [first local-only scaffold created](../provider_candidates/sportmonks_implementation_summary.md)
 - Stage 1 gate decision: `continue`
 - Provider approval: no
 - Production approval: no
@@ -157,7 +158,7 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 
 ## Current Decision
 
-- Current decision: `first-code-implementation-approved-local-only`
+- Current decision: `first-local-only-scaffold-created`
 - Transform design decision: `transform-design-plan-created-docs-only`
 - Implementation plan decision: `implementation-plan-created-docs-only`
 - First code implementation decision: `approved-local-only-strict-scope`
@@ -172,12 +173,12 @@ It does not inspect payloads, select a final provider, expose credentials or sta
   - broad payload inspection remains no; and
   - Sportmonks provider approval remains no.
 - Next allowed step:
-  - create the future local-only first code implementation under the approved file scope only.
+  - make a docs-only local preview run approval decision.
 
 - Still forbidden:
   - credential exposure or commitment;
   - broad payload inspection;
-  - raw JSON review;
+  - raw JSON review unless separately approved for a local preview;
   - `.local.csv` outputs;
   - code outside the approved first implementation file scope;
   - local trial;
@@ -215,4 +216,4 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 
 Minimal ID discovery, the [confirmed ID scope review](../provider_candidates/sportmonks_confirmed_id_scope_review.md) and the [minimal payload field review](../provider_candidates/sportmonks_minimal_payload_field_review_summary.md) have passed.
 
-The [first-code implementation approval decision](sportmonks_first_code_implementation_approval_decision.md) permits a future local-only implementation under the approved file scope only. API calls, raw JSON review, broad payload inspection, local trial, SQLite, Streamlit and provider approval remain forbidden.
+The [implementation summary](../provider_candidates/sportmonks_implementation_summary.md) records the first local-only scaffold. The next allowed step is a docs-only local preview run approval decision. API calls, raw JSON review unless separately approved for that preview, broad payload inspection, local trial, SQLite, Streamlit and provider approval remain forbidden.

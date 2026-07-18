@@ -1,0 +1,20 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "player_id": 10001,
+      "team_id": 85,
+      "season_id": 27897,
+      "position_id": 24,
+      "jersey_number": 9,
+      "has_values": true
+    },
+    {
+      "id": 2,
+      "player_id": 10002,
+      "team_id": 85,
+      "season_id": 27897,
+      "has_values": false
+    }
+  ]
+}

@@ -8,10 +8,11 @@
 - Related transform design plan: [Sportmonks Transform Design Plan](sportmonks_transform_design_plan.md)
 - Related payload decision record: [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md)
 - Related first-code approval decision: [Sportmonks First Code Implementation Approval Decision](../provider_decisions/sportmonks_first_code_implementation_approval_decision.md)
+- Related implementation summary: [Sportmonks Implementation Summary](sportmonks_implementation_summary.md)
 - Provider approval: no
 - First code implementation approved: yes, strict local-only future block
-- Implementation created: no
-- Code created in this block: no
+- Implementation created: yes, strict local-only scaffold
+- Code created in this block: yes, approved scaffold only
 - API calls performed in this block: no
 - Raw JSON reviewed in this block: no
 - `.local.csv` outputs created: no
@@ -243,6 +244,6 @@ Tests must use synthetic fixtures only. No real Sportmonks raw payloads, player 
 
 ## Next Required Action
 
-A future local-only code implementation block may create only the files approved by the [first-code implementation approval decision](../provider_decisions/sportmonks_first_code_implementation_approval_decision.md).
+A later docs-only block may decide whether the [created scaffold](sportmonks_implementation_summary.md) is sufficient to approve a local preview run using an ignored local cache path.
 
-That future block must remain default-off, synthetic-test-first and no-network. API calls, raw JSON review, `.local.csv`, SQLite writes, Streamlit activation, a local trial and provider approval remain forbidden.
+No local preview run against real provider cache is approved. API calls, `.local.csv`, SQLite writes, Streamlit activation, a local trial and provider approval remain forbidden.

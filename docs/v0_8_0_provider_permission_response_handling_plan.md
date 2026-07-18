@@ -36,6 +36,7 @@ In scope:
 - Record a docs-only readiness decision before any implementation plan is created.
 - Record the [Sportmonks Implementation Plan](provider_candidates/sportmonks_implementation_plan.md) as documentation only before any first-code-implementation approval decision.
 - Record the [Sportmonks First Code Implementation Approval Decision](provider_decisions/sportmonks_first_code_implementation_approval_decision.md) before any implementation begins.
+- Record the [Sportmonks Implementation Summary](provider_candidates/sportmonks_implementation_summary.md) before any local preview run decision.
 
 Out of scope:
 
@@ -133,7 +134,8 @@ The summary contains no confidential text, ticket identifiers, payloads or crede
 15. The [Sportmonks Transform Design Plan](provider_candidates/sportmonks_transform_design_plan.md) is created as documentation only.
 16. The [Sportmonks Implementation Plan Readiness Decision](provider_decisions/sportmonks_implementation_plan_readiness_decision.md) approved only docs-only implementation planning.
 17. The [Sportmonks Implementation Plan](provider_candidates/sportmonks_implementation_plan.md) is created as documentation only.
-18. The [Sportmonks First Code Implementation Approval Decision](provider_decisions/sportmonks_first_code_implementation_approval_decision.md) approves only the listed local-only, default-off, synthetic-test-first and no-network files.
-19. The next action is the first local-only code implementation under that strict scope.
-20. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
-21. Continue to treat Sportmonks as unapproved; API calls, integration, local trial and provider approval remain blocked.
+18. The [Sportmonks First Code Implementation Approval Decision](provider_decisions/sportmonks_first_code_implementation_approval_decision.md) approved only the listed local-only, default-off, synthetic-test-first and no-network files.
+19. The [Sportmonks Implementation Summary](provider_candidates/sportmonks_implementation_summary.md) records that the first scaffold is created without API calls or real provider payloads.
+20. The next action is a docs-only local preview run approval decision.
+21. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
+22. Continue to treat Sportmonks as unapproved; API calls, integration, local trial and provider approval remain blocked.

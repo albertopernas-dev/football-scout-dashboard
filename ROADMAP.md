@@ -16,10 +16,10 @@
 
 ## Recommended Next Steps
 
-1. Implementar el primer scaffold local-only de Sportmonks bajo el alcance de archivos aprobado.
-2. Usar solo fixtures sinteticos, ejecucion default-off y cero red.
-3. No leer raw JSON ni hacer llamadas API durante ese bloque.
-4. Mantener respuestas raw, credenciales, cache, `.local.csv`, local trial, SQLite, Streamlit app integration y provider approval fuera del flujo.
+1. Decidir en un bloque docs-only si el scaffold permite un preview local contra cache ignorada.
+2. Mantener cualquier preview default-off, sin red y separado de trial o app integration.
+3. No hacer llamadas API ni escribir SQLite durante esa decision.
+4. Mantener respuestas raw, credenciales, cache, `.local.csv`, local trial, SQLite, Streamlit app integration y provider approval fuera del flujo tracked.
 
 ## v0.2.0 Market Context Layer
 
@@ -138,11 +138,12 @@ Completed and published.
 - Sportmonks transform design plan created docs-only; no code or implementation approval.
 - Sportmonks implementation-plan readiness decision created; only docs-only plan creation was approved.
 - Sportmonks implementation plan created docs-only.
-- First local-only code implementation approval decision created under strict file scope; no code created yet.
+- First local-only code implementation approval decision created under strict file scope.
+- First local-only Sportmonks transform scaffold created with synthetic tests only; no network or real provider payloads.
 - Sportmonks secure credential setup verified as local-only.
 - Local `.env` credential setup verified outside Git; the token remains untracked and undocumented.
 - Trial scope remains one team, one season and a minimal payload, with Team Squad by Team and Season ID as the primary candidate endpoint.
-- Next: implement the first local-only Sportmonks transform scaffold with synthetic tests only.
+- Next: decide docs-only whether to approve a local preview run against ignored cache.
 
 - Only 3 minimal ID discovery calls performed; still no broad payload inspection or local trial.
 - Still no API calls, raw JSON review, local trial, SQLite writes, Streamlit app integration or provider approval.

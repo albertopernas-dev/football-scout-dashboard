@@ -7,9 +7,10 @@
 - Related implementation plan: [Sportmonks Implementation Plan](../provider_candidates/sportmonks_implementation_plan.md)
 - Related implementation-plan readiness decision: [Sportmonks Implementation Plan Readiness Decision](sportmonks_implementation_plan_readiness_decision.md)
 - Related payload decision record: [Sportmonks Payload Decision Record](sportmonks_payload_decision_record.md)
+- Related implementation summary: [Sportmonks Implementation Summary](../provider_candidates/sportmonks_implementation_summary.md)
 - Provider approval: no
 - First code implementation approved: yes, strict local-only scope
-- Code implemented in this block: no
+- Code implemented in this block: yes, strict local-only scaffold
 - API calls performed in this block: no
 - Raw JSON reviewed in this block: no
 - `.local.csv` outputs created: no
@@ -139,8 +140,6 @@ The future implementation is acceptable only if:
 
 ## Next Required Action
 
-A later implementation block may create only the approved local-only code, synthetic fixture, tests, preview script and implementation summary.
+A later docs-only block may decide whether the created scaffold is sufficient to approve a local preview run using an ignored local cache path.
 
-That future block must not make API calls, read raw provider JSON for test fixtures, write SQLite, activate Streamlit, create `.local.csv`, perform a trial or approve Sportmonks.
-
-The future block must provide full diffs and test results before commit.
+No local preview run against real provider cache is approved by this decision. API calls, SQLite writes, Streamlit activation, `.local.csv`, local trial and provider approval remain forbidden.
