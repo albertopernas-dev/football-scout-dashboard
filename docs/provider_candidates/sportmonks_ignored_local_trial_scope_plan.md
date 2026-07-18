@@ -18,6 +18,7 @@
 - Transform design plan: [created docs-only](sportmonks_transform_design_plan.md)
 - Implementation plan readiness decision: [approved for docs-only planning](../provider_decisions/sportmonks_implementation_plan_readiness_decision.md)
 - Implementation plan: [created docs-only](sportmonks_implementation_plan.md)
+- First code implementation approval: [approved under strict local-only scope](../provider_decisions/sportmonks_first_code_implementation_approval_decision.md)
 - Provider approval: no
 - Production approval: no
 - Credentials created locally: yes, outside Git
@@ -162,4 +163,4 @@ These non-sensitive references confirm the plan limits and four league IDs shown
 
 Minimal ID discovery, the [confirmed ID scope review](sportmonks_confirmed_id_scope_review.md) and the [minimal payload field review](sportmonks_minimal_payload_field_review_summary.md) have passed.
 
-The transform design plan and [implementation plan](sportmonks_implementation_plan.md) are created docs-only. A later docs-only block may decide whether to approve a first code implementation. The local trial, raw JSON review, broad inspection, implementation and app integration remain blocked.
+The transform design plan and [implementation plan](sportmonks_implementation_plan.md) are created docs-only. A future local-only first code implementation may occur only under the [approved strict scope](../provider_decisions/sportmonks_first_code_implementation_approval_decision.md). The local trial, raw JSON review, broad inspection and app integration remain blocked.

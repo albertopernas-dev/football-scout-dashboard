@@ -7,8 +7,10 @@
 - Related readiness decision: [Sportmonks Implementation Plan Readiness Decision](../provider_decisions/sportmonks_implementation_plan_readiness_decision.md)
 - Related transform design plan: [Sportmonks Transform Design Plan](sportmonks_transform_design_plan.md)
 - Related payload decision record: [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md)
+- Related first-code approval decision: [Sportmonks First Code Implementation Approval Decision](../provider_decisions/sportmonks_first_code_implementation_approval_decision.md)
 - Provider approval: no
-- Implementation approved: no
+- First code implementation approved: yes, strict local-only future block
+- Implementation created: no
 - Code created in this block: no
 - API calls performed in this block: no
 - Raw JSON reviewed in this block: no
@@ -241,8 +243,6 @@ Tests must use synthetic fixtures only. No real Sportmonks raw payloads, player 
 
 ## Next Required Action
 
-A later docs-only block may decide whether this implementation plan is sufficient to approve a first code implementation.
+A future local-only code implementation block may create only the files approved by the [first-code implementation approval decision](../provider_decisions/sportmonks_first_code_implementation_approval_decision.md).
 
-The first code implementation, if later approved, must still be local-only, default-off, synthetic-test-first and no-network.
-
-This implementation plan does not approve code, API calls, raw JSON review, `.local.csv`, SQLite writes, Streamlit activation, a local trial or provider approval.
+That future block must remain default-off, synthetic-test-first and no-network. API calls, raw JSON review, `.local.csv`, SQLite writes, Streamlit activation, a local trial and provider approval remain forbidden.

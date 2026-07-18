@@ -19,6 +19,7 @@
 - Transform design plan: [created docs-only](../provider_candidates/sportmonks_transform_design_plan.md)
 - Implementation plan readiness decision: [approved for docs-only planning](sportmonks_implementation_plan_readiness_decision.md)
 - Implementation plan: [created docs-only](../provider_candidates/sportmonks_implementation_plan.md)
+- First code implementation approval: [approved under strict local-only scope](sportmonks_first_code_implementation_approval_decision.md)
 - Stage 1 gate decision: `continue`
 - Provider approval: no
 - Production approval: no
@@ -156,9 +157,10 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 
 ## Current Decision
 
-- Current decision: `implementation-plan-created-docs-only`
+- Current decision: `first-code-implementation-approved-local-only`
 - Transform design decision: `transform-design-plan-created-docs-only`
 - Implementation plan decision: `implementation-plan-created-docs-only`
+- First code implementation decision: `approved-local-only-strict-scope`
 - Meaning:
   - the checklist and decision records exist;
   - local credential setup remains outside Git;
@@ -166,19 +168,22 @@ It does not inspect payloads, select a final provider, expose credentials or sta
   - minimal payload field review passed using existing ignored cache with 0 API calls;
   - the transform design plan is created as documentation only;
   - the implementation plan is created as documentation only;
+  - the first code implementation is approved only for the listed local-only files;
   - broad payload inspection remains no; and
   - Sportmonks provider approval remains no.
 - Next allowed step:
-  - make a docs-only first-code-implementation approval decision.
+  - create the future local-only first code implementation under the approved file scope only.
 
 - Still forbidden:
   - credential exposure or commitment;
   - broad payload inspection;
+  - raw JSON review;
+  - `.local.csv` outputs;
+  - code outside the approved first implementation file scope;
   - local trial;
-  - additional API calls without a new explicit decision;
+  - API calls;
   - SQLite writes;
   - Streamlit activation;
-  - parser or transform code; and
   - provider approval.
 
 ## Safety Checklist
@@ -210,4 +215,4 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 
 Minimal ID discovery, the [confirmed ID scope review](../provider_candidates/sportmonks_confirmed_id_scope_review.md) and the [minimal payload field review](../provider_candidates/sportmonks_minimal_payload_field_review_summary.md) have passed.
 
-The [implementation plan](../provider_candidates/sportmonks_implementation_plan.md) is created docs-only. A later docs-only block may decide whether to approve a first code implementation. Implementation, transform code, additional API calls, raw JSON review, broad payload inspection, local trial, SQLite, Streamlit and provider approval remain forbidden.
+The [first-code implementation approval decision](sportmonks_first_code_implementation_approval_decision.md) permits a future local-only implementation under the approved file scope only. API calls, raw JSON review, broad payload inspection, local trial, SQLite, Streamlit and provider approval remain forbidden.
