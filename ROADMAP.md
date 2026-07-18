@@ -16,9 +16,9 @@
 
 ## Recommended Next Steps
 
-1. Crear en un bloque posterior el transform design plan aprobado como documentacion solamente.
-2. Mantener el resultado `partially suitable` separado de cualquier implementacion o provider approval.
-3. No leer raw JSON ni hacer llamadas adicionales durante el bloque de diseno documental.
+1. Decidir en un bloque docs-only si el transform design plan basta para aprobar un implementation plan.
+2. Mantener implementation plan separado de cualquier implementacion o provider approval.
+3. No leer raw JSON ni hacer llamadas adicionales durante ese gate documental.
 4. Mantener respuestas raw, credenciales, cache, `.local.csv`, local trial, SQLite, Streamlit y parser/transform code fuera del flujo tracked.
 
 ## v0.2.0 Market Context Layer
@@ -135,10 +135,11 @@ Completed and published.
 - Minimal payload field review decision created under strict scope.
 - Minimal payload field review executed from existing ignored cache with 0 API calls; review status `passed` and shape `partially suitable`.
 - Transform design suitability decision created: docs-only planning approved; implementation remains blocked.
+- Sportmonks transform design plan created docs-only; no code or implementation approval.
 - Sportmonks secure credential setup verified as local-only.
 - Local `.env` credential setup verified outside Git; the token remains untracked and undocumented.
 - Trial scope remains one team, one season and a minimal payload, with Team Squad by Team and Season ID as the primary candidate endpoint.
-- Next: create the docs-only Sportmonks transform design plan.
+- Next: decide docs-only whether to approve creation of an implementation plan.
 
 - Only 3 minimal ID discovery calls performed; still no broad payload inspection or local trial.
 - Still no SQLite writes, Streamlit activation, parser code or provider approval.

@@ -16,6 +16,7 @@
 - Minimal payload field review decision: [approved under strict scope](sportmonks_minimal_payload_field_review_decision.md)
 - Minimal payload field review summary: [passed](../provider_candidates/sportmonks_minimal_payload_field_review_summary.md)
 - Transform design suitability decision: [approved for docs-only planning](sportmonks_transform_design_suitability_decision.md)
+- Transform design plan: [created docs-only](../provider_candidates/sportmonks_transform_design_plan.md)
 - Stage 1 gate decision: `continue`
 - Provider approval: no
 - Production approval: no
@@ -154,17 +155,17 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 ## Current Decision
 
 - Current decision: `minimal-field-review-passed`
-- Transform design decision: `transform-design-planning-approved-docs-only`
+- Transform design decision: `transform-design-plan-created-docs-only`
 - Meaning:
   - the checklist and decision records exist;
   - local credential setup remains outside Git;
   - minimal ID discovery and confirmed ID scope review passed;
   - minimal payload field review passed using existing ignored cache with 0 API calls;
-  - transform design planning is approved as documentation only;
+  - the transform design plan is created as documentation only;
   - broad payload inspection remains no; and
   - Sportmonks provider approval remains no.
 - Next allowed step:
-  - create the approved docs-only transform design plan.
+  - decide implementation-plan readiness in a later docs-only block.
 
 - Still forbidden:
   - credential exposure or commitment;
@@ -205,4 +206,4 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 
 Minimal ID discovery, the [confirmed ID scope review](../provider_candidates/sportmonks_confirmed_id_scope_review.md) and the [minimal payload field review](../provider_candidates/sportmonks_minimal_payload_field_review_summary.md) have passed.
 
-A later docs-only block may create the approved transform design plan. Transform code, additional API calls, broad payload inspection, local trial, SQLite, Streamlit and provider approval remain forbidden.
+A later docs-only block may decide whether the transform design plan is sufficient to approve an implementation plan. Transform code, additional API calls, broad payload inspection, local trial, SQLite, Streamlit and provider approval remain forbidden.

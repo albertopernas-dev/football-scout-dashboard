@@ -7,9 +7,10 @@
 - Related minimal payload field review summary: [Sportmonks Minimal Payload Field Review Summary](../provider_candidates/sportmonks_minimal_payload_field_review_summary.md)
 - Related minimal payload field review decision: [Sportmonks Minimal Payload Field Review Decision](sportmonks_minimal_payload_field_review_decision.md)
 - Related payload decision record: [Sportmonks Payload Decision Record](sportmonks_payload_decision_record.md)
+- Transform design plan: [Sportmonks Transform Design Plan](../provider_candidates/sportmonks_transform_design_plan.md)
 - Provider approval: no
 - Transform design planning approved: yes, docs-only
-- Transform design created in this block: no
+- Transform design created in this block: yes, docs-only
 - Transform implementation approved: no
 - API calls performed in this block: no
 - Raw responses reviewed in this block: no
@@ -116,8 +117,8 @@ The future design document must include:
 
 ## Next Required Action
 
-A later docs-only block may create `docs/provider_candidates/sportmonks_transform_design_plan.md`.
+The [Sportmonks Transform Design Plan](../provider_candidates/sportmonks_transform_design_plan.md) has been created as documentation only.
 
-That future plan must stay documentation-only.
+A later docs-only block may decide whether that plan is sufficient to approve an implementation plan. An implementation plan is still not implementation.
 
-No transform code, API calls, SQLite writes, Streamlit activation, `.local.csv` outputs or provider approval are allowed.
+No transform code, API calls, SQLite writes, Streamlit activation, `.local.csv` outputs, local trial or provider approval are allowed.

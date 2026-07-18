@@ -15,6 +15,7 @@
 - Minimal payload field review decision: [executed under strict scope](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md)
 - Minimal payload field review summary: [passed](sportmonks_minimal_payload_field_review_summary.md)
 - Transform design suitability decision: [approved for docs-only planning](../provider_decisions/sportmonks_transform_design_suitability_decision.md)
+- Transform design plan: [created docs-only](sportmonks_transform_design_plan.md)
 - Checklist status: draft/pre-trial
 - Gate decision: `continue`
 - Provider approval: no
@@ -55,7 +56,7 @@ It does not activate Sportmonks data in the app or write provider data to SQLite
 | Team scope | FC København, `team_id 85`. | confirmed | Confirmed by [minimal ID discovery](sportmonks_minimal_id_discovery_summary.md). |
 | Endpoint scope | Team Squad by Team and Season ID only. | access confirmed | The confirmed squad endpoint is the sole endpoint allowed by the minimal field review decision. |
 | Field scope | Review only field names and high-level categories for the confirmed squad endpoint. | reviewed minimal / passed | [Summary](sportmonks_minimal_payload_field_review_summary.md) records identity, team, season, position and jersey categories; dates/freshness/provenance remain unclear. |
-| Transform planning | Create a documentation-only design plan from the reviewed shape. | approved docs-only / not created | The suitability decision does not approve implementation, calls or trial activity. |
+| Transform planning | Create a documentation-only design plan from the reviewed shape. | created docs-only | [Plan](sportmonks_transform_design_plan.md) defines candidates and open decisions; implementation remains blocked. |
 | Payload minimization | One FC København squad, one Denmark Superliga season, minimal payload. | proposed | Avoid broad pulls; season and team IDs are confirmed. |
 | Raw data handling | Confirm raw payloads stay outside Git. | verified for ID discovery | Raw ID discovery responses remain only under the ignored local provider cache path. |
 | Cache handling | Confirm cache path, retention and cleanup. | partial | ID discovery cache is ignored and uncommitted; future trial retention and cleanup remain pending. |
@@ -135,7 +136,7 @@ The requirements below are recorded as passed in the [local credential setup ver
 
 The [payload-specific decision record](../provider_decisions/sportmonks_payload_decision_record.md) now exists as a draft/pre-trial artifact.
 
-Minimal ID discovery, confirmed ID scope review and the [minimal field review](sportmonks_minimal_payload_field_review_summary.md) have passed. The [suitability decision](../provider_decisions/sportmonks_transform_design_suitability_decision.md) approves only a future docs-only transform design plan. Cleanup remains pending, and no trial or broad payload inspection has been performed.
+Minimal ID discovery, confirmed ID scope review and minimal field review have passed. The [transform design plan](sportmonks_transform_design_plan.md) is created docs-only. Cleanup remains pending; trial and implementation remain blocked. The next gate is a docs-only implementation-plan readiness decision.
 
 ## Acceptance Criteria
 
