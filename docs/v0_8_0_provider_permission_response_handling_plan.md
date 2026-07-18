@@ -34,6 +34,7 @@ In scope:
 - Record a docs-only suitability decision before any transform design is created.
 - Record the documentation-only transform design plan before any implementation-plan decision.
 - Record a docs-only readiness decision before any implementation plan is created.
+- Record the [Sportmonks Implementation Plan](provider_candidates/sportmonks_implementation_plan.md) as documentation only before any first-code-implementation approval decision.
 
 Out of scope:
 
@@ -129,7 +130,8 @@ The summary contains no confidential text, ticket identifiers, payloads or crede
 13. The [Sportmonks Minimal Payload Field Review Summary](provider_candidates/sportmonks_minimal_payload_field_review_summary.md) records a `passed` review from existing ignored cache with 0 API calls.
 14. The [Sportmonks Transform Design Suitability Decision](provider_decisions/sportmonks_transform_design_suitability_decision.md) approved documentation-only planning.
 15. The [Sportmonks Transform Design Plan](provider_candidates/sportmonks_transform_design_plan.md) is created as documentation only.
-16. The [Sportmonks Implementation Plan Readiness Decision](provider_decisions/sportmonks_implementation_plan_readiness_decision.md) approves only a future docs-only implementation plan.
-17. The next action is to create that documentation-only implementation plan.
-18. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
-19. Continue to treat Sportmonks as unapproved; implementation, integration and trial activity remain blocked.
+16. The [Sportmonks Implementation Plan Readiness Decision](provider_decisions/sportmonks_implementation_plan_readiness_decision.md) approved only docs-only implementation planning.
+17. The [Sportmonks Implementation Plan](provider_candidates/sportmonks_implementation_plan.md) is created as documentation only.
+18. The next action is a docs-only decision on whether to approve a first code implementation.
+19. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
+20. Continue to treat Sportmonks as unapproved; implementation, integration and trial activity remain blocked.

@@ -16,8 +16,8 @@
 
 ## Recommended Next Steps
 
-1. Crear en un bloque posterior el Sportmonks implementation plan como documentacion solamente.
-2. Mantener implementation plan separado de cualquier implementacion o provider approval.
+1. Decidir en un bloque documental si el Sportmonks implementation plan permite aprobar una primera implementacion local-only.
+2. Mantener esa decision separada de cualquier implementacion o provider approval.
 3. No leer raw JSON ni hacer llamadas adicionales durante ese bloque documental.
 4. Mantener respuestas raw, credenciales, cache, `.local.csv`, local trial, SQLite, Streamlit y parser/transform code fuera del flujo tracked.
 
@@ -136,11 +136,12 @@ Completed and published.
 - Minimal payload field review executed from existing ignored cache with 0 API calls; review status `passed` and shape `partially suitable`.
 - Transform design suitability decision created: docs-only planning approved; implementation remains blocked.
 - Sportmonks transform design plan created docs-only; no code or implementation approval.
-- Sportmonks implementation-plan readiness decision created; only docs-only plan creation is approved.
+- Sportmonks implementation-plan readiness decision created; only docs-only plan creation was approved.
+- Sportmonks implementation plan created docs-only; no code or implementation approval.
 - Sportmonks secure credential setup verified as local-only.
 - Local `.env` credential setup verified outside Git; the token remains untracked and undocumented.
 - Trial scope remains one team, one season and a minimal payload, with Team Squad by Team and Season ID as the primary candidate endpoint.
-- Next: create the docs-only Sportmonks implementation plan.
+- Next: decide docs-only whether to approve a first local-only code implementation.
 
 - Only 3 minimal ID discovery calls performed; still no broad payload inspection or local trial.
 - Still no SQLite writes, Streamlit activation, parser code or provider approval.

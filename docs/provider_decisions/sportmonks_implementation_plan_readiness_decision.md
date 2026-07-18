@@ -7,9 +7,10 @@
 - Related transform design plan: [Sportmonks Transform Design Plan](../provider_candidates/sportmonks_transform_design_plan.md)
 - Related transform design suitability decision: [Sportmonks Transform Design Suitability Decision](sportmonks_transform_design_suitability_decision.md)
 - Related payload decision record: [Sportmonks Payload Decision Record](sportmonks_payload_decision_record.md)
+- Related implementation plan: [Sportmonks Implementation Plan](../provider_candidates/sportmonks_implementation_plan.md)
 - Provider approval: no
 - Implementation plan approved: yes, docs-only
-- Implementation plan created in this block: no
+- Implementation plan created: yes, docs-only
 - Implementation approved: no
 - Transform code approved: no
 - API calls performed in this block: no
@@ -113,8 +114,8 @@ The future implementation plan must:
 
 ## Next Required Action
 
-A later docs-only block may create `docs/provider_candidates/sportmonks_implementation_plan.md`.
+A later docs-only block may decide whether the [Sportmonks Implementation Plan](../provider_candidates/sportmonks_implementation_plan.md) is sufficient to approve a first code implementation.
 
-That future implementation plan is still not implementation.
+The implementation plan is documentation only and is still not implementation.
 
 No code, API calls, raw JSON review, `.local.csv`, SQLite writes, Streamlit activation, local trial or provider approval are allowed by this decision.
