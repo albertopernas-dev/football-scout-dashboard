@@ -16,9 +16,9 @@
 
 ## Recommended Next Steps
 
-1. Revisar el resumen de minimal ID discovery y los IDs confirmados.
-2. Actualizar el scope documental antes de cualquier field review.
-3. Decidir en un bloque explicito posterior si se permite un minimal payload field review.
+1. Preparar en un bloque explicito posterior la decision sobre minimal payload field review.
+2. Definir endpoint exacto, campos/categorias, maximo de llamadas, manejo local, resumen y stop conditions.
+3. No hacer llamadas adicionales hasta que esa decision exista.
 4. Mantener respuestas raw, credenciales, cache, SQLite, Streamlit y parser code fuera del flujo tracked.
 
 ## v0.2.0 Market Context Layer
@@ -131,10 +131,11 @@ Completed and published.
 - Denmark Superliga 2026/2027 `season_id 27897` and FC København `team_id 85` confirmed.
 - Manual UI lookup did not expose the IDs; 3 minimal API calls confirmed them and squad endpoint access returned HTTP 200.
 - Sportmonks minimal ID discovery completed; non-sensitive summary recorded.
+- Confirmed ID scope review passed.
 - Sportmonks secure credential setup verified as local-only.
 - Local `.env` credential setup verified outside Git; the token remains untracked and undocumented.
 - Trial scope remains one team, one season and a minimal payload, with Team Squad by Team and Season ID as the primary candidate endpoint.
-- Next: review confirmed IDs in a docs-only block, then decide explicitly whether minimal payload field review is allowed.
+- Next: prepare a later explicit decision for minimal payload field review; this docs-only review grants no API calls.
 
 - Only 3 minimal ID discovery calls performed; still no broad payload inspection or local trial.
 - Still no SQLite writes, Streamlit activation, parser code or provider approval.

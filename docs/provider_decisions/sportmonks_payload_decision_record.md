@@ -12,6 +12,7 @@
 - Related credential setup: [Sportmonks Secure Credential Setup](../provider_candidates/sportmonks_secure_credential_setup.md)
 - Related credential verification: [Sportmonks Local Credential Setup Verification](../provider_candidates/sportmonks_local_credential_setup_verification.md)
 - Discovery summary: [Sportmonks Minimal ID Discovery Summary](../provider_candidates/sportmonks_minimal_id_discovery_summary.md)
+- Confirmed ID scope review: [passed](../provider_candidates/sportmonks_confirmed_id_scope_review.md)
 - Stage 1 gate decision: `continue`
 - Provider approval: no
 - Production approval: no
@@ -123,7 +124,7 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 - User explicitly confirms credential creation outside Git.
 - `git status --short` clean before credential creation.
 - No credentials appear in `git diff`, tracked files or docs.
-- No API calls until a later separate ID discovery block.
+- No additional API calls until a later explicit minimal payload field review decision.
 
 ## Required Before Payload Inspection
 
@@ -155,18 +156,20 @@ It does not inspect payloads, select a final provider, expose credentials or sta
   - this decision record exists;
   - a local trial may be planned;
   - local credential setup is verified outside Git;
-  - minimal ID discovery passed with confirmed season, team and endpoint access; and
+  - minimal ID discovery passed with confirmed season, team and endpoint access;
+  - the confirmed ID scope review passed; and
   - broad payload inspection has not been performed.
 - Next allowed step:
-  - review the confirmed IDs and endpoint access in a separate docs-only block; then decide explicitly whether a minimal payload field review is allowed.
+  - prepare the minimal payload field review decision only in a later explicit block.
 
 - Still forbidden:
   - credential exposure or commitment;
   - broad payload inspection;
   - additional API calls without a later explicit payload field review decision;
   - SQLite writes;
-  - Streamlit activation; and
-  - parser or transform code.
+  - Streamlit activation;
+  - parser or transform code; and
+  - provider approval.
 
 ## Safety Checklist
 
@@ -186,6 +189,7 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 - [x] Selected plan documented.
 - [x] Competition scope documented.
 - [x] Endpoint access documented; field scope remains pending.
+- [x] Confirmed ID scope review passed.
 - [ ] Field scope documented.
 - [x] Ignored ID discovery path documented; future trial paths remain pending.
 - [ ] Cleanup process documented.
@@ -193,6 +197,6 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 
 ## Next Required Action
 
-Minimal ID discovery has [passed](../provider_candidates/sportmonks_minimal_id_discovery_summary.md). Review the confirmed IDs and endpoint access in a separate docs-only block.
+Minimal ID discovery and the [confirmed ID scope review](../provider_candidates/sportmonks_confirmed_id_scope_review.md) have passed.
 
-A later explicit block may decide whether a minimal payload field review is allowed. Do not make additional API calls or inspect fields in this docs-only update.
+The next later block may prepare the explicit minimal payload field review decision. Broad payload inspection, SQLite, Streamlit, parser/transform code and provider approval remain forbidden.

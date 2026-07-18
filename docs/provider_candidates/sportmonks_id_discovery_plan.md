@@ -10,6 +10,7 @@
 - Related credential setup: [Sportmonks Secure Credential Setup](sportmonks_secure_credential_setup.md)
 - Related credential verification: [Sportmonks Local Credential Setup Verification](sportmonks_local_credential_setup_verification.md)
 - Discovery summary: [Sportmonks Minimal ID Discovery Summary](sportmonks_minimal_id_discovery_summary.md)
+- Confirmed ID scope review: [passed](sportmonks_confirmed_id_scope_review.md)
 - Provider approval: no
 - Credentials created locally: yes, outside Git
 - Credentials stored in Git: no
@@ -106,4 +107,4 @@ Do not record complete URLs containing a real `api_token`. Do not include creden
 
 ## Next Required Action
 
-Review the [minimal ID discovery summary](sportmonks_minimal_id_discovery_summary.md). A later explicit block may decide whether a minimal payload field review is allowed.
+ID discovery and the [confirmed ID scope review](sportmonks_confirmed_id_scope_review.md) have passed. The next later block may prepare the explicit minimal payload field review decision.

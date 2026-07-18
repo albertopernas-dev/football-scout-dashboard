@@ -11,6 +11,7 @@
 - Related credential setup: [Sportmonks Secure Credential Setup](sportmonks_secure_credential_setup.md)
 - Related credential verification: [Sportmonks Local Credential Setup Verification](sportmonks_local_credential_setup_verification.md)
 - Discovery summary: [Sportmonks Minimal ID Discovery Summary](sportmonks_minimal_id_discovery_summary.md)
+- Confirmed ID scope review: [passed](sportmonks_confirmed_id_scope_review.md)
 - Checklist status: draft/pre-trial
 - Gate decision: `continue`
 - Provider approval: no
@@ -130,7 +131,7 @@ The requirements below are recorded as passed in the [local credential setup ver
 
 The [payload-specific decision record](../provider_decisions/sportmonks_payload_decision_record.md) now exists as a draft/pre-trial artifact.
 
-Minimal ID discovery has passed. Review the confirmed IDs and endpoint access, then use a later explicit decision to determine whether a minimal payload field review is allowed. No trial or broad payload inspection has been performed.
+Minimal ID discovery and the confirmed ID scope review have passed. Field scope and cleanup remain pending, and no trial or broad payload inspection has been performed. A later explicit block may prepare the minimal payload field review decision.
 
 ## Acceptance Criteria
 

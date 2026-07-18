@@ -28,6 +28,7 @@ In scope:
 - Prepare and review a payload-specific decision record before any concrete permitted payload is inspected.
 - Keep confidential terms and raw responses out of Git.
 - Record minimal ID discovery results only as non-sensitive summaries.
+- Record a docs-only confirmed ID scope review before any payload field review decision.
 
 Out of scope:
 
@@ -118,7 +119,8 @@ The summary contains no confidential text, ticket identifiers, payloads or crede
 8. The [Sportmonks Secure Credential Setup](provider_candidates/sportmonks_secure_credential_setup.md) is verified/local-only.
 9. The [Sportmonks Local Credential Setup Verification](provider_candidates/sportmonks_local_credential_setup_verification.md) records that local credential setup passed outside Git.
 10. The [Sportmonks Minimal ID Discovery Summary](provider_candidates/sportmonks_minimal_id_discovery_summary.md) records 3 scoped calls and HTTP 200 squad endpoint access.
-11. The next action is a docs-only review of confirmed IDs; a later explicit block may decide whether a minimal payload field review is allowed.
-12. Do not inspect broad payloads, perform the trial or make additional API calls in this docs-only update.
-13. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
-14. Continue to treat Sportmonks as unapproved until a later explicit decision.
+11. The [Sportmonks Confirmed ID Scope Review](provider_candidates/sportmonks_confirmed_id_scope_review.md) has passed.
+12. The next action is a later explicit minimal payload field review decision with exact endpoint, fields, call limit, local handling, summary format and stop conditions.
+13. No additional API calls, payload inspection or trial activity are allowed by this docs-only review.
+14. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
+15. Continue to treat Sportmonks as unapproved until a later explicit decision.

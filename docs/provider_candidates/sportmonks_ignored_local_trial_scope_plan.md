@@ -11,6 +11,7 @@
 - Related credential setup: [Sportmonks Secure Credential Setup](sportmonks_secure_credential_setup.md)
 - Related credential verification: [Sportmonks Local Credential Setup Verification](sportmonks_local_credential_setup_verification.md)
 - Discovery summary: [Sportmonks Minimal ID Discovery Summary](sportmonks_minimal_id_discovery_summary.md)
+- Confirmed ID scope review: [passed](sportmonks_confirmed_id_scope_review.md)
 - Provider approval: no
 - Production approval: no
 - Credentials created locally: yes, outside Git
@@ -153,6 +154,6 @@ These non-sensitive references confirm the plan limits and four league IDs shown
 
 ## Next Required Action
 
-Minimal ID discovery has [passed](sportmonks_minimal_id_discovery_summary.md) with the scoped season, team and endpoint access confirmed.
+Minimal ID discovery and the [confirmed ID scope review](sportmonks_confirmed_id_scope_review.md) have passed.
 
-Review the confirmed IDs in a separate docs-only block. A later explicit block may decide whether a minimal payload field review is allowed; the local trial and app integration remain blocked.
+Prepare the minimal payload field review decision only in a later explicit block. The trial, broad inspection and app integration remain blocked.
