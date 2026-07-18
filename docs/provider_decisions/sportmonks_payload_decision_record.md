@@ -14,6 +14,7 @@
 - Discovery summary: [Sportmonks Minimal ID Discovery Summary](../provider_candidates/sportmonks_minimal_id_discovery_summary.md)
 - Confirmed ID scope review: [passed](../provider_candidates/sportmonks_confirmed_id_scope_review.md)
 - Minimal payload field review decision: [approved under strict scope](sportmonks_minimal_payload_field_review_decision.md)
+- Minimal payload field review summary: [passed](../provider_candidates/sportmonks_minimal_payload_field_review_summary.md)
 - Stage 1 gate decision: `continue`
 - Provider approval: no
 - Production approval: no
@@ -151,24 +152,22 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 
 ## Current Decision
 
-- Current decision: `approved-for-minimal-field-review`
+- Current decision: `minimal-field-review-passed`
 - Meaning:
-  - the checklist exists;
-  - this decision record exists;
-  - local credential setup is verified outside Git;
-  - minimal ID discovery passed with confirmed season, team and endpoint access;
-  - the confirmed ID scope review passed;
-  - minimal payload field review is approved under a strict scope;
-  - Sportmonks provider approval remains no; and
-  - broad payload inspection has not been performed.
+  - the checklist and decision records exist;
+  - local credential setup remains outside Git;
+  - minimal ID discovery and confirmed ID scope review passed;
+  - minimal payload field review passed using existing ignored cache with 0 API calls;
+  - broad payload inspection remains no; and
+  - Sportmonks provider approval remains no.
 - Next allowed step:
-  - execute the minimal payload field review only in a later explicit block under the strict decision.
+  - prepare a docs-only transform design suitability decision.
 
 - Still forbidden:
   - credential exposure or commitment;
   - broad payload inspection;
   - local trial;
-  - additional API calls outside a later explicit minimal field review under the strict decision;
+  - additional API calls without a new explicit decision;
   - SQLite writes;
   - Streamlit activation;
   - parser or transform code; and
@@ -191,15 +190,16 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 - [x] No parser/transform code created.
 - [x] Selected plan documented.
 - [x] Competition scope documented.
-- [x] Endpoint access documented; field scope remains pending.
+- [x] Endpoint access and minimal field scope reviewed.
 - [x] Confirmed ID scope review passed.
-- [ ] Field scope documented.
+- [x] Minimal payload field review passed with 0 API calls.
+- [x] Field scope documented in the minimal payload field review summary.
 - [x] Ignored ID discovery path documented; future trial paths remain pending.
 - [ ] Cleanup process documented.
 - [ ] Final `git status --short` clean.
 
 ## Next Required Action
 
-Minimal ID discovery and the [confirmed ID scope review](../provider_candidates/sportmonks_confirmed_id_scope_review.md) have passed. The [minimal payload field review decision](sportmonks_minimal_payload_field_review_decision.md) approves only a future strictly scoped field review.
+Minimal ID discovery, the [confirmed ID scope review](../provider_candidates/sportmonks_confirmed_id_scope_review.md) and the [minimal payload field review](../provider_candidates/sportmonks_minimal_payload_field_review_summary.md) have passed.
 
-A later explicit block may execute that minimal field review. Broad payload inspection, local trial, SQLite, Streamlit, parser/transform code and provider approval remain forbidden.
+A later docs-only block may decide whether the payload shape is sufficient to plan a transform design. Transform code, broad payload inspection, local trial, SQLite, Streamlit and provider approval remain forbidden.

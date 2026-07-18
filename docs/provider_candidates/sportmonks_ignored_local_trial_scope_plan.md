@@ -12,7 +12,8 @@
 - Related credential verification: [Sportmonks Local Credential Setup Verification](sportmonks_local_credential_setup_verification.md)
 - Discovery summary: [Sportmonks Minimal ID Discovery Summary](sportmonks_minimal_id_discovery_summary.md)
 - Confirmed ID scope review: [passed](sportmonks_confirmed_id_scope_review.md)
-- Minimal payload field review decision: [approved for a future minimal review](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md)
+- Minimal payload field review decision: [executed under strict scope](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md)
+- Minimal payload field review summary: [passed](sportmonks_minimal_payload_field_review_summary.md)
 - Provider approval: no
 - Production approval: no
 - Credentials created locally: yes, outside Git
@@ -40,8 +41,8 @@ All provider data, credentials, cache and outputs must remain outside Git.
 | Competition scope | Denmark Superliga, league_id 271. | confirmed | Confirmed in user screenshot as included in Football Free Plan. Regular league selected over play-off competitions. |
 | Season scope | Denmark Superliga 2026/2027, `season_id 27897`. | confirmed | Confirmed by minimal ID discovery. |
 | Team scope | FC København, `team_id 85`. | confirmed | Confirmed by minimal ID discovery. |
-| Endpoint scope | Primary candidate: Team Squad by Team and Season ID. Auxiliary candidate: Players endpoint only if needed for schema/include validation. | access confirmed | Primary endpoint returned HTTP 200 with data; no broad field review performed. |
-| Field scope | Identity, team/squad context, season/date metadata, position, provenance/freshness, and Market Context candidates if available. | draft | Availability must be verified. |
+| Endpoint scope | Team Squad by Team and Season ID only. | reviewed minimal / passed | Existing ignored cache was sufficient; no additional API call was made. |
+| Field scope | Identity/reference, team/squad, season, position, jersey and dates/freshness/provenance categories. | reviewed minimal / passed | Identity, team, season, position and jersey are present by key names; dates/freshness/provenance remain unclear. |
 | Sample size | One FC København squad, one Denmark Superliga season, minimal payload. | proposed | Avoid broad pulls. |
 | Raw payload path | `data/provider_cache/sportmonks/raw/` or another ignored local path. | proposed | Must remain ignored. |
 | Cache path | `data/provider_cache/sportmonks/cache/` or another ignored local path. | proposed | Must remain ignored. |
@@ -155,6 +156,6 @@ These non-sensitive references confirm the plan limits and four league IDs shown
 
 ## Next Required Action
 
-Minimal ID discovery and the [confirmed ID scope review](sportmonks_confirmed_id_scope_review.md) have passed.
+Minimal ID discovery, the [confirmed ID scope review](sportmonks_confirmed_id_scope_review.md) and the [minimal payload field review](sportmonks_minimal_payload_field_review_summary.md) have passed.
 
-A later explicit block may execute the minimal payload field review under the [approved decision](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md). The trial, broad inspection and app integration remain blocked.
+A later docs-only block may decide whether the observed shape is sufficient to plan a transform design. The local trial, broad inspection and app integration remain blocked.

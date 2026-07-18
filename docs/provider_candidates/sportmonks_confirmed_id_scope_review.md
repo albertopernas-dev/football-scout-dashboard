@@ -7,7 +7,8 @@
 - Related minimal ID discovery summary: [Sportmonks Minimal ID Discovery Summary](sportmonks_minimal_id_discovery_summary.md)
 - Related ID discovery plan: [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md)
 - Related credential verification: [Sportmonks Local Credential Setup Verification](sportmonks_local_credential_setup_verification.md)
-- Minimal payload field review decision: [approved for a future minimal review](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md)
+- Minimal payload field review decision: [executed under strict scope](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md)
+- Minimal payload field review summary: [passed](sportmonks_minimal_payload_field_review_summary.md)
 - Provider approval: no
 - IDs confirmed: yes
 - Broad payload inspection performed: no
@@ -66,6 +67,6 @@
 
 ## Next Required Action
 
-A later explicit block may execute the minimal payload field review under the [approved decision](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md).
+The [minimal payload field review](sportmonks_minimal_payload_field_review_summary.md) passed using the existing ignored cache with 0 API calls.
 
-No API calls are performed or granted by the current docs-only block.
+A later docs-only block may decide whether the observed shape is sufficient to plan a transform design. Transform implementation and provider approval remain blocked.

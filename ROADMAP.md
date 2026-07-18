@@ -16,10 +16,10 @@
 
 ## Recommended Next Steps
 
-1. Ejecutar en un bloque explicito posterior el minimal payload field review bajo su decision de alcance estricto.
-2. Respetar el endpoint confirmado, categorias permitidas, limite de llamadas, manejo local, formato de resumen y stop conditions.
-3. No hacer llamadas en el bloque docs-only que crea la decision.
-4. Mantener respuestas raw, credenciales, cache, SQLite, Streamlit, parser code y provider approval fuera del flujo.
+1. Preparar una decision docs-only sobre si la forma observada basta para planificar un transform design.
+2. Mantener el resultado `partially suitable` separado de cualquier implementacion o provider approval.
+3. No hacer llamadas adicionales sin una nueva decision explicita.
+4. Mantener respuestas raw, credenciales, cache, local trial, SQLite, Streamlit y parser/transform code fuera del flujo tracked.
 
 ## v0.2.0 Market Context Layer
 
@@ -132,11 +132,12 @@ Completed and published.
 - Manual UI lookup did not expose the IDs; 3 minimal API calls confirmed them and squad endpoint access returned HTTP 200.
 - Sportmonks minimal ID discovery completed; non-sensitive summary recorded.
 - Confirmed ID scope review passed.
-- Minimal payload field review decision created under strict scope; the review has not been executed.
+- Minimal payload field review decision created under strict scope.
+- Minimal payload field review executed from existing ignored cache with 0 API calls; review status `passed` and shape `partially suitable`.
 - Sportmonks secure credential setup verified as local-only.
 - Local `.env` credential setup verified outside Git; the token remains untracked and undocumented.
 - Trial scope remains one team, one season and a minimal payload, with Team Squad by Team and Season ID as the primary candidate endpoint.
-- Next: execute the minimal payload field review only in a later explicit block under the strict decision.
+- Next: decide in a docs-only block whether the observed payload shape is sufficient to plan a transform design.
 
 - Only 3 minimal ID discovery calls performed; still no broad payload inspection or local trial.
 - Still no SQLite writes, Streamlit activation, parser code or provider approval.

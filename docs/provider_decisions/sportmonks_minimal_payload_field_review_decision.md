@@ -7,11 +7,13 @@
 - Related confirmed ID scope review: [Sportmonks Confirmed ID Scope Review](../provider_candidates/sportmonks_confirmed_id_scope_review.md)
 - Related minimal ID discovery summary: [Sportmonks Minimal ID Discovery Summary](../provider_candidates/sportmonks_minimal_id_discovery_summary.md)
 - Related payload decision record: [Sportmonks Payload Decision Record](sportmonks_payload_decision_record.md)
+- Field review summary: [Sportmonks Minimal Payload Field Review Summary](../provider_candidates/sportmonks_minimal_payload_field_review_summary.md)
 - Provider approval: no
 - Field review approved: yes, minimal only
-- Field review executed in this block: no
-- Additional API calls performed in this block: no
-- Raw responses reviewed in this block: no
+- Field review executed in this block: yes
+- Review result: `passed`
+- API calls in review: 0
+- Raw response shape reviewed from existing ignored cache: yes
 - Provider cache committed: no
 - SQLite writes performed: no
 - Streamlit activation performed: no
@@ -125,8 +127,6 @@ That summary may include:
 
 ## Next Required Action
 
-A later explicit block may execute the minimal payload field review under this decision.
+The minimal payload field review was executed from the existing ignored cache with 0 API calls and recorded as `passed`.
 
-That future block must follow the call limit, local handling, summary format and stop conditions above.
-
-This block grants no API calls by itself.
+A later docs-only block may decide whether the observed payload shape is sufficient to plan a transform design. Transform code, local trial, SQLite writes, Streamlit activation and provider approval remain blocked.

@@ -17,6 +17,7 @@
 - Discovery summary: [Sportmonks Minimal ID Discovery Summary](sportmonks_minimal_id_discovery_summary.md)
 - Confirmed ID scope review: [passed](sportmonks_confirmed_id_scope_review.md)
 - Minimal payload field review decision: [approved under strict scope](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md)
+- Minimal payload field review summary: [passed](sportmonks_minimal_payload_field_review_summary.md)
 - Gate status: substantive permission response reviewed
 - Gate decision: `continue`
 - Detailed permission response: received
@@ -24,7 +25,8 @@
 - Credentials setup: permitted only securely and after checklist and decision-record preparation
 - Minimal ID discovery: passed with 3 scoped calls
 - Confirmed ID scope review: passed
-- Local trial: permitted to plan; not yet performed
+- Minimal payload field review: passed using existing ignored cache with 0 API calls
+- Local trial: blocked; not performed
 - Decision record: created as draft/pre-trial
 - Provider approval: no
 - Review date: 2026-07-16
@@ -141,7 +143,7 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
   - Local caching is permitted under an active subscription and Terms of Service compliance.
   - Internal normalized/canonical derived outputs are permitted.
   - Internal derived-output documentation and demos are permitted if raw data is not exposed or redistributed.
-- Next allowed step: execute a future minimal payload field review only under the strict decision
+- Next allowed step: prepare a docs-only transform design suitability decision
 - Next forbidden step: broad payload inspection, local trial or app integration
 
 ## Impact On Sportmonks Candidate Review Pack
@@ -179,6 +181,6 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 
 ## Next Required Action
 
-Minimal ID discovery and the [confirmed ID scope review](sportmonks_confirmed_id_scope_review.md) have passed. The [minimal payload field review decision](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md) defines the only allowed future review scope.
+Minimal ID discovery, the [confirmed ID scope review](sportmonks_confirmed_id_scope_review.md) and the [minimal payload field review](sportmonks_minimal_payload_field_review_summary.md) have passed.
 
-A later explicit block may execute that minimal field review. Broad pulls, the local trial and app integration remain blocked.
+A later docs-only block may decide whether the payload shape is sufficient to plan a transform design. Broad pulls, the local trial and app integration remain blocked.
