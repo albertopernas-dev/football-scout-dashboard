@@ -14,11 +14,13 @@
 - ID discovery plan: [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md)
 - Secure credential setup: [Sportmonks Secure Credential Setup](sportmonks_secure_credential_setup.md)
 - Local credential verification: [Sportmonks Local Credential Setup Verification](sportmonks_local_credential_setup_verification.md)
+- Discovery summary: [Sportmonks Minimal ID Discovery Summary](sportmonks_minimal_id_discovery_summary.md)
 - Gate status: substantive permission response reviewed
 - Gate decision: `continue`
 - Detailed permission response: received
 - Payload inspection: permitted for schema/field assessment after checklist and decision-record preparation
 - Credentials setup: permitted only securely and after checklist and decision-record preparation
+- Minimal ID discovery: passed with 3 scoped calls
 - Local trial: permitted to plan; not yet performed
 - Decision record: created as draft/pre-trial
 - Provider approval: no
@@ -136,7 +138,7 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
   - Local caching is permitted under an active subscription and Terms of Service compliance.
   - Internal normalized/canonical derived outputs are permitted.
   - Internal derived-output documentation and demos are permitted if raw data is not exposed or redistributed.
-- Next allowed step: minimal ID discovery in a separate explicit block
+- Next allowed step: review confirmed IDs and endpoint access; later decide explicitly whether a minimal payload field review is allowed
 - Next forbidden step: broad payload inspection, local trial or app integration before those details are documented and reviewed
 
 ## Impact On Sportmonks Candidate Review Pack
@@ -157,7 +159,7 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 - [x] No app activation performed.
 - [x] No SQLite writes performed.
 - [x] No scraping performed.
-- [x] No live provider calls performed.
+- [x] Only 3 minimal ID discovery calls performed; no broad pull or field inspection.
 - [x] No confidential response or ticket identifier copied into Git.
 - [x] Provider payload checklist created as draft/pre-trial.
 - [x] Payload-specific decision record prepared as draft/pre-trial.
@@ -174,6 +176,6 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 
 ## Next Required Action
 
-Local credential setup has been [verified outside Git](sportmonks_local_credential_setup_verification.md). Minimal ID discovery may proceed only in a separate explicit block under the [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md).
+Minimal ID discovery has [passed](sportmonks_minimal_id_discovery_summary.md) with the season, team and primary squad endpoint access confirmed.
 
-Do not inspect broad payloads, perform the trial or integrate provider data into the app. No API calls occur in this docs-only block.
+Review the confirmed IDs in a separate docs-only block. A later explicit block may decide whether a minimal payload field review is allowed. Broad payload inspection, the trial and app integration remain blocked.

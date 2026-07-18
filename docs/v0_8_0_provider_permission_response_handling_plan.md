@@ -4,7 +4,7 @@
 
 v0.8.0 defines how to handle a real provider response or applicable license or subscription terms. A substantive Sportmonks response has now been recorded only as a non-sensitive summary. This does not approve Sportmonks or authorize skipping the checklist and payload-specific decision record.
 
-The recorded evidence supports moving the Stage 1 gate to `continue` for the next governance step only. No payload has been inspected, local credential setup has been verified outside Git and no integration has started.
+The recorded evidence supports moving the Stage 1 gate to `continue` for the next governance step only. No broad payload inspection has been performed, minimal ID discovery has passed, local credential setup remains outside Git and no integration has started.
 
 ## Starting Point
 
@@ -27,14 +27,15 @@ In scope:
 - Prepare a checklist only if the gate moves to `continue`.
 - Prepare and review a payload-specific decision record before any concrete permitted payload is inspected.
 - Keep confidential terms and raw responses out of Git.
+- Record minimal ID discovery results only as non-sensitive summaries.
 
 Out of scope:
 
 - Payload inspection before the checklist and payload-specific decision record are prepared.
 - Credential creation before the checklist and payload-specific decision record are prepared.
-- API calls.
+- API calls beyond the completed minimal ID discovery.
 - Scraping.
-- Provider caching.
+- Provider caching beyond the ignored local ID discovery responses.
 - `.local.csv` outputs from provider data.
 - SQLite writes.
 - Streamlit activation.
@@ -99,9 +100,9 @@ The summary contains no confidential text, ticket identifiers, payloads or crede
 - [ ] ROADMAP identifies v0.8.0 as the current milestone.
 - [ ] No provider response is invented.
 - [ ] No provider approval is claimed.
-- [ ] No payload inspection has been performed.
-- [ ] No code is changed.
-- [ ] No data files are generated.
+- [ ] No broad payload inspection has been performed.
+- [ ] No tracked product code is changed.
+- [ ] No provider data files are tracked or committed.
 - [ ] `git diff --check` passes.
 - [ ] Final `git status --short` is clean before commit.
 
@@ -112,11 +113,12 @@ The summary contains no confidential text, ticket identifiers, payloads or crede
 3. The [Sportmonks Ignored Local Trial Scope Plan](provider_candidates/sportmonks_ignored_local_trial_scope_plan.md) remains draft/pre-trial.
 4. The Football Free Plan is confirmed by user screenshot, which shows 4 leagues and 3000 API calls.
 5. The Free Plan league list is confirmed, and Denmark Superliga `league_id 271` is selected for the minimal trial scope.
-6. Manual UI lookup did not expose the Denmark Superliga `season_id` or FC Copenhagen `team_id`.
-7. The [Sportmonks ID Discovery Plan](provider_candidates/sportmonks_id_discovery_plan.md) is ready for a separate minimal discovery block.
+6. Manual UI lookup did not expose the IDs; minimal API discovery later confirmed Denmark Superliga 2026/2027 `season_id 27897` and FC København `team_id 85`.
+7. The [Sportmonks ID Discovery Plan](provider_candidates/sportmonks_id_discovery_plan.md) is completed for minimal discovery.
 8. The [Sportmonks Secure Credential Setup](provider_candidates/sportmonks_secure_credential_setup.md) is verified/local-only.
 9. The [Sportmonks Local Credential Setup Verification](provider_candidates/sportmonks_local_credential_setup_verification.md) records that local credential setup passed outside Git.
-10. The next action is minimal ID discovery in a separate explicit block.
-11. Do not inspect broad payloads, perform the trial or call APIs in this docs-only block.
-12. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
-13. Continue to treat Sportmonks as unapproved until a later explicit decision.
+10. The [Sportmonks Minimal ID Discovery Summary](provider_candidates/sportmonks_minimal_id_discovery_summary.md) records 3 scoped calls and HTTP 200 squad endpoint access.
+11. The next action is a docs-only review of confirmed IDs; a later explicit block may decide whether a minimal payload field review is allowed.
+12. Do not inspect broad payloads, perform the trial or make additional API calls in this docs-only update.
+13. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
+14. Continue to treat Sportmonks as unapproved until a later explicit decision.

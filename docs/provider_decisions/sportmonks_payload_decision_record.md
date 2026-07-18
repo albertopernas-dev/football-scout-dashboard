@@ -11,14 +11,16 @@
 - Related ID discovery plan: [Sportmonks ID Discovery Plan](../provider_candidates/sportmonks_id_discovery_plan.md)
 - Related credential setup: [Sportmonks Secure Credential Setup](../provider_candidates/sportmonks_secure_credential_setup.md)
 - Related credential verification: [Sportmonks Local Credential Setup Verification](../provider_candidates/sportmonks_local_credential_setup_verification.md)
+- Discovery summary: [Sportmonks Minimal ID Discovery Summary](../provider_candidates/sportmonks_minimal_id_discovery_summary.md)
 - Stage 1 gate decision: `continue`
 - Provider approval: no
 - Production approval: no
-- Payload inspection performed: no
+- Broad payload inspection performed: no
 - Credentials created locally: yes, outside Git
 - Credentials stored in Git: no
-- API calls performed: no
-- Provider cache created: no
+- API calls performed: yes, 3 minimal discovery calls
+- Local provider cache created: yes, ignored
+- Provider cache committed: no
 - Local trial performed: no
 - SQLite writes performed: no
 - Streamlit activation performed: no
@@ -50,7 +52,7 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 | Production use | Not approved. | fixed | Production use is out of scope. |
 | Local evaluation | May be planned. | allowed with conditions | Requires selected plan, checklist completion and secure credentials. |
 | Payload inspection | May be planned. | allowed with conditions | Only minimal schema, field and suitability inspection after checklist review. |
-| Credentials | May be prepared later. | allowed with conditions | Only in ignored local environment or configuration after user confirmation. |
+| Credentials | Prepared locally outside Git. | verified/local-only | Token remains ignored, untracked and undisclosed. |
 | Local caching | May be planned. | allowed with conditions | Only under ignored local paths, active subscription and Terms of Service compliance. |
 | Derived outputs | May be planned. | allowed with conditions | Internal normalized or canonical outputs only, with no raw redistribution. |
 | Documentation/demo | May use derived non-raw summaries. | allowed with conditions | No raw payload excerpts. |
@@ -64,15 +66,15 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 |---|---|---|
 | Selected Sportmonks plan | Football Free Plan confirmed by user screenshot. | confirmed |
 | Selected competition(s) | Denmark Superliga, league_id 271. | confirmed |
-| Selected season | Latest available Denmark Superliga season. | pending season_id confirmation |
-| Selected team | FC Copenhagen. | pending team_id confirmation |
-| Endpoint(s) | Team Squad by Team and Season ID primary; Players auxiliary only if needed for schema/include validation. | proposed/pending endpoint access confirmation |
+| Selected season | Denmark Superliga 2026/2027, `season_id 27897`. | confirmed |
+| Selected team | FC København, `team_id 85`. | confirmed |
+| Endpoint(s) | Team Squad by Team and Season ID primary; Players auxiliary only if needed for schema/include validation. | primary access confirmed; field review pending |
 | Field categories | Must be mapped to Market Context needs. | pending |
-| Sample size | One FC Copenhagen squad, one Denmark Superliga season, minimal payload. | proposed; not executed |
-| Raw payload path | Must be an ignored local path. | proposed in trial scope plan; not created |
-| Cache path | Must be an ignored local path. | proposed in trial scope plan; not created |
+| Sample size | One FC København squad, one Denmark Superliga season, minimal payload. | proposed; field review not executed |
+| Raw payload path | Must be an ignored local path. | ID discovery responses stored locally under ignored provider cache; trial path pending |
+| Cache path | Must be an ignored local path. | ignored ID discovery cache verified; trial retention pending |
 | Retention/cleanup | Must be documented before trial. | pending |
-| Credential storage | Must use ignored local environment or configuration. | proposed in trial scope plan; not created |
+| Credential storage | Must use ignored local environment or configuration. | verified outside Git |
 | Expected derived output | Must avoid raw data exposure. | pending |
 | Stop conditions | Must be reviewed before trial. | pending |
 
@@ -152,15 +154,16 @@ It does not inspect payloads, select a final provider, expose credentials or sta
   - the checklist exists;
   - this decision record exists;
   - a local trial may be planned;
-  - local credential setup is verified outside Git; and
-  - payload inspection has not been performed.
+  - local credential setup is verified outside Git;
+  - minimal ID discovery passed with confirmed season, team and endpoint access; and
+  - broad payload inspection has not been performed.
 - Next allowed step:
-  - minimal ID discovery in a separate explicit block.
+  - review the confirmed IDs and endpoint access in a separate docs-only block; then decide explicitly whether a minimal payload field review is allowed.
 
 - Still forbidden:
   - credential exposure or commitment;
   - broad payload inspection;
-  - API calls outside the separate minimal ID discovery block;
+  - additional API calls without a later explicit payload field review decision;
   - SQLite writes;
   - Streamlit activation; and
   - parser or transform code.
@@ -180,16 +183,16 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 - [x] No SQLite writes performed.
 - [x] No Streamlit activation performed.
 - [x] No parser/transform code created.
-- [ ] Selected plan documented.
-- [ ] Competition scope documented.
-- [ ] Endpoint scope documented.
+- [x] Selected plan documented.
+- [x] Competition scope documented.
+- [x] Endpoint access documented; field scope remains pending.
 - [ ] Field scope documented.
-- [ ] Ignored local paths documented.
+- [x] Ignored ID discovery path documented; future trial paths remain pending.
 - [ ] Cleanup process documented.
 - [ ] Final `git status --short` clean.
 
 ## Next Required Action
 
-Local credential setup has been verified outside Git. A separate explicit block may perform the minimal discovery steps in the [Sportmonks ID Discovery Plan](../provider_candidates/sportmonks_id_discovery_plan.md).
+Minimal ID discovery has [passed](../provider_candidates/sportmonks_minimal_id_discovery_summary.md). Review the confirmed IDs and endpoint access in a separate docs-only block.
 
-Do not invent `season_id`, `team_id` or endpoint access. Do not call APIs or inspect payloads in this docs-only block.
+A later explicit block may decide whether a minimal payload field review is allowed. Do not make additional API calls or inspect fields in this docs-only update.

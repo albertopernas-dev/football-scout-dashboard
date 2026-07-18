@@ -3,28 +3,30 @@
 ## Status
 
 - Candidate: Sportmonks
-- ID discovery status: ready for separate minimal discovery
+- ID discovery status: passed
 - Related trial scope plan: [Sportmonks Ignored Local Trial Scope Plan](sportmonks_ignored_local_trial_scope_plan.md)
 - Related checklist: [Sportmonks Provider Payload Checklist](sportmonks_provider_payload_checklist.md)
 - Related decision record: [Sportmonks Payload Decision Record](../provider_decisions/sportmonks_payload_decision_record.md)
 - Related credential setup: [Sportmonks Secure Credential Setup](sportmonks_secure_credential_setup.md)
 - Related credential verification: [Sportmonks Local Credential Setup Verification](sportmonks_local_credential_setup_verification.md)
+- Discovery summary: [Sportmonks Minimal ID Discovery Summary](sportmonks_minimal_id_discovery_summary.md)
 - Provider approval: no
 - Credentials created locally: yes, outside Git
 - Credentials stored in Git: no
-- API calls performed: no
-- Payload inspection performed: no
-- Provider cache created: no
+- API calls performed: yes, 3 minimal discovery calls
+- Broad payload inspection performed: no
+- Local provider cache created: yes, ignored
+- Provider cache committed: no
 - Local trial performed: no
-- Season ID confirmed: no
-- Team ID confirmed: no
-- Endpoint access confirmed: no
+- Season ID confirmed: yes, `27897`
+- Team ID confirmed: yes, `85`
+- Endpoint access confirmed: yes, HTTP 200
 
 ## Purpose
 
-The user could not find the Denmark Superliga `season_id` or FC Copenhagen `team_id` in the Sportmonks UI. This plan defines a minimal future ID discovery path without inventing IDs or endpoint access.
+The user could not find the Denmark Superliga `season_id` or FC Copenhagen `team_id` in the Sportmonks UI. This plan defined the minimal discovery path used to confirm those IDs and endpoint access without inventing values.
 
-It does not expose credentials, call APIs or inspect payloads. All raw API responses and credentials must remain outside Git.
+It does not expose credentials or authorize broad payload inspection. All raw API responses and credentials remain outside Git.
 
 ## Manual UI Lookup Result
 
@@ -32,9 +34,9 @@ It does not expose credentials, call APIs or inspect payloads. All raw API respo
 |---|---|---|---|
 | League list | Free Plan leagues | Found in UI screenshot. | confirmed |
 | Selected league | Denmark Superliga, league_id 271 | Found in UI screenshot. | confirmed |
-| Season ID | Latest Denmark Superliga season | Not found in UI. | pending |
-| Team ID | FC Copenhagen | Not found in UI. | pending |
-| Endpoint access | Team Squad by Team and Season ID | Not tested. | pending |
+| Season ID | Denmark Superliga 2026/2027 | `27897` | confirmed |
+| Team ID | FC København | `85` | confirmed |
+| Endpoint access | Team Squad by Team and Season ID | HTTP 200; data present | confirmed |
 
 ## Proposed Minimal ID Discovery Sequence
 
@@ -50,10 +52,10 @@ It does not expose credentials, call APIs or inspect payloads. All raw API respo
 
 | Purpose | Candidate Endpoint / Method | Status | Notes |
 |---|---|---|---|
-| Confirm accessible leagues | GET All Leagues with `currentSeason` or `seasons` include if needed. | planned | `league_id 271` is already known; useful for `season_id`. |
-| Confirm latest/current season | League by ID or All Leagues with `currentSeason` or `seasons` include. | planned | Must minimize response. |
-| Confirm teams | Teams by Season ID or minimal team lookup or search if available. | planned | Used only to identify FC Copenhagen `team_id`. |
-| Confirm final squad endpoint | Team Squad by Team and Season ID. | planned | Only after `season_id` and `team_id` are known. |
+| Confirm accessible leagues | League by ID with `currentSeason;seasons`. | completed | `league_id 271` accessible; `season_id 27897` confirmed. |
+| Confirm latest/current season | League by ID with `currentSeason;seasons`. | completed | Denmark Superliga 2026/2027 confirmed. |
+| Confirm teams | Teams by Season ID. | completed | FC København, `team_id 85`, confirmed without search fallback. |
+| Confirm final squad endpoint | Team Squad by Team and Season ID. | completed | HTTP 200; data present; no broad field inspection. |
 
 Do not record complete URLs containing a real `api_token`. Do not include credentials or raw responses.
 
@@ -74,9 +76,9 @@ Do not record complete URLs containing a real `api_token`. Do not include creden
 - Raw response path confirmed ignored.
 - Cache path confirmed ignored.
 - Stop conditions reviewed.
-- No API calls performed yet.
+- Minimal ID discovery completed with 3 calls; no broad payload inspection performed.
 
-## Allowed Outputs After Future ID Discovery
+## Allowed Outputs After ID Discovery
 
 - A non-sensitive summary only:
   - confirmed `league_id`;
@@ -93,10 +95,10 @@ Do not record complete URLs containing a real `api_token`. Do not include creden
 ## Still Forbidden In This Block
 
 - Do not expose or commit credentials.
-- Do not call APIs.
+- Do not make additional API calls in this docs-only update.
 - Do not inspect payloads.
-- Do not create provider cache.
-- Do not create provider folders or outputs.
+- Do not commit provider cache.
+- Do not create additional provider folders or outputs in this docs-only update.
 - Do not write to SQLite.
 - Do not activate Streamlit.
 - Do not create parser or transform code.
@@ -104,4 +106,4 @@ Do not record complete URLs containing a real `api_token`. Do not include creden
 
 ## Next Required Action
 
-Minimal ID discovery may be prepared in a separate explicit block. It must remain limited to the documented `season_id`, `team_id` and endpoint-access checks and use minimal requests.
+Review the [minimal ID discovery summary](sportmonks_minimal_id_discovery_summary.md). A later explicit block may decide whether a minimal payload field review is allowed.

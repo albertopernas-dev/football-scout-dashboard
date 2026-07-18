@@ -10,14 +10,16 @@
 - Related ID discovery plan: [Sportmonks ID Discovery Plan](sportmonks_id_discovery_plan.md)
 - Related credential setup: [Sportmonks Secure Credential Setup](sportmonks_secure_credential_setup.md)
 - Related credential verification: [Sportmonks Local Credential Setup Verification](sportmonks_local_credential_setup_verification.md)
+- Discovery summary: [Sportmonks Minimal ID Discovery Summary](sportmonks_minimal_id_discovery_summary.md)
 - Checklist status: draft/pre-trial
 - Gate decision: `continue`
 - Provider approval: no
-- Payload inspection performed: no
+- Broad payload inspection performed: no
 - Credentials created locally: yes, outside Git
 - Credentials stored in Git: no
-- API calls performed: no
-- Provider cache created: no
+- API calls performed: yes, 3 minimal discovery calls
+- Local provider cache created: yes, ignored
+- Provider cache committed: no
 - Local trial performed: no
 - Decision record created: yes, draft/pre-trial
 - Notes: This checklist and the draft decision record prepare the next governance step only. They do not approve Sportmonks or authorize production use.
@@ -45,14 +47,14 @@ It does not activate Sportmonks data in the app or write provider data to SQLite
 |---|---|---|---|
 | Selected plan | Football Free Plan confirmed by user screenshot. | confirmed | 4 leagues and 3000 API calls shown; no paid plan selected. |
 | Competition scope | Denmark Superliga, league_id 271. | confirmed | Confirmed included in the Free Plan by user screenshot. |
-| Season scope | Latest available Denmark Superliga season. | pending season_id confirmation | Not found in UI; [ID discovery plan](sportmonks_id_discovery_plan.md) required. |
-| Team scope | FC Copenhagen. | pending team_id confirmation | Not found in UI; [ID discovery plan](sportmonks_id_discovery_plan.md) required. |
-| Endpoint scope | Primary candidate: Team Squad by Team and Season ID; Players endpoint only if needed for schema/include validation. | proposed/pending endpoint access confirmation | Not tested; ID discovery plan required and no API calls have occurred. |
+| Season scope | Denmark Superliga 2026/2027, `season_id 27897`. | confirmed | Confirmed by [minimal ID discovery](sportmonks_minimal_id_discovery_summary.md). |
+| Team scope | FC København, `team_id 85`. | confirmed | Confirmed by [minimal ID discovery](sportmonks_minimal_id_discovery_summary.md). |
+| Endpoint scope | Primary candidate: Team Squad by Team and Season ID; Players endpoint only if needed for schema/include validation. | access confirmed | Primary endpoint returned HTTP 200 with data; no broad field review performed. |
 | Field scope | Identify desired fields/categories for Market Context fit. | pending | Identity, squad/team, dates, metadata and Market Context if available. |
-| Payload minimization | One FC Copenhagen squad, one Denmark Superliga season, minimal payload. | proposed | Avoid broad pulls; season and team IDs remain unconfirmed. |
-| Raw data handling | Confirm raw payloads stay outside Git. | proposed | Ignored path documented in the [trial scope plan](sportmonks_ignored_local_trial_scope_plan.md); not created. |
-| Cache handling | Confirm cache path, retention and cleanup. | proposed | Ignored path documented in the [trial scope plan](sportmonks_ignored_local_trial_scope_plan.md); not created. |
-| Credential handling | Store API token only in local ignored `.env` or equivalent configuration. | local setup verified/outside Git | [Verification record](sportmonks_local_credential_setup_verification.md) exists; no API calls have occurred. |
+| Payload minimization | One FC København squad, one Denmark Superliga season, minimal payload. | proposed | Avoid broad pulls; season and team IDs are confirmed. |
+| Raw data handling | Confirm raw payloads stay outside Git. | verified for ID discovery | Raw ID discovery responses remain only under the ignored local provider cache path. |
+| Cache handling | Confirm cache path, retention and cleanup. | partial | ID discovery cache is ignored and uncommitted; future trial retention and cleanup remain pending. |
+| Credential handling | Store API token only in local ignored `.env` or equivalent configuration. | local setup verified/outside Git | [Verification record](sportmonks_local_credential_setup_verification.md) exists; only 3 minimal discovery calls have occurred. |
 | Derived output handling | Confirm derived outputs do not expose raw data. | pending | Internal review only. |
 | Documentation handling | Confirm documentation uses non-sensitive summaries only. | pending | No raw payload excerpts. |
 | Demo handling | Confirm demos use derived, non-raw content only. | pending | No raw redistribution. |
@@ -115,8 +117,8 @@ The requirements below are recorded as passed in the [local credential setup ver
 
 - Do not expose or commit credentials.
 - Do not inspect payloads.
-- Do not call Sportmonks APIs.
-- Do not create provider cache.
+- Do not make additional Sportmonks API calls in this docs-only update.
+- Do not commit provider cache.
 - Do not create `.local.csv` provider outputs.
 - Do not write provider data to SQLite.
 - Do not activate provider data in Streamlit.
@@ -128,7 +130,7 @@ The requirements below are recorded as passed in the [local credential setup ver
 
 The [payload-specific decision record](../provider_decisions/sportmonks_payload_decision_record.md) now exists as a draft/pre-trial artifact.
 
-The next step is minimal ID discovery in a separate explicit block. No trial has been performed, and broad payload inspection remains blocked until the concrete endpoint scope, field scope, ignored local paths, retention and cleanup are documented and reviewed.
+Minimal ID discovery has passed. Review the confirmed IDs and endpoint access, then use a later explicit decision to determine whether a minimal payload field review is allowed. No trial or broad payload inspection has been performed.
 
 ## Acceptance Criteria
 

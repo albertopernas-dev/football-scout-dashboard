@@ -16,10 +16,10 @@
 
 ## Recommended Next Steps
 
-1. Ejecutar minimal ID discovery solo en un bloque explicito separado.
-2. Confirmar `season_id`, `team_id` y acceso al endpoint candidato con solicitudes minimas.
-3. Mantener respuestas raw, credenciales, cache y correspondencia confidencial fuera de Git.
-4. No iniciar payload inspection amplia, SQLite, Streamlit, parser code ni aprobacion del proveedor.
+1. Revisar el resumen de minimal ID discovery y los IDs confirmados.
+2. Actualizar el scope documental antes de cualquier field review.
+3. Decidir en un bloque explicito posterior si se permite un minimal payload field review.
+4. Mantener respuestas raw, credenciales, cache, SQLite, Streamlit y parser code fuera del flujo tracked.
 
 ## v0.2.0 Market Context Layer
 
@@ -121,22 +121,22 @@ Completed and published.
 - A non-sensitive Sportmonks substantive response summary exists.
 - The Stage 1 gate is `continue` for the next governance step only.
 - Sportmonks is not approved as a provider.
-- No payload inspection or local trial has been performed; local credential setup is verified outside Git.
+- No broad payload inspection or local trial has been performed; minimal ID discovery passed and credential setup remains outside Git.
 - Sportmonks provider payload checklist created as draft/pre-trial.
 - Sportmonks payload-specific decision record created as draft/pre-trial.
 - Sportmonks ignored local trial scope plan remains draft/pre-trial.
 - Football Free Plan confirmed by user screenshot; 4 leagues and 3000 API calls shown.
 - Free Plan league list confirmed.
 - Denmark Superliga league_id 271 selected for the first trial.
-- FC Copenhagen selected pending `team_id`; latest Denmark Superliga season pending `season_id`.
-- Manual UI lookup did not expose `season_id` or `team_id`.
-- Sportmonks ID discovery plan is ready for a separate minimal discovery block.
+- Denmark Superliga 2026/2027 `season_id 27897` and FC København `team_id 85` confirmed.
+- Manual UI lookup did not expose the IDs; 3 minimal API calls confirmed them and squad endpoint access returned HTTP 200.
+- Sportmonks minimal ID discovery completed; non-sensitive summary recorded.
 - Sportmonks secure credential setup verified as local-only.
 - Local `.env` credential setup verified outside Git; the token remains untracked and undocumented.
 - Trial scope remains one team, one season and a minimal payload, with Team Squad by Team and Season ID as the primary candidate endpoint.
-- Next: minimal ID discovery in a separate explicit block.
+- Next: review confirmed IDs in a docs-only block, then decide explicitly whether minimal payload field review is allowed.
 
-- Still no API calls, broad payload inspection, provider cache or local trial.
+- Only 3 minimal ID discovery calls performed; still no broad payload inspection or local trial.
 - Still no SQLite writes, Streamlit activation, parser code or provider approval.
 - Raw correspondence, ticket identifiers, payloads, credentials and provider cache remain outside Git.
 - Plan: [`docs/v0_8_0_provider_permission_response_handling_plan.md`](docs/v0_8_0_provider_permission_response_handling_plan.md).
