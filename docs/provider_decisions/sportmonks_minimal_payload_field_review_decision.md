@@ -8,10 +8,12 @@
 - Related minimal ID discovery summary: [Sportmonks Minimal ID Discovery Summary](../provider_candidates/sportmonks_minimal_id_discovery_summary.md)
 - Related payload decision record: [Sportmonks Payload Decision Record](sportmonks_payload_decision_record.md)
 - Field review summary: [Sportmonks Minimal Payload Field Review Summary](../provider_candidates/sportmonks_minimal_payload_field_review_summary.md)
+- Transform design suitability decision: [approved for docs-only planning](sportmonks_transform_design_suitability_decision.md)
 - Provider approval: no
 - Field review approved: yes, minimal only
 - Field review executed in this block: yes
 - Review result: `passed`
+- Transform design suitability decision: `approved-to-plan-transform-design`
 - API calls in review: 0
 - Raw response shape reviewed from existing ignored cache: yes
 - Provider cache committed: no
@@ -129,4 +131,4 @@ That summary may include:
 
 The minimal payload field review was executed from the existing ignored cache with 0 API calls and recorded as `passed`.
 
-A later docs-only block may decide whether the observed payload shape is sufficient to plan a transform design. Transform code, local trial, SQLite writes, Streamlit activation and provider approval remain blocked.
+A later docs-only block may create the approved transform design plan. Transform implementation, API calls, local trial, SQLite writes, Streamlit activation and provider approval remain blocked.

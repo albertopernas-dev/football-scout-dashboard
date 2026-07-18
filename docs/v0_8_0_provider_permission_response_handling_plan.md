@@ -15,7 +15,7 @@ v0.7.0 was published as a documentation and governance milestone. Sportmonks has
 - partial public-source review notes; and
 - a permission request sent log; a [ticket acknowledgement log](provider_candidates/sportmonks_ticket_acknowledgement_log.md); and a [non-sensitive substantive response summary](provider_candidates/sportmonks_permission_response_summary.md).
 
-The current gate decision is `continue`. This permits preparation of the checklist, payload-specific decision record and ignored local trial plan; it does not approve the provider or permit bypassing those controls.
+The current gate decision is `continue`. The checklist, decision records and minimal field review are complete; only a docs-only transform design plan is now permitted. This does not approve the provider or local trial.
 
 ## Scope
 
@@ -31,6 +31,7 @@ In scope:
 - Record a docs-only confirmed ID scope review before any payload field review decision.
 - Record a strict minimal payload field review decision before any field review is executed.
 - Record the completed minimal payload field review as a non-sensitive field/category summary.
+- Record a docs-only suitability decision before any transform design is created.
 
 Out of scope:
 
@@ -93,7 +94,7 @@ The summary contains no confidential text, ticket identifiers, payloads or crede
 - Do not commit `.local.csv` outputs from provider data.
 - Do not inspect payloads until the checklist and payload-specific decision record are prepared.
 - Keep credentials local, ignored and absent from docs, diffs, logs and commits.
-- Do not add parser or transform code until a later explicit decision.
+- Do not add parser or transform code; the current suitability decision permits documentation only.
 
 ## Acceptance Criteria
 
@@ -124,6 +125,7 @@ The summary contains no confidential text, ticket identifiers, payloads or crede
 11. The [Sportmonks Confirmed ID Scope Review](provider_candidates/sportmonks_confirmed_id_scope_review.md) has passed.
 12. The [Sportmonks Minimal Payload Field Review Decision](provider_decisions/sportmonks_minimal_payload_field_review_decision.md) defined the strict review scope.
 13. The [Sportmonks Minimal Payload Field Review Summary](provider_candidates/sportmonks_minimal_payload_field_review_summary.md) records a `passed` review from existing ignored cache with 0 API calls.
-14. The next action is a docs-only decision on whether the observed shape is sufficient to plan a transform design.
-15. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
-16. Continue to treat Sportmonks as unapproved; transform implementation, integration and trial activity remain blocked.
+14. The [Sportmonks Transform Design Suitability Decision](provider_decisions/sportmonks_transform_design_suitability_decision.md) approves only a future docs-only design plan.
+15. The next action is to create that documentation-only transform design plan.
+16. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
+17. Continue to treat Sportmonks as unapproved; transform implementation, integration and trial activity remain blocked.

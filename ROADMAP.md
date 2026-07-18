@@ -16,10 +16,10 @@
 
 ## Recommended Next Steps
 
-1. Preparar una decision docs-only sobre si la forma observada basta para planificar un transform design.
+1. Crear en un bloque posterior el transform design plan aprobado como documentacion solamente.
 2. Mantener el resultado `partially suitable` separado de cualquier implementacion o provider approval.
-3. No hacer llamadas adicionales sin una nueva decision explicita.
-4. Mantener respuestas raw, credenciales, cache, local trial, SQLite, Streamlit y parser/transform code fuera del flujo tracked.
+3. No leer raw JSON ni hacer llamadas adicionales durante el bloque de diseno documental.
+4. Mantener respuestas raw, credenciales, cache, `.local.csv`, local trial, SQLite, Streamlit y parser/transform code fuera del flujo tracked.
 
 ## v0.2.0 Market Context Layer
 
@@ -106,8 +106,8 @@ Completed and published.
 - Pack template: [`docs/v0_7_0_candidate_review_pack_template.md`](docs/v0_7_0_candidate_review_pack_template.md).
 - Shortlist matrix: [`docs/v0_7_0_provider_candidate_shortlist_matrix.md`](docs/v0_7_0_provider_candidate_shortlist_matrix.md).
 - Initial shortlist: [`docs/provider_candidates/v0_7_0_initial_shortlist.md`](docs/provider_candidates/v0_7_0_initial_shortlist.md).
-- Current intake candidate: [Sportmonks Stage 0 only](docs/provider_candidates/sportmonks_candidate_review_pack.md); no approval and no payload inspection.
-- Sportmonks Stage 1 gate: [`continue`](docs/provider_candidates/sportmonks_license_terms_gate.md) for the next governance step only; no provider approval and no payload inspection performed.
+- Current candidate: [Sportmonks](docs/provider_candidates/sportmonks_candidate_review_pack.md) remains unapproved; minimal field review passed and no broad payload inspection occurred.
+- Sportmonks Stage 1 gate: [`continue`](docs/provider_candidates/sportmonks_license_terms_gate.md) for the next governance step only; no provider approval or broad payload inspection.
 - Public review notes: [`docs/provider_candidates/sportmonks_public_terms_review_notes.md`](docs/provider_candidates/sportmonks_public_terms_review_notes.md).
 - Permission request sent: [docs/provider_candidates/sportmonks_permission_request_sent_log.md](docs/provider_candidates/sportmonks_permission_request_sent_log.md).
 - Ticket acknowledgement: [docs/provider_candidates/sportmonks_ticket_acknowledgement_log.md](docs/provider_candidates/sportmonks_ticket_acknowledgement_log.md); exact ticket reference remains outside Git.
@@ -134,10 +134,11 @@ Completed and published.
 - Confirmed ID scope review passed.
 - Minimal payload field review decision created under strict scope.
 - Minimal payload field review executed from existing ignored cache with 0 API calls; review status `passed` and shape `partially suitable`.
+- Transform design suitability decision created: docs-only planning approved; implementation remains blocked.
 - Sportmonks secure credential setup verified as local-only.
 - Local `.env` credential setup verified outside Git; the token remains untracked and undocumented.
 - Trial scope remains one team, one season and a minimal payload, with Team Squad by Team and Season ID as the primary candidate endpoint.
-- Next: decide in a docs-only block whether the observed payload shape is sufficient to plan a transform design.
+- Next: create the docs-only Sportmonks transform design plan.
 
 - Only 3 minimal ID discovery calls performed; still no broad payload inspection or local trial.
 - Still no SQLite writes, Streamlit activation, parser code or provider approval.

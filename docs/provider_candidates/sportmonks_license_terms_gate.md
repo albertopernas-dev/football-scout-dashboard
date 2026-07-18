@@ -18,6 +18,7 @@
 - Confirmed ID scope review: [passed](sportmonks_confirmed_id_scope_review.md)
 - Minimal payload field review decision: [approved under strict scope](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md)
 - Minimal payload field review summary: [passed](sportmonks_minimal_payload_field_review_summary.md)
+- Transform design suitability decision: [approved for docs-only planning](../provider_decisions/sportmonks_transform_design_suitability_decision.md)
 - Gate status: substantive permission response reviewed
 - Gate decision: `continue`
 - Detailed permission response: received
@@ -37,7 +38,7 @@
 
 This document records the Stage 1 review for Sportmonks using public references and a non-sensitive summary of the substantive permission response. The response supports moving the gate from `defer` to `continue` under explicit conditions.
 
-The gate decision allows preparation of the provider payload checklist, payload-specific decision record and an ignored local trial plan. No payload has been inspected, local credential setup has been verified outside Git and no local trial has been performed.
+The gate decision supported the completed governance artifacts and minimal field review. Local credential setup remains outside Git; no broad payload inspection or local trial has been performed.
 
 ## Reviewed Evidence
 
@@ -112,7 +113,7 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 - Do not expose or redistribute raw Sportmonks data.
 - Do not write provider data to SQLite.
 - Do not activate provider data in the app.
-- Do not create parser or transform code until a later explicit block.
+- Do not create parser or transform code; the current decision permits only a docs-only design plan.
 - Do not treat `continue` as provider or production approval.
 
 ## Evidence Log
@@ -143,8 +144,8 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
   - Local caching is permitted under an active subscription and Terms of Service compliance.
   - Internal normalized/canonical derived outputs are permitted.
   - Internal derived-output documentation and demos are permitted if raw data is not exposed or redistributed.
-- Next allowed step: prepare a docs-only transform design suitability decision
-- Next forbidden step: broad payload inspection, local trial or app integration
+- Next allowed step: create a docs-only transform design plan
+- Next forbidden step: implementation, additional API calls, broad payload inspection, local trial, app integration or provider approval
 
 ## Impact On Sportmonks Candidate Review Pack
 
@@ -183,4 +184,4 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 
 Minimal ID discovery, the [confirmed ID scope review](sportmonks_confirmed_id_scope_review.md) and the [minimal payload field review](sportmonks_minimal_payload_field_review_summary.md) have passed.
 
-A later docs-only block may decide whether the payload shape is sufficient to plan a transform design. Broad pulls, the local trial and app integration remain blocked.
+A later docs-only block may create the approved transform design plan. Implementation, broad pulls, the local trial, app integration and provider approval remain blocked.

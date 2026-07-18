@@ -15,6 +15,7 @@
 - Confirmed ID scope review: [passed](../provider_candidates/sportmonks_confirmed_id_scope_review.md)
 - Minimal payload field review decision: [approved under strict scope](sportmonks_minimal_payload_field_review_decision.md)
 - Minimal payload field review summary: [passed](../provider_candidates/sportmonks_minimal_payload_field_review_summary.md)
+- Transform design suitability decision: [approved for docs-only planning](sportmonks_transform_design_suitability_decision.md)
 - Stage 1 gate decision: `continue`
 - Provider approval: no
 - Production approval: no
@@ -126,7 +127,7 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 - User explicitly confirms credential creation outside Git.
 - `git status --short` clean before credential creation.
 - No credentials appear in `git diff`, tracked files or docs.
-- No additional API calls until a later explicit minimal payload field review decision.
+- No additional API calls without a new explicit decision.
 
 ## Required Before Payload Inspection
 
@@ -145,7 +146,7 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 
 | Outcome | Meaning | Follow-up |
 |---|---|---|
-| `accept_for_local_transform_design` | Payload shape is suitable enough to design local transform code later. | Create an explicit implementation plan. |
+| `accept_for_local_transform_design` | Payload shape is suitable enough to plan a transform design. | Create a docs-only design plan; implementation requires a separate decision. |
 | `defer` | Payload, plan or field coverage remains unclear. | Record blockers and avoid implementation. |
 | `reject` | Payload, plan, coverage or restrictions do not fit project needs. | Close the Sportmonks candidate path or revisit alternatives. |
 | `stop` | A safety issue occurred. | Remove local data, document the issue and do not proceed. |
@@ -153,15 +154,17 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 ## Current Decision
 
 - Current decision: `minimal-field-review-passed`
+- Transform design decision: `transform-design-planning-approved-docs-only`
 - Meaning:
   - the checklist and decision records exist;
   - local credential setup remains outside Git;
   - minimal ID discovery and confirmed ID scope review passed;
   - minimal payload field review passed using existing ignored cache with 0 API calls;
+  - transform design planning is approved as documentation only;
   - broad payload inspection remains no; and
   - Sportmonks provider approval remains no.
 - Next allowed step:
-  - prepare a docs-only transform design suitability decision.
+  - create the approved docs-only transform design plan.
 
 - Still forbidden:
   - credential exposure or commitment;
@@ -202,4 +205,4 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 
 Minimal ID discovery, the [confirmed ID scope review](../provider_candidates/sportmonks_confirmed_id_scope_review.md) and the [minimal payload field review](../provider_candidates/sportmonks_minimal_payload_field_review_summary.md) have passed.
 
-A later docs-only block may decide whether the payload shape is sufficient to plan a transform design. Transform code, broad payload inspection, local trial, SQLite, Streamlit and provider approval remain forbidden.
+A later docs-only block may create the approved transform design plan. Transform code, additional API calls, broad payload inspection, local trial, SQLite, Streamlit and provider approval remain forbidden.

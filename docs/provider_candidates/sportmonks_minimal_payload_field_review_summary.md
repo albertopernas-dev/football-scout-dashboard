@@ -6,6 +6,7 @@
 - Review status: `passed`
 - Related field review decision: [Sportmonks Minimal Payload Field Review Decision](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md)
 - Related confirmed ID scope review: [Sportmonks Confirmed ID Scope Review](sportmonks_confirmed_id_scope_review.md)
+- Transform design suitability decision: [approved for docs-only planning](../provider_decisions/sportmonks_transform_design_suitability_decision.md)
 - Provider approval: no
 - Field review executed: yes
 - Source: existing ignored cache
@@ -101,6 +102,6 @@ None.
 
 ## Next Required Action
 
-A later docs-only block may decide whether the payload shape is sufficient to plan a transform design.
+The [transform design suitability decision](../provider_decisions/sportmonks_transform_design_suitability_decision.md) approves creation of a future docs-only transform design plan.
 
-Transform design, local trial, SQLite writes, Streamlit activation and provider approval remain blocked.
+Implementation, API calls, local trial, SQLite writes, Streamlit activation and provider approval remain blocked.

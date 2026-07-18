@@ -14,6 +14,7 @@
 - Confirmed ID scope review: [passed](sportmonks_confirmed_id_scope_review.md)
 - Minimal payload field review decision: [executed under strict scope](../provider_decisions/sportmonks_minimal_payload_field_review_decision.md)
 - Minimal payload field review summary: [passed](sportmonks_minimal_payload_field_review_summary.md)
+- Transform design suitability decision: [approved for docs-only planning](../provider_decisions/sportmonks_transform_design_suitability_decision.md)
 - Provider approval: no
 - Production approval: no
 - Credentials created locally: yes, outside Git
@@ -158,4 +159,4 @@ These non-sensitive references confirm the plan limits and four league IDs shown
 
 Minimal ID discovery, the [confirmed ID scope review](sportmonks_confirmed_id_scope_review.md) and the [minimal payload field review](sportmonks_minimal_payload_field_review_summary.md) have passed.
 
-A later docs-only block may decide whether the observed shape is sufficient to plan a transform design. The local trial, broad inspection and app integration remain blocked.
+A later docs-only block may create the approved transform design plan. The local trial, broad inspection, implementation and app integration remain blocked.
