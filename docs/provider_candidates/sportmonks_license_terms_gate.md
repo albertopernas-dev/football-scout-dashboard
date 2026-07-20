@@ -27,6 +27,7 @@
 - Local preview run approval: [approved / executed](../provider_decisions/sportmonks_local_preview_run_approval_decision.md)
 - Local preview run summary: [completed](sportmonks_local_preview_run_summary.md)
 - Local preview result decision: [accepted with limitations](../provider_decisions/sportmonks_local_preview_result_decision.md)
+- v0.8.0 closeout decision: [closed with limitations](../provider_decisions/sportmonks_v0_8_0_closeout_decision.md)
 - Gate status: substantive permission response reviewed
 - Gate decision: `continue`
 - Detailed permission response: received
@@ -152,7 +153,7 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
   - Local caching is permitted under an active subscription and Terms of Service compliance.
   - Internal normalized/canonical derived outputs are permitted.
   - Internal derived-output documentation and demos are permitted if raw data is not exposed or redistributed.
-- Next allowed step: v0.8.0 closeout docs-only
+- Next allowed step: separate release/tag block or v0.9.0 scope decision
 - Next forbidden step: API calls, manual raw JSON review, additional cache reading, broad payload inspection, local trial, app integration or provider approval
 
 ## Impact On Sportmonks Candidate Review Pack
@@ -192,4 +193,4 @@ Do not copy restricted legal text, ticket identifiers or confidential correspond
 
 Minimal ID discovery, the [confirmed ID scope review](sportmonks_confirmed_id_scope_review.md) and the [minimal payload field review](sportmonks_minimal_payload_field_review_summary.md) have passed.
 
-The [first local-only scaffold](sportmonks_implementation_summary.md) and the [approved local preview](sportmonks_local_preview_run_summary.md) are completed, and the [preview result](../provider_decisions/sportmonks_local_preview_result_decision.md) is accepted with limitations. The next allowed step is v0.8.0 closeout docs-only. API calls, manual raw JSON review, additional cache reading, broad payload inspection, local trial, app integration and provider approval remain blocked.
+The [v0.8.0 closeout decision](../provider_decisions/sportmonks_v0_8_0_closeout_decision.md) closes the milestone docs-only with limitations. The next allowed step is a separate release/tag block or v0.9.0 scope decision. API calls, manual raw JSON review, additional cache reading, broad payload inspection, local trial, app integration and provider approval remain blocked.

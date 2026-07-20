@@ -11,15 +11,14 @@
 - v0.5.0 completa Provider Fixture Prototype como demo sintetico offline: validacion y aplicacion de identity mapping, CLI de records mapeados, builder canonico y preview.
 - v0.6.0 publicada con governance de evaluacion, payload avanzado sintetico, flattening local y demo end-to-end sintetica hacia Market Context canonico.
 - v0.7.0 completada y publicada como milestone documental/de gobernanza; Sportmonks sigue en `defer` y sin aprobacion.
-- v0.8.0 es el milestone actual para manejar respuestas y permisos de proveedor de forma segura.
+- v0.8.0 completada con closeout docs-only; tag/release queda para un bloque separado.
 - El contexto de mercado real depende de CSVs revisados localmente; no hay scraping ni proveedor automatico conectado.
 
 ## Recommended Next Steps
 
-1. Ejecutar un unico preview local aprobado contra un archivo explicito de cache ignorada.
-2. Mantener el preview default-off, sin red y limitado al resumen agregado.
-3. No revisar manualmente raw JSON ni hacer llamadas API.
-4. Mantener `.local.csv`, local trial, SQLite, Streamlit app integration y provider approval fuera del flujo.
+1. Preparar un bloque separado de tag/release v0.8.0, si se desea.
+2. Decidir por separado el alcance de v0.9.0.
+3. Mantener bloqueados API calls, cache reading adicional, `.local.csv`, local trial, SQLite, Streamlit app integration y provider approval.
 
 ## v0.2.0 Market Context Layer
 
@@ -116,7 +115,7 @@ Completed and published.
 
 ## v0.8.0 Provider Permission Response Handling
 
-- Current milestone.
+- Completed with a docs-only closeout and limitations.
 - Focus: handle provider permission responses safely.
 - A non-sensitive Sportmonks substantive response summary exists.
 - The Stage 1 gate is `continue` for the next governance step only.
@@ -143,16 +142,18 @@ Completed and published.
 - One approved local preview completed against exactly one ignored cache input.
 - Preview result: `row_count 6`, `has_position_ids 0`, `has_jersey_numbers 0`.
 - Preview result accepted with limitations; the local scaffold validation portion is complete.
+- Governance chain completed for v0.8.0.
 - Sportmonks secure credential setup verified as local-only.
 - Local `.env` credential setup verified outside Git; the token remains untracked and undocumented.
 - Trial scope remains one team, one season and a minimal payload, with Team Squad by Team and Season ID as the primary candidate endpoint.
-- Next: v0.8.0 closeout docs-only.
+- Next: separate v0.8.0 release/tag block or v0.9.0 scope decision.
 
 - Only 3 minimal ID discovery calls performed; still no broad payload inspection or local trial.
 - Still no API calls during the preview, manual raw JSON review, additional cache reading, broad payload inspection, `.local.csv`, local trial, SQLite writes, Streamlit app integration or provider approval.
 - Unresolved: labels, position coverage, jersey coverage and Market Context.
 - Raw correspondence, ticket identifiers, payloads, credentials and provider cache remain outside Git.
 - Plan: [`docs/v0_8_0_provider_permission_response_handling_plan.md`](docs/v0_8_0_provider_permission_response_handling_plan.md).
+- Release notes: [docs/release_notes_v0_8_0.md](docs/release_notes_v0_8_0.md).
 
 ## Potential v0.4.x Follow-ups
 

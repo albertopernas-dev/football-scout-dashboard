@@ -7,6 +7,7 @@
 - Related local preview summary: [Sportmonks Local Preview Run Summary](../provider_candidates/sportmonks_local_preview_run_summary.md)
 - Related local preview approval decision: [Sportmonks Local Preview Run Approval Decision](sportmonks_local_preview_run_approval_decision.md)
 - Related payload decision record: [Sportmonks Payload Decision Record](sportmonks_payload_decision_record.md)
+- Related v0.8.0 closeout decision: [Sportmonks v0.8.0 Closeout Decision](sportmonks_v0_8_0_closeout_decision.md)
 - Provider approval: no
 - Preview result accepted: yes, limited technical validation only
 - API calls performed in this block: no
@@ -111,6 +112,6 @@
 
 ## Next Required Action
 
-A later docs-only block may prepare v0.8.0 closeout.
+A separate release/tag block or v0.9.0 scope decision may follow.
 
 No further preview, cache reading, API calls, `.local.csv`, SQLite, Streamlit, local trial or provider approval is approved by this decision.

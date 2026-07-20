@@ -40,6 +40,7 @@ In scope:
 - Record the [Sportmonks Local Preview Run Approval Decision](provider_decisions/sportmonks_local_preview_run_approval_decision.md) before any real cache preview.
 - Record the [Sportmonks Local Preview Run Summary](provider_candidates/sportmonks_local_preview_run_summary.md) after the approved aggregate preview.
 - Record the [Sportmonks Local Preview Result Decision](provider_decisions/sportmonks_local_preview_result_decision.md) before milestone closeout.
+- Record the [Sportmonks v0.8.0 Closeout Decision](provider_decisions/sportmonks_v0_8_0_closeout_decision.md) to close the milestone docs-only.
 
 Out of scope:
 
@@ -142,6 +143,7 @@ The summary contains no confidential text, ticket identifiers, payloads or crede
 20. The [Sportmonks Local Preview Run Approval Decision](provider_decisions/sportmonks_local_preview_run_approval_decision.md) approved exactly one aggregate preview against one ignored cache input.
 21. The [Sportmonks Local Preview Run Summary](provider_candidates/sportmonks_local_preview_run_summary.md) records that completed preview without raw or player-identifying output.
 22. The [Sportmonks Local Preview Result Decision](provider_decisions/sportmonks_local_preview_result_decision.md) accepts the result as limited technical validation only.
-23. The next action is v0.8.0 closeout docs-only.
-24. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
-25. Continue to treat Sportmonks as unapproved; API calls, local trial and provider approval remain blocked.
+23. The [Sportmonks v0.8.0 Closeout Decision](provider_decisions/sportmonks_v0_8_0_closeout_decision.md) closes v0.8.0 docs-only with limitations.
+24. The next action is a separate release/tag block or v0.9.0 scope decision.
+25. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
+26. Continue to treat Sportmonks as unapproved; API calls, local trial and provider approval remain blocked.

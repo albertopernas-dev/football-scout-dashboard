@@ -24,6 +24,7 @@
 - Local preview run approval: [approved / executed](sportmonks_local_preview_run_approval_decision.md)
 - Local preview run summary: [completed](../provider_candidates/sportmonks_local_preview_run_summary.md)
 - Local preview result decision: [accepted with limitations](sportmonks_local_preview_result_decision.md)
+- v0.8.0 closeout decision: [closed with limitations](sportmonks_v0_8_0_closeout_decision.md)
 - Stage 1 gate decision: `continue`
 - Provider approval: no
 - Production approval: no
@@ -161,7 +162,7 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 
 ## Current Decision
 
-- Current decision: `preview-result-accepted-with-limitations`
+- Current decision: `v0.8.0-closed-with-limitations`
 - Transform design decision: `transform-design-plan-created-docs-only`
 - Implementation plan decision: `implementation-plan-created-docs-only`
 - First code implementation decision: `approved-local-only-strict-scope`
@@ -177,7 +178,7 @@ It does not inspect payloads, select a final provider, expose credentials or sta
   - broad payload inspection remains no; and
   - Sportmonks provider approval remains no.
 - Next allowed step:
-  - prepare v0.8.0 closeout docs-only.
+  - prepare a separate release/tag block or make a v0.9.0 scope decision.
 
 - Still forbidden:
   - credential exposure or commitment;
@@ -221,4 +222,4 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 
 Minimal ID discovery, the [confirmed ID scope review](../provider_candidates/sportmonks_confirmed_id_scope_review.md) and the [minimal payload field review](../provider_candidates/sportmonks_minimal_payload_field_review_summary.md) have passed.
 
-The [local preview result decision](sportmonks_local_preview_result_decision.md) accepts the completed aggregate preview with limitations. The next allowed step is v0.8.0 closeout docs-only. API calls, manual raw JSON review, additional cache reading, broad payload inspection, `.local.csv`, local trial, SQLite, Streamlit and provider approval remain forbidden.
+The [v0.8.0 closeout decision](sportmonks_v0_8_0_closeout_decision.md) closes the milestone with limitations. The next allowed step is a separate release/tag block or v0.9.0 scope decision. API calls, manual raw JSON review, additional cache reading, broad payload inspection, `.local.csv`, local trial, SQLite, Streamlit and provider approval remain forbidden.

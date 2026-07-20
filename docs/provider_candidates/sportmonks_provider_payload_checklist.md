@@ -23,7 +23,8 @@
 - Local preview run approval: [approved / executed](../provider_decisions/sportmonks_local_preview_run_approval_decision.md)
 - Local preview run summary: [completed](sportmonks_local_preview_run_summary.md)
 - Local preview result decision: [accepted with limitations](../provider_decisions/sportmonks_local_preview_result_decision.md)
-- Checklist status: draft/pre-trial
+- v0.8.0 closeout decision: [closed with limitations](../provider_decisions/sportmonks_v0_8_0_closeout_decision.md)
+- Checklist status: v0.8.0 closed with limitations
 - Gate decision: `continue`
 - Provider approval: no
 - Broad payload inspection performed: no
