@@ -21,7 +21,8 @@
 - Implementation plan: [created docs-only](../provider_candidates/sportmonks_implementation_plan.md)
 - First code implementation approval: [approved under strict local-only scope](sportmonks_first_code_implementation_approval_decision.md)
 - Implementation summary: [first local-only scaffold created](../provider_candidates/sportmonks_implementation_summary.md)
-- Local preview run approval: [approved / not executed](sportmonks_local_preview_run_approval_decision.md)
+- Local preview run approval: [approved / executed](sportmonks_local_preview_run_approval_decision.md)
+- Local preview run summary: [completed](../provider_candidates/sportmonks_local_preview_run_summary.md)
 - Stage 1 gate decision: `continue`
 - Provider approval: no
 - Production approval: no
@@ -159,7 +160,7 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 
 ## Current Decision
 
-- Current decision: `local-preview-run-approved-not-executed`
+- Current decision: `local-preview-completed`
 - Transform design decision: `transform-design-plan-created-docs-only`
 - Implementation plan decision: `implementation-plan-created-docs-only`
 - First code implementation decision: `approved-local-only-strict-scope`
@@ -171,15 +172,17 @@ It does not inspect payloads, select a final provider, expose credentials or sta
   - the transform design plan is created as documentation only;
   - the implementation plan is created as documentation only;
   - the first code implementation is approved only for the listed local-only files;
+  - one approved local preview is completed with non-sensitive aggregate output only;
   - broad payload inspection remains no; and
   - Sportmonks provider approval remains no.
 - Next allowed step:
-  - execute one approved local preview run under the strict one-input scope.
+  - make a docs-only preview result decision or close the v0.8.0 milestone.
 
 - Still forbidden:
   - credential exposure or commitment;
   - broad payload inspection;
   - manual raw JSON review;
+  - additional cache reading;
   - `.local.csv` outputs;
   - code outside the approved first implementation file scope;
   - local trial;
@@ -217,4 +220,4 @@ It does not inspect payloads, select a final provider, expose credentials or sta
 
 Minimal ID discovery, the [confirmed ID scope review](../provider_candidates/sportmonks_confirmed_id_scope_review.md) and the [minimal payload field review](../provider_candidates/sportmonks_minimal_payload_field_review_summary.md) have passed.
 
-The [local preview approval decision](sportmonks_local_preview_run_approval_decision.md) permits exactly one future aggregate preview against one ignored local input. API calls, manual raw JSON review, broad payload inspection, `.local.csv`, local trial, SQLite, Streamlit and provider approval remain forbidden.
+The [local preview summary](../provider_candidates/sportmonks_local_preview_run_summary.md) records the completed aggregate preview. The next allowed step is a docs-only preview result decision or v0.8.0 closeout. API calls, manual raw JSON review, additional cache reading, broad payload inspection, `.local.csv`, local trial, SQLite, Streamlit and provider approval remain forbidden.

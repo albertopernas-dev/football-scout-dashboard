@@ -7,9 +7,10 @@
 - Related implementation summary: [Sportmonks Implementation Summary](../provider_candidates/sportmonks_implementation_summary.md)
 - Related first-code approval decision: [Sportmonks First Code Implementation Approval Decision](sportmonks_first_code_implementation_approval_decision.md)
 - Related payload decision record: [Sportmonks Payload Decision Record](sportmonks_payload_decision_record.md)
+- Related preview summary: [Sportmonks Local Preview Run Summary](../provider_candidates/sportmonks_local_preview_run_summary.md)
 - Provider approval: no
 - Local preview run approved: yes, strict one-run local-only scope
-- Preview executed in this block: no
+- Preview executed: yes
 - API calls performed in this block: no
 - Raw JSON manually reviewed in this block: no
 - Provider cache modified in this block: no
@@ -153,8 +154,6 @@ Do not report:
 
 ## Next Required Action
 
-A later preview block may run exactly one local preview under this approval.
+A later docs-only block may decide on the non-sensitive [preview result](../provider_candidates/sportmonks_local_preview_run_summary.md) or close the v0.8.0 milestone.
 
-That future block must provide the exact command, stdout/stderr summary, exit code and post-run checks.
-
-The future preview still does not approve API calls, broad inspection, `.local.csv`, SQLite, Streamlit, local trial or provider approval.
+No further preview, API calls, broad inspection, `.local.csv`, SQLite, Streamlit, local trial or provider approval is approved.

@@ -140,14 +140,15 @@ Completed and published.
 - Sportmonks implementation plan created docs-only.
 - First local-only code implementation approval decision created under strict file scope.
 - First local-only Sportmonks transform scaffold created with synthetic tests only; no network or real provider payloads.
-- Local preview run approval decision created for exactly one ignored cache input; preview not executed yet.
+- One approved local preview completed against exactly one ignored cache input.
+- Preview result: `row_count 6`, `has_position_ids 0`, `has_jersey_numbers 0`.
 - Sportmonks secure credential setup verified as local-only.
 - Local `.env` credential setup verified outside Git; the token remains untracked and undocumented.
 - Trial scope remains one team, one season and a minimal payload, with Team Squad by Team and Season ID as the primary candidate endpoint.
-- Next: run one approved local preview against ignored cache.
+- Next: docs-only preview result decision or v0.8.0 closeout.
 
 - Only 3 minimal ID discovery calls performed; still no broad payload inspection or local trial.
-- Still no API calls, broad payload inspection, `.local.csv`, local trial, SQLite writes, Streamlit app integration or provider approval.
+- Still no API calls during the preview, manual raw JSON review, broad payload inspection, `.local.csv`, local trial, SQLite writes, Streamlit app integration or provider approval.
 - Raw correspondence, ticket identifiers, payloads, credentials and provider cache remain outside Git.
 - Plan: [`docs/v0_8_0_provider_permission_response_handling_plan.md`](docs/v0_8_0_provider_permission_response_handling_plan.md).
 

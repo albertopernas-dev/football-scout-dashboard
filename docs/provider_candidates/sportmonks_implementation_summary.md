@@ -6,8 +6,9 @@
 - Implementation status: `first-local-only-scaffold-created`
 - Related first-code approval decision: [Sportmonks First Code Implementation Approval Decision](../provider_decisions/sportmonks_first_code_implementation_approval_decision.md)
 - Related local preview approval decision: [Sportmonks Local Preview Run Approval Decision](../provider_decisions/sportmonks_local_preview_run_approval_decision.md)
+- Related local preview summary: [Sportmonks Local Preview Run Summary](sportmonks_local_preview_run_summary.md)
 - Provider approval: no
-- Local preview run approved: yes, not executed
+- Local preview run: completed
 - Code created: yes, strict local-only scaffold
 - API calls performed: no
 - Raw JSON reviewed: no
@@ -52,6 +53,6 @@
 
 ## Next Required Action
 
-A later preview block may run one approved local preview against one explicit ignored cache file.
+A later docs-only block may decide on the preview result or close the v0.8.0 milestone.
 
-The preview remains local-only, no-network and aggregate-summary-only. It does not approve a local trial or provider approval.
+No further preview, local trial or provider approval is approved.
