@@ -62,9 +62,10 @@ Current milestone: `v0.9.0` provider suitability scope.
 - v0.8.0 plan: [docs/v0_8_0_provider_permission_response_handling_plan.md](docs/v0_8_0_provider_permission_response_handling_plan.md)
 - v0.8.0 release notes: [docs/release_notes_v0_8_0.md](docs/release_notes_v0_8_0.md)
 - v0.9.0 scope plan: [docs/v0_9_0_provider_suitability_scope_plan.md](docs/v0_9_0_provider_suitability_scope_plan.md)
+- v0.9.0 provider comparison plan: [docs/v0_9_0_provider_comparison_plan.md](docs/v0_9_0_provider_comparison_plan.md)
 - Demo assets checklist: [`docs/demo_assets_checklist.md`](docs/demo_assets_checklist.md)
 
-v0.8.0 is completed and published. Sportmonks remains unapproved; v0.9.0 will decide whether to continue with Sportmonks, compare providers or stop provider exploration.
+v0.8.0 is completed and published. v0.9.0 selected a provider comparison path using the documented candidates Sportmonks, API-Football/API-Sports, Capology and Transfermarkt as a manual reference. The comparison has not been executed and no provider is approved.
 
 ## v0.2.0 Market Context Layer
 

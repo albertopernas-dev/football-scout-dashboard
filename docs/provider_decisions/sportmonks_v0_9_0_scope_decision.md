@@ -7,9 +7,12 @@
 - Decision status: `scope-opened-provider-suitability`
 - Related v0.9.0 scope plan: [v0.9.0 Provider Suitability Scope Plan](../v0_9_0_provider_suitability_scope_plan.md)
 - Related v0.8.0 closeout decision: [Sportmonks v0.8.0 Closeout Decision](sportmonks_v0_8_0_closeout_decision.md)
+- Related comparison scope decision: [v0.9.0 Provider Comparison Scope Decision](v0_9_0_provider_comparison_scope_decision.md)
 - Sportmonks provider approval: no
 - v0.9.0 opened: yes, docs-only
+- Selected evaluation path: compare providers
 - Selected implementation path: none
+- Deeper Sportmonks work: paused
 - API calls performed in this block: no
 - Manual raw JSON review performed in this block: no
 - Additional cache reading performed in this block: no
@@ -25,7 +28,9 @@
 - This decision does not select an implementation path.
 - This decision does not approve Sportmonks as a provider.
 - This decision does not approve API calls, additional cache reading, `.local.csv`, SQLite, Streamlit, local trial or app integration.
-- The next decision must choose whether to stop Sportmonks, compare providers, investigate labels, review richer endpoints or design a local trial.
+- `Compare providers` is selected as the evaluation path.
+- Deeper Sportmonks-specific work remains paused.
+- The next decision must define a docs-only public-source comparison research protocol.
 
 ## Evidence From v0.8.0
 
@@ -44,14 +49,14 @@
 ## Scope Options
 
 1. Stop Sportmonks exploration.
-2. Compare providers before deeper Sportmonks work.
+2. Compare providers before deeper Sportmonks work. Selected.
 3. Investigate Sportmonks label lookup strategy.
 4. Review richer Sportmonks endpoint suitability.
 5. Design a separate local trial.
 
 ## Recommendation
 
-Recommended next decision: compare providers before deeper Sportmonks work.
+Selected evaluation path: compare providers before deeper Sportmonks work.
 
 - v0.8.0 validated the scaffold but exposed major unresolved gaps.
 - Continuing deeper into Sportmonks without comparison risks overfitting the project to a weak or incomplete source.
@@ -75,6 +80,6 @@ This is only a recommendation. It does not authorize provider access, web resear
 
 ## Next Required Action
 
-A later docs-only block may create a provider comparison scope decision for v0.9.0.
+A later docs-only block may create a public-source provider comparison research protocol decision for v0.9.0.
 
-No provider access, API calls, cache reading, implementation or approval is authorized by this decision.
+No web research, provider access, API calls, cache reading, implementation or approval is authorized by this decision.

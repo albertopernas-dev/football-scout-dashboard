@@ -17,9 +17,9 @@
 
 ## Recommended Next Steps
 
-1. Crear una decision docs-only sobre el alcance de comparacion de proveedores para v0.9.0.
-2. Mantener Sportmonks sin aprobar y seleccionar exactamente un camino antes de cualquier trabajo adicional.
-3. Mantener bloqueados API calls, revision manual de raw JSON, lectura adicional de cache, broad payload inspection, `.local.csv`, local trial, SQLite, Streamlit app integration y provider approval.
+1. Crear una decision docs-only sobre el protocolo de investigacion publica para la comparacion de proveedores de v0.9.0.
+2. Mantener pausado el trabajo especifico de Sportmonks y todos los candidatos sin aprobar.
+3. Mantener bloqueados web research, API calls, revision manual de raw JSON, lectura adicional de cache, broad payload inspection, `.local.csv`, local trial, SQLite, Streamlit app integration y provider approval.
 
 ## v0.2.0 Market Context Layer
 
@@ -160,11 +160,16 @@ Completed and published.
 
 - Status: opened docs-only.
 - Sportmonks remains a candidate and is not approved.
-- No implementation path is selected.
-- Recommended next step: a docs-only provider comparison scope decision.
-- Still forbidden: API calls, manual raw JSON review, additional cache reading, broad payload inspection, `.local.csv`, local trial, SQLite writes, Streamlit app integration and provider approval.
+- Selected evaluation path: `Compare providers`.
+- Candidates: Sportmonks, API-Football/API-Sports, Capology and Transfermarkt as a manual reference.
+- Comparison not executed; public web research is not approved.
+- No implementation path is selected and no provider is approved.
+- Recommended next step: a docs-only public-source comparison research protocol decision.
+- Still forbidden: web research, API calls, manual raw JSON review, additional cache reading, broad payload inspection, `.local.csv`, local trial, SQLite writes, Streamlit app integration and provider approval.
 - Plan: [`docs/v0_9_0_provider_suitability_scope_plan.md`](docs/v0_9_0_provider_suitability_scope_plan.md).
 - Scope decision: [`docs/provider_decisions/sportmonks_v0_9_0_scope_decision.md`](docs/provider_decisions/sportmonks_v0_9_0_scope_decision.md).
+- Comparison plan: [`docs/v0_9_0_provider_comparison_plan.md`](docs/v0_9_0_provider_comparison_plan.md).
+- Comparison scope decision: [`docs/provider_decisions/v0_9_0_provider_comparison_scope_decision.md`](docs/provider_decisions/v0_9_0_provider_comparison_scope_decision.md).
 
 ## Potential v0.4.x Follow-ups
 
