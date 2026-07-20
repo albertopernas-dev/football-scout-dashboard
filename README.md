@@ -48,7 +48,7 @@ A practical 5-10 minute demo script is available in [`docs/demo_walkthrough.md`]
 
 ## Release
 
-Current milestone: `v0.8.0` docs-only closeout completed; tag/release pending.
+Current milestone: `v0.9.0` provider suitability scope.
 
 - Release notes: [`docs/release_notes_v0_1_0.md`](docs/release_notes_v0_1_0.md)
 - v0.2.0 release notes: [`docs/release_notes_v0_2_0.md`](docs/release_notes_v0_2_0.md)
@@ -61,9 +61,10 @@ Current milestone: `v0.8.0` docs-only closeout completed; tag/release pending.
 - v0.7.0 release notes: [`docs/release_notes_v0_7_0.md`](docs/release_notes_v0_7_0.md)
 - v0.8.0 plan: [docs/v0_8_0_provider_permission_response_handling_plan.md](docs/v0_8_0_provider_permission_response_handling_plan.md)
 - v0.8.0 release notes: [docs/release_notes_v0_8_0.md](docs/release_notes_v0_8_0.md)
+- v0.9.0 scope plan: [docs/v0_9_0_provider_suitability_scope_plan.md](docs/v0_9_0_provider_suitability_scope_plan.md)
 - Demo assets checklist: [`docs/demo_assets_checklist.md`](docs/demo_assets_checklist.md)
 
-v0.8.0 completed a docs-only closeout for Sportmonks candidate governance. The local-only scaffold and one aggregate preview were completed, but Sportmonks remains unapproved and no app integration or SQLite loading is authorized.
+v0.8.0 is completed and published. Sportmonks remains unapproved; v0.9.0 will decide whether to continue with Sportmonks, compare providers or stop provider exploration.
 
 ## v0.2.0 Market Context Layer
 

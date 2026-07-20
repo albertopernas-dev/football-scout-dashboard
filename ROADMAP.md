@@ -11,14 +11,15 @@
 - v0.5.0 completa Provider Fixture Prototype como demo sintetico offline: validacion y aplicacion de identity mapping, CLI de records mapeados, builder canonico y preview.
 - v0.6.0 publicada con governance de evaluacion, payload avanzado sintetico, flattening local y demo end-to-end sintetica hacia Market Context canonico.
 - v0.7.0 completada y publicada como milestone documental/de gobernanza; Sportmonks sigue en `defer` y sin aprobacion.
-- v0.8.0 completada con closeout docs-only; tag/release queda para un bloque separado.
+- v0.8.0 completada y publicada; Sportmonks sigue sin aprobacion.
+- v0.9.0 es el milestone actual para decidir el alcance de provider suitability.
 - El contexto de mercado real depende de CSVs revisados localmente; no hay scraping ni proveedor automatico conectado.
 
 ## Recommended Next Steps
 
-1. Preparar un bloque separado de tag/release v0.8.0, si se desea.
-2. Decidir por separado el alcance de v0.9.0.
-3. Mantener bloqueados API calls, cache reading adicional, `.local.csv`, local trial, SQLite, Streamlit app integration y provider approval.
+1. Crear una decision docs-only sobre el alcance de comparacion de proveedores para v0.9.0.
+2. Mantener Sportmonks sin aprobar y seleccionar exactamente un camino antes de cualquier trabajo adicional.
+3. Mantener bloqueados API calls, revision manual de raw JSON, lectura adicional de cache, broad payload inspection, `.local.csv`, local trial, SQLite, Streamlit app integration y provider approval.
 
 ## v0.2.0 Market Context Layer
 
@@ -146,7 +147,7 @@ Completed and published.
 - Sportmonks secure credential setup verified as local-only.
 - Local `.env` credential setup verified outside Git; the token remains untracked and undocumented.
 - Trial scope remains one team, one season and a minimal payload, with Team Squad by Team and Season ID as the primary candidate endpoint.
-- Next: separate v0.8.0 release/tag block or v0.9.0 scope decision.
+- Published as tag and GitHub Release v0.8.0.
 
 - Only 3 minimal ID discovery calls performed; still no broad payload inspection or local trial.
 - Still no API calls during the preview, manual raw JSON review, additional cache reading, broad payload inspection, `.local.csv`, local trial, SQLite writes, Streamlit app integration or provider approval.
@@ -154,6 +155,16 @@ Completed and published.
 - Raw correspondence, ticket identifiers, payloads, credentials and provider cache remain outside Git.
 - Plan: [`docs/v0_8_0_provider_permission_response_handling_plan.md`](docs/v0_8_0_provider_permission_response_handling_plan.md).
 - Release notes: [docs/release_notes_v0_8_0.md](docs/release_notes_v0_8_0.md).
+
+## v0.9.0 Provider Suitability Scope
+
+- Status: opened docs-only.
+- Sportmonks remains a candidate and is not approved.
+- No implementation path is selected.
+- Recommended next step: a docs-only provider comparison scope decision.
+- Still forbidden: API calls, manual raw JSON review, additional cache reading, broad payload inspection, `.local.csv`, local trial, SQLite writes, Streamlit app integration and provider approval.
+- Plan: [`docs/v0_9_0_provider_suitability_scope_plan.md`](docs/v0_9_0_provider_suitability_scope_plan.md).
+- Scope decision: [`docs/provider_decisions/sportmonks_v0_9_0_scope_decision.md`](docs/provider_decisions/sportmonks_v0_9_0_scope_decision.md).
 
 ## Potential v0.4.x Follow-ups
 
