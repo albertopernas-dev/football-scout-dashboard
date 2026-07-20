@@ -8,8 +8,10 @@
 - Related v0.8.0 release notes: [Release Notes v0.8.0](release_notes_v0_8_0.md)
 - Related provider comparison plan: [v0.9.0 Provider Comparison Plan](v0_9_0_provider_comparison_plan.md)
 - Related comparison scope decision: [v0.9.0 Provider Comparison Scope Decision](provider_decisions/v0_9_0_provider_comparison_scope_decision.md)
+- Related public research protocol: [v0.9.0 Provider Public Research Protocol](v0_9_0_provider_public_research_protocol.md)
 - Sportmonks provider approval: no
 - Selected evaluation path: `Compare providers`
+- Public research protocol: approved / not executed
 - Selected implementation path: none
 - API calls approved: no
 - Raw JSON review approved: no
@@ -73,24 +75,15 @@ No implementation is selected by this plan.
 - Production usage.
 - Release/tag.
 
-## Required Decision Before Any Further Work
+## Public Research Protocol Status
 
-The `Compare providers` path is selected. Before any research or other v0.9.0 work beyond documentation, a separate decision must approve the public-source comparison research protocol.
+The public-source comparison research protocol is approved for a later separately executed block and has not been executed.
 
-That future decision must define:
+The candidate set, allowed public sources, evidence classifications, six future output files, no-scoring policy, stop conditions and verification requirements are defined in the protocol.
 
-- allowed files;
-- allowed commands;
-- whether any provider access is allowed;
-- whether any cache reading is allowed;
-- expected outputs;
-- stop conditions;
-- verification requirements.
-
+Implementation path remains none.
 ## Recommended Next Action
 
-Create a docs-only public-source comparison research protocol decision.
+Execute the approved public-source research block under the strict protocol.
 
-`Compare providers` is selected before deeper Sportmonks work because v0.8.0 showed unresolved labels, position coverage, jersey coverage and Market Context.
-
-This selection does not approve web research, provider searches, API calls, cache reading or implementation.
+`Compare providers` remains the selected evaluation path. No login, private dashboard access, API calls, cache reading, raw JSON review, automated scraping, scoring, implementation or provider approval is authorized.

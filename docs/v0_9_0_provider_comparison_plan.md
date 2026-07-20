@@ -7,7 +7,11 @@
 - Related suitability scope plan: [v0.9.0 Provider Suitability Scope Plan](v0_9_0_provider_suitability_scope_plan.md)
 - Related scope decision: [Sportmonks v0.9.0 Scope Decision](provider_decisions/sportmonks_v0_9_0_scope_decision.md)
 - Related comparison scope decision: [v0.9.0 Provider Comparison Scope Decision](provider_decisions/v0_9_0_provider_comparison_scope_decision.md)
+- Related public research protocol: [v0.9.0 Provider Public Research Protocol](v0_9_0_provider_public_research_protocol.md)
+- Related protocol decision: [v0.9.0 Provider Public Research Protocol Decision](provider_decisions/v0_9_0_provider_public_research_protocol_decision.md)
 - Selected path: compare providers
+- Research protocol: approved / not executed
+- No-scoring policy: selected
 - Comparison performed: no
 - Public web research performed: no
 - Provider access performed: no
@@ -154,17 +158,8 @@ Those artifacts are not created in this block.
 
 ## Next Required Action
 
-A later docs-only decision may approve a public-source provider comparison research block.
+Execute the approved public-source research block under the strict protocol.
 
-That future block must define:
+That future block may create only the six approved evidence, matrix and summary files. It must stop before recommendation, ranking, scoring, implementation or provider approval.
 
-- exact allowed files;
-- exact candidate set;
-- allowed public sources;
-- evidence template;
-- comparison matrix structure;
-- scoring or no-scoring policy;
-- stop conditions;
-- verification commands.
-
-No web research, provider access or implementation is approved by this plan.
+No provider approval is granted by this plan.

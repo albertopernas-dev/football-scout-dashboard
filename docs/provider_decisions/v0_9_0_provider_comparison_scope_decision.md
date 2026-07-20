@@ -7,13 +7,17 @@
 - Related comparison plan: [v0.9.0 Provider Comparison Plan](../v0_9_0_provider_comparison_plan.md)
 - Related suitability scope plan: [v0.9.0 Provider Suitability Scope Plan](../v0_9_0_provider_suitability_scope_plan.md)
 - Related Sportmonks scope decision: [Sportmonks v0.9.0 Scope Decision](sportmonks_v0_9_0_scope_decision.md)
+- Related protocol decision: [v0.9.0 Provider Public Research Protocol Decision](v0_9_0_provider_public_research_protocol_decision.md)
 - Selected path: compare providers
 - Candidate set selected: yes
 - Comparison executed: no
-- Public web research approved: no
+- Future public web research: approved under strict protocol / not executed
 - Provider access approved: no
 - API calls approved: no
 - Additional cache reading approved: no
+- Numeric scoring approved: no
+- Ranking approved: no
+- Recommendation approved: no
 - Implementation approved: no
 - Provider approval: none
 
@@ -23,6 +27,7 @@
 - Deeper Sportmonks-specific work remains paused.
 - The comparison is limited to candidates already documented in the repository.
 - No evaluation, scoring or current-fact research is performed in this block.
+- The public-source research protocol is approved for a later block and has not been executed.
 - No provider gains approval from inclusion in the candidate set.
 
 ## Selected Candidates
@@ -71,7 +76,7 @@ The future comparison must focus on:
 
 ## Still Forbidden
 
-- Web research until separately approved.
+- Web research outside the approved public-source protocol.
 - API calls.
 - Login or account dashboard access.
 - Provider cache reading.
@@ -82,11 +87,14 @@ The future comparison must focus on:
 - Streamlit integration.
 - Local trial.
 - App integration.
+- Numeric scoring.
+- Ranking.
+- Recommendation.
 - Provider approval.
 - Release/tag.
 
 ## Next Required Action
 
-A later docs-only block may approve the public-source comparison research protocol.
+Execute the approved public-source research block under the strict protocol.
 
-No research or provider access is authorized by this decision.
+Scoring, ranking, recommendation, implementation and provider approval remain blocked.
