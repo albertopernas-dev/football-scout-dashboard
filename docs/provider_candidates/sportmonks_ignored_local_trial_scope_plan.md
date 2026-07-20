@@ -22,6 +22,7 @@
 - Implementation summary: [first local-only scaffold created](sportmonks_implementation_summary.md)
 - Local preview run approval: [approved / executed](../provider_decisions/sportmonks_local_preview_run_approval_decision.md)
 - Local preview run summary: [completed](sportmonks_local_preview_run_summary.md)
+- Local preview result decision: [accepted with limitations](../provider_decisions/sportmonks_local_preview_result_decision.md)
 - Provider approval: no
 - Production approval: no
 - Credentials created locally: yes, outside Git
@@ -166,4 +167,4 @@ These non-sensitive references confirm the plan limits and four league IDs shown
 
 Minimal ID discovery, the [confirmed ID scope review](sportmonks_confirmed_id_scope_review.md) and the [minimal payload field review](sportmonks_minimal_payload_field_review_summary.md) have passed.
 
-The [first local-only scaffold](sportmonks_implementation_summary.md) and the [approved local preview](sportmonks_local_preview_run_summary.md) are completed. The next allowed step is a docs-only preview result decision or v0.8.0 closeout. The local trial, any additional cache reading, manual raw JSON review, broad inspection and app integration remain blocked.
+The [first local-only scaffold](sportmonks_implementation_summary.md) and the [approved local preview](sportmonks_local_preview_run_summary.md) are completed, and the [preview result](../provider_decisions/sportmonks_local_preview_result_decision.md) is accepted with limitations. The next allowed step is v0.8.0 closeout docs-only. The local trial, any additional cache reading, manual raw JSON review, broad inspection and app integration remain blocked.

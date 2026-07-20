@@ -39,6 +39,7 @@ In scope:
 - Record the [Sportmonks Implementation Summary](provider_candidates/sportmonks_implementation_summary.md) before any local preview run decision.
 - Record the [Sportmonks Local Preview Run Approval Decision](provider_decisions/sportmonks_local_preview_run_approval_decision.md) before any real cache preview.
 - Record the [Sportmonks Local Preview Run Summary](provider_candidates/sportmonks_local_preview_run_summary.md) after the approved aggregate preview.
+- Record the [Sportmonks Local Preview Result Decision](provider_decisions/sportmonks_local_preview_result_decision.md) before milestone closeout.
 
 Out of scope:
 
@@ -140,6 +141,7 @@ The summary contains no confidential text, ticket identifiers, payloads or crede
 19. The [Sportmonks Implementation Summary](provider_candidates/sportmonks_implementation_summary.md) records that the first scaffold is created without API calls or real provider payloads.
 20. The [Sportmonks Local Preview Run Approval Decision](provider_decisions/sportmonks_local_preview_run_approval_decision.md) approved exactly one aggregate preview against one ignored cache input.
 21. The [Sportmonks Local Preview Run Summary](provider_candidates/sportmonks_local_preview_run_summary.md) records that completed preview without raw or player-identifying output.
-22. The next action is a docs-only preview result decision or v0.8.0 closeout.
-23. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
-24. Continue to treat Sportmonks as unapproved; API calls, local trial and provider approval remain blocked.
+22. The [Sportmonks Local Preview Result Decision](provider_decisions/sportmonks_local_preview_result_decision.md) accepts the result as limited technical validation only.
+23. The next action is v0.8.0 closeout docs-only.
+24. Keep raw payloads, provider cache, `.local.csv` outputs, credentials and confidential correspondence outside Git.
+25. Continue to treat Sportmonks as unapproved; API calls, local trial and provider approval remain blocked.

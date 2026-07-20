@@ -22,6 +22,7 @@
 - Implementation summary: [first local-only scaffold created](sportmonks_implementation_summary.md)
 - Local preview run approval: [approved / executed](../provider_decisions/sportmonks_local_preview_run_approval_decision.md)
 - Local preview run summary: [completed](sportmonks_local_preview_run_summary.md)
+- Local preview result decision: [accepted with limitations](../provider_decisions/sportmonks_local_preview_result_decision.md)
 - Checklist status: draft/pre-trial
 - Gate decision: `continue`
 - Provider approval: no
@@ -65,6 +66,7 @@ It does not activate Sportmonks data in the app or write provider data to SQLite
 | Transform planning | Create a documentation-only design plan from the reviewed shape. | created docs-only | [Plan](sportmonks_transform_design_plan.md) defines candidates and open decisions; first code scope is governed separately by the approval decision. |
 | Implementation planning | Create a documentation-only implementation plan. | first local-only scaffold created | The [implementation summary](sportmonks_implementation_summary.md) records the synthetic, local-only scaffold; preview execution is governed by the separate approval decision. |
 | Local preview | Run one local aggregate preview against one ignored cache input. | completed | The [preview summary](sportmonks_local_preview_run_summary.md) records `row_count 6`, `has_position_ids 0` and `has_jersey_numbers 0`. |
+| Local preview result | Classify the non-sensitive aggregate result. | accepted with limitations | Position IDs and jersey numbers are `0`; labels and Market Context remain unresolved. |
 | Payload minimization | One FC København squad, one Denmark Superliga season, minimal payload. | proposed | Avoid broad pulls; season and team IDs are confirmed. |
 | Raw data handling | Confirm raw payloads stay outside Git. | verified for ID discovery | Raw ID discovery responses remain only under the ignored local provider cache path. |
 | Cache handling | Confirm cache path, retention and cleanup. | partial | ID discovery cache is ignored and uncommitted; future trial retention and cleanup remain pending. |
@@ -144,7 +146,7 @@ The requirements below are recorded as passed in the [local credential setup ver
 
 The [payload-specific decision record](../provider_decisions/sportmonks_payload_decision_record.md) now exists as a draft/pre-trial artifact.
 
-Minimal ID discovery, confirmed ID scope review and minimal field review have passed, and the [first local-only scaffold](sportmonks_implementation_summary.md) is created with synthetic tests only. One approved local preview is completed with `row_count 6`, `has_position_ids 0` and `has_jersey_numbers 0`. Cleanup remains pending, the trial has not been performed and provider approval remains no.
+Minimal ID discovery, confirmed ID scope review and minimal field review have passed, and the [first local-only scaffold](sportmonks_implementation_summary.md) is created with synthetic tests only. The local preview result is accepted with limitations: position IDs and jersey numbers are `0`, while labels and Market Context remain unresolved. Cleanup remains pending, the trial has not been performed and provider approval remains no.
 
 ## Acceptance Criteria
 

@@ -142,13 +142,15 @@ Completed and published.
 - First local-only Sportmonks transform scaffold created with synthetic tests only; no network or real provider payloads.
 - One approved local preview completed against exactly one ignored cache input.
 - Preview result: `row_count 6`, `has_position_ids 0`, `has_jersey_numbers 0`.
+- Preview result accepted with limitations; the local scaffold validation portion is complete.
 - Sportmonks secure credential setup verified as local-only.
 - Local `.env` credential setup verified outside Git; the token remains untracked and undocumented.
 - Trial scope remains one team, one season and a minimal payload, with Team Squad by Team and Season ID as the primary candidate endpoint.
-- Next: docs-only preview result decision or v0.8.0 closeout.
+- Next: v0.8.0 closeout docs-only.
 
 - Only 3 minimal ID discovery calls performed; still no broad payload inspection or local trial.
-- Still no API calls during the preview, manual raw JSON review, broad payload inspection, `.local.csv`, local trial, SQLite writes, Streamlit app integration or provider approval.
+- Still no API calls during the preview, manual raw JSON review, additional cache reading, broad payload inspection, `.local.csv`, local trial, SQLite writes, Streamlit app integration or provider approval.
+- Unresolved: labels, position coverage, jersey coverage and Market Context.
 - Raw correspondence, ticket identifiers, payloads, credentials and provider cache remain outside Git.
 - Plan: [`docs/v0_8_0_provider_permission_response_handling_plan.md`](docs/v0_8_0_provider_permission_response_handling_plan.md).
 

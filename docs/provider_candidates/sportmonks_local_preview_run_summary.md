@@ -5,6 +5,7 @@
 - Candidate: Sportmonks
 - Preview status: `completed`
 - Related local preview approval decision: [Sportmonks Local Preview Run Approval Decision](../provider_decisions/sportmonks_local_preview_run_approval_decision.md)
+- Related preview result decision: [Sportmonks Local Preview Result Decision](../provider_decisions/sportmonks_local_preview_result_decision.md)
 - Related implementation summary: [Sportmonks Implementation Summary](sportmonks_implementation_summary.md)
 - Provider approval: no
 - Preview executed: yes
@@ -133,6 +134,6 @@ This does not approve app integration, SQLite loading, local trial or `.local.cs
 
 ## Next Required Action
 
-A later docs-only block may decide whether the completed preview is sufficient to approve a non-sensitive preview result decision or close the v0.8.0 milestone.
+A later docs-only block may prepare v0.8.0 closeout.
 
 No further preview, additional cache reading, `.local.csv`, SQLite, Streamlit, local trial or provider approval is approved by this summary.
