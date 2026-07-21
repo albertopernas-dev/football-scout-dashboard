@@ -3,13 +3,15 @@
 ## Status
 
 - Milestone: v0.9.0
-- Protocol status: `public-source-research-protocol-defined`
+- Protocol status: `public-source-research-protocol-completed`
 - Related provider comparison plan: [v0.9.0 Provider Comparison Plan](v0_9_0_provider_comparison_plan.md)
 - Related comparison scope decision: [v0.9.0 Provider Comparison Scope Decision](provider_decisions/v0_9_0_provider_comparison_scope_decision.md)
 - Related protocol decision: [v0.9.0 Provider Public Research Protocol Decision](provider_decisions/v0_9_0_provider_public_research_protocol_decision.md)
 - Candidate set locked: yes
-- Future public web research approved: yes, only in a later separately executed research block
-- Research performed in this block: no
+- Future public web research approved: no, the existing authorization has been fulfilled
+- Research performed under this protocol: yes
+- Research block completed: yes
+- Evidence completeness review completed: yes
 - Login or private dashboard access approved: no
 - Account creation approved: no
 - API calls approved: no
@@ -202,9 +204,9 @@ Copy no more source text than necessary. Do not include payloads, player data or
 
 Unknowns and marketing claims must not be converted into artificial numeric precision.
 
-## Future Research Outputs
+## Approved Research Outputs
 
-The future approved block may create only:
+The completed approved block created only:
 
 - `docs/provider_comparison/evidence/sportmonks_public_evidence.md`
 - `docs/provider_comparison/evidence/api_football_public_evidence.md`
@@ -213,7 +215,7 @@ The future approved block may create only:
 - `docs/provider_comparison/v0_9_0_provider_comparison_matrix.md`
 - `docs/provider_comparison/v0_9_0_public_research_summary.md`
 
-No recommendation decision. No provider approval. No scoring. No code.
+No recommendation decision, provider approval, scoring or code was created.
 
 ## Research Execution Order
 
@@ -264,6 +266,6 @@ The future block must:
 
 ## Next Required Action
 
-A later research block may execute the approved public-source research protocol and create only the six approved evidence and matrix files.
+A separate docs-only decision may define a qualitative recommendation protocol.
 
-That future block must stop before recommendation, ranking, scoring, implementation or provider approval.
+This protocol no longer authorizes further research automatically. Any new research requires another decision. Scoring, ranking, recommendation execution, implementation and provider approval remain blocked.

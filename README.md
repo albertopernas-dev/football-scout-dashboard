@@ -64,9 +64,10 @@ Current milestone: `v0.9.0` provider suitability scope.
 - v0.9.0 scope plan: [docs/v0_9_0_provider_suitability_scope_plan.md](docs/v0_9_0_provider_suitability_scope_plan.md)
 - v0.9.0 provider comparison plan: [docs/v0_9_0_provider_comparison_plan.md](docs/v0_9_0_provider_comparison_plan.md)
 - v0.9.0 public research protocol: [docs/v0_9_0_provider_public_research_protocol.md](docs/v0_9_0_provider_public_research_protocol.md)
+- v0.9.0 evidence completeness review: [docs/provider_comparison/v0_9_0_evidence_completeness_review.md](docs/provider_comparison/v0_9_0_evidence_completeness_review.md)
 - Demo assets checklist: [`docs/demo_assets_checklist.md`](docs/demo_assets_checklist.md)
 
-v0.8.0 is completed and published. v0.9.0 selected a provider comparison path and approved a strict public-source research protocol for a later block. Research has not been executed; scoring, ranking and provider approval remain blocked.
+v0.8.0 is completed and published. v0.9.0 completed its public evidence comparison and evidence completeness review. The evidence is sufficient for descriptive comparison and qualitative recommendation protocol design with limitations; numeric scoring, ranking, recommendation execution and provider approval remain blocked.
 
 ## v0.2.0 Market Context Layer
 

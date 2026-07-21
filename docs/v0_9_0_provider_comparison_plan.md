@@ -10,10 +10,15 @@
 - Related public research protocol: [v0.9.0 Provider Public Research Protocol](v0_9_0_provider_public_research_protocol.md)
 - Related protocol decision: [v0.9.0 Provider Public Research Protocol Decision](provider_decisions/v0_9_0_provider_public_research_protocol_decision.md)
 - Selected path: compare providers
-- Research protocol: approved / not executed
+- Research protocol: approved / executed
 - No-scoring policy: selected
-- Comparison performed: no
-- Public web research performed: no
+- Comparison performed: yes, descriptive only
+- Public web research performed: yes, in the completed approved research block
+- Public evidence pass: completed
+- Evidence completeness review: completed
+- Descriptive comparison: sufficient
+- Qualitative recommendation protocol design: permitted with limitations
+- Numeric scoring: blocked
 - Provider access performed: no
 - API calls performed: no
 - Cache reading performed: no
@@ -133,16 +138,16 @@ Future research, if separately approved, must:
 
 Secondary sources may be used only for context and must be clearly identified.
 
-## Expected Future Artifacts
+## Completed Research Artifacts And Next Decision
 
-A future approved research block may create, under a separate decision record:
+The approved research block created:
 
-- comparison evidence notes for each candidate;
-- a comparison matrix;
-- a recommendation decision;
-- a stop/continue decision for Sportmonks.
+- Public evidence notes for each candidate.
+- A descriptive comparison matrix.
+- A public research summary.
+- An evidence completeness review and decision record.
 
-Those artifacts are not created in this block.
+No recommendation, scoring, ranking or provider approval was produced. The next permitted step is a separate docs-only qualitative recommendation protocol decision.
 
 ## Stop Conditions
 
@@ -158,8 +163,6 @@ Those artifacts are not created in this block.
 
 ## Next Required Action
 
-Execute the approved public-source research block under the strict protocol.
+A separate docs-only decision may define a qualitative recommendation protocol.
 
-That future block may create only the six approved evidence, matrix and summary files. It must stop before recommendation, ranking, scoring, implementation or provider approval.
-
-No provider approval is granted by this plan.
+Numeric scoring, ranking, recommendation execution, implementation and provider approval remain blocked. No provider approval is granted by this plan.

@@ -12,13 +12,13 @@
 - v0.6.0 publicada con governance de evaluacion, payload avanzado sintetico, flattening local y demo end-to-end sintetica hacia Market Context canonico.
 - v0.7.0 completada y publicada como milestone documental/de gobernanza; Sportmonks sigue en `defer` y sin aprobacion.
 - v0.8.0 completada y publicada; Sportmonks sigue sin aprobacion.
-- v0.9.0 es el milestone actual para decidir el alcance de provider suitability.
+- v0.9.0 es el milestone actual para revisar provider suitability mediante comparacion descriptiva.
 - El contexto de mercado real depende de CSVs revisados localmente; no hay scraping ni proveedor automatico conectado.
 
 ## Recommended Next Steps
 
-1. Ejecutar el bloque aprobado de investigacion publica usando solo los seis archivos documentales permitidos.
-2. Mantener la politica sin puntuacion, ranking, recomendacion ni provider approval.
+1. Definir mediante decision docs-only un protocolo de recomendacion cualitativa.
+2. Mantener bloqueados scoring numerico, ranking, ejecucion de recomendacion y provider approval.
 3. Mantener bloqueados login, private dashboards, account creation, API calls, cache reading, raw JSON, automated scraping, implementation, `.local.csv`, SQLite y Streamlit.
 
 ## v0.2.0 Market Context Layer
@@ -158,19 +158,24 @@ Completed and published.
 
 ## v0.9.0 Provider Suitability Scope
 
-- Status: opened docs-only.
+- Status: public evidence and completeness review completed docs-only.
 - Sportmonks remains a candidate and is not approved.
 - Selected evaluation path: `Compare providers`.
 - Candidates: Sportmonks, API-Football/API-Sports, Capology and Transfermarkt as a manual reference.
-- Public-source comparison research protocol approved.
-- Candidate set locked; research not executed.
+- Public-source comparison research protocol completed.
+- Candidate set locked; public evidence pass completed.
+- Evidence completeness review completed.
+- Descriptive comparison evidence is sufficient.
+- Qualitative recommendation protocol design is permitted with limitations.
 - No-scoring policy selected.
+- Numeric scoring, ranking, recommendation execution and provider approval remain blocked.
 - No implementation path is selected and no provider is approved.
-- Recommended next step: execute the approved public-source research block.
-- Still forbidden: login, private dashboards, account creation, API calls, provider cache reading, raw JSON review, automated scraping, implementation, `.local.csv`, SQLite writes, Streamlit integration, scoring, ranking, recommendation and provider approval.
+- Recommended next step: docs-only qualitative recommendation protocol decision.
+- Still forbidden: login, private dashboards, account creation, API calls, provider cache reading, raw JSON review, automated scraping, implementation, `.local.csv`, SQLite writes, Streamlit integration, scoring, ranking, recommendation execution and provider approval.
 - Plan: [`docs/v0_9_0_provider_suitability_scope_plan.md`](docs/v0_9_0_provider_suitability_scope_plan.md).
 - Scope decision: [`docs/provider_decisions/sportmonks_v0_9_0_scope_decision.md`](docs/provider_decisions/sportmonks_v0_9_0_scope_decision.md).
-- Comparison plan: [`docs/v0_9_0_provider_comparison_plan.md`](docs/v0_9_0_provider_comparison_plan.md).
+- Comparison plan: [docs/v0_9_0_provider_comparison_plan.md](docs/v0_9_0_provider_comparison_plan.md).
+- Evidence completeness review: [docs/provider_comparison/v0_9_0_evidence_completeness_review.md](docs/provider_comparison/v0_9_0_evidence_completeness_review.md).
 - Comparison scope decision: [`docs/provider_decisions/v0_9_0_provider_comparison_scope_decision.md`](docs/provider_decisions/v0_9_0_provider_comparison_scope_decision.md).
 - Public research protocol: [`docs/v0_9_0_provider_public_research_protocol.md`](docs/v0_9_0_provider_public_research_protocol.md).
 - Protocol decision: [`docs/provider_decisions/v0_9_0_provider_public_research_protocol_decision.md`](docs/provider_decisions/v0_9_0_provider_public_research_protocol_decision.md).

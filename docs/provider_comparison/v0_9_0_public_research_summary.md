@@ -120,4 +120,18 @@ All consulted URLs and consultation dates are recorded in the candidate evidence
 
 ## Next Required Action
 
-A separate docs-only evidence-completeness review decision is required before any recommendation, scoring design, additional research, provider access or implementation.
+The evidence-completeness review and decision are completed.
+
+A separate docs-only qualitative recommendation protocol decision may follow.
+
+Numeric scoring, ranking, recommendation execution, provider approval and implementation remain blocked.
+
+## Evidence Completeness Review
+
+- Completeness review: [v0.9.0 Provider Evidence Completeness Review](v0_9_0_evidence_completeness_review.md)
+- Decision record: [v0.9.0 Provider Evidence Completeness Review Decision](../provider_decisions/v0_9_0_provider_evidence_completeness_review_decision.md)
+- Descriptive comparison: sufficient.
+- Qualitative recommendation protocol design: permitted with limitations.
+- Numeric scoring: not approved.
+- Provider approval: none.
+- Next: docs-only qualitative recommendation protocol decision.

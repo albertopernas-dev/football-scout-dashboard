@@ -3,13 +3,15 @@
 ## Status
 
 - Milestone: v0.9.0
-- Decision status: `public-source-research-protocol-approved`
+- Decision status: `public-source-research-protocol-fulfilled`
 - Related research protocol: [v0.9.0 Provider Public Research Protocol](../v0_9_0_provider_public_research_protocol.md)
 - Related comparison plan: [v0.9.0 Provider Comparison Plan](../v0_9_0_provider_comparison_plan.md)
 - Related comparison scope decision: [v0.9.0 Provider Comparison Scope Decision](v0_9_0_provider_comparison_scope_decision.md)
 - Candidate set: locked
-- Future public web research approved: yes, strict public-source scope
-- Research executed in this block: no
+- Future public web research approved: no, the approved block has been completed
+- Research executed: yes
+- Evidence completeness review completed: yes
+- Existing protocol fulfilled: yes
 - Numeric scoring approved: no
 - Ranking approved: no
 - Recommendation approved: no
@@ -22,13 +24,13 @@
 
 ## Decision
 
-- A future public-source research block is approved under the protocol.
-- Research is restricted to the four locked candidates.
-- Official public sources must be prioritized.
-- Current facts must be verified during the future research block.
-- Evidence must use the approved classifications.
-- The future block may create only the six approved evidence, matrix and summary files.
-- The future block must not score, rank, recommend or approve a provider.
+- The approved public-source research block was executed under the protocol.
+- Research remained restricted to the four locked candidates.
+- Official public sources were prioritized.
+- Current facts were verified during the completed research block.
+- Evidence used the approved classifications.
+- The completed block created only the six approved evidence, matrix and summary files.
+- The completed block did not score, rank, recommend or approve a provider.
 
 ## Locked Candidate Set
 
@@ -107,6 +109,6 @@ Forbidden:
 
 ## Next Required Action
 
-A later research block may execute the approved protocol.
+A separate docs-only decision may define a qualitative recommendation protocol.
 
-After that research is reviewed and committed, a separate docs-only decision may determine whether evidence completeness is sufficient for recommendation or scoring design.
+No further research is automatically approved. Numeric scoring, ranking, recommendation execution, implementation and provider approval remain blocked.
