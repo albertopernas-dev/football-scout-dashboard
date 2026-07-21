@@ -194,6 +194,15 @@ This review does not select a final outcome.
 
 ## Next Required Action
 
-A separate docs-only decision may approve a qualitative recommendation protocol.
+The qualitative recommendation protocol and decision are completed.
 
-That future protocol must define allowed outcomes, evidence hierarchy, treatment of unknowns and conflicts, and explicit prohibition of numeric scoring.
+A separate docs-only decision may approve recommendation execution under the defined protocol. Numeric scoring, ranking, implementation and provider approval remain blocked.
+
+## Qualitative Recommendation Protocol
+
+- Protocol: [v0.9.0 Qualitative Provider Recommendation Protocol](v0_9_0_qualitative_recommendation_protocol.md)
+- Decision record: [v0.9.0 Qualitative Provider Recommendation Protocol Decision](../provider_decisions/v0_9_0_qualitative_recommendation_protocol_decision.md)
+- Protocol approved: yes.
+- Recommendation execution approved: no.
+- Numeric scoring, ranking and provider approval: not approved.
+- Next: separate docs-only recommendation execution decision.

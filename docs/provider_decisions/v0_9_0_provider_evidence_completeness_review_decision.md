@@ -88,6 +88,8 @@ Not permitted:
 
 ## Next Required Action
 
-A later docs-only block may define a qualitative recommendation protocol.
+A qualitative recommendation protocol has been approved.
 
-No recommendation, provider access or implementation is authorized by this decision.
+Recommendation execution remains unapproved. The next permitted step is a separate docs-only execution decision.
+
+No recommendation, provider access, scoring, ranking, provider approval or implementation is authorized by this decision.

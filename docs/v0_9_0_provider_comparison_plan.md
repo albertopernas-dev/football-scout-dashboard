@@ -18,6 +18,8 @@
 - Evidence completeness review: completed
 - Descriptive comparison: sufficient
 - Qualitative recommendation protocol design: permitted with limitations
+- Qualitative recommendation protocol: approved
+- Recommendation execution: not approved
 - Numeric scoring: blocked
 - Provider access performed: no
 - API calls performed: no
@@ -147,7 +149,18 @@ The approved research block created:
 - A public research summary.
 - An evidence completeness review and decision record.
 
-No recommendation, scoring, ranking or provider approval was produced. The next permitted step is a separate docs-only qualitative recommendation protocol decision.
+No recommendation, scoring, ranking or provider approval was produced. The qualitative recommendation protocol is now approved, while execution remains a separate decision.
+
+## Approved Qualitative Outcome Vocabulary
+
+- `continue-targeted-clarification`
+- `technical-baseline-only`
+- `manual-reference-only`
+- `defer`
+- `stop-exploration`
+- `separate-role-candidate`
+
+The vocabulary defines role-based outcomes only. It does not authorize recommendation execution, scoring, ranking, implementation or provider approval.
 
 ## Stop Conditions
 
@@ -163,6 +176,6 @@ No recommendation, scoring, ranking or provider approval was produced. The next 
 
 ## Next Required Action
 
-A separate docs-only decision may define a qualitative recommendation protocol.
+A separate docs-only decision may approve execution of the qualitative recommendation protocol.
 
 Numeric scoring, ranking, recommendation execution, implementation and provider approval remain blocked. No provider approval is granted by this plan.

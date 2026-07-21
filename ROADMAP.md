@@ -17,7 +17,7 @@
 
 ## Recommended Next Steps
 
-1. Definir mediante decision docs-only un protocolo de recomendacion cualitativa.
+1. Preparar una decision docs-only separada para ejecutar el protocolo de recomendacion cualitativa.
 2. Mantener bloqueados scoring numerico, ranking, ejecucion de recomendacion y provider approval.
 3. Mantener bloqueados login, private dashboards, account creation, API calls, cache reading, raw JSON, automated scraping, implementation, `.local.csv`, SQLite y Streamlit.
 
@@ -167,15 +167,20 @@ Completed and published.
 - Evidence completeness review completed.
 - Descriptive comparison evidence is sufficient.
 - Qualitative recommendation protocol design is permitted with limitations.
+- Qualitative recommendation protocol approved.
+- Recommendation execution is not yet approved.
+- Approved outcomes: `continue-targeted-clarification`, `technical-baseline-only`, `manual-reference-only`, `defer`, `stop-exploration` and `separate-role-candidate`.
+- No universal winner is permitted.
 - No-scoring policy selected.
 - Numeric scoring, ranking, recommendation execution and provider approval remain blocked.
 - No implementation path is selected and no provider is approved.
-- Recommended next step: docs-only qualitative recommendation protocol decision.
+- Recommended next step: separate docs-only recommendation execution decision.
 - Still forbidden: login, private dashboards, account creation, API calls, provider cache reading, raw JSON review, automated scraping, implementation, `.local.csv`, SQLite writes, Streamlit integration, scoring, ranking, recommendation execution and provider approval.
 - Plan: [`docs/v0_9_0_provider_suitability_scope_plan.md`](docs/v0_9_0_provider_suitability_scope_plan.md).
 - Scope decision: [`docs/provider_decisions/sportmonks_v0_9_0_scope_decision.md`](docs/provider_decisions/sportmonks_v0_9_0_scope_decision.md).
 - Comparison plan: [docs/v0_9_0_provider_comparison_plan.md](docs/v0_9_0_provider_comparison_plan.md).
 - Evidence completeness review: [docs/provider_comparison/v0_9_0_evidence_completeness_review.md](docs/provider_comparison/v0_9_0_evidence_completeness_review.md).
+- Qualitative recommendation protocol: [docs/provider_comparison/v0_9_0_qualitative_recommendation_protocol.md](docs/provider_comparison/v0_9_0_qualitative_recommendation_protocol.md).
 - Comparison scope decision: [`docs/provider_decisions/v0_9_0_provider_comparison_scope_decision.md`](docs/provider_decisions/v0_9_0_provider_comparison_scope_decision.md).
 - Public research protocol: [`docs/v0_9_0_provider_public_research_protocol.md`](docs/v0_9_0_provider_public_research_protocol.md).
 - Protocol decision: [`docs/provider_decisions/v0_9_0_provider_public_research_protocol_decision.md`](docs/provider_decisions/v0_9_0_provider_public_research_protocol_decision.md).
