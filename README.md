@@ -48,7 +48,7 @@ A practical 5-10 minute demo script is available in [`docs/demo_walkthrough.md`]
 
 ## Release
 
-Current milestone: `v0.9.0` docs-only closeout completed; tag/release pending.
+Current milestone: `v0.10.0 Manual Market Context Workflow Hardening`.
 
 - Release notes: [`docs/release_notes_v0_1_0.md`](docs/release_notes_v0_1_0.md)
 - v0.2.0 release notes: [`docs/release_notes_v0_2_0.md`](docs/release_notes_v0_2_0.md)
@@ -68,9 +68,11 @@ Current milestone: `v0.9.0` docs-only closeout completed; tag/release pending.
 - v0.9.0 qualitative recommendation protocol: [docs/provider_comparison/v0_9_0_qualitative_recommendation_protocol.md](docs/provider_comparison/v0_9_0_qualitative_recommendation_protocol.md)
 - v0.9.0 closeout decision: [docs/provider_decisions/v0_9_0_provider_suitability_closeout_decision.md](docs/provider_decisions/v0_9_0_provider_suitability_closeout_decision.md)
 - v0.9.0 release notes: [docs/release_notes_v0_9_0.md](docs/release_notes_v0_9_0.md)
+- v0.10.0 scope plan: [docs/v0_10_0_manual_market_context_scope_plan.md](docs/v0_10_0_manual_market_context_scope_plan.md)
+- v0.10.0 scope decision: [docs/provider_decisions/v0_10_0_manual_market_context_scope_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_scope_decision.md)
 - Demo assets checklist: [`docs/demo_assets_checklist.md`](docs/demo_assets_checklist.md)
 
-v0.8.0 is completed and published. v0.9.0 closes with role-specific outcomes: Sportmonks `continue-targeted-clarification`, API-Football/API-Sports `technical-baseline-only`, Capology `separate-role-candidate` and Transfermarkt `manual-reference-only`. No provider, implementation path, universal winner or multi-provider architecture is approved.
+v0.9.0 is completed and published. v0.10.0 focuses on making reviewed local Market Context inputs deterministic, traceable and diagnosable. No provider integration or implementation is approved yet; the first next step is the canonical reviewed local input contract.
 
 ## v0.2.0 Market Context Layer
 

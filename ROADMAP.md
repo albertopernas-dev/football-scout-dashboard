@@ -12,14 +12,17 @@
 - v0.6.0 publicada con governance de evaluacion, payload avanzado sintetico, flattening local y demo end-to-end sintetica hacia Market Context canonico.
 - v0.7.0 completada y publicada como milestone documental/de gobernanza; Sportmonks sigue en `defer` y sin aprobacion.
 - v0.8.0 completada y publicada; Sportmonks sigue sin aprobacion.
-- v0.9.0 es el milestone actual para revisar provider suitability mediante comparacion descriptiva.
+- v0.9.0 completado y publicado con outcomes de proveedor por rol y sin provider approval.
+- v0.10.0 es el milestone actual: Manual Market Context Workflow Hardening.
+- Current path: manual Market Context workflow hardening.
+- Ningun proveedor esta aprobado.
 - El contexto de mercado real depende de CSVs revisados localmente; no hay scraping ni proveedor automatico conectado.
 
 ## Recommended Next Steps
 
-1. Complete a separate v0.9.0 release/tag block.
-2. Select any future milestone or provider path through a separate decision.
-3. Keep provider contact, login, dashboards, API calls, cache reading, trials, implementation, scoring, ranking and provider approval blocked.
+1. Define the canonical reviewed local input contract.
+2. Keep implementation blocked until the contract is approved.
+3. Keep provider access, real local data, SQLite and Streamlit blocked.
 
 ## v0.2.0 Market Context Layer
 
@@ -158,7 +161,7 @@ Completed and published.
 
 ## v0.9.0 Provider Suitability Scope
 
-- Status: completed docs-only; tag/release pending.
+- Status: completed and published.
 - Selected evaluation path `Compare providers`: completed.
 - Final outcomes:
   - Sportmonks: `continue-targeted-clarification`.
@@ -168,10 +171,9 @@ Completed and published.
 - All providers remain unapproved.
 - No implementation path, universal winner or multi-provider architecture is selected.
 - Numeric scoring and ranking remain blocked.
-- Recommended next:
-  1. Complete a separate v0.9.0 release/tag block.
-  2. Select any future milestone separately.
-  3. Keep all restricted actions blocked.
+- Closeout, tag and public release: completed.
+- A future provider path was not selected by v0.9.0; v0.10.0 was opened separately for manual workflow hardening.
+- Restricted provider actions remain blocked.
 - Still forbidden: login, private dashboards, account creation, API calls, provider cache reading, raw JSON review, automated scraping, implementation, `.local.csv`, SQLite writes, Streamlit integration, scoring, ranking and provider approval.
 - Plan: [`docs/v0_9_0_provider_suitability_scope_plan.md`](docs/v0_9_0_provider_suitability_scope_plan.md).
 - Scope decision: [`docs/provider_decisions/sportmonks_v0_9_0_scope_decision.md`](docs/provider_decisions/sportmonks_v0_9_0_scope_decision.md).
@@ -184,6 +186,18 @@ Completed and published.
 - Comparison scope decision: [`docs/provider_decisions/v0_9_0_provider_comparison_scope_decision.md`](docs/provider_decisions/v0_9_0_provider_comparison_scope_decision.md).
 - Public research protocol: [`docs/v0_9_0_provider_public_research_protocol.md`](docs/v0_9_0_provider_public_research_protocol.md).
 - Protocol decision: [`docs/provider_decisions/v0_9_0_provider_public_research_protocol_decision.md`](docs/provider_decisions/v0_9_0_provider_public_research_protocol_decision.md).
+
+## v0.10.0 Manual Market Context Workflow Hardening
+
+- Status: opened docs-only.
+- Selected path: Manual Market Context workflow improvements.
+- Goal: make reviewed local Market Context inputs deterministic, traceable and diagnosable.
+- In-scope design areas: canonical input contract, provenance and freshness, validation severities, duplicate/conflict policy, diagnostics, synthetic fixtures and testing strategy.
+- Provider boundary: no provider is selected or approved, and no provider clarification or API access is initiated.
+- Implementation, real local data access, SQLite writes and Streamlit changes are not approved.
+- First next decision: define the canonical reviewed local input contract in a separate docs-only block.
+- Scope plan: [docs/v0_10_0_manual_market_context_scope_plan.md](docs/v0_10_0_manual_market_context_scope_plan.md).
+- Scope decision: [docs/provider_decisions/v0_10_0_manual_market_context_scope_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_scope_decision.md).
 
 ## Potential v0.4.x Follow-ups
 
