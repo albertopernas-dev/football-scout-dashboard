@@ -48,7 +48,7 @@ A practical 5-10 minute demo script is available in [`docs/demo_walkthrough.md`]
 
 ## Release
 
-Current milestone: `v0.9.0` provider suitability scope.
+Current milestone: `v0.9.0` docs-only closeout completed; tag/release pending.
 
 - Release notes: [`docs/release_notes_v0_1_0.md`](docs/release_notes_v0_1_0.md)
 - v0.2.0 release notes: [`docs/release_notes_v0_2_0.md`](docs/release_notes_v0_2_0.md)
@@ -66,9 +66,11 @@ Current milestone: `v0.9.0` provider suitability scope.
 - v0.9.0 public research protocol: [docs/v0_9_0_provider_public_research_protocol.md](docs/v0_9_0_provider_public_research_protocol.md)
 - v0.9.0 evidence completeness review: [docs/provider_comparison/v0_9_0_evidence_completeness_review.md](docs/provider_comparison/v0_9_0_evidence_completeness_review.md)
 - v0.9.0 qualitative recommendation protocol: [docs/provider_comparison/v0_9_0_qualitative_recommendation_protocol.md](docs/provider_comparison/v0_9_0_qualitative_recommendation_protocol.md)
+- v0.9.0 closeout decision: [docs/provider_decisions/v0_9_0_provider_suitability_closeout_decision.md](docs/provider_decisions/v0_9_0_provider_suitability_closeout_decision.md)
+- v0.9.0 release notes: [docs/release_notes_v0_9_0.md](docs/release_notes_v0_9_0.md)
 - Demo assets checklist: [`docs/demo_assets_checklist.md`](docs/demo_assets_checklist.md)
 
-v0.8.0 is completed and published. v0.9.0 completed its public evidence comparison and evidence completeness review, and its qualitative recommendation protocol is approved. The recommendation has not been executed; numeric scoring, ranking, a universal winner and provider approval remain blocked.
+v0.8.0 is completed and published. v0.9.0 closes with role-specific outcomes: Sportmonks `continue-targeted-clarification`, API-Football/API-Sports `technical-baseline-only`, Capology `separate-role-candidate` and Transfermarkt `manual-reference-only`. No provider, implementation path, universal winner or multi-provider architecture is approved.
 
 ## v0.2.0 Market Context Layer
 

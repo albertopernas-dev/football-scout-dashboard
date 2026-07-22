@@ -3,7 +3,7 @@
 ## Status
 
 - Milestone: v0.9.0
-- Status: planned / docs-only scope start
+- Status: completed / closed docs-only
 - Related v0.8.0 closeout decision: [Sportmonks v0.8.0 Closeout Decision](provider_decisions/sportmonks_v0_8_0_closeout_decision.md)
 - Related v0.8.0 release notes: [Release Notes v0.8.0](release_notes_v0_8_0.md)
 - Related provider comparison plan: [v0.9.0 Provider Comparison Plan](v0_9_0_provider_comparison_plan.md)
@@ -11,7 +11,9 @@
 - Related public research protocol: [v0.9.0 Provider Public Research Protocol](v0_9_0_provider_public_research_protocol.md)
 - Sportmonks provider approval: no
 - Selected evaluation path: `Compare providers`
-- Public research protocol: approved / not executed
+- Selected evaluation path status: completed
+- Public research protocol: fulfilled
+- Final outcomes: Sportmonks `continue-targeted-clarification`; API-Football / API-Sports `technical-baseline-only`; Capology `separate-role-candidate`; Transfermarkt manual reference `manual-reference-only`
 - Selected implementation path: none
 - API calls approved: no
 - Raw JSON review approved: no
@@ -48,7 +50,7 @@ No implementation is selected by this plan.
 | Label lookup strategy | Investigate how to resolve player and position labels safely | medium | improves human usability | not approved |
 | Richer endpoint review | Evaluate whether another Sportmonks endpoint can provide better fields | medium/high | may unlock Market Context or richer identity | not approved |
 | Local trial design | Design an ignored local trial with derived output only | high | closer to provider suitability evidence | not approved |
-| Compare providers | Compare Sportmonks against another candidate before continuing | medium | avoids provider lock-in | selected docs-only; research not approved |
+| Compare providers | Compare Sportmonks against another candidate before continuing | medium | avoids provider lock-in | completed docs-only |
 
 ## Recommended Evaluation Questions
 
@@ -77,13 +79,14 @@ No implementation is selected by this plan.
 
 ## Public Research Protocol Status
 
-The public-source comparison research protocol is approved for a later separately executed block and has not been executed.
+The public-source comparison research protocol was fulfilled. The evidence review, qualitative recommendation and v0.9.0 closeout are completed docs-only.
 
-The candidate set, allowed public sources, evidence classifications, six future output files, no-scoring policy, stop conditions and verification requirements are defined in the protocol.
+The final role outcomes are recorded without scoring, ranking, a universal winner, implementation or provider approval.
 
-Implementation path remains none.
+Implementation path remains none, and no future provider path is selected.
+
 ## Recommended Next Action
 
-Execute the approved public-source research block under the strict protocol.
+Commit the docs-only closeout, then use a separate release/tag block for v0.9.0.
 
-`Compare providers` remains the selected evaluation path. No login, private dashboard access, API calls, cache reading, raw JSON review, automated scraping, scoring, implementation or provider approval is authorized.
+`Compare providers` is completed. No login, private dashboard access, API calls, cache reading, raw JSON review, automated scraping, scoring, implementation or provider approval is authorized.

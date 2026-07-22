@@ -84,11 +84,16 @@ The outcome preserves manual reference and excludes automation, scraping and int
 
 ## Next Required Action
 
-A later docs-only decision may choose exactly one of these paths:
+- The subsequent closeout decision selected v0.9.0 closeout with every provider unapproved.
+- No Sportmonks clarification scope was authorized.
+- No Capology clarification scope was authorized.
+- No other provider action was authorized.
+- Next: separate v0.9.0 release/tag block.
 
-1. Sportmonks clarification scope.
-2. Capology clarification scope.
-3. v0.9.0 closeout with every provider unapproved.
-4. No further action.
+## v0.9.0 Closeout
 
-No path is authorized automatically by this decision.
+- Closeout decision: [v0.9.0 Provider Suitability Closeout Decision](v0_9_0_provider_suitability_closeout_decision.md)
+- Milestone closeout: completed.
+- Provider approval: none.
+- Future clarification requires a separate milestone or decision.
+- Next: a separate release/tag block.

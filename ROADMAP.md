@@ -17,9 +17,9 @@
 
 ## Recommended Next Steps
 
-1. Preparar una decision docs-only separada para ejecutar el protocolo de recomendacion cualitativa.
-2. Mantener bloqueados scoring numerico, ranking, ejecucion de recomendacion y provider approval.
-3. Mantener bloqueados login, private dashboards, account creation, API calls, cache reading, raw JSON, automated scraping, implementation, `.local.csv`, SQLite y Streamlit.
+1. Complete a separate v0.9.0 release/tag block.
+2. Select any future milestone or provider path through a separate decision.
+3. Keep provider contact, login, dashboards, API calls, cache reading, trials, implementation, scoring, ranking and provider approval blocked.
 
 ## v0.2.0 Market Context Layer
 
@@ -158,29 +158,29 @@ Completed and published.
 
 ## v0.9.0 Provider Suitability Scope
 
-- Status: public evidence and completeness review completed docs-only.
-- Sportmonks remains a candidate and is not approved.
-- Selected evaluation path: `Compare providers`.
-- Candidates: Sportmonks, API-Football/API-Sports, Capology and Transfermarkt as a manual reference.
-- Public-source comparison research protocol completed.
-- Candidate set locked; public evidence pass completed.
-- Evidence completeness review completed.
-- Descriptive comparison evidence is sufficient.
-- Qualitative recommendation protocol design is permitted with limitations.
-- Qualitative recommendation protocol approved.
-- Recommendation execution is not yet approved.
-- Approved outcomes: `continue-targeted-clarification`, `technical-baseline-only`, `manual-reference-only`, `defer`, `stop-exploration` and `separate-role-candidate`.
-- No universal winner is permitted.
-- No-scoring policy selected.
-- Numeric scoring, ranking, recommendation execution and provider approval remain blocked.
-- No implementation path is selected and no provider is approved.
-- Recommended next step: separate docs-only recommendation execution decision.
-- Still forbidden: login, private dashboards, account creation, API calls, provider cache reading, raw JSON review, automated scraping, implementation, `.local.csv`, SQLite writes, Streamlit integration, scoring, ranking, recommendation execution and provider approval.
+- Status: completed docs-only; tag/release pending.
+- Selected evaluation path `Compare providers`: completed.
+- Final outcomes:
+  - Sportmonks: `continue-targeted-clarification`.
+  - API-Football / API-Sports: `technical-baseline-only`.
+  - Capology: `separate-role-candidate`.
+  - Transfermarkt manual reference: `manual-reference-only`.
+- All providers remain unapproved.
+- No implementation path, universal winner or multi-provider architecture is selected.
+- Numeric scoring and ranking remain blocked.
+- Recommended next:
+  1. Complete a separate v0.9.0 release/tag block.
+  2. Select any future milestone separately.
+  3. Keep all restricted actions blocked.
+- Still forbidden: login, private dashboards, account creation, API calls, provider cache reading, raw JSON review, automated scraping, implementation, `.local.csv`, SQLite writes, Streamlit integration, scoring, ranking and provider approval.
 - Plan: [`docs/v0_9_0_provider_suitability_scope_plan.md`](docs/v0_9_0_provider_suitability_scope_plan.md).
 - Scope decision: [`docs/provider_decisions/sportmonks_v0_9_0_scope_decision.md`](docs/provider_decisions/sportmonks_v0_9_0_scope_decision.md).
 - Comparison plan: [docs/v0_9_0_provider_comparison_plan.md](docs/v0_9_0_provider_comparison_plan.md).
 - Evidence completeness review: [docs/provider_comparison/v0_9_0_evidence_completeness_review.md](docs/provider_comparison/v0_9_0_evidence_completeness_review.md).
 - Qualitative recommendation protocol: [docs/provider_comparison/v0_9_0_qualitative_recommendation_protocol.md](docs/provider_comparison/v0_9_0_qualitative_recommendation_protocol.md).
+- Qualitative recommendation: [docs/provider_comparison/v0_9_0_qualitative_recommendation.md](docs/provider_comparison/v0_9_0_qualitative_recommendation.md).
+- Closeout decision: [docs/provider_decisions/v0_9_0_provider_suitability_closeout_decision.md](docs/provider_decisions/v0_9_0_provider_suitability_closeout_decision.md).
+- Release notes: [docs/release_notes_v0_9_0.md](docs/release_notes_v0_9_0.md).
 - Comparison scope decision: [`docs/provider_decisions/v0_9_0_provider_comparison_scope_decision.md`](docs/provider_decisions/v0_9_0_provider_comparison_scope_decision.md).
 - Public research protocol: [`docs/v0_9_0_provider_public_research_protocol.md`](docs/v0_9_0_provider_public_research_protocol.md).
 - Protocol decision: [`docs/provider_decisions/v0_9_0_provider_public_research_protocol_decision.md`](docs/provider_decisions/v0_9_0_provider_public_research_protocol_decision.md).

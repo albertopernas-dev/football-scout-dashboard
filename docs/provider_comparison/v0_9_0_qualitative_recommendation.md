@@ -124,11 +124,17 @@ These outcomes are specific to each candidate's role. They do not constitute a r
 
 ## Next Decision Boundary
 
-The next docs-only decision must choose exactly one of these paths:
+- The v0.9.0 closeout selected the path to close the milestone with every provider unapproved.
+- Sportmonks and Capology clarification paths were not selected.
+- No-further-action was not selected as a distinct outcome because the milestone was formally closed.
+- No future provider path is authorized.
+- Any future clarification or provider search requires a new milestone or separately approved decision.
+- Next operational step: separate v0.9.0 release/tag block.
 
-1. Define a clarification request for Sportmonks.
-2. Define a clarification request for Capology.
-3. Close v0.9.0 with every provider remaining unapproved.
-4. Stop further action and retain only the documented outcomes.
+## v0.9.0 Closeout
 
-This document does not choose a path. It does not automatically authorize new research, provider contact, API calls, cache reading, a trial, implementation or provider approval.
+- Closeout decision: [v0.9.0 Provider Suitability Closeout Decision](../provider_decisions/v0_9_0_provider_suitability_closeout_decision.md)
+- v0.9.0 is closed with role outcomes.
+- All providers remain unapproved.
+- No future path is automatically authorized.
+- Next: a separate release/tag block.

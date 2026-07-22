@@ -3,7 +3,7 @@
 ## Status
 
 - Milestone: v0.9.0
-- Plan status: `provider-comparison-selected-docs-only`
+- Plan status: `provider-comparison-completed-docs-only`
 - Related suitability scope plan: [v0.9.0 Provider Suitability Scope Plan](v0_9_0_provider_suitability_scope_plan.md)
 - Related scope decision: [Sportmonks v0.9.0 Scope Decision](provider_decisions/sportmonks_v0_9_0_scope_decision.md)
 - Related comparison scope decision: [v0.9.0 Provider Comparison Scope Decision](provider_decisions/v0_9_0_provider_comparison_scope_decision.md)
@@ -18,13 +18,16 @@
 - Evidence completeness review: completed
 - Descriptive comparison: sufficient
 - Qualitative recommendation protocol design: permitted with limitations
-- Qualitative recommendation protocol: approved
-- Recommendation execution: not approved
+- Qualitative recommendation protocol: fulfilled
+- Qualitative outcomes: completed
+- v0.9.0 closeout: completed docs-only
 - Numeric scoring: blocked
 - Provider access performed: no
 - API calls performed: no
 - Cache reading performed: no
 - Provider approval: none
+- No future provider path selected: yes
+- Next: separate release/tag block
 
 ## Goal
 
@@ -149,7 +152,7 @@ The approved research block created:
 - A public research summary.
 - An evidence completeness review and decision record.
 
-No recommendation, scoring, ranking or provider approval was produced. The qualitative recommendation protocol is now approved, while execution remains a separate decision.
+The qualitative role recommendation and closeout are completed. No scoring, ranking, universal winner, implementation or provider approval was produced.
 
 ## Approved Qualitative Outcome Vocabulary
 
@@ -160,7 +163,7 @@ No recommendation, scoring, ranking or provider approval was produced. The quali
 - `stop-exploration`
 - `separate-role-candidate`
 
-The vocabulary defines role-based outcomes only. It does not authorize recommendation execution, scoring, ranking, implementation or provider approval.
+The vocabulary defines the completed role-based outcomes only. It does not authorize scoring, ranking, implementation or provider approval.
 
 ## Stop Conditions
 
@@ -176,6 +179,6 @@ The vocabulary defines role-based outcomes only. It does not authorize recommend
 
 ## Next Required Action
 
-A separate docs-only decision may approve execution of the qualitative recommendation protocol.
+Commit the docs-only closeout. After commit and clean status, a separate release/tag block may create the v0.9.0 tag and GitHub release.
 
-Numeric scoring, ranking, recommendation execution, implementation and provider approval remain blocked. No provider approval is granted by this plan.
+No future provider path is selected. Numeric scoring, ranking, implementation and provider approval remain blocked.
