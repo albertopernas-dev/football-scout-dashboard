@@ -1,0 +1,5 @@
+schema_version,local_record_id,player,team,league,season,source_name,source_type,reviewed_at,reviewer
+manual-market-context-input-v1,synthetic-missing-player,,Team Red,Synthetic League,2024,Synthetic Review,internal-reviewed,2026-07-22T10:00:00Z,reviewer-alpha
+manual-market-context-input-v1,synthetic-invalid-season,Player Beta,Team Blue,Synthetic League,2024/25,Synthetic Review,internal-reviewed,2026-07-22T10:00:00Z,reviewer-beta
+manual-market-context-input-v1,synthetic-naive-review,Player Gamma,Team Green,Synthetic League,2024,Synthetic Review,internal-reviewed,2026-07-22T10:00:00,reviewer-gamma
+manual-market-context-input-v1,synthetic-invalid-source,Player Delta,Team Yellow,Synthetic League,2024,Synthetic Review,unreviewed,2026-07-22T10:00:00Z,reviewer-delta

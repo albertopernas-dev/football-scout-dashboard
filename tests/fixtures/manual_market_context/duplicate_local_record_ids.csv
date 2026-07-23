@@ -1,0 +1,3 @@
+schema_version,local_record_id,player,team,league,season,source_name,source_type,reviewed_at,reviewer
+manual-market-context-input-v1,synthetic-duplicate-001,Player Alpha,Team Red,Synthetic League,2024,Synthetic Review,internal-reviewed,2026-07-22T10:00:00Z,reviewer-alpha
+manual-market-context-input-v1,synthetic-duplicate-001,Player Beta,Team Blue,Synthetic League,2024,Synthetic Review,internal-reviewed,2026-07-22T11:00:00Z,reviewer-beta
