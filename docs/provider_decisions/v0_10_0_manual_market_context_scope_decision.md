@@ -17,9 +17,16 @@
 - Implementation plan: [v0.10.0 Reviewed Local Market Context Implementation Plan](../v0_10_0_manual_market_context_implementation_plan.md)
 - Implementation plan decision: [v0.10.0 Reviewed Local Market Context Implementation Plan Decision](v0_10_0_manual_market_context_implementation_plan_decision.md)
 - Implementation plan status: approved docs-only
+- Stage A plan: [v0.10.0 Reviewed Local Market Context Stage A Plan](../v0_10_0_manual_market_context_stage_a_plan.md)
+- Stage A decision: [v0.10.0 Reviewed Local Market Context Stage A Decision](v0_10_0_manual_market_context_stage_a_decision.md)
+- Stage A implementation approved: yes
+- Stage A implemented: no
+- Stage B approved: no
+- Stage C approved: no
+- Stage D approved: no
 - v0.10.0 opened: yes
 - Selected path: Manual Market Context workflow improvements
-- Implementation approved: no
+- Full implementation approved: no
 - Provider integration approved: no
 - Real local data access approved: no
 - SQLite writes approved: no
@@ -35,11 +42,11 @@
 - No provider is selected or approved.
 - No provider API or automated source is authorized.
 - The first design block, the canonical reviewed local input contract, is completed docs-only.
-- Implementation remains unapproved.
-- That input contract is now approved as documentation only; no parser or data processing is approved.
+- Full implementation remains unapproved; Stage A alone is separately approved and remains unimplemented.
+- The input contract remains approved as documentation; the separate Stage A decision now approves only bounded structural parser and validation work.
 - Freshness, provenance, validation, diagnostics and duplicate/conflict policy are completed docs-only.
 - The market-value-zero parser blocker is resolved through observation/effective separation.
-- Parser, fixtures and preview remain unapproved.
+- Stage A structural parser and three synthetic fixtures are approved; broader parser work, Stages B-D and preview remain unapproved.
 
 ## Selected Scope
 
@@ -77,7 +84,7 @@ Not yet permitted:
 
 - `manual-market-context-input-v1` is approved as a documentation contract.
 - It retains the existing `player`, `team`, `league`, `season` compound identity.
-- It does not authorize implementation, fixtures, previews, real-data access, SQLite or Streamlit.
+- The contract decision itself does not authorize implementation or fixtures. The separate Stage A decision authorizes only its bounded structural implementation and three synthetic fixtures; previews, real-data access, SQLite and Streamlit remain blocked.
 
 ## Processing Policy
 
@@ -88,6 +95,6 @@ Not yet permitted:
 
 ## Next Required Decision
 
-The bounded implementation plan is approved docs-only. Implementation remains blocked.
+The bounded implementation plan is approved docs-only. Stage A implementation is separately approved and remains unimplemented.
 
-A separate decision may approve Stage A core contract and file-validation implementation only. Stages B-D, real local data, persistence, SQLite, Streamlit and provider access remain excluded.
+Next action: implement Stage A only. Stages B-D, real local data, persistence, SQLite, Streamlit and provider access remain excluded.

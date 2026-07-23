@@ -11,10 +11,16 @@
 - Related processing policy: [v0.10.0 Reviewed Local Market Context Processing Policy](v0_10_0_manual_market_context_processing_policy.md)
 - Policy version: `manual-market-context-policy-v1`
 - Related implementation decision: [v0.10.0 Reviewed Local Market Context Implementation Plan Decision](provider_decisions/v0_10_0_manual_market_context_implementation_plan_decision.md)
+- Related Stage A plan: [v0.10.0 Reviewed Local Market Context Stage A Plan](v0_10_0_manual_market_context_stage_a_plan.md)
+- Related Stage A decision: [v0.10.0 Reviewed Local Market Context Stage A Decision](provider_decisions/v0_10_0_manual_market_context_stage_a_decision.md)
 - Plan approved: yes, documentation only
-- Implementation approved: no
-- Parser approved: no
-- Synthetic fixtures approved: no
+- Full implementation approved: no
+- Stage A implementation approved: yes, for a separate code block
+- Stage A implemented: no
+- Stage A synthetic fixtures approved: yes, only the three specified Stage A fixture paths
+- Stage B approved: no
+- Stage C approved: no
+- Stage D approved: no
 - Preview execution approved: no
 - Real local data access approved: no
 - SQLite approved: no
@@ -35,7 +41,7 @@ It translates the contract and policy into concrete components while requiring t
 - no local input path is discovered automatically; and
 - processing results are deterministic and reconcilable.
 
-This document approves the plan only. It does not authorize implementation.
+This document approves the complete plan as documentation. The separate Stage A decision now authorizes Stage A implementation only; no other stage is authorized.
 
 ## Repository Alignment Review
 
@@ -363,7 +369,7 @@ Rules:
 - expected output is deterministic; and
 - all fixtures are safe to version.
 
-No fixture is created or approved by this document.
+No fixture is created by this document. The separate Stage A decision approves only the three specified Stage A fixture paths for a future code block.
 
 ## Test Plan
 
@@ -528,9 +534,10 @@ The plan does not approve Pydantic, Pandera, new date libraries, new CLI librari
 ## Stage Approval Boundary
 
 - The complete plan is approved as documentation.
-- Implementation is not authorized by this document.
-- The recommended first code block is Stage A.
+- Full implementation is not authorized; Stage A alone is separately approved and remains unimplemented.
+- Stage A is separately approved for implementation and is not yet implemented.
 - Stage A does not authorize Stages B, C or D.
+- Stages B-D remain unapproved.
 - Each stage requires a separate decision, focused diff, stage-specific tests, full pytest, compileall and a clean status after any later approved commit.
 - Only synthetic fixtures may be used.
 
@@ -553,8 +560,8 @@ This plan is considered fully executed only when:
 
 The bounded implementation plan is approved docs-only.
 
-No code, script, fixture or preview execution is authorized by this document.
+Stage A implementation is separately authorized by its Stage A decision, but no code or fixture is implemented by this document. Preview execution remains unauthorized.
 
-Next recommended decision: approve Stage A core contract and file-validation implementation only.
+Next action: implement Stage A only under its approved file, diagnostic and test boundaries.
 
 No other stage receives automatic approval.
