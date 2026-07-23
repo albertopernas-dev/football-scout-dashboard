@@ -6,6 +6,10 @@
 - Plan status: `manual-market-context-scope-opened`
 - Related v0.9.0 closeout decision: [v0.9.0 Provider Suitability Closeout Decision](provider_decisions/v0_9_0_provider_suitability_closeout_decision.md)
 - Related v0.9.0 release notes: [Release Notes v0.9.0](release_notes_v0_9_0.md)
+- Canonical input contract: [v0.10.0 Reviewed Local Market Context Input Contract](v0_10_0_manual_market_context_input_contract.md)
+- Contract decision: [v0.10.0 Reviewed Local Market Context Input Contract Decision](provider_decisions/v0_10_0_manual_market_context_input_contract_decision.md)
+- Contract version: `manual-market-context-input-v1`
+- Contract status: approved docs-only
 - Selected path: Manual Market Context workflow improvements
 - Implementation approved: no
 - Real local data access approved: no
@@ -218,6 +222,16 @@ future approved persistence or UI integration
 - SQLite and Streamlit remain outside this milestone for now.
 - Every transition must be observable and diagnosable.
 
+## Canonical Input Contract
+
+The initial reviewed local input contract is defined in [v0.10.0 Reviewed Local Market Context Input Contract](v0_10_0_manual_market_context_input_contract.md) and approved as documentation by the [contract decision](provider_decisions/v0_10_0_manual_market_context_input_contract_decision.md).
+
+- Contract version: `manual-market-context-input-v1`.
+- Status: approved docs-only.
+- The existing `player`, `team`, `league`, `season` compound identity is retained.
+- Parser, validation implementation, fixtures, previews and real-data processing remain blocked.
+- The next design boundary is freshness, provenance, validation and duplicate/conflict policy.
+
 ## Proposed Workstreams
 
 | Workstream | Purpose | Current Approval |
@@ -271,4 +285,4 @@ This block does not meet those criteria. It only opens the scope.
 
 ## Recommended Next Action
 
-Define the canonical reviewed local input contract in a separate docs-only block. Its implementation is not yet authorized.
+Define freshness, provenance, validation and duplicate/conflict policy for `manual-market-context-input-v1` in a separate docs-only block. Parser, fixtures, previews and real-data processing remain unauthorized.

@@ -6,6 +6,10 @@
 - Decision status: `manual-market-context-workflow-selected`
 - Related scope plan: [v0.10.0 Manual Market Context Workflow Hardening Scope Plan](../v0_10_0_manual_market_context_scope_plan.md)
 - Related v0.9.0 closeout: [v0.9.0 Provider Suitability Closeout Decision](v0_9_0_provider_suitability_closeout_decision.md)
+- Canonical input contract: [v0.10.0 Reviewed Local Market Context Input Contract](../v0_10_0_manual_market_context_input_contract.md)
+- Contract decision: [v0.10.0 Reviewed Local Market Context Input Contract Decision](v0_10_0_manual_market_context_input_contract_decision.md)
+- Contract version: `manual-market-context-input-v1`
+- Contract status: approved docs-only
 - v0.10.0 opened: yes
 - Selected path: Manual Market Context workflow improvements
 - Implementation approved: no
@@ -23,8 +27,11 @@
 - It does not reopen v0.9.0 provider suitability work.
 - No provider is selected or approved.
 - No provider API or automated source is authorized.
-- The first planned design block is the canonical reviewed local input contract.
+- The first design block, the canonical reviewed local input contract, is completed docs-only.
 - Implementation remains unapproved.
+- That input contract is now approved as documentation only; no parser or data processing is approved.
+- Known contract/runtime compatibility blockers remain unresolved.
+- No parser implementation may be approved until those blockers are addressed by a separate decision.
 
 ## Selected Scope
 
@@ -58,8 +65,14 @@ Not yet permitted:
 - No role outcome changes.
 - No provider clarification is initiated.
 
-## First Required Decision
+## Canonical Input Contract
 
-A separate docs-only block may define the canonical reviewed local Market Context input contract.
+- `manual-market-context-input-v1` is approved as a documentation contract.
+- It retains the existing `player`, `team`, `league`, `season` compound identity.
+- It does not authorize implementation, fixtures, previews, real-data access, SQLite or Streamlit.
 
-That block must not implement parsing, access real local data or modify the application.
+## Next Required Decision
+
+A separate docs-only block may define freshness, provenance, validation and duplicate/conflict policy for the approved contract.
+
+That block must not implement parsing, fixtures, previews, persistence or UI integration.

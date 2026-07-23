@@ -20,9 +20,9 @@
 
 ## Recommended Next Steps
 
-1. Define the canonical reviewed local input contract.
-2. Keep implementation blocked until the contract is approved.
-3. Keep provider access, real local data, SQLite and Streamlit blocked.
+1. Define freshness, provenance, validation and duplicate/conflict policy.
+2. Keep parser, fixtures and preview blocked.
+3. Keep real data, SQLite, Streamlit and providers blocked.
 
 ## v0.2.0 Market Context Layer
 
@@ -195,9 +195,15 @@ Completed and published.
 - In-scope design areas: canonical input contract, provenance and freshness, validation severities, duplicate/conflict policy, diagnostics, synthetic fixtures and testing strategy.
 - Provider boundary: no provider is selected or approved, and no provider clarification or API access is initiated.
 - Implementation, real local data access, SQLite writes and Streamlit changes are not approved.
-- First next decision: define the canonical reviewed local input contract in a separate docs-only block.
+- Canonical reviewed local input contract: approved docs-only.
+- Contract version: `manual-market-context-input-v1`.
+- Parser and implementation: not approved.
+- Real local data: not approved.
+- Next decision: define freshness, provenance, validation and duplicate/conflict policy.
 - Scope plan: [docs/v0_10_0_manual_market_context_scope_plan.md](docs/v0_10_0_manual_market_context_scope_plan.md).
 - Scope decision: [docs/provider_decisions/v0_10_0_manual_market_context_scope_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_scope_decision.md).
+- Input contract: [docs/v0_10_0_manual_market_context_input_contract.md](docs/v0_10_0_manual_market_context_input_contract.md).
+- Contract decision: [docs/provider_decisions/v0_10_0_manual_market_context_input_contract_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_input_contract_decision.md).
 
 ## Potential v0.4.x Follow-ups
 
