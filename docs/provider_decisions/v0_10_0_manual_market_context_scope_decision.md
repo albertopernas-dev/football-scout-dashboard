@@ -10,6 +10,10 @@
 - Contract decision: [v0.10.0 Reviewed Local Market Context Input Contract Decision](v0_10_0_manual_market_context_input_contract_decision.md)
 - Contract version: `manual-market-context-input-v1`
 - Contract status: approved docs-only
+- Processing policy: [v0.10.0 Reviewed Local Market Context Processing Policy](../v0_10_0_manual_market_context_processing_policy.md)
+- Policy decision: [v0.10.0 Reviewed Local Market Context Processing Policy Decision](v0_10_0_manual_market_context_processing_policy_decision.md)
+- Policy version: `manual-market-context-policy-v1`
+- Policy status: approved docs-only
 - v0.10.0 opened: yes
 - Selected path: Manual Market Context workflow improvements
 - Implementation approved: no
@@ -30,8 +34,9 @@
 - The first design block, the canonical reviewed local input contract, is completed docs-only.
 - Implementation remains unapproved.
 - That input contract is now approved as documentation only; no parser or data processing is approved.
-- Known contract/runtime compatibility blockers remain unresolved.
-- No parser implementation may be approved until those blockers are addressed by a separate decision.
+- Freshness, provenance, validation, diagnostics and duplicate/conflict policy are completed docs-only.
+- The market-value-zero parser blocker is resolved through observation/effective separation.
+- Parser, fixtures and preview remain unapproved.
 
 ## Selected Scope
 
@@ -71,8 +76,15 @@ Not yet permitted:
 - It retains the existing `player`, `team`, `league`, `season` compound identity.
 - It does not authorize implementation, fixtures, previews, real-data access, SQLite or Streamlit.
 
+## Processing Policy
+
+- `manual-market-context-policy-v1` is approved as a documentation policy.
+- It defines freshness, provenance, validation, diagnostics, duplicates and conflicts.
+- It does not approve source precedence, effective consolidation or runtime changes.
+- The market-value-zero parser blocker is resolved, while effective integration remains limited.
+
 ## Next Required Decision
 
-A separate docs-only block may define freshness, provenance, validation and duplicate/conflict policy for the approved contract.
+A separate block may define and approve a bounded implementation plan for parser, normalization, diagnostics, synthetic fixtures and a preview contract.
 
-That block must not implement parsing, fixtures, previews, persistence or UI integration.
+Until that plan is approved, implementation remains blocked. Real local data, persistence, SQLite, Streamlit and provider access remain excluded.

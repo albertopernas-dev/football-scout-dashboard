@@ -20,8 +20,8 @@
 
 ## Recommended Next Steps
 
-1. Define freshness, provenance, validation and duplicate/conflict policy.
-2. Keep parser, fixtures and preview blocked.
+1. Define a bounded parser/diagnostics/synthetic-fixture implementation plan.
+2. Keep implementation blocked until that plan is approved.
 3. Keep real data, SQLite, Streamlit and providers blocked.
 
 ## v0.2.0 Market Context Layer
@@ -197,13 +197,22 @@ Completed and published.
 - Implementation, real local data access, SQLite writes and Streamlit changes are not approved.
 - Canonical reviewed local input contract: approved docs-only.
 - Contract version: `manual-market-context-input-v1`.
+- Processing policy: approved docs-only.
+- Policy version: `manual-market-context-policy-v1`.
+- Freshness and provenance design: completed docs-only.
+- Validation and diagnostics design: completed docs-only.
+- Duplicate and conflict policy: completed docs-only.
+- Market-value-zero parser blocker: resolved through observation/effective separation.
 - Parser and implementation: not approved.
+- Synthetic fixtures and preview: not approved.
 - Real local data: not approved.
-- Next decision: define freshness, provenance, validation and duplicate/conflict policy.
+- Next decision: define a bounded parser, diagnostics, synthetic-fixture and preview-contract implementation plan.
 - Scope plan: [docs/v0_10_0_manual_market_context_scope_plan.md](docs/v0_10_0_manual_market_context_scope_plan.md).
 - Scope decision: [docs/provider_decisions/v0_10_0_manual_market_context_scope_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_scope_decision.md).
 - Input contract: [docs/v0_10_0_manual_market_context_input_contract.md](docs/v0_10_0_manual_market_context_input_contract.md).
 - Contract decision: [docs/provider_decisions/v0_10_0_manual_market_context_input_contract_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_input_contract_decision.md).
+- Processing policy: [docs/v0_10_0_manual_market_context_processing_policy.md](docs/v0_10_0_manual_market_context_processing_policy.md).
+- Policy decision: [docs/provider_decisions/v0_10_0_manual_market_context_processing_policy_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_processing_policy_decision.md).
 
 ## Potential v0.4.x Follow-ups
 

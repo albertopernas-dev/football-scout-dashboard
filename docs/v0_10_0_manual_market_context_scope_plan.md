@@ -10,6 +10,10 @@
 - Contract decision: [v0.10.0 Reviewed Local Market Context Input Contract Decision](provider_decisions/v0_10_0_manual_market_context_input_contract_decision.md)
 - Contract version: `manual-market-context-input-v1`
 - Contract status: approved docs-only
+- Processing policy: [v0.10.0 Reviewed Local Market Context Processing Policy](v0_10_0_manual_market_context_processing_policy.md)
+- Policy decision: [v0.10.0 Reviewed Local Market Context Processing Policy Decision](provider_decisions/v0_10_0_manual_market_context_processing_policy_decision.md)
+- Policy version: `manual-market-context-policy-v1`
+- Policy status: approved docs-only
 - Selected path: Manual Market Context workflow improvements
 - Implementation approved: no
 - Real local data access approved: no
@@ -230,7 +234,19 @@ The initial reviewed local input contract is defined in [v0.10.0 Reviewed Local 
 - Status: approved docs-only.
 - The existing `player`, `team`, `league`, `season` compound identity is retained.
 - Parser, validation implementation, fixtures, previews and real-data processing remain blocked.
-- The next design boundary is freshness, provenance, validation and duplicate/conflict policy.
+- Freshness, provenance, validation and duplicate/conflict policy are completed docs-only.
+- The market-value-zero parser blocker is resolved through observation/effective separation.
+
+## Processing Policy
+
+The [v0.10.0 Reviewed Local Market Context Processing Policy](v0_10_0_manual_market_context_processing_policy.md) and its [decision record](provider_decisions/v0_10_0_manual_market_context_processing_policy_decision.md) are approved docs-only.
+
+- Policy version: `manual-market-context-policy-v1`.
+- Date resolution and freshness thresholds are defined.
+- Provenance, validation severity and the diagnostic catalog are defined.
+- Duplicate and conflict outcomes are defined without source precedence or automatic consolidation.
+- Parser, synthetic fixtures and preview remain unapproved.
+- The next boundary is a bounded implementation plan.
 
 ## Proposed Workstreams
 
@@ -285,4 +301,4 @@ This block does not meet those criteria. It only opens the scope.
 
 ## Recommended Next Action
 
-Define freshness, provenance, validation and duplicate/conflict policy for `manual-market-context-input-v1` in a separate docs-only block. Parser, fixtures, previews and real-data processing remain unauthorized.
+Define a bounded implementation plan for parser, diagnostics, synthetic fixtures and a preview contract. Implementation, real-data processing, SQLite and Streamlit remain unauthorized.

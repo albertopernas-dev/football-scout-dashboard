@@ -7,6 +7,8 @@
 - Related contract: [v0.10.0 Reviewed Local Market Context Input Contract](../v0_10_0_manual_market_context_input_contract.md)
 - Related scope plan: [v0.10.0 Manual Market Context Workflow Hardening Scope Plan](../v0_10_0_manual_market_context_scope_plan.md)
 - Related scope decision: [v0.10.0 Manual Market Context Workflow Scope Decision](v0_10_0_manual_market_context_scope_decision.md)
+- Related processing policy: [v0.10.0 Reviewed Local Market Context Processing Policy](../v0_10_0_manual_market_context_processing_policy.md)
+- Related policy decision: [v0.10.0 Reviewed Local Market Context Processing Policy Decision](v0_10_0_manual_market_context_processing_policy_decision.md)
 - Contract version approved: `manual-market-context-input-v1`
 - Contract approved: yes, documentation only
 - Implementation approved: no
@@ -23,7 +25,7 @@
 - The reviewed local Market Context input contract v1 is approved as a documentation contract.
 - The contract aligns with the existing compound identity and canonical field names where possible.
 - Known semantic incompatibilities are explicitly recorded.
-- `market_value_eur = 0` remains an implementation-blocking compatibility decision.
+- `market_value_eur = 0` is resolved for parser semantics; effective integration remains limited under current behavior.
 - It defines row grain, identity, field semantics, dates, currencies, provenance, review metadata and structural acceptance expectations.
 - It does not authorize implementation or real-data processing.
 - No provider-specific schema is approved.
@@ -55,7 +57,7 @@
 | Row grain | approved docs-only |
 | Schema version | approved docs-only |
 | Structural acceptance rules | approved docs-only |
-| Market-value zero semantics | unresolved; blocks parser implementation |
+| Market-value zero semantics | resolved for parser; effective integration remains limited |
 | Parser implementation | not approved |
 | Validation implementation | not approved |
 | Conflict resolution | deferred |
@@ -76,6 +78,6 @@
 
 ## Next Required Decision
 
-A separate docs-only block may define the freshness, provenance, validation and duplicate/conflict policy for contract v1. Before implementation can be approved, that policy decision must resolve the `market_value_eur = 0` compatibility blocker or explicitly preserve it as blocking.
+A separate bounded implementation-plan block may cover parser, normalization, diagnostics, synthetic fixtures and a preview contract.
 
-That block must not implement parsing, fixtures, previews, persistence or UI integration.
+Implementation remains unapproved until that plan is reviewed. Real local data, persistence, SQLite, Streamlit and provider access remain excluded.

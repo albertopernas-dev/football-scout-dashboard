@@ -8,6 +8,8 @@
 - Related scope plan: [v0.10.0 Manual Market Context Workflow Hardening Scope Plan](v0_10_0_manual_market_context_scope_plan.md)
 - Related scope decision: [v0.10.0 Manual Market Context Workflow Scope Decision](provider_decisions/v0_10_0_manual_market_context_scope_decision.md)
 - Related contract decision: [v0.10.0 Reviewed Local Market Context Input Contract Decision](provider_decisions/v0_10_0_manual_market_context_input_contract_decision.md)
+- Processing policy: [v0.10.0 Reviewed Local Market Context Processing Policy](v0_10_0_manual_market_context_processing_policy.md)
+- Processing policy decision: [v0.10.0 Reviewed Local Market Context Processing Policy Decision](provider_decisions/v0_10_0_manual_market_context_processing_policy_decision.md)
 - Implementation approved: no
 - Real local data access approved: no
 - Parser approved: no
@@ -202,7 +204,7 @@ These fields support human inspection and diagnostics. Their presence does not a
 - Because the field name fixes EUR, `market_value_currency` is not accepted in v1.
 - Monetary conversion is not approved.
 
-The current validator and effective-field logic treat only positive values as known. That difference is an explicit compatibility issue for future implementation; this documentation does not change it.
+The processing policy resolves this compatibility issue for a future parser by preserving zero as an observation while excluding it from current effective eligibility. This documentation does not change current runtime behavior.
 
 ### Salary Or Compensation
 
@@ -394,7 +396,7 @@ These checks do not replace the future validation policy. This contract defines 
 |---|---|---|
 | `player`, `team`, `league`, `season` | aligned | Exact current compound merge identity; no standalone player ID exists in this layer. |
 | `age` | aligned | Existing canonical input and `market_context_age` output. |
-| `market_value_eur` | aligned with semantic incompatibility | Existing input/output name; current validation/effective logic treats only positive values as known, while v1 preserves a declared zero as real. |
+| `market_value_eur` | aligned with effective limitation | Existing input/output name; v1 preserves a declared zero as an observation, while current effective logic keeps zero ineligible for effective promotion. |
 | `contract_end_date` | aligned | Existing canonical input and output. |
 | `source_url`, `confidence`, `notes` | aligned | Existing canonical provenance/review fields. |
 | `source_name` | mapping-required | Must map explicitly to existing `source`; v1 does not rename the current canonical field. |
@@ -412,22 +414,25 @@ These checks do not replace the future validation policy. This contract defines 
 
 The current loader accepts the smaller legacy schema and permits extra columns. The v1 contract is therefore documentation for a future explicit parser, not a claim that current code enforces it.
 
-## Implementation-Blocking Compatibility Decisions
+## Resolved Contract Compatibility Decisions
 
 ### `market_value_eur = 0`
 
 - Contract v1 semantics: zero is a real declared value and is distinct from null.
-- Current canonical behavior: zero is rejected or treated as unknown because current validation and effective coverage require a positive value.
-- Status: unresolved semantic incompatibility.
-- Parser implementation MUST NOT proceed until a separate decision chooses one of:
-  1. adapt the canonical validation and effective logic to preserve zero;
-  2. revise the v1 contract before implementation.
+- A conforming future parser MUST accept and preserve a structurally valid zero as a normalized observation.
+- It MUST preserve the numeric value as zero and MUST NOT convert it to null.
+- It MUST emit `MCV407_MARKET_VALUE_ZERO_NOT_EFFECTIVE`.
+- Field outcome: `accepted-with-warning`.
+- Minimum row outcome: `accepted-with-warnings`.
+- The observation remains in `accepted_observations` unless another independent rule rejects or places the row or field under review.
+- It MUST NOT promote zero to `effective_market_value_eur` under current effective behavior.
+- It MUST NOT increase effective market-value coverage.
+- Status: resolved for parser through observation/effective separation; effective integration remains limited.
 - This documentation block does not change current code or runtime behavior.
 
 ## Explicitly Deferred
 
 - Parser implementation.
-- Resolution of the `market_value_eur = 0` semantic incompatibility.
 - Normalization functions.
 - Final diagnostic codes.
 - Row rejection format.
@@ -478,4 +483,4 @@ This row is invalid because it uses an unsupported schema version, lacks `local_
 - Parser, fixtures, preview, SQLite and Streamlit work are not authorized.
 - Provider integration or approval is not authorized.
 
-The recommended next decision is a separate docs-only definition of freshness, provenance, validation and duplicate/conflict policy for v1.
+The processing policy is defined in [v0.10.0 Reviewed Local Market Context Processing Policy](v0_10_0_manual_market_context_processing_policy.md). The recommended next decision is a bounded implementation plan for parser, diagnostics, synthetic fixtures and a preview contract.
