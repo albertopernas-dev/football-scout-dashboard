@@ -10,6 +10,8 @@
 - Related contract decision: [v0.10.0 Reviewed Local Market Context Input Contract Decision](provider_decisions/v0_10_0_manual_market_context_input_contract_decision.md)
 - Processing policy: [v0.10.0 Reviewed Local Market Context Processing Policy](v0_10_0_manual_market_context_processing_policy.md)
 - Processing policy decision: [v0.10.0 Reviewed Local Market Context Processing Policy Decision](provider_decisions/v0_10_0_manual_market_context_processing_policy_decision.md)
+- Implementation plan: [v0.10.0 Reviewed Local Market Context Implementation Plan](v0_10_0_manual_market_context_implementation_plan.md)
+- Implementation plan decision: [v0.10.0 Reviewed Local Market Context Implementation Plan Decision](provider_decisions/v0_10_0_manual_market_context_implementation_plan_decision.md)
 - Implementation approved: no
 - Real local data access approved: no
 - Parser approved: no
@@ -483,4 +485,4 @@ This row is invalid because it uses an unsupported schema version, lacks `local_
 - Parser, fixtures, preview, SQLite and Streamlit work are not authorized.
 - Provider integration or approval is not authorized.
 
-The processing policy is defined in [v0.10.0 Reviewed Local Market Context Processing Policy](v0_10_0_manual_market_context_processing_policy.md). The recommended next decision is a bounded implementation plan for parser, diagnostics, synthetic fixtures and a preview contract.
+The processing policy is defined in [v0.10.0 Reviewed Local Market Context Processing Policy](v0_10_0_manual_market_context_processing_policy.md). The bounded [implementation plan](v0_10_0_manual_market_context_implementation_plan.md) and its [decision](provider_decisions/v0_10_0_manual_market_context_implementation_plan_decision.md) are approved docs-only, while implementation remains blocked. The next decision may approve Stage A core contract and file-validation implementation only.

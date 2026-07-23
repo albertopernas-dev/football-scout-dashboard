@@ -10,6 +10,8 @@
 - Related scope plan: [v0.10.0 Manual Market Context Workflow Hardening Scope Plan](v0_10_0_manual_market_context_scope_plan.md)
 - Related scope decision: [v0.10.0 Manual Market Context Workflow Scope Decision](provider_decisions/v0_10_0_manual_market_context_scope_decision.md)
 - Related policy decision: [v0.10.0 Reviewed Local Market Context Processing Policy Decision](provider_decisions/v0_10_0_manual_market_context_processing_policy_decision.md)
+- Implementation plan: [v0.10.0 Reviewed Local Market Context Implementation Plan](v0_10_0_manual_market_context_implementation_plan.md)
+- Implementation plan decision: [v0.10.0 Reviewed Local Market Context Implementation Plan Decision](provider_decisions/v0_10_0_manual_market_context_implementation_plan_decision.md)
 - Implementation approved: no
 - Parser approved: no
 - Synthetic fixtures approved: no
@@ -522,4 +524,4 @@ Original CSV order MUST NOT have semantic meaning.
 - SQLite and Streamlit are not authorized.
 - No provider is approved.
 
-The recommended next decision is a bounded implementation plan for parser, diagnostics, synthetic fixtures and a preview contract.
+The bounded [implementation plan](v0_10_0_manual_market_context_implementation_plan.md) and its [decision](provider_decisions/v0_10_0_manual_market_context_implementation_plan_decision.md) are approved docs-only. Implementation remains blocked. The next decision may approve Stage A core contract and file-validation implementation only; Stages B-D remain blocked.

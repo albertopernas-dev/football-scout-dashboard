@@ -14,6 +14,9 @@
 - Policy decision: [v0.10.0 Reviewed Local Market Context Processing Policy Decision](provider_decisions/v0_10_0_manual_market_context_processing_policy_decision.md)
 - Policy version: `manual-market-context-policy-v1`
 - Policy status: approved docs-only
+- Implementation plan: [v0.10.0 Reviewed Local Market Context Implementation Plan](v0_10_0_manual_market_context_implementation_plan.md)
+- Implementation plan decision: [v0.10.0 Reviewed Local Market Context Implementation Plan Decision](provider_decisions/v0_10_0_manual_market_context_implementation_plan_decision.md)
+- Implementation plan status: approved docs-only
 - Selected path: Manual Market Context workflow improvements
 - Implementation approved: no
 - Real local data access approved: no
@@ -301,4 +304,6 @@ This block does not meet those criteria. It only opens the scope.
 
 ## Recommended Next Action
 
-Define a bounded implementation plan for parser, diagnostics, synthetic fixtures and a preview contract. Implementation, real-data processing, SQLite and Streamlit remain unauthorized.
+The bounded implementation plan is approved docs-only. Implementation remains blocked.
+
+The next decision may approve Stage A core contract and file-validation implementation only. Stages B-D, real-data processing, SQLite and Streamlit remain unauthorized.

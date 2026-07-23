@@ -9,6 +9,8 @@
 - Related scope decision: [v0.10.0 Manual Market Context Workflow Scope Decision](v0_10_0_manual_market_context_scope_decision.md)
 - Related processing policy: [v0.10.0 Reviewed Local Market Context Processing Policy](../v0_10_0_manual_market_context_processing_policy.md)
 - Related policy decision: [v0.10.0 Reviewed Local Market Context Processing Policy Decision](v0_10_0_manual_market_context_processing_policy_decision.md)
+- Related implementation plan: [v0.10.0 Reviewed Local Market Context Implementation Plan](../v0_10_0_manual_market_context_implementation_plan.md)
+- Related implementation plan decision: [v0.10.0 Reviewed Local Market Context Implementation Plan Decision](v0_10_0_manual_market_context_implementation_plan_decision.md)
 - Contract version approved: `manual-market-context-input-v1`
 - Contract approved: yes, documentation only
 - Implementation approved: no
@@ -78,6 +80,6 @@
 
 ## Next Required Decision
 
-A separate bounded implementation-plan block may cover parser, normalization, diagnostics, synthetic fixtures and a preview contract.
+The bounded implementation plan is approved docs-only. Implementation remains unapproved.
 
-Implementation remains unapproved until that plan is reviewed. Real local data, persistence, SQLite, Streamlit and provider access remain excluded.
+A separate decision may approve Stage A core contract and file-validation implementation only. Stages B-D, real local data, persistence, SQLite, Streamlit and provider access remain excluded.

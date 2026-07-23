@@ -74,9 +74,11 @@ Current milestone: `v0.10.0 Manual Market Context Workflow Hardening`.
 - v0.10.0 input contract decision: [docs/provider_decisions/v0_10_0_manual_market_context_input_contract_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_input_contract_decision.md)
 - v0.10.0 processing policy: [docs/v0_10_0_manual_market_context_processing_policy.md](docs/v0_10_0_manual_market_context_processing_policy.md)
 - v0.10.0 processing policy decision: [docs/provider_decisions/v0_10_0_manual_market_context_processing_policy_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_processing_policy_decision.md)
+- v0.10.0 implementation plan: [docs/v0_10_0_manual_market_context_implementation_plan.md](docs/v0_10_0_manual_market_context_implementation_plan.md)
+- v0.10.0 implementation plan decision: [docs/provider_decisions/v0_10_0_manual_market_context_implementation_plan_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_implementation_plan_decision.md)
 - Demo assets checklist: [`docs/demo_assets_checklist.md`](docs/demo_assets_checklist.md)
 
-v0.9.0 is completed and published. v0.10.0 now has the docs-approved `manual-market-context-input-v1` contract and `manual-market-context-policy-v1`. The zero-value parser blocker is resolved by separating accepted observations from effective eligibility. Parser, fixtures, real-data access, SQLite and Streamlit remain unapproved; the next step is a bounded implementation plan.
+v0.9.0 is completed and published. v0.10.0 now has the docs-approved `manual-market-context-input-v1` contract, `manual-market-context-policy-v1` and bounded implementation plan. Four stages are defined, but no stage is implemented or approved. The next decision may approve Stage A only; real-data access, SQLite and Streamlit remain blocked.
 
 ## v0.2.0 Market Context Layer
 

@@ -20,8 +20,8 @@
 
 ## Recommended Next Steps
 
-1. Define a bounded parser/diagnostics/synthetic-fixture implementation plan.
-2. Keep implementation blocked until that plan is approved.
+1. Approve Stage A core contract and file-validation implementation.
+2. Keep Stages B-D blocked.
 3. Keep real data, SQLite, Streamlit and providers blocked.
 
 ## v0.2.0 Market Context Layer
@@ -203,16 +203,19 @@ Completed and published.
 - Validation and diagnostics design: completed docs-only.
 - Duplicate and conflict policy: completed docs-only.
 - Market-value-zero parser blocker: resolved through observation/effective separation.
-- Parser and implementation: not approved.
-- Synthetic fixtures and preview: not approved.
+- Implementation plan: approved docs-only.
+- Four stages defined: Stage A core/file validation, Stage B normalization, Stage C duplicate/conflict analysis and Stage D synthetic preview.
+- No implementation stage is approved; synthetic fixtures and preview remain blocked.
 - Real local data: not approved.
-- Next decision: define a bounded parser, diagnostics, synthetic-fixture and preview-contract implementation plan.
+- Next decision: separate approval for Stage A only.
 - Scope plan: [docs/v0_10_0_manual_market_context_scope_plan.md](docs/v0_10_0_manual_market_context_scope_plan.md).
 - Scope decision: [docs/provider_decisions/v0_10_0_manual_market_context_scope_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_scope_decision.md).
 - Input contract: [docs/v0_10_0_manual_market_context_input_contract.md](docs/v0_10_0_manual_market_context_input_contract.md).
 - Contract decision: [docs/provider_decisions/v0_10_0_manual_market_context_input_contract_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_input_contract_decision.md).
 - Processing policy: [docs/v0_10_0_manual_market_context_processing_policy.md](docs/v0_10_0_manual_market_context_processing_policy.md).
 - Policy decision: [docs/provider_decisions/v0_10_0_manual_market_context_processing_policy_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_processing_policy_decision.md).
+- Implementation plan: [docs/v0_10_0_manual_market_context_implementation_plan.md](docs/v0_10_0_manual_market_context_implementation_plan.md).
+- Implementation plan decision: [docs/provider_decisions/v0_10_0_manual_market_context_implementation_plan_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_implementation_plan_decision.md).
 
 ## Potential v0.4.x Follow-ups
 

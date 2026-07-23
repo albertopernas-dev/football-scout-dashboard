@@ -7,6 +7,8 @@
 - Policy version: `manual-market-context-policy-v1`
 - Related policy: [v0.10.0 Reviewed Local Market Context Processing Policy](../v0_10_0_manual_market_context_processing_policy.md)
 - Related input contract: [v0.10.0 Reviewed Local Market Context Input Contract](../v0_10_0_manual_market_context_input_contract.md)
+- Related implementation plan: [v0.10.0 Reviewed Local Market Context Implementation Plan](../v0_10_0_manual_market_context_implementation_plan.md)
+- Related implementation plan decision: [v0.10.0 Reviewed Local Market Context Implementation Plan Decision](v0_10_0_manual_market_context_implementation_plan_decision.md)
 - Input contract version: `manual-market-context-input-v1`
 - Policy approved: yes, docs-only
 - Market-value zero parser blocker: resolved
@@ -74,18 +76,6 @@
 
 ## Next Required Decision
 
-A separate block may define and approve a bounded implementation plan for:
+The bounded implementation plan is approved docs-only. Implementation remains blocked.
 
-- parser;
-- normalization;
-- diagnostics;
-- synthetic fixtures; and
-- preview contract.
-
-That block must still exclude:
-
-- real local data;
-- SQLite;
-- Streamlit;
-- provider access; and
-- production integration.
+A separate decision may approve Stage A core contract and file-validation implementation only. Stages B-D, real local data, SQLite, Streamlit, provider access and production integration remain excluded.
