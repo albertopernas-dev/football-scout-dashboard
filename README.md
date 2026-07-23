@@ -78,9 +78,11 @@ Current milestone: `v0.10.0 Manual Market Context Workflow Hardening`.
 - v0.10.0 implementation plan decision: [docs/provider_decisions/v0_10_0_manual_market_context_implementation_plan_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_implementation_plan_decision.md)
 - v0.10.0 Stage A plan: [docs/v0_10_0_manual_market_context_stage_a_plan.md](docs/v0_10_0_manual_market_context_stage_a_plan.md)
 - v0.10.0 Stage A decision: [docs/provider_decisions/v0_10_0_manual_market_context_stage_a_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_stage_a_decision.md)
+- v0.10.0 Stage A closeout: [docs/v0_10_0_manual_market_context_stage_a_closeout.md](docs/v0_10_0_manual_market_context_stage_a_closeout.md)
+- v0.10.0 Stage A closeout decision: [docs/provider_decisions/v0_10_0_manual_market_context_stage_a_closeout_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_stage_a_closeout_decision.md)
 - Demo assets checklist: [`docs/demo_assets_checklist.md`](docs/demo_assets_checklist.md)
 
-v0.9.0 is completed and published. v0.10.0 has the docs-approved contract, policy and implementation plan. Stage A is approved for a separate implementation block but is not yet implemented; Stages B-D remain blocked. Real-data access, SQLite and Streamlit remain blocked.
+v0.9.0 is completed and published. v0.10.0 Stage A is implemented, verified and closed. Stages B-D are not approved; real-data access, SQLite and Streamlit remain blocked, and no provider is approved.
 
 ## v0.2.0 Market Context Layer
 

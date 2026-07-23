@@ -13,8 +13,12 @@
 - Related processing policy: [v0.10.0 Reviewed Local Market Context Processing Policy](v0_10_0_manual_market_context_processing_policy.md)
 - Policy version: `manual-market-context-policy-v1`
 - Related Stage A decision: [v0.10.0 Reviewed Local Market Context Stage A Decision](provider_decisions/v0_10_0_manual_market_context_stage_a_decision.md)
-- Stage A implementation approved: yes, for a separate code block
-- Stage A implemented: no
+- Related Stage A closeout: [v0.10.0 Reviewed Local Market Context Stage A Closeout](v0_10_0_manual_market_context_stage_a_closeout.md)
+- Related Stage A closeout decision: [v0.10.0 Reviewed Local Market Context Stage A Closeout Decision](provider_decisions/v0_10_0_manual_market_context_stage_a_closeout_decision.md)
+- Stage A implementation approved: yes
+- Stage A implemented: yes
+- Stage A verified: yes
+- Stage A completed: yes
 - Stage B approved: no
 - Stage C approved: no
 - Stage D approved: no
@@ -38,11 +42,11 @@ Stage A:
 - does not access real data; and
 - prepares the structured result contract for later, separately approved stages.
 
-This document authorizes a future Stage A code block only. It does not implement that block.
+This document defined and authorized the bounded Stage A code block. The linked closeout records that block as implemented and verified.
 
-## Approved Future Files
+## Approved Stage A Files
 
-Only these five paths are authorized for the separate Stage A implementation:
+Only these five paths were authorized and implemented for Stage A:
 
 | Path | Stage A Purpose |
 |---|---|
@@ -146,7 +150,7 @@ All observation rows remain absent in Stage A.
 
 ## Approved Stage A Constants
 
-The future module may define only the constants needed for Stage A:
+The implemented module defines only the constants needed for Stage A:
 
 - input contract version;
 - processing policy version;
@@ -177,7 +181,7 @@ Stage A does not approve:
 
 ## Approved Stage A Diagnostics
 
-Stage A may implement exactly these diagnostics:
+Stage A implements exactly these diagnostics:
 
 ### File Scope
 
@@ -541,19 +545,18 @@ BOM, undecodable bytes, invalid delimiters, duplicate headers, missing columns a
 - reordered canonically equivalent inputs producing identical diagnostics and `diagnostic_order` values; and
 - no mutable output state shared with parsing internals.
 
-## Verification Required For Future Code Block
+## Verification Evidence
 
-The future Stage A implementation must run:
+The completed Stage A implementation recorded:
 
-```powershell
-.venv\Scripts\python.exe -m pytest -p no:cacheprovider tests/test_manual_market_context_processing.py -q
-.venv\Scripts\python.exe -m pytest -p no:cacheprovider tests -q
-.venv\Scripts\python.exe -m compileall src scripts
-git diff --check
-git status --short
-```
+- Python `3.12.13`;
+- Stage A tests: `92 passed`;
+- full test suite: `654 passed`;
+- `python -m compileall src scripts`: passed;
+- `git diff --check`: passed; and
+- preview: not executed.
 
-Stage A has no preview smoke.
+The repository `.venv\Scripts\python.exe` launcher pointed to a removed Python installation, so verification used the functional Python 3.12.13 interpreter without modifying the environment.
 
 ## Stage A Exclusions
 
@@ -598,12 +601,14 @@ Stage A is implemented only when:
 - no change exists outside the approved paths; and
 - no real data was used.
 
+All Stage A completion criteria are met and recorded in the closeout.
+
 ## Stage A Decision Boundary
 
-Stage A is authorized for a separate code block.
+Stage A is implemented, verified and closed.
 
-Stage A is not yet implemented.
+Stage A completion does not authorize Stage B or any later stage.
 
-Stages B-D remain blocked. This authorization does not include preview, integration, effective processing or real data.
+Stages B-D remain blocked. Stage A completion does not authorize preview, integration, effective processing or real data.
 
-Next action: implement Stage A only.
+Next permitted action: define a separate Stage B approval decision docs-only.

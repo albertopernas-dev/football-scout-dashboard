@@ -9,8 +9,12 @@
 - Related implementation plan: [v0.10.0 Reviewed Local Market Context Implementation Plan](../v0_10_0_manual_market_context_implementation_plan.md)
 - Related input contract: [v0.10.0 Reviewed Local Market Context Input Contract](../v0_10_0_manual_market_context_input_contract.md)
 - Related processing policy: [v0.10.0 Reviewed Local Market Context Processing Policy](../v0_10_0_manual_market_context_processing_policy.md)
+- Related Stage A closeout: [v0.10.0 Reviewed Local Market Context Stage A Closeout](../v0_10_0_manual_market_context_stage_a_closeout.md)
+- Related Stage A closeout decision: [v0.10.0 Reviewed Local Market Context Stage A Closeout Decision](v0_10_0_manual_market_context_stage_a_closeout_decision.md)
 - Stage A approved: yes
-- Stage A implemented: no
+- Stage A implemented: yes
+- Stage A verified: yes
+- Stage A completed: yes
 - Stage B approved: no
 - Stage C approved: no
 - Stage D approved: no
@@ -22,7 +26,7 @@
 
 ## Decision
 
-- Stage A implementation is approved for a separate code block.
+- Stage A implementation was approved for a separate code block and is now completed under the linked closeout decision.
 - Approval is limited to the five specified paths.
 - Only structural contract and file/row validation are approved.
 - Only diagnostics `MCV100` through `MCV105` and `MCV200` through `MCV204` may be implemented.
@@ -82,6 +86,8 @@ The approved severity for all eleven diagnostics remains `error`. Stage A does n
 
 ## Next Action
 
-Implement Stage A only under the approved file, diagnostic and test boundaries.
+Stage A is implemented, verified and closed within the approved file, diagnostic and test boundaries.
 
-Completion of Stage A does not approve Stage B.
+Next permitted action: define a separate Stage B approval decision docs-only.
+
+Stage A completion does not approve Stage B.

@@ -19,8 +19,12 @@
 - Implementation plan status: approved docs-only
 - Stage A plan: [v0.10.0 Reviewed Local Market Context Stage A Plan](v0_10_0_manual_market_context_stage_a_plan.md)
 - Stage A decision: [v0.10.0 Reviewed Local Market Context Stage A Decision](provider_decisions/v0_10_0_manual_market_context_stage_a_decision.md)
-- Stage A implementation approved: yes, for a separate code block
-- Stage A implemented: no
+- Stage A closeout: [v0.10.0 Reviewed Local Market Context Stage A Closeout](v0_10_0_manual_market_context_stage_a_closeout.md)
+- Stage A closeout decision: [v0.10.0 Reviewed Local Market Context Stage A Closeout Decision](provider_decisions/v0_10_0_manual_market_context_stage_a_closeout_decision.md)
+- Stage A implementation approved: yes
+- Stage A implemented: yes
+- Stage A verified: yes
+- Stage A completed: yes
 - Stage B approved: no
 - Stage C approved: no
 - Stage D approved: no
@@ -232,7 +236,7 @@ canonical Market Context preview
 future approved persistence or UI integration
 ```
 
-- Full implementation is not approved; Stage A alone is separately approved and remains unimplemented.
+- Full milestone implementation is not approved; Stage A is implemented, verified and closed separately.
 - SQLite and Streamlit remain outside this milestone for now.
 - Every transition must be observable and diagnosable.
 
@@ -243,7 +247,7 @@ The initial reviewed local input contract is defined in [v0.10.0 Reviewed Local 
 - Contract version: `manual-market-context-input-v1`.
 - Status: approved docs-only.
 - The existing `player`, `team`, `league`, `season` compound identity is retained.
-- Stage A structural parser/validation and its three synthetic fixtures are separately approved; broader validation, Stages B-D, preview and real-data processing remain blocked.
+- Stage A structural parser/validation and its three synthetic fixtures are implemented and closed; broader validation, Stages B-D, preview and real-data processing remain blocked.
 - Freshness, provenance, validation and duplicate/conflict policy are completed docs-only.
 - The market-value-zero parser blocker is resolved through observation/effective separation.
 
@@ -255,8 +259,8 @@ The [v0.10.0 Reviewed Local Market Context Processing Policy](v0_10_0_manual_mar
 - Date resolution and freshness thresholds are defined.
 - Provenance, validation severity and the diagnostic catalog are defined.
 - Duplicate and conflict outcomes are defined without source precedence or automatic consolidation.
-- Stage A structural parser and its three synthetic fixtures are approved but unimplemented; broader parser work and preview remain unapproved.
-- The next action is Stage A implementation only.
+- Stage A structural parser and its three synthetic fixtures are implemented, verified and closed; broader parser work and preview remain unapproved.
+- The next permitted action is a separate Stage B approval decision docs-only.
 
 ## Proposed Workstreams
 
@@ -299,18 +303,16 @@ The milestone may be considered complete when later blocks establish that:
 - An approved preview demonstrates the workflow.
 - SQLite and Streamlit remain separate decisions unless later authorized.
 
-This block does not meet those criteria. It only opens the scope.
+Stage A meets its bounded completion criteria. The full v0.10.0 milestone remains incomplete because Stages B-D and an approved synthetic preview are not implemented.
 
-## Decision Options After Scope Opening
+## Remaining Decision Boundary
 
-1. Define the canonical input contract.
-2. Define freshness and provenance rules first.
-3. Define duplicate and conflict rules first.
-4. Stop v0.10.0 before implementation.
-5. Rescope the milestone.
+Stage A is completed and closed. No later stage receives automatic approval.
+
+Any Stage B work requires a separate docs-only approval decision before implementation.
 
 ## Recommended Next Action
 
-The bounded implementation plan is approved docs-only. Stage A implementation is separately approved and remains unimplemented.
+Stage A is implemented, verified and closed under its bounded plan and decision.
 
-Next action: implement Stage A only. Stages B-D, real-data processing, SQLite and Streamlit remain unauthorized.
+Next permitted action: define a separate Stage B approval decision docs-only. Stages B-D implementation, real-data processing, SQLite and Streamlit remain unauthorized.

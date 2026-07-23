@@ -13,10 +13,14 @@
 - Related implementation decision: [v0.10.0 Reviewed Local Market Context Implementation Plan Decision](provider_decisions/v0_10_0_manual_market_context_implementation_plan_decision.md)
 - Related Stage A plan: [v0.10.0 Reviewed Local Market Context Stage A Plan](v0_10_0_manual_market_context_stage_a_plan.md)
 - Related Stage A decision: [v0.10.0 Reviewed Local Market Context Stage A Decision](provider_decisions/v0_10_0_manual_market_context_stage_a_decision.md)
+- Related Stage A closeout: [v0.10.0 Reviewed Local Market Context Stage A Closeout](v0_10_0_manual_market_context_stage_a_closeout.md)
+- Related Stage A closeout decision: [v0.10.0 Reviewed Local Market Context Stage A Closeout Decision](provider_decisions/v0_10_0_manual_market_context_stage_a_closeout_decision.md)
 - Plan approved: yes, documentation only
 - Full implementation approved: no
-- Stage A implementation approved: yes, for a separate code block
-- Stage A implemented: no
+- Stage A implementation approved: yes
+- Stage A implemented: yes
+- Stage A verified: yes
+- Stage A completed: yes
 - Stage A synthetic fixtures approved: yes, only the three specified Stage A fixture paths
 - Stage B approved: no
 - Stage C approved: no
@@ -41,7 +45,7 @@ It translates the contract and policy into concrete components while requiring t
 - no local input path is discovered automatically; and
 - processing results are deterministic and reconcilable.
 
-This document approves the complete plan as documentation. The separate Stage A decision now authorizes Stage A implementation only; no other stage is authorized.
+This document approves the complete plan as documentation. The separate Stage A decision authorized Stage A only, and its closeout records that implementation as completed; no other stage is authorized.
 
 ## Repository Alignment Review
 
@@ -369,7 +373,7 @@ Rules:
 - expected output is deterministic; and
 - all fixtures are safe to version.
 
-No fixture is created by this document. The separate Stage A decision approves only the three specified Stage A fixture paths for a future code block.
+The completed Stage A implementation created only the three specified synthetic fixture paths. No later-stage fixture is approved.
 
 ## Test Plan
 
@@ -534,9 +538,9 @@ The plan does not approve Pydantic, Pandera, new date libraries, new CLI librari
 ## Stage Approval Boundary
 
 - The complete plan is approved as documentation.
-- Full implementation is not authorized; Stage A alone is separately approved and remains unimplemented.
-- Stage A is separately approved for implementation and is not yet implemented.
-- Stage A does not authorize Stages B, C or D.
+- Full milestone implementation is not authorized.
+- Stage A is implemented, verified and closed under its separate approval and closeout.
+- Stage A completion does not authorize Stages B, C or D.
 - Stages B-D remain unapproved.
 - Each stage requires a separate decision, focused diff, stage-specific tests, full pytest, compileall and a clean status after any later approved commit.
 - Only synthetic fixtures may be used.
@@ -560,8 +564,8 @@ This plan is considered fully executed only when:
 
 The bounded implementation plan is approved docs-only.
 
-Stage A implementation is separately authorized by its Stage A decision, but no code or fixture is implemented by this document. Preview execution remains unauthorized.
+Stage A was separately authorized, implemented and closed under its Stage A decision and closeout. Preview execution remains unauthorized.
 
-Next action: implement Stage A only under its approved file, diagnostic and test boundaries.
+Next permitted action: define a separate Stage B approval decision docs-only.
 
 No other stage receives automatic approval.

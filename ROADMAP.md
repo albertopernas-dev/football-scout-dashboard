@@ -20,8 +20,8 @@
 
 ## Recommended Next Steps
 
-1. Implement Stage A only.
-2. Keep Stages B-D blocked.
+1. Define a separate Stage B approval decision docs-only.
+2. Keep Stage B implementation and Stages C-D blocked.
 3. Keep real data, SQLite, Streamlit and providers blocked.
 
 ## v0.2.0 Market Context Layer
@@ -189,12 +189,12 @@ Completed and published.
 
 ## v0.10.0 Manual Market Context Workflow Hardening
 
-- Status: opened docs-only.
+- Status: in progress; Stage A completed.
 - Selected path: Manual Market Context workflow improvements.
 - Goal: make reviewed local Market Context inputs deterministic, traceable and diagnosable.
 - In-scope design areas: canonical input contract, provenance and freshness, validation severities, duplicate/conflict policy, diagnostics, synthetic fixtures and testing strategy.
 - Provider boundary: no provider is selected or approved, and no provider clarification or API access is initiated.
-- Full implementation, real local data access, SQLite writes and Streamlit changes are not approved; Stage A alone is approved separately.
+- Full milestone implementation, real local data access, SQLite writes and Streamlit changes are not approved; Stage A is completed separately.
 - Canonical reviewed local input contract: approved docs-only.
 - Contract version: `manual-market-context-input-v1`.
 - Processing policy: approved docs-only.
@@ -205,10 +205,11 @@ Completed and published.
 - Market-value-zero parser blocker: resolved through observation/effective separation.
 - Implementation plan: approved docs-only.
 - Four stages defined: Stage A core/file validation, Stage B normalization, Stage C duplicate/conflict analysis and Stage D synthetic preview.
-- Stage A implementation: approved, not implemented.
+- Stage A implementation: completed, verified, committed and pushed.
+- Stage A verification: Stage A tests `92 passed`; full suite `654 passed`; compileall and diff check passed.
 - Stages B-D: not approved.
 - Real local data: not approved.
-- Next action: implement Stage A only.
+- Next action: define a separate Stage B approval decision docs-only.
 - Scope plan: [docs/v0_10_0_manual_market_context_scope_plan.md](docs/v0_10_0_manual_market_context_scope_plan.md).
 - Scope decision: [docs/provider_decisions/v0_10_0_manual_market_context_scope_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_scope_decision.md).
 - Input contract: [docs/v0_10_0_manual_market_context_input_contract.md](docs/v0_10_0_manual_market_context_input_contract.md).
@@ -219,6 +220,8 @@ Completed and published.
 - Implementation plan decision: [docs/provider_decisions/v0_10_0_manual_market_context_implementation_plan_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_implementation_plan_decision.md).
 - Stage A plan: [docs/v0_10_0_manual_market_context_stage_a_plan.md](docs/v0_10_0_manual_market_context_stage_a_plan.md).
 - Stage A decision: [docs/provider_decisions/v0_10_0_manual_market_context_stage_a_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_stage_a_decision.md).
+- Stage A closeout: [docs/v0_10_0_manual_market_context_stage_a_closeout.md](docs/v0_10_0_manual_market_context_stage_a_closeout.md).
+- Stage A closeout decision: [docs/provider_decisions/v0_10_0_manual_market_context_stage_a_closeout_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_stage_a_closeout_decision.md).
 
 ## Potential v0.4.x Follow-ups
 

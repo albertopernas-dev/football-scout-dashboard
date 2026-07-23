@@ -7,6 +7,8 @@
 - Related implementation plan: [v0.10.0 Reviewed Local Market Context Implementation Plan](../v0_10_0_manual_market_context_implementation_plan.md)
 - Related Stage A plan: [v0.10.0 Reviewed Local Market Context Stage A Plan](../v0_10_0_manual_market_context_stage_a_plan.md)
 - Related Stage A decision: [v0.10.0 Reviewed Local Market Context Stage A Decision](v0_10_0_manual_market_context_stage_a_decision.md)
+- Related Stage A closeout: [v0.10.0 Reviewed Local Market Context Stage A Closeout](../v0_10_0_manual_market_context_stage_a_closeout.md)
+- Related Stage A closeout decision: [v0.10.0 Reviewed Local Market Context Stage A Closeout Decision](v0_10_0_manual_market_context_stage_a_closeout_decision.md)
 - Related input contract: [v0.10.0 Reviewed Local Market Context Input Contract](../v0_10_0_manual_market_context_input_contract.md)
 - Input contract version: `manual-market-context-input-v1`
 - Related processing policy: [v0.10.0 Reviewed Local Market Context Processing Policy](../v0_10_0_manual_market_context_processing_policy.md)
@@ -14,7 +16,9 @@
 - Plan approved: yes, docs-only
 - Full implementation approved: no
 - Stage A approved: yes
-- Stage A implemented: no
+- Stage A implemented: yes
+- Stage A verified: yes
+- Stage A completed: yes
 - Stage B approved: no
 - Stage C approved: no
 - Stage D approved: no
@@ -29,7 +33,7 @@
 - The bounded implementation plan is approved as documentation.
 - It defines four staged implementation blocks.
 - It defines proposed files, APIs, result and output schemas, synthetic fixtures, tests and preview behavior.
-- It does not authorize full implementation; Stage A is authorized only by its separate Stage A decision.
+- It does not authorize full milestone implementation; Stage A was authorized separately and is now completed under its closeout decision.
 - Only synthetic fixtures may be used in later, separately approved code blocks.
 - Each stage requires separate approval and review.
 
@@ -45,7 +49,7 @@
 | Synthetic fixture matrix | approved as plan |
 | Test plan | approved as plan |
 | Preview contract | approved as plan |
-| Stage A implementation | approved, not implemented |
+| Stage A implementation | completed and closed |
 | Stage B implementation | not approved |
 | Stage C implementation | not approved |
 | Stage D implementation | not approved |
@@ -98,8 +102,8 @@ Stages are not implicitly authorized. Completion of one stage does not approve t
 
 ## Next Action
 
-Implement Stage A only under the approved file, diagnostic and test boundaries.
+Stage A is implemented, verified and closed within its approved file, diagnostic and test boundaries.
 
-Stage A remains limited to core constants, strict file validation, structural row validation, deterministic Stage A diagnostics, three synthetic fixtures and tests.
+Next permitted action: define a separate Stage B approval decision docs-only.
 
-Completion of Stage A does not approve Stage B, Stage C or Stage D.
+Stage A completion does not approve Stage B, Stage C or Stage D.
