@@ -20,9 +20,9 @@
 
 ## Recommended Next Steps
 
-1. Define a separate Stage B approval decision docs-only.
-2. Keep Stage B implementation and Stages C-D blocked.
-3. Keep real data, SQLite, Streamlit and providers blocked.
+1. Implement Stage B only under its approved boundary.
+2. Keep Stages C-D blocked.
+3. Keep real data, preview, SQLite, Streamlit and providers blocked.
 
 ## v0.2.0 Market Context Layer
 
@@ -207,9 +207,12 @@ Completed and published.
 - Four stages defined: Stage A core/file validation, Stage B normalization, Stage C duplicate/conflict analysis and Stage D synthetic preview.
 - Stage A implementation: completed, verified, committed and pushed.
 - Stage A verification: Stage A tests `92 passed`; full suite `654 passed`; compileall and diff check passed.
-- Stages B-D: not approved.
+- Stage B plan and decision: approved docs-only.
+- Stage B implementation: not started.
+- Stages C-D: not approved.
+- Full milestone: incomplete.
 - Real local data: not approved.
-- Next action: define a separate Stage B approval decision docs-only.
+- Next action: implement Stage B only under its approved boundary.
 - Scope plan: [docs/v0_10_0_manual_market_context_scope_plan.md](docs/v0_10_0_manual_market_context_scope_plan.md).
 - Scope decision: [docs/provider_decisions/v0_10_0_manual_market_context_scope_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_scope_decision.md).
 - Input contract: [docs/v0_10_0_manual_market_context_input_contract.md](docs/v0_10_0_manual_market_context_input_contract.md).
@@ -222,6 +225,8 @@ Completed and published.
 - Stage A decision: [docs/provider_decisions/v0_10_0_manual_market_context_stage_a_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_stage_a_decision.md).
 - Stage A closeout: [docs/v0_10_0_manual_market_context_stage_a_closeout.md](docs/v0_10_0_manual_market_context_stage_a_closeout.md).
 - Stage A closeout decision: [docs/provider_decisions/v0_10_0_manual_market_context_stage_a_closeout_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_stage_a_closeout_decision.md).
+- Stage B plan: [docs/v0_10_0_manual_market_context_stage_b_plan.md](docs/v0_10_0_manual_market_context_stage_b_plan.md).
+- Stage B decision: [docs/provider_decisions/v0_10_0_manual_market_context_stage_b_decision.md](docs/provider_decisions/v0_10_0_manual_market_context_stage_b_decision.md).
 
 ## Potential v0.4.x Follow-ups
 

@@ -15,6 +15,8 @@
 - Related Stage A decision: [v0.10.0 Reviewed Local Market Context Stage A Decision](provider_decisions/v0_10_0_manual_market_context_stage_a_decision.md)
 - Related Stage A closeout: [v0.10.0 Reviewed Local Market Context Stage A Closeout](v0_10_0_manual_market_context_stage_a_closeout.md)
 - Related Stage A closeout decision: [v0.10.0 Reviewed Local Market Context Stage A Closeout Decision](provider_decisions/v0_10_0_manual_market_context_stage_a_closeout_decision.md)
+- Related Stage B plan: [v0.10.0 Reviewed Local Market Context Stage B Plan](v0_10_0_manual_market_context_stage_b_plan.md)
+- Related Stage B decision: [v0.10.0 Reviewed Local Market Context Stage B Decision](provider_decisions/v0_10_0_manual_market_context_stage_b_decision.md)
 - Plan approved: yes, documentation only
 - Full implementation approved: no
 - Stage A implementation approved: yes
@@ -22,7 +24,8 @@
 - Stage A verified: yes
 - Stage A completed: yes
 - Stage A synthetic fixtures approved: yes, only the three specified Stage A fixture paths
-- Stage B approved: no
+- Stage B approved: yes, for a separate code block
+- Stage B implemented: no
 - Stage C approved: no
 - Stage D approved: no
 - Preview execution approved: no
@@ -45,7 +48,7 @@ It translates the contract and policy into concrete components while requiring t
 - no local input path is discovered automatically; and
 - processing results are deterministic and reconcilable.
 
-This document approves the complete plan as documentation. The separate Stage A decision authorized Stage A only, and its closeout records that implementation as completed; no other stage is authorized.
+This document approves the complete plan as documentation. Stage A is completed and closed. The separate Stage B decision authorizes only its bounded future code block; Stages C-D remain unauthorized.
 
 ## Repository Alignment Review
 
@@ -540,8 +543,8 @@ The plan does not approve Pydantic, Pandera, new date libraries, new CLI librari
 - The complete plan is approved as documentation.
 - Full milestone implementation is not authorized.
 - Stage A is implemented, verified and closed under its separate approval and closeout.
-- Stage A completion does not authorize Stages B, C or D.
-- Stages B-D remain unapproved.
+- Stage B is approved for a separate code block and is not implemented.
+- Stages C-D remain unapproved.
 - Each stage requires a separate decision, focused diff, stage-specific tests, full pytest, compileall and a clean status after any later approved commit.
 - Only synthetic fixtures may be used.
 
@@ -564,8 +567,8 @@ This plan is considered fully executed only when:
 
 The bounded implementation plan is approved docs-only.
 
-Stage A was separately authorized, implemented and closed under its Stage A decision and closeout. Preview execution remains unauthorized.
+Stage A was separately authorized, implemented and closed under its Stage A decision and closeout. Stage B is approved but not implemented. Preview execution remains unauthorized.
 
-Next permitted action: define a separate Stage B approval decision docs-only.
+Next permitted action: implement Stage B only under its approved file, diagnostic and test boundaries.
 
 No other stage receives automatic approval.

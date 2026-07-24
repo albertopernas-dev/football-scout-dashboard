@@ -9,6 +9,8 @@
 - Related Stage A decision: [v0.10.0 Reviewed Local Market Context Stage A Decision](v0_10_0_manual_market_context_stage_a_decision.md)
 - Related Stage A closeout: [v0.10.0 Reviewed Local Market Context Stage A Closeout](../v0_10_0_manual_market_context_stage_a_closeout.md)
 - Related Stage A closeout decision: [v0.10.0 Reviewed Local Market Context Stage A Closeout Decision](v0_10_0_manual_market_context_stage_a_closeout_decision.md)
+- Related Stage B plan: [v0.10.0 Reviewed Local Market Context Stage B Plan](../v0_10_0_manual_market_context_stage_b_plan.md)
+- Related Stage B decision: [v0.10.0 Reviewed Local Market Context Stage B Decision](v0_10_0_manual_market_context_stage_b_decision.md)
 - Related input contract: [v0.10.0 Reviewed Local Market Context Input Contract](../v0_10_0_manual_market_context_input_contract.md)
 - Input contract version: `manual-market-context-input-v1`
 - Related processing policy: [v0.10.0 Reviewed Local Market Context Processing Policy](../v0_10_0_manual_market_context_processing_policy.md)
@@ -19,9 +21,11 @@
 - Stage A implemented: yes
 - Stage A verified: yes
 - Stage A completed: yes
-- Stage B approved: no
+- Stage B approved: yes
+- Stage B implemented: no
 - Stage C approved: no
 - Stage D approved: no
+- Preview approved: no
 - Real local data approved: no
 - SQLite approved: no
 - Streamlit approved: no
@@ -31,6 +35,7 @@
 ## Decision
 
 - The bounded implementation plan is approved as documentation.
+- The separate Stage B decision authorizes only the bounded future Stage B code block defined in its plan.
 - It defines four staged implementation blocks.
 - It defines proposed files, APIs, result and output schemas, synthetic fixtures, tests and preview behavior.
 - It does not authorize full milestone implementation; Stage A was authorized separately and is now completed under its closeout decision.
@@ -50,7 +55,7 @@
 | Test plan | approved as plan |
 | Preview contract | approved as plan |
 | Stage A implementation | completed and closed |
-| Stage B implementation | not approved |
+| Stage B implementation | approved, not implemented |
 | Stage C implementation | not approved |
 | Stage D implementation | not approved |
 | Real-data processing | not approved |
@@ -102,8 +107,8 @@ Stages are not implicitly authorized. Completion of one stage does not approve t
 
 ## Next Action
 
-Stage A is implemented, verified and closed within its approved file, diagnostic and test boundaries.
+Stage A is implemented, verified and closed within its approved file, diagnostic and test boundaries. Stage B is approved for a separate code block and is not implemented.
 
-Next permitted action: define a separate Stage B approval decision docs-only.
+Next permitted action: implement Stage B only under its approved file, diagnostic and test boundaries.
 
-Stage A completion does not approve Stage B, Stage C or Stage D.
+Stage B approval does not approve Stage C or Stage D.

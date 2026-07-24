@@ -21,13 +21,17 @@
 - Stage A decision: [v0.10.0 Reviewed Local Market Context Stage A Decision](provider_decisions/v0_10_0_manual_market_context_stage_a_decision.md)
 - Stage A closeout: [v0.10.0 Reviewed Local Market Context Stage A Closeout](v0_10_0_manual_market_context_stage_a_closeout.md)
 - Stage A closeout decision: [v0.10.0 Reviewed Local Market Context Stage A Closeout Decision](provider_decisions/v0_10_0_manual_market_context_stage_a_closeout_decision.md)
+- Stage B plan: [v0.10.0 Reviewed Local Market Context Stage B Plan](v0_10_0_manual_market_context_stage_b_plan.md)
+- Stage B decision: [v0.10.0 Reviewed Local Market Context Stage B Decision](provider_decisions/v0_10_0_manual_market_context_stage_b_decision.md)
 - Stage A implementation approved: yes
 - Stage A implemented: yes
 - Stage A verified: yes
 - Stage A completed: yes
-- Stage B approved: no
+- Stage B approved: yes, for a separate code block
+- Stage B implemented: no
 - Stage C approved: no
 - Stage D approved: no
+- Preview approved: no
 - Selected path: Manual Market Context workflow improvements
 - Full implementation approved: no
 - Real local data access approved: no
@@ -236,7 +240,7 @@ canonical Market Context preview
 future approved persistence or UI integration
 ```
 
-- Full milestone implementation is not approved; Stage A is implemented, verified and closed separately.
+- Full milestone implementation is not approved; Stage A is closed and Stage B is approved but not implemented.
 - SQLite and Streamlit remain outside this milestone for now.
 - Every transition must be observable and diagnosable.
 
@@ -247,7 +251,7 @@ The initial reviewed local input contract is defined in [v0.10.0 Reviewed Local 
 - Contract version: `manual-market-context-input-v1`.
 - Status: approved docs-only.
 - The existing `player`, `team`, `league`, `season` compound identity is retained.
-- Stage A structural parser/validation and its three synthetic fixtures are implemented and closed; broader validation, Stages B-D, preview and real-data processing remain blocked.
+- Stage A structural parser/validation is closed. Stage B row and field normalization is approved but not implemented. Stages C-D, preview and real-data processing remain blocked.
 - Freshness, provenance, validation and duplicate/conflict policy are completed docs-only.
 - The market-value-zero parser blocker is resolved through observation/effective separation.
 
@@ -259,19 +263,19 @@ The [v0.10.0 Reviewed Local Market Context Processing Policy](v0_10_0_manual_mar
 - Date resolution and freshness thresholds are defined.
 - Provenance, validation severity and the diagnostic catalog are defined.
 - Duplicate and conflict outcomes are defined without source precedence or automatic consolidation.
-- Stage A structural parser and its three synthetic fixtures are implemented, verified and closed; broader parser work and preview remain unapproved.
-- The next permitted action is a separate Stage B approval decision docs-only.
+- Stage A is closed; Stage B is approved but not implemented; Stages C-D and preview remain unapproved.
+- The next permitted action is Stage B implementation only under its approved boundary.
 
 ## Proposed Workstreams
 
 | Workstream | Purpose | Current Approval |
 |---|---|---|
 | Input contract design | Define canonical reviewed local input | not approved for implementation |
-| Freshness and provenance design | Preserve source dates and lineage | not approved for implementation |
-| Validation design | Define errors, warnings and diagnostics | not approved for implementation |
+| Freshness and provenance design | Preserve source dates and lineage | Stage B value-date, freshness and provenance validation approved, not implemented; Stage C grouping and precedence blocked |
+| Validation design | Define errors, warnings and diagnostics | Stage A structural validation completed; Stage B row/field validation approved, not implemented; Stage C blocked |
 | Conflict policy design | Prevent silent overwrites | not approved for implementation |
-| Synthetic fixture design | Enable committed testing safely | three Stage A fixtures approved only |
-| Parser/normalizer implementation | Build deterministic local processing | Stage A structural parser approved only; normalization blocked |
+| Synthetic fixture design | Enable committed testing safely | Stage A fixtures completed; seven exact Stage B fixtures approved |
+| Parser/normalizer implementation | Build deterministic local processing | Stage A completed; Stage B normalization approved but not implemented |
 | Preview/report implementation | Review normalized output and failures | not approved |
 | SQLite integration | Persist effective Market Context | not approved |
 | Streamlit integration | Surface diagnostics and context | not approved |
@@ -303,16 +307,16 @@ The milestone may be considered complete when later blocks establish that:
 - An approved preview demonstrates the workflow.
 - SQLite and Streamlit remain separate decisions unless later authorized.
 
-Stage A meets its bounded completion criteria. The full v0.10.0 milestone remains incomplete because Stages B-D and an approved synthetic preview are not implemented.
+Stage A meets its bounded completion criteria. The full v0.10.0 milestone remains incomplete because Stage B is not implemented and Stages C-D remain unapproved.
 
 ## Remaining Decision Boundary
 
-Stage A is completed and closed. No later stage receives automatic approval.
+Stage A is completed and closed. Stage B is approved but not implemented. No later stage receives automatic approval.
 
-Any Stage B work requires a separate docs-only approval decision before implementation.
+Stages C-D remain blocked.
 
 ## Recommended Next Action
 
-Stage A is implemented, verified and closed under its bounded plan and decision.
+Stage A is closed. Stage B is approved for a separate future code block and is not implemented.
 
-Next permitted action: define a separate Stage B approval decision docs-only. Stages B-D implementation, real-data processing, SQLite and Streamlit remain unauthorized.
+Next permitted action: implement Stage B only under its approved boundary. Stages C-D, real-data processing, preview, SQLite, Streamlit and providers remain unauthorized.

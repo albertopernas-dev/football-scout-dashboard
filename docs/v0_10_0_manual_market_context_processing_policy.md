@@ -79,7 +79,7 @@ Allowed outcomes:
 - `rejected`
 - `not-provided`
 
-A row MAY retain valid field observations when another field observation is rejected. Structural or identity errors reject the complete row. `partially-accepted` applies when at least one field is accepted and at least one field is rejected, unless a row-level rule requires `review-required` or `rejected`.
+A row MAY retain valid field observations when another one of the seven Stage B Market Context observations is rejected. Structural or identity errors reject the complete row. `partially-accepted` applies only when one or more of the seven observations have field outcome `rejected`, at least one other provided observation survives with field outcome `accepted` or `accepted-with-warning`, and no row rule requires `review-required` or `rejected`. Rejection of metadata or provenance alone never produces `partially-accepted`.
 
 Outcome precedence is:
 
@@ -90,6 +90,55 @@ Outcome precedence is:
 5. `accepted`
 
 No silent fallback is allowed. `review-required` MUST NOT be converted automatically to an accepted outcome.
+
+### Missing Optional Observation Precedence
+
+The only Stage B optional observation fields are:
+
+- `market_value_eur`
+- `contract_end_date`
+- `salary_value`
+- `age`
+- `date_of_birth`
+- `jersey_number`
+- `position`
+
+For each of these seven fields, an absent optional column, null, empty or whitespace-only token:
+
+- emits exactly one `MCV503_OPTIONAL_VALUE_MISSING`;
+- has field outcome `not-provided`;
+- creates no row in `accepted_observations`;
+- creates no row in `review_required_observations`;
+- does not reject the row by itself; and
+- suppresses every later field-specific validation for that absent token.
+- uses the absent observation field as `field_name`, preserves the safe empty token in `raw_value` and uses null `normalized_value`.
+
+`MCV503_OPTIONAL_VALUE_MISSING` MUST NOT be emitted for `confidence`, `review_status`, `source_url`, `source_reference`, `salary_currency`, `salary_period`, `is_estimated`, auxiliary dates or other metadata.
+
+Age is the sole sequencing exception: an absent `age` token is held pending the approved explicit-date derivation attempt. Successful derivation creates the age observation and suppresses `MCV503`; unsuccessful or unavailable derivation produces the normal single `MCV503`.
+
+An optional column absent from the header is equivalent to an absent token for that observation or metadata field. For metadata:
+
+- absent `review_status` is equivalent to null and follows `MCV408_MISSING_REVIEW_STATUS`;
+- absent `source_url` and `source_reference` participate in `MCV400_MISSING_PROVENANCE_REFERENCE`;
+- absent `confidence` follows the conditional confidence rules below; and
+- absent metadata never emits `MCV503`.
+
+Under Stage B, the unchanged Stage A fixture `valid_minimal.csv` therefore has this exact cumulative result:
+
+- file outcome `accepted`;
+- seven `MCV503_OPTIONAL_VALUE_MISSING` diagnostics;
+- one `MCV408_MISSING_REVIEW_STATUS`;
+- one `MCV400_MISSING_PROVENANCE_REFERENCE`;
+- no `MCV303_MISSING_CONDITIONAL_METADATA`;
+- no `MCV305_INVALID_CONFIDENCE`;
+- no observation rows;
+- final row outcome `review-required`;
+- `review_required_rows = 1`;
+- `accepted_rows = 0`; and
+- `rejected_rows = 0`.
+
+This changes only the Stage B expectations for the existing fixture. The Stage A fixture remains unchanged.
 
 ## Date Resolution Policy
 
@@ -114,6 +163,11 @@ Rules:
 - An unknown effective value date emits `MCV401_UNKNOWN_VALUE_DATE` when the field value is populated.
 - A field-specific date later than the UTC calendar date represented by future pipeline-generated `ingested_at` emits `MCV309_FUTURE_VALUE_DATE` and rejects that field.
 - The same future-date rule applies to general `value_date` when it supplies the effective field date.
+- A populated invalid field-specific value date emits one `MCV300_INVALID_DATE` with `field_name` set to that date column, preserves the safe original token in `raw_value`, uses null `normalized_value`, rejects every observation that depends on it and MUST NOT fall back to `value_date`.
+- A populated invalid general `value_date`, when it is the selected fallback, emits one `MCV300_INVALID_DATE` with `field_name=value_date`, preserves the safe original token in `raw_value`, uses null `normalized_value`, rejects every observation that depends on it and MUST NOT become `unknown`.
+- An invalid selected date suppresses `MCV401_UNKNOWN_VALUE_DATE` for every affected observation and produces no freshness count for those rejected observations.
+- A future selected date emits one `MCV309_FUTURE_VALUE_DATE` per affected observation, with `field_name` set to the observation field and the ISO date in `raw_value` and `normalized_value`.
+- A future selected date uses `future-invalid`, rejects the affected observation and suppresses `MCV401_UNKNOWN_VALUE_DATE` and `MCV402_STALE_VALUE`.
 
 ## Freshness Classification
 
@@ -164,6 +218,35 @@ Rules:
 
 For deterministic grouping, source identity uses normalized `source_url` when present, otherwise normalized `source_reference`, otherwise normalized `source_name` with `source_type`. This identity is diagnostic metadata only and does not merge observations.
 
+### Source URL Validation
+
+A populated `source_url` is valid only when standard-library parsing confirms all of the following:
+
+- scheme is exactly `http` or `https`;
+- the URL is absolute;
+- hostname is non-empty;
+- username and password are absent;
+- whitespace and control characters are absent;
+- leading and trailing whitespace are absent; and
+- no network request or meaning-changing URL normalization is required.
+
+Reserved `.test` hostnames are valid for synthetic fixtures.
+
+An invalid populated URL:
+
+- emits exactly one `MCV310_INVALID_SOURCE_URL` for the row;
+- uses `field_name=source_url`;
+- preserves the bounded safe original token in `raw_value`;
+- uses null `normalized_value`;
+- has diagnostic field outcome `rejected`;
+- rejects only the provenance field and does not reject any of the seven Market Context observations;
+- does not independently change observation `effective_eligible`;
+- does not increment `rejected_field_observations`;
+- does not independently change the row outcome; and
+- does not convert an otherwise `accepted` row to `partially-accepted`.
+
+When the invalid URL is accompanied by no valid `source_reference`, emit the independent row warning `MCV400_MISSING_PROVENANCE_REFERENCE`, whose minimum row outcome remains `accepted-with-warnings`. A valid `source_reference` suppresses `MCV400` but not `MCV310`.
+
 ## Review Status Policy
 
 ### `reviewed`
@@ -191,6 +274,17 @@ For deterministic grouping, source identity uses normalized `source_url` when pr
 - Minimum row outcome: `review-required`.
 - A future implementation MUST NOT infer review status from the filename.
 - Treating null as `reviewed` requires a separate explicit decision.
+
+## Confidence Precedence
+
+- When none of the seven Stage B observation fields is populated, empty `confidence` is valid and emits none of `MCV303`, `MCV305` or `MCV503`.
+- When one or more observation fields are populated and `confidence` is absent, emit exactly one `MCV303_MISSING_CONDITIONAL_METADATA` for the row with `field_name=confidence`, the safe empty token in `raw_value` and null `normalized_value`.
+- Missing confidence rejects every populated observation field. It does not emit one diagnostic per affected observation, and it MUST NOT also emit `MCV305` for the same token.
+- When `confidence` is populated outside `low`, `medium` or `high`, emit exactly one `MCV305_INVALID_CONFIDENCE` for the row with `field_name=confidence`, the bounded safe original token in `raw_value` and null `normalized_value`.
+- Invalid populated confidence rejects every populated observation field and MUST NOT also emit `MCV303` for the same token.
+- If invalid populated confidence exists without any populated observation, the confidence metadata field is rejected and the row outcome is `rejected`.
+- When missing or invalid confidence rejects all populated observations, the row outcome is `rejected`, subject to any independent higher-precedence row rejection already present.
+- Each affected observation contributes at most once to `rejected_field_observations`, regardless of the single confidence diagnostic.
 
 ## Validation Severity Model
 
@@ -266,11 +360,11 @@ Diagnostic codes MUST remain stable. Messages MAY improve without changing code 
 | `MCV300_INVALID_DATE` | error | field | field rejected | A field date is invalid or non-ISO. |
 | `MCV301_INVALID_NUMBER` | error | field | field rejected | A numeric field cannot be parsed canonically. |
 | `MCV302_NEGATIVE_VALUE` | error | field | field rejected | A non-negative value field contains a negative number. |
-| `MCV303_MISSING_CONDITIONAL_METADATA` | error | field | field rejected | Required metadata such as currency, period, estimate flag, age reference date or confidence is missing. |
+| `MCV303_MISSING_CONDITIONAL_METADATA` | error | field | field rejected | Required conditional metadata such as currency, period, estimate flag, age reference date or confidence is missing or is not validly supplied under its exact Stage B lexical contract. |
 | `MCV304_INVALID_CURRENCY` | error | field | field rejected | Currency is not an approved uppercase ISO 4217 code. |
-| `MCV305_INVALID_CONFIDENCE` | error | field | field rejected | Confidence is required or outside `low`, `medium`, `high`. |
+| `MCV305_INVALID_CONFIDENCE` | error | field | field rejected | Populated confidence is outside `low`, `medium`, `high`. |
 | `MCV306_AGE_DATE_CONTRADICTION` | error | field | age and date-of-birth observations rejected | `age`, reference date and date of birth contradict one another. |
-| `MCV307_INVALID_POSITION` | error | field | field rejected | Position is empty, malformed or structurally invalid. |
+| `MCV307_INVALID_POSITION` | error | field | field rejected | A non-empty position token is one of the exact prohibited literal sentinels defined by the Stage B policy. |
 | `MCV308_INVALID_JERSEY_NUMBER` | error | field | field rejected | Jersey number is outside 1 through 99 or is not an integer. |
 | `MCV309_FUTURE_VALUE_DATE` | error | field | field rejected | Effective value date is later than `ingested_at`. |
 | `MCV310_INVALID_SOURCE_URL` | error | field | provenance field rejected | A populated source URL is invalid. |
@@ -315,8 +409,15 @@ No diagnostic code is provider-specific. Final implementation wording may improv
 ### Salary
 
 - A negative value emits `MCV302_NEGATIVE_VALUE` and rejects the field.
-- Currency, period and `is_estimated` are required when a salary value is present.
-- Missing conditional metadata emits `MCV303_MISSING_CONDITIONAL_METADATA`.
+- `salary_currency`, `salary_period` and `is_estimated` must be validly supplied when a salary value is present.
+- `salary_period` allows exactly `annual`, `monthly` or `weekly`.
+- `is_estimated` allows exactly lowercase `true` or `false`.
+- Missing `salary_currency`, `salary_period` or `is_estimated` emits one `MCV303_MISSING_CONDITIONAL_METADATA` for each distinct defective metadata field.
+- A populated `salary_period` outside its enum or a populated `is_estimated` outside its canonical boolean tokens emits `MCV303_MISSING_CONDITIONAL_METADATA` for that metadata field.
+- Each `MCV303` uses the defective metadata column as `field_name`, preserves the bounded safe original token in `raw_value` and uses null `normalized_value`.
+- An invalid populated `salary_currency` emits `MCV304_INVALID_CURRENCY` with `field_name=salary_currency` and MUST NOT also emit `MCV303` for that token.
+- Multiple independent metadata defects may emit one diagnostic each, but the `salary_value` observation is rejected and counted only once in `rejected_field_observations`.
+- One defective token MUST NOT emit multiple diagnostics for the same root cause.
 - `is_estimated=true` emits `MCV403_ESTIMATED_VALUE`.
 - A declared zero is preserved as zero.
 - No canonical salary mapping or effective integration is approved.
@@ -334,8 +435,19 @@ No diagnostic code is provider-specific. Final implementation wording may improv
 - `age` MUST be an integer from 15 through 45.
 - `age_reference_date` is required when `age` is present.
 - A contradiction with `date_of_birth` emits `MCV306_AGE_DATE_CONTRADICTION`.
-- Both contradictory age observations are rejected; the pipeline MUST NOT choose one silently.
-- Future derivation MUST be deterministic and use an explicit reference date.
+- When `age`, `date_of_birth` and `age_reference_date` are valid but contradictory, emit exactly two `MCV306` diagnostics: one with `field_name=age` and one with `field_name=date_of_birth`.
+- Each contradiction diagnostic preserves that field's bounded safe original token in `raw_value` and its parsed value in `normalized_value`.
+- Both contradictory observations are rejected and contribute two rejected field observations; the pipeline MUST NOT choose one silently.
+- Independent observations remain processable and row outcome follows the approved precedence.
+- Age derivation is permitted only when `age` is absent and both `date_of_birth` and an explicitly populated `age_reference_date` are valid.
+- Completed years are calculated exactly as `reference.year - birth.year - ((reference.month, reference.day) < (birth.month, birth.day))`.
+- Derivation MUST NOT use `ingested_at`, `reviewed_at`, filesystem time or the current date.
+- A derived age must be from 15 through 45 inclusive.
+- A valid derived age creates an `age` observation with null `raw_value`, Python `int` `normalized_value`, `age_reference_date` as `effective_value_date`, normal age freshness and `MCV502_DERIVED_AGE`; it suppresses `MCV503` for `age`.
+- When absent age cannot be derived, emit `MCV503` for `age` and invent no value.
+- A populated age with absent `age_reference_date` emits `MCV303` for `age_reference_date`.
+- A populated age with an invalid `age_reference_date` emits `MCV300` for `age_reference_date`.
+- A populated age with invalid integer syntax or outside the approved range emits `MCV301` for `age`.
 
 ### Jersey Number
 
@@ -353,7 +465,109 @@ The versioned canonical normalization in `src/api_football_canonical.py` defines
 - `Midfielder`
 - `Forward`
 
-An exact canonical value may be accepted. A non-empty string outside this taxonomy emits `MCV409_UNMAPPED_POSITION`, remains preserved for diagnostics and receives `review-required`. Empty, malformed or structurally invalid values emit `MCV307_INVALID_POSITION` and are rejected. No provider taxonomy is converted silently.
+Position is evaluated verbatim after null, empty and whitespace-only detection. The general text-normalization algorithm is not applied to this field.
+
+- Null, empty or whitespace-only emits only `MCV503_OPTIONAL_VALUE_MISSING`, has field outcome `not-provided` and emits neither `MCV307` nor `MCV409`.
+- An exact canonical value may be accepted.
+- The exact prohibited literal sentinel tokens are `N/A`, `unknown`, `-` and `null`. These emit `MCV307_INVALID_POSITION` and are rejected.
+- No broader malformed-position predicate is approved in v1.
+- Any other non-empty string outside the canonical taxonomy emits `MCV409_UNMAPPED_POSITION`, remains preserved for diagnostics and has field outcome `review-required`.
+- Case differences, aliases and provider taxonomies are not converted to canonical values.
+- No heuristic, fuzzy matching or transliteration is allowed.
+
+## Exact Stage B Normalization Contract
+
+| Input | Accepted lexical form | Normalized public value | Invalid behavior |
+|---|---|---|---|
+| `market_value_eur`, `salary_value` | `-?[0-9]+(?:\.[0-9]+)?`, where leading `-` is recognized only to classify a negative value | `decimal.Decimal`; numeric zero remains Decimal zero | negative emits `MCV302`; any other invalid token emits `MCV301`; never emit both for one token |
+| `age` | `[0-9]+`, with no sign, decimal, exponent or whitespace; value 15-45 | Python `int` | invalid lexical form or range emits `MCV301` |
+| `jersey_number` | `[0-9]+`, with no sign, decimal, exponent or whitespace; value 1-99 | Python `int` | invalid lexical form or range emits `MCV308` |
+| Business dates and value dates | exact calendar-valid `YYYY-MM-DD` | ISO string `YYYY-MM-DD` | populated invalid token emits `MCV300` |
+| `reviewed_at` | Stage A-valid timezone-aware ISO-8601 timestamp | `datetime.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")` | Stage A retains `MCV203`; Stage B does not reinterpret invalid timestamps |
+| Safe text fields | any Stage A-valid non-missing string | NFKC, exterior trim and internal whitespace runs collapsed to one ASCII space | no aliases, case folding, accent removal, punctuation removal, transliteration or fuzzy matching |
+| `position` | exact canonical values or other non-empty tokens under the finite position rules | unchanged string | exact sentinels emit `MCV307`; other non-canonical values emit `MCV409` |
+
+Numeric rules:
+
+- Monetary parsing MUST use `decimal.Decimal`, never binary float.
+- Accepted monetary tokens MUST be converted with `Decimal(token)`.
+- The parser MUST NOT call `.normalize()`, quantize or round accepted monetary values.
+- Lexical scale is preserved: `1` becomes `Decimal("1")`, `1.0` becomes `Decimal("1.0")` and `1.00` becomes `Decimal("1.00")`.
+- Numeric equality does not require representational equality, and the original raw token remains available for audit.
+- At least one digit is required before an optional decimal point.
+- Exponents, thousands separators, leading `+` and surrounding whitespace are invalid.
+- Every token beginning with `-`, including `-0` and `-0.00`, is parsed only far enough to emit `MCV302_NEGATIVE_VALUE`.
+- A negative-zero token creates no zero observation. Only non-negative lexical zero forms use the approved market-value-zero semantics.
+- Syntactically valid monetary zero remains Decimal zero and MUST NOT become null.
+
+Date and timestamp rules:
+
+- Datetimes are not accepted as business dates or value dates.
+- Local date formats and surrounding whitespace are invalid.
+- UTC timestamp normalization preserves the instant.
+- Fractional seconds are preserved only as produced by `datetime.isoformat()`.
+- Emit `MCV501_NORMALIZED_TIMESTAMP` only when the canonical UTC representation differs from the valid original token.
+
+The text algorithm runs in this exact order: (1) `unicodedata.normalize("NFKC", token)`, (2) remove leading and trailing Unicode whitespace, and (3) replace every maximal internal Unicode-whitespace run with one ASCII space (`U+0020`).
+
+Safe text normalization applies exactly to:
+
+- `player`
+- `team`
+- `league`
+- `source_name`
+- `source_reference`
+- `reviewer`
+
+It does not apply automatically to `season`, URLs, enum fields, numeric fields, dates, `position`, `notes` or `review_notes`.
+
+- Public identity and provenance output values use the normalized text.
+- Diagnostic `raw_value` retains the bounded safe original token.
+- Emit one `MCV500_NORMALIZED_TEXT` per changed field, using that field as `field_name`.
+- Preserve case, accents and punctuation.
+- Private complete sorting keys remain internal and MUST NOT appear in public outputs.
+
+Public logical types are frozen for Stage B:
+
+| Output value | Logical type |
+|---|---|
+| Monetary normalized values | `decimal.Decimal` |
+| `age`, `jersey_number` | Python `int` |
+| Business dates and effective dates | ISO `YYYY-MM-DD` strings |
+| `position` | Python `str` |
+| `reviewed_at` | canonical UTC string |
+| Missing normalized values | `None` |
+| `effective_eligible` | Python `bool` |
+| `conflict_group_id` | `None` throughout Stage B |
+
+## Static Currency Validation
+
+Stage B may validate salary currency with one explicit static immutable set of accepted alphabetic ISO 4217 codes in `src/manual_market_context_processing.py`.
+
+- Tokens must be exactly three ASCII uppercase letters.
+- Membership validation is case-sensitive.
+- Lowercase tokens, symbols and free-form names are invalid.
+- No case normalization, currency conversion, network access or runtime lookup is allowed.
+- The future code diff MUST expose the complete set for review and tests.
+- No new dependency, including pycountry, Babel, Pydantic or Pandera, is approved.
+
+## Stage B Diagnostic And Outcome Reconciliation
+
+- Missing-value checks run before field-specific validation.
+- A missing optional observation emits only its single `MCV503`.
+- Missing confidence uses `MCV303`; invalid populated confidence uses `MCV305`; the two are mutually exclusive for one token.
+- Missing or invalid salary metadata uses the exact one-root-cause rules above.
+- Diagnostics affecting multiple observations may reject each affected observation while emitting only the approved metadata diagnostic cardinality.
+- `MCV306` emits exactly twice for one age/date-of-birth contradiction.
+- `MCV503` emits at most once for each absent one of the seven observation fields.
+- Row-scope diagnostics follow their approved minimum row outcomes.
+- Field-observation diagnostics determine the affected observation outcome; independent valid observations survive.
+- `rejected_field_observations` counts only rejected observations among the seven Stage B Market Context fields, once per observation.
+- Rejected metadata or provenance fields do not increment `rejected_field_observations`.
+- `MCV405_DUPLICATE_OBSERVATION` and `MCV406_CONFLICTING_OBSERVATION` MUST NOT be emitted in Stage B.
+- Every summary count MUST reconcile with final public outputs and diagnostics.
+- Final deterministic sorting precedes assignment of zero-based consecutive `diagnostic_order`.
+- Pandas indexes and physical CSV row order MUST NOT be used as identity or tie-breakers.
 
 ## Duplicate Policy
 
@@ -453,10 +667,10 @@ The cryptographic algorithm is deferred. Stability for identical canonical input
 - Parser blocker: resolved.
 - Effective integration behavior: explicitly limited.
 - Current runtime behavior is unchanged.
-- No code change is approved.
+- This policy does not independently approve code; the separate Stage B decision authorizes the bounded future Stage B behavior, which is not implemented.
 - A future integration decision MAY preserve this separation or change effective semantics with an explicit decision and tests.
 
-The contract version remains `manual-market-context-input-v1`: the field name and representation are unchanged, the effective destination is clarified, and no approved implementation exists to break.
+The contract version remains `manual-market-context-input-v1`: the field name and representation are unchanged, the effective destination is clarified, Stage A remains intact and Stage B behavior is not yet implemented.
 
 ## Output Disposition Model
 
@@ -474,6 +688,18 @@ No physical path, file format or persistence target is approved.
 - A partially accepted row may contribute accepted and rejected field observations.
 - `review-required` MUST NOT be promoted automatically.
 - File, row, field and diagnostic counts MUST be deterministic and reconcilable.
+
+Final observation partitioning occurs only after all field outcomes and the final row outcome are known:
+
+- A `not-provided` field appears in neither observation DataFrame, may be represented by `MCV503` and increments no accepted, review-required or rejected observation count.
+- A `rejected` field appears in neither observation DataFrame. It increments `rejected_field_observations` exactly once only when it is one of the seven observation fields; rejected metadata or provenance does not increment that count.
+- For final row outcome `accepted`, every observation with field outcome `accepted` goes to `accepted_observations`.
+- For final row outcome `accepted-with-warnings`, every observation with field outcome `accepted` or `accepted-with-warning` goes to `accepted_observations` and preserves its exact field outcome.
+- Final row outcome `partially-accepted` is available only when one or more of the seven observations are rejected, at least one other provided observation survives as `accepted` or `accepted-with-warning`, and no row rule requires `review-required` or `rejected`. Every surviving observation goes to `accepted_observations`; rejected observations remain outside both observation DataFrames, and the row does not appear in `rejected_rows`. Isolated metadata or provenance rejection never selects this outcome.
+- For final row outcome `review-required`, every provided, non-rejected observation goes to `review_required_observations`; its existing field outcome is preserved when a row rule caused review, while an observation that caused review, including `MCV409`, uses field outcome `review-required`. No observation from that row appears in `accepted_observations`, and the row does not appear in `rejected_rows`.
+- For final row outcome `rejected`, no observation appears in either observation DataFrame and the row appears exactly once in `rejected_rows`. Row rejection does not automatically convert otherwise valid observations into rejected field observations.
+
+The five row counters are mutually exclusive and sum to `total_rows` for a processable file. Summary observation counts equal the row counts of their corresponding DataFrames. `rejected_field_observations` follows the seven-field rule above. Info diagnostics do not change row outcome by themselves. All partitions are complete before final summary construction.
 
 ## Deterministic Ordering
 
@@ -497,10 +723,9 @@ Original CSV order MUST NOT have semantic meaning.
 
 ## Explicitly Deferred
 
-- Parser implementation.
-- DataFrame schema.
-- Python types.
-- Fixture files.
+- Stage B code and fixtures except through the separate Stage B decision.
+- Stage C duplicate/conflict implementation.
+- Stage D preview implementation and execution.
 - Preview/report layout.
 - Physical output paths.
 - Currency conversion.
@@ -518,10 +743,12 @@ Original CSV order MUST NOT have semantic meaning.
 `manual-market-context-policy-v1` is defined docs-only, and `manual-market-context-input-v1` remains approved.
 
 - The `market_value_eur = 0` parser blocker is resolved through observation/effective separation.
-- Parser and fixture implementation are not authorized.
+- Stage A is completed and closed.
+- Stage B code and its seven fixtures are authorized only by the separate Stage B decision and are not implemented.
+- Stages C-D remain blocked.
 - Real-data access is not authorized.
 - Preview is not authorized.
 - SQLite and Streamlit are not authorized.
 - No provider is approved.
 
-The bounded [implementation plan](v0_10_0_manual_market_context_implementation_plan.md) and its [decision](provider_decisions/v0_10_0_manual_market_context_implementation_plan_decision.md) are approved docs-only. Implementation remains blocked. The next decision may approve Stage A core contract and file-validation implementation only; Stages B-D remain blocked.
+The bounded [implementation plan](v0_10_0_manual_market_context_implementation_plan.md) and its [decision](provider_decisions/v0_10_0_manual_market_context_implementation_plan_decision.md) remain approved. Stage A is closed. The separate Stage B decision approves only its bounded future implementation, which has not started. Stages C-D remain blocked.

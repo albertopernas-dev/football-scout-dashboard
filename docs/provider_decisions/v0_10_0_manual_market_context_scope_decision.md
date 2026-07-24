@@ -21,13 +21,17 @@
 - Stage A decision: [v0.10.0 Reviewed Local Market Context Stage A Decision](v0_10_0_manual_market_context_stage_a_decision.md)
 - Stage A closeout: [v0.10.0 Reviewed Local Market Context Stage A Closeout](../v0_10_0_manual_market_context_stage_a_closeout.md)
 - Stage A closeout decision: [v0.10.0 Reviewed Local Market Context Stage A Closeout Decision](v0_10_0_manual_market_context_stage_a_closeout_decision.md)
+- Stage B plan: [v0.10.0 Reviewed Local Market Context Stage B Plan](../v0_10_0_manual_market_context_stage_b_plan.md)
+- Stage B decision: [v0.10.0 Reviewed Local Market Context Stage B Decision](v0_10_0_manual_market_context_stage_b_decision.md)
 - Stage A implementation approved: yes
 - Stage A implemented: yes
 - Stage A verified: yes
 - Stage A completed: yes
-- Stage B approved: no
+- Stage B approved: yes
+- Stage B implemented: no
 - Stage C approved: no
 - Stage D approved: no
+- Preview approved: no
 - v0.10.0 opened: yes
 - Selected path: Manual Market Context workflow improvements
 - Full implementation approved: no
@@ -41,16 +45,17 @@
 ## Decision
 
 - v0.10.0 is opened as a local Market Context workflow-hardening milestone.
+- The separate Stage B decision authorizes only the bounded future Stage B code block defined in its plan.
 - The milestone builds on reviewed local CSV enrichment.
 - It does not reopen v0.9.0 provider suitability work.
 - No provider is selected or approved.
 - No provider API or automated source is authorized.
 - The first design block, the canonical reviewed local input contract, is completed docs-only.
-- Full milestone implementation remains unapproved; Stage A is implemented, verified and closed separately.
+- Full milestone implementation remains unapproved; Stage A is closed and Stage B is approved but not implemented.
 - The input contract remains approved as documentation; the separate Stage A decision authorized only bounded structural parser and validation work, now completed under the closeout.
 - Freshness, provenance, validation, diagnostics and duplicate/conflict policy are completed docs-only.
 - The market-value-zero parser blocker is resolved through observation/effective separation.
-- Stage A structural parser and three synthetic fixtures are implemented and closed; broader parser work, Stages B-D and preview remain unapproved.
+- Stage A structural work is closed. Stage B normalization is approved but not implemented. Stages C-D and preview remain unapproved.
 
 ## Selected Scope
 
@@ -99,6 +104,6 @@ Not yet permitted:
 
 ## Next Required Decision
 
-Stage A is implemented, verified and closed under its bounded decision and closeout evidence.
+Stage A is implemented, verified and closed. Stage B is approved for a separate code block and is not implemented.
 
-Next permitted action: define a separate Stage B approval decision docs-only. Stages B-D implementation, real local data, persistence, SQLite, Streamlit and provider access remain excluded.
+Next permitted action: implement Stage B only under its approved boundary. Stages C-D, real local data, preview, persistence, SQLite, Streamlit and provider access remain excluded.
